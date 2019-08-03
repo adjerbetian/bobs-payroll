@@ -1,0 +1,41 @@
+{
+    "name": "asdppp-1-payroll",
+    "version": "1.0.0",
+    "author": "Alexandre Djerbetian",
+    "license": "ISC",
+    "description": "Agile Software Development - Principles, Pattern, and Practices - Case Study 1 - The Payroll System",
+    "main": "src\\index.ts",
+    "scripts": {
+        "build": "tsc",
+        "start": "ts-node src/index.ts",
+        "prestart:prod": "npm run build",
+        "start:prod": "node dist/main.js",
+        "test": "mocha ./src/**/*.unit.ts",
+        "test:watch": "mocha ./src/**/*.unit.ts --watch",
+        "test:e2e": "mocha ./e2e/**/*.e2e.ts"
+    },
+    "dependencies": {
+        "lodash": "^4.17.15"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.1.7",
+        "@types/chai-as-promised": "^7.1.1",
+        "@types/lodash": "^4.14.136",
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^12.6.9",
+        "@types/sinon": "^7.0.13",
+        "@types/sinon-chai": "^3.2.2",
+        "@typescript-eslint/eslint-plugin": "^1.13.0",
+        "@typescript-eslint/parser": "^1.13.0",
+        "chai": "^4.2.0",
+        "chai-as-promised": "^7.1.1",
+        "eslint": "^6.1.0",
+        "eslint-config-prettier": "^6.0.0",
+        "mocha": "^6.2.0",
+        "prettier": "^1.18.2",
+        "sinon": "^7.3.2",
+        "sinon-chai": "^3.3.0",
+        "ts-node": "^8.3.0",
+        "typescript": "^3.5.3"
+    }
+}
