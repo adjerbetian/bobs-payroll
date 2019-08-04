@@ -1,5 +1,5 @@
 import { EmployeeRepository } from "../repositories";
-import { stripQuotationMarks } from "../utils";
+import { stripQuotationMarks } from "../common/utils";
 
 export interface Transactions {
     addEmployee(...args: string[]): Promise<void>;
