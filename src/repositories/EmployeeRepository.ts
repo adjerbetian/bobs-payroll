@@ -1,4 +1,4 @@
-import { Employee } from "../entities/Employee";
+import { Employee } from "../entities";
 
 export interface EmployeeRepository {
     fetchEmployeeById(id: number): Promise<Employee>;

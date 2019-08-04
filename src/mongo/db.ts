@@ -1,6 +1,6 @@
 import { Collection, MongoClient, ObjectID } from "mongodb";
 import * as config from "../config.json";
-import { Employee } from "../entities/Employee";
+import { Employee } from "../entities";
 
 export let dbEmployees: Collection<DBEmployee>;
 

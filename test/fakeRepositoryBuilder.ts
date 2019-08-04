@@ -1,8 +1,8 @@
 import { sandbox } from "./unitTest";
 import { SinonStub } from "sinon";
-import { EmployeeRepository } from "../repositories";
+import { EmployeeRepository } from "../src/repositories";
 
-interface FakeEmployeeRepository extends EmployeeRepository {
+export interface FakeEmployeeRepository extends EmployeeRepository {
     fetchEmployeeById: SinonStub;
     insertOne: SinonStub;
 }

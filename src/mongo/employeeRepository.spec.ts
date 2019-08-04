@@ -1,12 +1,13 @@
-import { expect } from "../test/integrationTest";
-import { generateEmployee } from "../test/generators";
+import "../../test/integrationTest";
+import { expect } from "../../test/unitTest";
+import { generateHourlyRateEmployee } from "../../test/generators";
 import { NotFoundError } from "../errors";
 import { employeeRepository } from "./employeeRepository";
 
 describe("employeeRepository", () => {
     describe("fetchEmployeeById", () => {
         it("should return the employee", async () => {
-            const employee = generateEmployee();
+            const employee = generateHourlyRateEmployee();
             await employeeRepository.insertOne(employee);
 
             const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
@@ -15,7 +16,7 @@ describe("employeeRepository", () => {
         });
 
         it("should not return the _id field", async () => {
-            const employee = generateEmployee();
+            const employee = generateHourlyRateEmployee();
             await employeeRepository.insertOne(employee);
 
             const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
@@ -32,7 +33,7 @@ describe("employeeRepository", () => {
     });
     describe("insertOne", () => {
         it("insert the given employee", async () => {
-            const employee = generateEmployee();
+            const employee = generateHourlyRateEmployee();
 
             await employeeRepository.insertOne(employee);
 
@@ -41,7 +42,7 @@ describe("employeeRepository", () => {
         });
 
         it("should not add the _id field to the entity", async () => {
-            const employee = generateEmployee();
+            const employee = generateHourlyRateEmployee();
 
             await employeeRepository.insertOne(employee);
 

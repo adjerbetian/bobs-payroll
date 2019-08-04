@@ -1,25 +1,52 @@
-import { expect } from "./test/unitTest";
-import { generateEmployee } from "./test/generators";
-import { buildTransactions } from "./transactions";
-import { buildFakeEmployeeRepository } from "./test/fakeRepositoryBuilder";
+import { expect } from "../test/unitTest";
+import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../test/generators";
+import { buildTransactions, Transaction } from "./transactions";
+import { buildFakeEmployeeRepository, FakeEmployeeRepository } from "../test/fakeRepositoryBuilder";
 
 describe("transactions", () => {
     describe("addEmployee", () => {
-        it("should call the insertOne method of the employeeRepository", async () => {
-            const fakeEmployeeRepository = buildFakeEmployeeRepository();
+        let fakeEmployeeRepository: FakeEmployeeRepository;
+        let transactions: Transaction;
+
+        beforeEach(() => {
+            fakeEmployeeRepository = buildFakeEmployeeRepository();
             fakeEmployeeRepository.insertOne.resolves();
-            const transactions = buildTransactions(fakeEmployeeRepository);
-            const employee = generateEmployee();
+            transactions = buildTransactions(fakeEmployeeRepository);
+        });
 
-            await transactions.addEmployee(
-                `${employee.id}`,
-                `"${employee.name}"`,
-                `"${employee.address}"`,
-                "H",
-                `${employee.rate}`
-            );
+        describe("with a hourly rate emply", () => {
+            it("should call the insertOne method of the employeeRepository", async () => {
+                const employee = generateHourlyRateEmployee();
 
-            expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+                await transactions.addEmployee(
+                    `${employee.id}`,
+                    `"${employee.name}"`,
+                    `"${employee.address}"`,
+                    "H",
+                    `${employee.hourlyRate}`
+                );
+
+                expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+            });
+        });
+
+        describe("with a monthly salary", () => {
+            it("should call the insertOne method of the employeeRepository", async () => {
+                const fakeEmployeeRepository = buildFakeEmployeeRepository();
+                fakeEmployeeRepository.insertOne.resolves();
+                const transactions = buildTransactions(fakeEmployeeRepository);
+                const employee = generateMonthlySalaryEmployee();
+
+                await transactions.addEmployee(
+                    `${employee.id}`,
+                    `"${employee.name}"`,
+                    `"${employee.address}"`,
+                    "S",
+                    `${employee.salary}`
+                );
+
+                expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+            });
         });
     });
 });

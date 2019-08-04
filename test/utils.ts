@@ -1,4 +1,5 @@
 import { exec } from "child_process";
+import * as _ from "lodash";
 
 export async function execute(command: string): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -11,3 +12,8 @@ export async function execute(command: string): Promise<string> {
         });
     });
 }
+
+export const generateIndex = (() => {
+    let index = _.random(1, 100);
+    return () => index++;
+})();

@@ -6,7 +6,7 @@
     "description": "Agile Software Development - Principles, Pattern, and Practices - Case Study 1 - The Payroll System",
     "main": "src\\index.ts",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc --project tsconfig.build.json",
         "start": "ts-node src/index.ts",
         "prestart:prod": "npm run build",
         "start:prod": "node dist/main.js",

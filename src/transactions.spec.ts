@@ -1,21 +1,37 @@
-import "./test/integrationTest";
-import { expect } from "./test/unitTest";
-import { generateEmployee } from "./test/generators";
+import "../test/integrationTest";
+import { expect } from "../test/unitTest";
+import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../test/generators";
 import { employeeRepository } from "./mongo";
 import { buildTransactions } from "./transactions";
 
 describe("transactions", () => {
     describe("addEmployee", () => {
-        it("should work", async () => {
+        it("should add employee with a hourly rate", async () => {
             const transactions = buildTransactions(employeeRepository);
-            const employee = generateEmployee();
+            const employee = generateHourlyRateEmployee();
 
             await transactions.addEmployee(
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
                 "H",
-                `${employee.rate}`
+                `${employee.hourlyRate}`
+            );
+
+            const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
+            expect(dbEmployee).to.deep.equal(employee);
+        });
+
+        it("should add employee with a monthly salary", async () => {
+            const transactions = buildTransactions(employeeRepository);
+            const employee = generateMonthlySalaryEmployee();
+
+            await transactions.addEmployee(
+                `${employee.id}`,
+                `"${employee.name}"`,
+                `"${employee.address}"`,
+                "S",
+                `${employee.salary}`
             );
 
             const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);

@@ -1,4 +1,4 @@
-import { Employee } from "../entities/Employee";
+import { Employee } from "../entities";
 import { dbEmployees } from "./db";
 import { FilterQuery } from "mongodb";
 import { NotFoundError } from "../errors";

@@ -12,6 +12,5 @@
         "listEmittedFiles": true,
         "resolveJsonModule": true
     },
-    "exclude": ["node_modules",
-      "src/test", "e2e", "src/**/*.unit.ts"]
+    "exclude": ["node_modules"]
 }

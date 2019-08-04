@@ -1,23 +1,42 @@
 import { EmployeeRepository } from "./repositories";
 import { stripQuotationMarks } from "./utils";
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function buildTransactions(employeeRepository: EmployeeRepository) {
+export interface Transaction {
+    addEmployee(
+        id: string,
+        name: string,
+        address: string,
+        type: string,
+        rate: string
+    ): Promise<void>;
+}
+
+export function buildTransactions(employeeRepository: EmployeeRepository): Transaction {
     return {
         async addEmployee(
             id: string,
             name: string,
             address: string,
-            rateType: string,
+            type: string,
             rate: string
         ): Promise<void> {
-            await employeeRepository.insertOne({
-                id: parseInt(id),
-                name: stripQuotationMarks(name),
-                address: stripQuotationMarks(address),
-                rateType: "hourly",
-                rate: parseFloat(rate)
-            });
+            if (type === "H") {
+                await employeeRepository.insertOne({
+                    id: parseInt(id),
+                    name: stripQuotationMarks(name),
+                    address: stripQuotationMarks(address),
+                    type: "hourly-rate",
+                    hourlyRate: parseFloat(rate)
+                });
+            } else {
+                await employeeRepository.insertOne({
+                    id: parseInt(id),
+                    name: stripQuotationMarks(name),
+                    address: stripQuotationMarks(address),
+                    type: "monthly-salary",
+                    salary: parseFloat(rate)
+                });
+            }
         }
     };
 }
