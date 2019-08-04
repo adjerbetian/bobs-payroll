@@ -11,8 +11,9 @@
         "prestart:prod": "npm run build",
         "start:prod": "node dist/main.js",
         "test": "mocha ./src/**/*.unit.ts",
-        "test:watch": "mocha ./src/**/*.unit.ts --watch",
-        "test:e2e": "mocha ./e2e/**/*.e2e.ts"
+        "test:integration": "mocha ./src/**/*.spec.ts",
+        "test:e2e": "mocha ./e2e/**/*.e2e.ts",
+        "test:watch": "mocha ./src/**/*.unit.ts --watch"
     },
     "dependencies": {
         "lodash": "^4.17.15",

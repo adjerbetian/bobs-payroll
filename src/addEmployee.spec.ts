@@ -1,17 +1,23 @@
-import { execute, expect } from "../test/e2eTest";
-import { db } from "../src/db";
+import "../test/integrationTest";
+import { expect } from "../test/unitTest";
+import { db } from "./db";
 import { ObjectID } from "bson";
+import { addEmployee } from "./addEmployee";
 
-describe("Use Case 1: Add New Employee", () => {
-    const employee = {
-        id: 12345,
-        name: "employee name",
-        address: "55 Rue du Faubourg Saint-Honoré, 75008 Paris"
-    };
+describe("addEmployee", () => {
+    it("should work", async () => {
+        const employee = {
+            id: 12345,
+            name: "employee name",
+            address: "55 Rue du Faubourg Saint-Honoré, 75008 Paris"
+        };
 
-    it("should add an employee with a hourly rate", async () => {
-        await executePayrollCommand(
-            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" H 2`
+        await addEmployee(
+            `${employee.id}`,
+            `"${employee.name}"`,
+            `"${employee.address}"`,
+            "H",
+            `${2}`
         );
 
         const dbEmployee = await fetchEmployee(employee.id);
@@ -24,10 +30,6 @@ describe("Use Case 1: Add New Employee", () => {
         });
     });
 });
-
-async function executePayrollCommand(command: string): Promise<string> {
-    return execute("node dist/index.js " + command);
-}
 
 async function fetchEmployee(id: number): Promise<DBEmployee | null> {
     return await db.collection("employees").findOne({ id });

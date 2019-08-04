@@ -1,3 +1,5 @@
-import { getHelloWorld } from "./getHelloWorld";
+const [, , transactionName, ...transactionParams] = process.argv;
 
-console.log(getHelloWorld());
+console.log({ transactionName, transactionParams });
+
+// AddEmp(...transactionParams);
