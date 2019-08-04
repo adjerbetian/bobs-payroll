@@ -3,6 +3,7 @@ import { dbEmployees } from "./db";
 import { FilterQuery } from "mongodb";
 import { NotFoundError } from "../errors";
 import { EmployeeRepository } from "../repositories";
+import { cleanMongoEntity } from "./utils";
 
 export const employeeRepository: EmployeeRepository = {
     async fetchEmployeeById(id: number): Promise<Employee> {
@@ -10,8 +11,7 @@ export const employeeRepository: EmployeeRepository = {
     },
     async insertOne(employee: Employee): Promise<void> {
         await dbEmployees.insertOne(employee);
-        // @ts-ignore
-        delete employee._id;
+        cleanMongoEntity(employee);
     },
     async exists(query: Partial<Employee>): Promise<boolean> {
         return !!(await dbEmployees.findOne(query, { projection: { _id: 1 } }));
@@ -29,6 +29,5 @@ async function fetchIt(query: FilterQuery<Employee>): Promise<Employee> {
     if (!employee) {
         throw new NotFoundError(`no employee matching ${JSON.stringify(query)} was found`);
     }
-    delete employee._id;
-    return employee;
+    return cleanMongoEntity(employee);
 }

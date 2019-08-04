@@ -1,6 +1,7 @@
 import { TimeCardRepository } from "../repositories";
 import { TimeCard } from "../entities";
 import { dbTimeCards } from "./db";
+import { cleanMongoEntity } from "./utils";
 
 export const timeCardRepository: TimeCardRepository = {
     async fetchAllOfEmployee(employeeId: number): Promise<TimeCard[]> {
@@ -12,9 +13,3 @@ export const timeCardRepository: TimeCardRepository = {
         cleanMongoEntity(timeCard);
     }
 };
-
-function cleanMongoEntity<T>(entity: T): T {
-    // @ts-ignore
-    delete entity._id;
-    return entity;
-}
