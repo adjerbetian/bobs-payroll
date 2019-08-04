@@ -5,12 +5,14 @@ import { EmployeeRepository } from "../src/repositories";
 export interface FakeEmployeeRepository extends EmployeeRepository {
     fetchEmployeeById: SinonStub;
     insertOne: SinonStub;
+    exists: SinonStub;
 }
 
 export function buildFakeEmployeeRepository(): FakeEmployeeRepository {
     return {
         fetchEmployeeById: buildStubFor("fetchEmployeeById"),
-        insertOne: buildStubFor("insertOne")
+        insertOne: buildStubFor("insertOne"),
+        exists: buildStubFor("exists")
     };
 }
 

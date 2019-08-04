@@ -12,6 +12,9 @@ export const employeeRepository: EmployeeRepository = {
         await dbEmployees.insertOne(employee);
         // @ts-ignore
         delete employee._id;
+    },
+    async exists(query: Partial<Employee>): Promise<boolean> {
+        return !!(await dbEmployees.findOne(query, { projection: { _id: 1 } }));
     }
 };
 

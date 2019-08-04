@@ -35,6 +35,17 @@ describe("Use Case 1: Add New Employee", () => {
         const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
         expect(dbEmployee).to.have.property("commissionRate", 10);
     });
+
+    it("should do nothing when the transaction is wrongly put", async () => {
+        const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+
+        await executePayrollCommand(
+            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary}`
+        );
+
+        const employeeExistsInDB = await employeeRepository.exists({ id: employee.id });
+        expect(employeeExistsInDB).to.be.false;
+    });
 });
 
 async function executePayrollCommand(command: string): Promise<void> {

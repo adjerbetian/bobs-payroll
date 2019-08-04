@@ -41,13 +41,16 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
                 });
             }
             if (type === "C") {
+                if (!commissionRate) {
+                    throw new Error("commission rate missing");
+                }
                 await employeeRepository.insertOne({
                     id: parseInt(id),
                     name: stripQuotationMarks(name),
                     address: stripQuotationMarks(address),
                     type: "monthly-salary",
                     monthlySalary: parseFloat(rate),
-                    commissionRate: parseFloat(commissionRate || "0")
+                    commissionRate: parseFloat(commissionRate)
                 });
             }
         }

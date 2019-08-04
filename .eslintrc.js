@@ -39,8 +39,6 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-use-before-define": ["error", "nofunc"],
         "@typescript-eslint/interface-name-prefix": "off",
-        "no-extra-parens": "off",
-        "@typescript-eslint/no-extra-parens": "error",
         "@typescript-eslint/no-floating-promises": "error",
         "@typescript-eslint/no-for-in-array": "error",
         "@typescript-eslint/no-non-null-assertion": "off",

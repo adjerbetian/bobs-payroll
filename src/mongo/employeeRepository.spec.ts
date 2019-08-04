@@ -49,4 +49,22 @@ describe("employeeRepository", () => {
             expect(employee).not.to.have.property("_id");
         });
     });
+    describe("exists", () => {
+        it("return true when the employee exists", async () => {
+            const employee = generateHourlyRateEmployee();
+            await employeeRepository.insertOne(employee);
+
+            const result = await employeeRepository.exists({ id: employee.id });
+
+            expect(result).to.be.true;
+        });
+
+        it("return false when the employee exists", async () => {
+            const employee = generateHourlyRateEmployee();
+
+            const result = await employeeRepository.exists({ id: employee.id });
+
+            expect(result).to.be.false;
+        });
+    });
 });

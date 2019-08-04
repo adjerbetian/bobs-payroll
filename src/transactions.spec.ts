@@ -51,6 +51,21 @@ describe("transactions", () => {
 
             await expectEmployeeToExistInDB(employee);
         });
+
+        it("should reject when the transaction is wrong", async () => {
+            const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+
+            // noinspection ES6MissingAwait
+            const promise = transactions.addEmployee(
+                `${employee.id}`,
+                `"${employee.name}"`,
+                `"${employee.address}"`,
+                "C",
+                `${employee.monthlySalary}`
+            );
+
+            await expect(promise).to.be.rejected;
+        });
     });
 });
 
