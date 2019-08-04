@@ -1,12 +1,12 @@
-import { expect } from "../test/unitTest";
-import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../test/generators";
-import { buildTransactions, Transaction } from "./transactions";
-import { buildFakeEmployeeRepository, FakeEmployeeRepository } from "../test/fakeRepositoryBuilder";
+import { expect } from "../../test/unitTest";
+import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../../test/generators";
+import { buildFakeEmployeeRepository, FakeEmployeeRepository } from "../../test/fakeBuilders";
+import { buildTransactions, Transactions } from "./addEmployee";
 
 describe("transactions", () => {
     describe("addEmployee", () => {
         let fakeEmployeeRepository: FakeEmployeeRepository;
-        let transactions: Transaction;
+        let transactions: Transactions;
 
         beforeEach(() => {
             fakeEmployeeRepository = buildFakeEmployeeRepository();
@@ -60,6 +60,23 @@ describe("transactions", () => {
                 );
 
                 expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+            });
+        });
+
+        describe("should throw when the transaction is malformed", () => {
+            it("should call the insertOne method of the employeeRepository", async () => {
+                const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+
+                // noinspection ES6MissingAwait
+                const promise = transactions.addEmployee(
+                    `${employee.id}`,
+                    `"${employee.name}"`,
+                    `"${employee.address}"`,
+                    "C",
+                    `${employee.monthlySalary}`
+                );
+
+                await expect(promise).to.be.rejected;
             });
         });
     });

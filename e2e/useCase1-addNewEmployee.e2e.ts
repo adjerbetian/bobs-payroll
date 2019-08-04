@@ -1,4 +1,4 @@
-import { execute, expect } from "../test/e2eTest";
+import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../test/generators";
 import { employeeRepository } from "../src/mongo";
 
@@ -47,8 +47,3 @@ describe("Use Case 1: Add New Employee", () => {
         expect(employeeExistsInDB).to.be.false;
     });
 });
-
-async function executePayrollCommand(command: string): Promise<void> {
-    const output = await execute("node dist/index.js " + command);
-    console.log(output);
-}

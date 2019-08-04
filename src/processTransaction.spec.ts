@@ -3,16 +3,19 @@ import { expect } from "../test/unitTest";
 import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../test/generators";
 import { employeeRepository } from "./mongo";
 import { buildTransactions } from "./transactions";
+import { buildProcessTransaction } from "./processTransaction";
 import { Employee } from "./entities";
 
 describe("transactions", () => {
     const transactions = buildTransactions(employeeRepository);
+    const processTransaction = buildProcessTransaction(transactions);
 
     describe("addEmployee", () => {
         it("should add an employee with a hourly rate", async () => {
             const employee = generateHourlyRateEmployee();
 
-            await transactions.addEmployee(
+            await processTransaction(
+                "AddEmp",
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
@@ -26,7 +29,8 @@ describe("transactions", () => {
         it("should add an employee with a monthly salary", async () => {
             const employee = generateMonthlySalaryEmployee();
 
-            await transactions.addEmployee(
+            await processTransaction(
+                "AddEmp",
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
@@ -40,7 +44,8 @@ describe("transactions", () => {
         it("should add an employee with a monthly salary and a commission rate", async () => {
             const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
 
-            await transactions.addEmployee(
+            await processTransaction(
+                "AddEmp",
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
@@ -56,7 +61,8 @@ describe("transactions", () => {
             const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
 
             // noinspection ES6MissingAwait
-            const promise = transactions.addEmployee(
+            const promise = processTransaction(
+                "AddEmp",
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
