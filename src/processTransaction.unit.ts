@@ -1,19 +1,19 @@
 import { expect } from "../test/unitTest";
-import { generateHourlyRateEmployee } from "../test/generators";
+import { generateHourlyRateEmployee, generateTimeCard } from "../test/generators";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
 import { buildFakeTransactions, FakeTransactions } from "../test/fakeBuilders";
 import { generateIndex } from "../test/utils";
 
 describe("processTransaction", () => {
-    describe("addEmp", () => {
-        let processTransaction: ProcessTransaction;
-        let fakeTransactions: FakeTransactions;
+    let processTransaction: ProcessTransaction;
+    let fakeTransactions: FakeTransactions;
 
-        beforeEach(() => {
-            fakeTransactions = buildFakeTransactions();
-            processTransaction = buildProcessTransaction(fakeTransactions);
-        });
+    beforeEach(() => {
+        fakeTransactions = buildFakeTransactions();
+        processTransaction = buildProcessTransaction(fakeTransactions);
+    });
 
+    describe("AddEmp", () => {
         it("should call the addEmployee transaction", async () => {
             fakeTransactions.addEmployee.resolves();
             const employee = generateHourlyRateEmployee();
@@ -35,6 +35,8 @@ describe("processTransaction", () => {
                 `${employee.hourlyRate}`
             );
         });
+    });
+    describe("DelEmp", () => {
         it("should call the deleteEmployee transaction", async () => {
             fakeTransactions.deleteEmployee.resolves();
             const employeeId = generateIndex();
@@ -42,6 +44,25 @@ describe("processTransaction", () => {
             await processTransaction("DelEmp", `${employeeId}`);
 
             expect(fakeTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
+        });
+    });
+    describe("TimeCard", () => {
+        it("should call the postTimeCard transaction", async () => {
+            fakeTransactions.postTimeCard.resolves();
+            const timeCard = generateTimeCard();
+
+            await processTransaction(
+                "TimeCard",
+                `${timeCard.employeeId}`,
+                `${timeCard.date}`,
+                `${timeCard.hours}`
+            );
+
+            expect(fakeTransactions.postTimeCard).to.have.been.calledOnceWith(
+                `${timeCard.employeeId}`,
+                `${timeCard.date}`,
+                `${timeCard.hours}`
+            );
         });
     });
 });

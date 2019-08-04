@@ -10,5 +10,8 @@ export function buildProcessTransaction(transactions: Transactions): ProcessTran
         if (transactionName === "DelEmp") {
             return transactions.deleteEmployee(...args);
         }
+        if (transactionName === "TimeCard") {
+            return transactions.postTimeCard(...args);
+        }
     };
 }
