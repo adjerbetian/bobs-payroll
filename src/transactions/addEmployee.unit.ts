@@ -3,6 +3,7 @@ import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../..
 import { buildFakeEmployeeRepository, FakeEmployeeRepository } from "../../test/fakeBuilders";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 import { Transaction } from "./Transactions";
+import { TransactionFormatError } from "../errors/TransactionFormatError";
 
 describe("addEmployee", () => {
     let fakeEmployeeRepository: FakeEmployeeRepository;
@@ -67,6 +68,6 @@ describe("addEmployee", () => {
             `${employee.monthlySalary}`
         );
 
-        await expect(promise).to.be.rejected;
+        await expect(promise).to.be.rejectedWith(TransactionFormatError);
     });
 });

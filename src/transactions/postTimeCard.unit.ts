@@ -12,7 +12,7 @@ import {
     FakeEmployeeRepository,
     FakeTimeCardRepository
 } from "../../test/fakeBuilders";
-import { WrongEmployeeTypeError } from "../errors";
+import { EmployeeTypeError } from "../errors";
 import { TimeCard } from "../entities";
 
 describe("postTimeCard", () => {
@@ -41,8 +41,7 @@ describe("postTimeCard", () => {
 
         expect(fakeTimeCardRepository.insertOne).to.have.been.calledOnceWith(timeCard);
     });
-
-    it("should throw an error if the employee is not in hourly rate", async () => {
+    it("should throw a EmployeeTypeError if the employee is not in hourly rate", async () => {
         const timeCard = generateTimeCard();
         fakeEmployeeRepository.fetchEmployeeById
             .withArgs(timeCard.employeeId)
@@ -51,7 +50,7 @@ describe("postTimeCard", () => {
         // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);
 
-        await expect(promise).to.be.rejectedWith(WrongEmployeeTypeError);
+        await expect(promise).to.be.rejectedWith(EmployeeTypeError);
     });
 
     async function postTimeCardEntity(timeCard: TimeCard): Promise<void> {

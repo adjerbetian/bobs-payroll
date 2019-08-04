@@ -5,7 +5,7 @@ export interface Employee {
     type: EmployeeType;
     hourlyRate?: number;
     monthlySalary?: number;
-    commissionRate?: number;
+    commissionRate?: number | null;
 }
 
 export enum EmployeeType {

@@ -1,6 +1,6 @@
 import { Transaction } from "./Transactions";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
-import { WrongEmployeeTypeError } from "../errors";
+import { EmployeeTypeError } from "../errors";
 
 export function buildPostTimeCardTransaction({
     timeCardRepository,
@@ -12,7 +12,7 @@ export function buildPostTimeCardTransaction({
     return async function(employeeId: string, date: string, hours: string): Promise<void> {
         const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
         if (employee.type !== "hourly-rate") {
-            throw new WrongEmployeeTypeError(employee, "hourly-rate");
+            throw new EmployeeTypeError(employee, "hourly-rate");
         }
 
         await timeCardRepository.insertOne({

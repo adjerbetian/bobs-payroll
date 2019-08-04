@@ -1,2 +1,2 @@
 export { NotFoundError } from "./NotFoundError";
-export { WrongEmployeeTypeError } from "./WrongEmployeeTypeError";
+export { EmployeeTypeError } from "./EmployeeTypeError";
