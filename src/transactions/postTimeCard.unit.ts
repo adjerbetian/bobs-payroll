@@ -14,6 +14,8 @@ import {
 } from "../../test/fakeBuilders";
 import { EmployeeTypeError } from "../errors";
 import { TimeCard } from "../entities";
+import * as moment from "moment";
+import { TransactionFormatError } from "../errors/TransactionFormatError";
 
 describe("postTimeCard", () => {
     let fakeTimeCardRepository: FakeTimeCardRepository;
@@ -51,6 +53,17 @@ describe("postTimeCard", () => {
         const promise = postTimeCardEntity(timeCard);
 
         await expect(promise).to.be.rejectedWith(EmployeeTypeError);
+    });
+    it("should throw a TransactionFormatError if the date is not in good format", async () => {
+        const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
+        fakeEmployeeRepository.fetchEmployeeById
+            .withArgs(timeCard.employeeId)
+            .resolves(generateHourlyRateEmployee());
+
+        // noinspection ES6MissingAwait
+        const promise = postTimeCardEntity(timeCard);
+
+        await expect(promise).to.be.rejectedWith(TransactionFormatError);
     });
 
     async function postTimeCardEntity(timeCard: TimeCard): Promise<void> {

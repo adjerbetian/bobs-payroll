@@ -43,8 +43,8 @@ export function buildAddEmployeeTransaction(employeeRepository: EmployeeReposito
             throw new TransactionFormatError("AddEmp");
         }
 
-        function assertIsNotEmpty(id?: string): void {
-            assert(!!id);
+        function assertIsNotEmpty(value?: string): void {
+            assert(!!value);
         }
     }
 
