@@ -7,13 +7,15 @@ export interface FakeEmployeeRepository extends EmployeeRepository {
     fetchEmployeeById: SinonStub;
     insertOne: SinonStub;
     exists: SinonStub;
+    deleteById: SinonStub;
 }
 
 export function buildFakeEmployeeRepository(): FakeEmployeeRepository {
     return {
         fetchEmployeeById: buildStubFor("fetchEmployeeById"),
         insertOne: buildStubFor("insertOne"),
-        exists: buildStubFor("exists")
+        exists: buildStubFor("exists"),
+        deleteById: buildStubFor("deleteById")
     };
 }
 

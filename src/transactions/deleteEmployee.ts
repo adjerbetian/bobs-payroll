@@ -1,5 +1,10 @@
 import { Transaction } from "./Transactions";
+import { EmployeeRepository } from "../repositories";
 
-export function buildDeleteEmployeeTransaction(): Transaction {
-    return async function(): Promise<void> {};
+export function buildDeleteEmployeeTransaction(
+    employeeRepository: EmployeeRepository
+): Transaction {
+    return async function(employeeId: string): Promise<void> {
+        await employeeRepository.deleteById(parseInt(employeeId));
+    };
 }

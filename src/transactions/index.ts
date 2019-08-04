@@ -8,6 +8,6 @@ export { Transactions } from "./Transactions";
 export function buildTransactions(employeeRepository: EmployeeRepository): Transactions {
     return {
         addEmployee: buildAddEmployeeTransaction(employeeRepository),
-        deleteEmployee: buildDeleteEmployeeTransaction()
+        deleteEmployee: buildDeleteEmployeeTransaction(employeeRepository)
     };
 }

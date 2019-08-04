@@ -3,6 +3,7 @@ import { expect } from "../../test/unitTest";
 import { generateHourlyRateEmployee } from "../../test/generators";
 import { NotFoundError } from "../errors";
 import { employeeRepository } from "./employeeRepository";
+import { generateIndex } from "../../test/utils";
 
 describe("employeeRepository", () => {
     describe("fetchEmployeeById", () => {
@@ -61,6 +62,23 @@ describe("employeeRepository", () => {
             const result = await employeeRepository.exists({ id: employee.id });
 
             expect(result).to.be.false;
+        });
+    });
+    describe("deleteById", () => {
+        it("delete the employee when it exists", async () => {
+            const employee = generateHourlyRateEmployee();
+            await employeeRepository.insertOne(employee);
+
+            await employeeRepository.deleteById(employee.id);
+
+            const result = await employeeRepository.exists({ id: employee.id });
+            expect(result).to.be.false;
+        });
+        it("throw a NotFoundError when the employee does not exists", async () => {
+            // noinspection ES6MissingAwait
+            const promise = employeeRepository.deleteById(generateIndex());
+
+            await expect(promise).to.be.rejectedWith(NotFoundError);
         });
     });
 });

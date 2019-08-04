@@ -15,6 +15,12 @@ export const employeeRepository: EmployeeRepository = {
     },
     async exists(query: Partial<Employee>): Promise<boolean> {
         return !!(await dbEmployees.findOne(query, { projection: { _id: 1 } }));
+    },
+    async deleteById(id: number): Promise<void> {
+        const a = await dbEmployees.deleteOne({ id });
+        if (a.deletedCount === 0) {
+            throw new NotFoundError(`the employee ${id} does not exist`);
+        }
     }
 };
 
