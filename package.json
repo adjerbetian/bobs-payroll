@@ -12,7 +12,7 @@
         "start:prod": "node dist/main.js",
         "test": "mocha ./src/**/*.unit.ts",
         "test:integration": "mocha ./src/**/*.spec.ts",
-        "test:e2e": "mocha ./e2e/**/*.e2e.ts",
+        "test:e2e": "mocha ./e2e/**/*.e2e.ts --timeout 10000",
         "test:watch": "mocha ./src/**/*.unit.ts --watch"
     },
     "dependencies": {

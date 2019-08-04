@@ -1,5 +1,18 @@
-const [, , transactionName, ...transactionParams] = process.argv;
+import { buildTransactions } from "./transactions";
+import { closeConnection, employeeRepository, initConnection } from "./mongo";
 
-console.log({ transactionName, transactionParams });
+const [, , , ...transactionParams] = process.argv;
 
-// AddEmp(...transactionParams);
+const transactions = buildTransactions(employeeRepository);
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+initConnection()
+    .then(async () => {
+        // @ts-ignore
+        await transactions.addEmployee(...transactionParams);
+    })
+    .catch(err => {
+        console.log("AN ERROR HAS OCCURED");
+        console.log({ err });
+    })
+    .then(async () => closeConnection());

@@ -1,6 +1,6 @@
 import { execute } from "./utils";
 
-export * from "./integrationTest";
+export { expect } from "./integrationTest";
 export { execute } from "./utils";
 
 before(async function() {
