@@ -12,7 +12,6 @@ describe("Use Case 2: Deleting an Employee", () => {
         const employeeExistsInDB = await employeeRepository.exists({ id: employee.id });
         expect(employeeExistsInDB).to.be.false;
     });
-
     it("should do nothing when the userId does not exist", async () => {
         const employee = generateHourlyRateEmployee();
         await employeeRepository.insertOne(employee);

@@ -7,12 +7,10 @@ describe("utils", () => {
             const result = stripQuotationMarks(`"coucou"`);
             expect(result).to.equal("coucou");
         });
-
         it("should strip quotation marks and trim the string", () => {
             const result = stripQuotationMarks(`  "coucou"  `);
             expect(result).to.equal("coucou");
         });
-
         it("should return the same string when there is no quotation marks", () => {
             const result = stripQuotationMarks("  coucou  ");
             expect(result).to.equal("  coucou  ");

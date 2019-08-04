@@ -25,7 +25,6 @@ describe("transactions", () => {
 
             await expectEmployeeToExistInDB(employee);
         });
-
         it("should add an employee with a monthly salary", async () => {
             const employee = generateMonthlySalaryEmployee();
 
@@ -40,7 +39,6 @@ describe("transactions", () => {
 
             await expectEmployeeToExistInDB(employee);
         });
-
         it("should add an employee with a monthly salary and a commission rate", async () => {
             const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
 
@@ -56,7 +54,6 @@ describe("transactions", () => {
 
             await expectEmployeeToExistInDB(employee);
         });
-
         it("should reject when the transaction is wrong", async () => {
             const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
 

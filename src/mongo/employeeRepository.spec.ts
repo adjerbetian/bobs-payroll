@@ -14,7 +14,6 @@ describe("employeeRepository", () => {
 
             expect(dbEmployee).to.deep.equal(employee);
         });
-
         it("should not return the _id field", async () => {
             const employee = generateHourlyRateEmployee();
             await employeeRepository.insertOne(employee);
@@ -23,7 +22,6 @@ describe("employeeRepository", () => {
 
             expect(dbEmployee).not.to.have.property("_id");
         });
-
         it("should throw a not found error when the employee was not found", async () => {
             // noinspection ES6MissingAwait
             const promise = employeeRepository.fetchEmployeeById(1234);
@@ -40,7 +38,6 @@ describe("employeeRepository", () => {
             const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
             expect(dbEmployee).to.deep.equal(employee);
         });
-
         it("should not add the _id field to the entity", async () => {
             const employee = generateHourlyRateEmployee();
 
@@ -58,7 +55,6 @@ describe("employeeRepository", () => {
 
             expect(result).to.be.true;
         });
-
         it("return false when the employee exists", async () => {
             const employee = generateHourlyRateEmployee();
 
