@@ -7,7 +7,8 @@ export interface Transaction {
         name: string,
         address: string,
         type: string,
-        rate: string
+        rate: string,
+        commissionRate?: string
     ): Promise<void>;
 }
 
@@ -18,7 +19,8 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
             name: string,
             address: string,
             type: string,
-            rate: string
+            rate: string,
+            commissionRate?: string
         ): Promise<void> {
             if (type === "H") {
                 await employeeRepository.insertOne({
@@ -28,13 +30,24 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
                     type: "hourly-rate",
                     hourlyRate: parseFloat(rate)
                 });
-            } else {
+            }
+            if (type === "S") {
                 await employeeRepository.insertOne({
                     id: parseInt(id),
                     name: stripQuotationMarks(name),
                     address: stripQuotationMarks(address),
                     type: "monthly-salary",
-                    salary: parseFloat(rate)
+                    monthlySalary: parseFloat(rate)
+                });
+            }
+            if (type === "C") {
+                await employeeRepository.insertOne({
+                    id: parseInt(id),
+                    name: stripQuotationMarks(name),
+                    address: stripQuotationMarks(address),
+                    type: "monthly-salary",
+                    monthlySalary: parseFloat(rate),
+                    commissionRate: parseFloat(commissionRate || "0")
                 });
             }
         }

@@ -32,9 +32,6 @@ describe("transactions", () => {
 
         describe("with a monthly salary", () => {
             it("should call the insertOne method of the employeeRepository", async () => {
-                const fakeEmployeeRepository = buildFakeEmployeeRepository();
-                fakeEmployeeRepository.insertOne.resolves();
-                const transactions = buildTransactions(fakeEmployeeRepository);
                 const employee = generateMonthlySalaryEmployee();
 
                 await transactions.addEmployee(
@@ -42,7 +39,24 @@ describe("transactions", () => {
                     `"${employee.name}"`,
                     `"${employee.address}"`,
                     "S",
-                    `${employee.salary}`
+                    `${employee.monthlySalary}`
+                );
+
+                expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+            });
+        });
+
+        describe("with a monthly salary and a commission", () => {
+            it("should call the insertOne method of the employeeRepository", async () => {
+                const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+
+                await transactions.addEmployee(
+                    `${employee.id}`,
+                    `"${employee.name}"`,
+                    `"${employee.address}"`,
+                    "C",
+                    `${employee.monthlySalary}`,
+                    `${employee.commissionRate}`
                 );
 
                 expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);

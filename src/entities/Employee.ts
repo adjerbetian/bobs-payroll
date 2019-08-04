@@ -4,5 +4,6 @@ export interface Employee {
     address: string;
     type: string;
     hourlyRate?: number;
-    salary?: number;
+    monthlySalary?: number;
+    commissionRate?: number;
 }

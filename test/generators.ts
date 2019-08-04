@@ -9,10 +9,11 @@ export function generateHourlyRateEmployee(): Employee {
     });
 }
 
-export function generateMonthlySalaryEmployee(): Employee {
+export function generateMonthlySalaryEmployee(overridingParams: Partial<Employee> = {}): Employee {
     return generateEmployee({
         type: "monthly-salary",
-        salary: generateFloatBetween(10, 20)
+        monthlySalary: generateFloatBetween(10, 20),
+        ...overridingParams
     });
 }
 
