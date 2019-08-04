@@ -1,16 +1,9 @@
 import { EmployeeRepository } from "../repositories";
 import { stripQuotationMarks } from "../common/utils";
+import { Transaction } from "./Transactions";
 
-export interface Transactions {
-    addEmployee(...args: string[]): Promise<void>;
-}
-
-export function buildTransactions(employeeRepository: EmployeeRepository): Transactions {
-    return {
-        addEmployee
-    };
-
-    async function addEmployee(
+export function buildAddEmployeeTransaction(employeeRepository: EmployeeRepository): Transaction {
+    return async function(
         id: string,
         name: string,
         address: string,
@@ -49,5 +42,5 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
                 commissionRate: parseFloat(commissionRate)
             });
         }
-    }
+    };
 }

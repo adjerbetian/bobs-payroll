@@ -7,5 +7,8 @@ export function buildProcessTransaction(transactions: Transactions): ProcessTran
         if (transactionName === "AddEmp") {
             return transactions.addEmployee(...args);
         }
+        if (transactionName === "DelEmp") {
+            return transactions.deleteEmployee(...args);
+        }
     };
 }

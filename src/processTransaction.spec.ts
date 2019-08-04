@@ -5,12 +5,13 @@ import { employeeRepository } from "./mongo";
 import { buildTransactions } from "./transactions";
 import { buildProcessTransaction } from "./processTransaction";
 import { Employee } from "./entities";
+import { NotFoundError } from "./errors";
 
 describe("transactions", () => {
     const transactions = buildTransactions(employeeRepository);
     const processTransaction = buildProcessTransaction(transactions);
 
-    describe("addEmployee", () => {
+    describe("AddEmp", () => {
         it("should add an employee with a hourly rate", async () => {
             const employee = generateHourlyRateEmployee();
 
@@ -23,7 +24,7 @@ describe("transactions", () => {
                 `${employee.hourlyRate}`
             );
 
-            await expectEmployeeToExistInDB(employee);
+            await expectEmployeeToHaveBeenStored(employee);
         });
         it("should add an employee with a monthly salary", async () => {
             const employee = generateMonthlySalaryEmployee();
@@ -37,7 +38,7 @@ describe("transactions", () => {
                 `${employee.monthlySalary}`
             );
 
-            await expectEmployeeToExistInDB(employee);
+            await expectEmployeeToHaveBeenStored(employee);
         });
         it("should add an employee with a monthly salary and a commission rate", async () => {
             const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
@@ -52,7 +53,7 @@ describe("transactions", () => {
                 `${employee.commissionRate}`
             );
 
-            await expectEmployeeToExistInDB(employee);
+            await expectEmployeeToHaveBeenStored(employee);
         });
         it("should reject when the transaction is wrong", async () => {
             const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
@@ -70,9 +71,39 @@ describe("transactions", () => {
             await expect(promise).to.be.rejected;
         });
     });
+    describe("DelEmp", () => {
+        it("should delete an existing employee", async () => {
+            const employee = generateHourlyRateEmployee();
+            await employeeRepository.insertOne(employee);
+
+            await processTransaction("DelEmp", `${employee.id}`);
+
+            await expectEmployeeNotToExistsInDB(employee.id);
+        });
+        it("should reject when the employee does not exist", async () => {
+            const employee = generateHourlyRateEmployee();
+            await employeeRepository.insertOne(employee);
+
+            // noinspection ES6MissingAwait
+            const promise = processTransaction("DelEmp", `${employee.id + 1}`);
+
+            await expect(promise).to.be.rejectedWith(NotFoundError);
+            await expectEmployeeToExistsInDB(employee.id);
+        });
+    });
 });
 
-async function expectEmployeeToExistInDB(employee: Employee): Promise<void> {
+async function expectEmployeeToHaveBeenStored(employee: Employee): Promise<void> {
     const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
     expect(dbEmployee).to.deep.equal(employee);
+}
+
+async function expectEmployeeToExistsInDB(id: number): Promise<void> {
+    const employeeExistsInDB = await employeeRepository.exists({ id });
+    expect(employeeExistsInDB).to.be.true;
+}
+
+async function expectEmployeeNotToExistsInDB(id: number): Promise<void> {
+    const employeeExistsInDB = await employeeRepository.exists({ id });
+    expect(employeeExistsInDB).to.be.false;
 }

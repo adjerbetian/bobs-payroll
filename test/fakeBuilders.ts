@@ -19,11 +19,13 @@ export function buildFakeEmployeeRepository(): FakeEmployeeRepository {
 
 export interface FakeTransactions extends Transactions {
     addEmployee: SinonStub;
+    deleteEmployee: SinonStub;
 }
 
 export function buildFakeTransactions(): FakeTransactions {
     return {
-        addEmployee: buildStubFor("addEmployee")
+        addEmployee: buildStubFor("addEmployee"),
+        deleteEmployee: buildStubFor("addEmployee")
     };
 }
 

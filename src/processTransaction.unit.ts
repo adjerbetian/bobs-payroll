@@ -2,6 +2,7 @@ import { expect } from "../test/unitTest";
 import { generateHourlyRateEmployee } from "../test/generators";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
 import { buildFakeTransactions, FakeTransactions } from "../test/fakeBuilders";
+import { generateIndex } from "../test/utils";
 
 describe("processTransaction", () => {
     describe("addEmp", () => {
@@ -13,7 +14,7 @@ describe("processTransaction", () => {
             processTransaction = buildProcessTransaction(fakeTransactions);
         });
 
-        it("should call the insertOne method of the employeeRepository", async () => {
+        it("should call the addEmployee transaction", async () => {
             fakeTransactions.addEmployee.resolves();
             const employee = generateHourlyRateEmployee();
 
@@ -33,6 +34,14 @@ describe("processTransaction", () => {
                 "H",
                 `${employee.hourlyRate}`
             );
+        });
+        it("should call the deleteEmployee transaction", async () => {
+            fakeTransactions.deleteEmployee.resolves();
+            const employeeId = generateIndex();
+
+            await processTransaction("DelEmp", `${employeeId}`);
+
+            expect(fakeTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
         });
     });
 });
