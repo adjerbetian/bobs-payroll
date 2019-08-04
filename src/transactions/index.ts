@@ -11,6 +11,6 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
     return {
         addEmployee: buildAddEmployeeTransaction(employeeRepository),
         deleteEmployee: buildDeleteEmployeeTransaction(employeeRepository),
-        postTimeCard: buildPostTimeCardTransaction(timeCardRepository)
+        postTimeCard: buildPostTimeCardTransaction({ timeCardRepository, employeeRepository })
     };
 }

@@ -2,8 +2,13 @@ export interface Employee {
     id: number;
     name: string;
     address: string;
-    type: string;
+    type: EmployeeType;
     hourlyRate?: number;
     monthlySalary?: number;
     commissionRate?: number;
+}
+
+export enum EmployeeType {
+    HOURLY_RATE = "hourly-rate",
+    MONTHLY_SALARY = "monthly-salary"
 }

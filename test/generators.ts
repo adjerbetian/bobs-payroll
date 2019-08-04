@@ -2,29 +2,29 @@ import { Employee, TimeCard } from "../src/entities";
 import * as _ from "lodash";
 import { generateIndex } from "./utils";
 import * as moment from "moment";
+import { EmployeeType } from "../src/entities/Employee";
 
 export function generateHourlyRateEmployee(): Employee {
     return generateEmployee({
-        type: "hourly-rate",
+        type: EmployeeType.HOURLY_RATE,
         hourlyRate: generateFloatBetween(0, 10)
     });
 }
 
 export function generateMonthlySalaryEmployee(overridingParams: Partial<Employee> = {}): Employee {
     return generateEmployee({
-        type: "monthly-salary",
+        type: EmployeeType.MONTHLY_SALARY,
         monthlySalary: generateFloatBetween(10, 20),
         ...overridingParams
     });
 }
 
-function generateEmployee(overridingFields: Partial<Employee> = {}): Employee {
+function generateEmployee(overridingFields: Partial<Employee> & { type: EmployeeType }): Employee {
     const index = generateIndex();
     return {
         id: index,
         name: `name of employee ${index}`,
         address: `address of employee ${index}`,
-        type: "unknown",
         ...overridingFields
     };
 }

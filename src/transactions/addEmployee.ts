@@ -1,6 +1,7 @@
 import { EmployeeRepository } from "../repositories";
 import { stripQuotationMarks } from "../common/utils";
 import { Transaction } from "./Transactions";
+import { EmployeeType } from "../entities/Employee";
 
 export function buildAddEmployeeTransaction(employeeRepository: EmployeeRepository): Transaction {
     return async function(
@@ -16,7 +17,7 @@ export function buildAddEmployeeTransaction(employeeRepository: EmployeeReposito
                 id: parseInt(id),
                 name: stripQuotationMarks(name),
                 address: stripQuotationMarks(address),
-                type: "hourly-rate",
+                type: EmployeeType.HOURLY_RATE,
                 hourlyRate: parseFloat(rate)
             });
         }
@@ -25,7 +26,7 @@ export function buildAddEmployeeTransaction(employeeRepository: EmployeeReposito
                 id: parseInt(id),
                 name: stripQuotationMarks(name),
                 address: stripQuotationMarks(address),
-                type: "monthly-salary",
+                type: EmployeeType.MONTHLY_SALARY,
                 monthlySalary: parseFloat(rate)
             });
         }
@@ -37,7 +38,7 @@ export function buildAddEmployeeTransaction(employeeRepository: EmployeeReposito
                 id: parseInt(id),
                 name: stripQuotationMarks(name),
                 address: stripQuotationMarks(address),
-                type: "monthly-salary",
+                type: EmployeeType.MONTHLY_SALARY,
                 monthlySalary: parseFloat(rate),
                 commissionRate: parseFloat(commissionRate)
             });
