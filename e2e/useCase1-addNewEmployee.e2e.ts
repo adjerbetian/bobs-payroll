@@ -13,7 +13,6 @@ describe("Use Case 1: Add New Employee", () => {
         const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
         expect(dbEmployee).to.deep.equal(employee);
     });
-
     it("should add an employee with a monthly salary", async () => {
         const employee = generateMonthlySalaryEmployee();
 
@@ -24,7 +23,6 @@ describe("Use Case 1: Add New Employee", () => {
         const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
         expect(dbEmployee).to.deep.equal(employee);
     });
-
     it("should add an employee with a monthly salary and a commission rate", async () => {
         const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
 
@@ -35,7 +33,6 @@ describe("Use Case 1: Add New Employee", () => {
         const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
         expect(dbEmployee).to.have.property("commissionRate", 10);
     });
-
     it("should do nothing when the transaction is wrongly put", async () => {
         const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
 

@@ -36,7 +36,7 @@ describe("Use Case 3: Post a Time Card", () => {
         const timeCards = await timeCardRepository.fetchAllOfEmployee(timeCard.employeeId);
         expect(timeCards).to.be.empty;
     });
-    it("should do nothing when the transaction if not of the right format", async () => {
+    it("should do nothing when the transaction is not of the right format", async () => {
         const employee = generateHourlyRateEmployee();
         await employeeRepository.insertOne(employee);
         const timeCard = generateTimeCard({ employeeId: employee.id });
