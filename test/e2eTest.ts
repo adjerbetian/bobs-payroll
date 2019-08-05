@@ -5,7 +5,7 @@ export { execute } from "./utils";
 
 before(async function() {
     this.timeout(5000);
-    await execute("DEL /F/Q/S dist\\*.*");
+    await execute("IF EXIST dist\\ DEL /F/Q/S dist\\*.*");
     await execute("npm run build");
 });
 
