@@ -1,4 +1,4 @@
-import { Collection, MongoClient, ObjectID } from "mongodb";
+import { Collection, Db, MongoClient, ObjectID } from "mongodb";
 import * as config from "../config.json";
 import { Employee, SalesReceipt, TimeCard } from "../entities";
 
@@ -10,7 +10,7 @@ const client = new MongoClient(config.db.url);
 
 export async function initConnection(): Promise<void> {
     await client.connect();
-    const db = client.db(config.db.dbName);
+    const db = getDB();
     dbEmployees = db.collection<DBEmployee>("employees");
     dbTimeCards = db.collection<DBTimeCard>("timecards");
     dbSalesReceipt = db.collection<DBSalesReceipt>("salesreceipts");
@@ -21,8 +21,12 @@ export async function closeConnection(): Promise<void> {
 }
 
 export async function cleanCollections(): Promise<void> {
-    await dbEmployees.deleteMany({});
-    await dbTimeCards.deleteMany({});
+    const collections = await getDB().collections();
+    await Promise.all(collections.map(async c => getDB().dropCollection(c.collectionName)));
+}
+
+function getDB(): Db {
+    return client.db(config.db.dbName);
 }
 
 interface DBEmployee extends Employee {

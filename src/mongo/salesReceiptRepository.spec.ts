@@ -33,4 +33,23 @@ describe("salesReceiptRepository", () => {
             return salesReceipt;
         }
     });
+    describe("insertOne", () => {
+        it("insert the given sales receipt", async () => {
+            const salesReceipt = generateSalesReceipt();
+
+            await salesReceiptRepository.insertOne(salesReceipt);
+
+            const salesReceipts = await salesReceiptRepository.fetchAllOfEmployee(
+                salesReceipt.employeeId
+            );
+            expect(salesReceipts).to.deep.equal([salesReceipt]);
+        });
+        it("should not add the _id field to the entity", async () => {
+            const salesReceipt = generateSalesReceipt();
+
+            await salesReceiptRepository.insertOne(salesReceipt);
+
+            expect(salesReceipt).not.to.have.property("_id");
+        });
+    });
 });

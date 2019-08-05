@@ -4,6 +4,8 @@ import { Transactions } from "./Transactions";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { buildPostTimeCardTransaction } from "./postTimeCard";
 import { timeCardRepository } from "../mongo";
+import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
+import { salesReceiptRepository } from "../mongo/salesReceiptRepository";
 
 export { Transactions } from "./Transactions";
 
@@ -11,6 +13,10 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
     return {
         addEmployee: buildAddEmployeeTransaction(employeeRepository),
         deleteEmployee: buildDeleteEmployeeTransaction(employeeRepository),
-        postTimeCard: buildPostTimeCardTransaction({ timeCardRepository, employeeRepository })
+        postTimeCard: buildPostTimeCardTransaction({ timeCardRepository, employeeRepository }),
+        postSalesReceipt: buildPostSalesReceiptTransaction({
+            salesReceiptRepository,
+            employeeRepository
+        })
     };
 }

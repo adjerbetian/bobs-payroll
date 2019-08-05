@@ -1,5 +1,5 @@
 import { EmployeeRepository } from "../repositories";
-import { stripQuotationMarks } from "../common/utils";
+import { assertIsNotEmpty, stripQuotationMarks } from "../common/utils";
 import { Transaction } from "./Transactions";
 import { EmployeeType } from "../entities/Employee";
 import * as assert from "assert";
@@ -41,10 +41,6 @@ export function buildAddEmployeeTransaction(employeeRepository: EmployeeReposito
             assert(args.type !== "C" || !!args.commissionRate);
         } catch (err) {
             throw new TransactionFormatError("AddEmp");
-        }
-
-        function assertIsNotEmpty(value?: string): void {
-            assert(!!value);
         }
     }
 
