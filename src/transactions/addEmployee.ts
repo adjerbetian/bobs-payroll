@@ -80,7 +80,7 @@ export function buildAddEmployeeTransaction(employeeRepository: EmployeeReposito
                 id: args.id,
                 name: args.name,
                 address: args.address,
-                type: EmployeeType.MONTHLY_SALARY,
+                type: EmployeeType.COMMISSIONED,
                 monthlySalary: args.rate,
                 commissionRate: args.commissionRate
             });

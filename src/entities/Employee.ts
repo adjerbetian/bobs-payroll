@@ -10,5 +10,6 @@ export interface Employee {
 
 export enum EmployeeType {
     HOURLY_RATE = "hourly-rate",
-    MONTHLY_SALARY = "monthly-salary"
+    MONTHLY_SALARY = "monthly-salary",
+    COMMISSIONED = "commissioned"
 }

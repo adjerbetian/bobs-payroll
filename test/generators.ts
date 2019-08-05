@@ -19,6 +19,17 @@ export function generateMonthlySalaryEmployee(overridingParams: Partial<Employee
     });
 }
 
+export function generateCommissionedSalaryEmployee(
+    overridingParams: Partial<Employee> = {}
+): Employee {
+    return generateEmployee({
+        type: EmployeeType.COMMISSIONED,
+        monthlySalary: generateFloatBetween(10, 20),
+        commissionRate: generateFloatBetween(20, 30),
+        ...overridingParams
+    });
+}
+
 function generateEmployee(overridingFields: Partial<Employee> & { type: EmployeeType }): Employee {
     const index = generateIndex();
     return {

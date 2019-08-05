@@ -5,12 +5,13 @@
         "target": "esnext",
         "sourceMap": true,
         "moduleResolution": "node",
-        "outDir": "dist/",
         "noImplicitAny": true,
         "strictNullChecks": true,
-        "baseUrl": "./src",
         "listEmittedFiles": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "baseUrl": "./src/",
+        "outDir": "dist/",
+        "noEmit": true
     },
     "exclude": ["node_modules"]
 }

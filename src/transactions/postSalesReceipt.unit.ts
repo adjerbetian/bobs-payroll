@@ -1,5 +1,9 @@
 import { expect } from "../../test/unitTest";
-import { generateMonthlySalaryEmployee, generateSalesReceipt } from "../../test/generators";
+import {
+    generateCommissionedSalaryEmployee,
+    generateMonthlySalaryEmployee,
+    generateSalesReceipt
+} from "../../test/generators";
 import { Transaction } from "./Transactions";
 import {
     buildFakeEmployeeRepository,
@@ -33,7 +37,7 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt();
         fakeEmployeeRepository.fetchEmployeeById
             .withArgs(salesReceipt.employeeId)
-            .resolves(generateMonthlySalaryEmployee({ commissionRate: 10 }));
+            .resolves(generateCommissionedSalaryEmployee());
 
         await postSalesReceiptEntity(salesReceipt);
 
@@ -54,7 +58,7 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt();
         fakeEmployeeRepository.fetchEmployeeById
             .withArgs(salesReceipt.employeeId)
-            .resolves(generateMonthlySalaryEmployee({ commissionRate: 10 }));
+            .resolves(generateCommissionedSalaryEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postSalesReceipt(`${salesReceipt.employeeId}`, `${salesReceipt.date}`, ``);
@@ -65,7 +69,7 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
         fakeEmployeeRepository.fetchEmployeeById
             .withArgs(salesReceipt.employeeId)
-            .resolves(generateMonthlySalaryEmployee({ commissionRate: 10 }));
+            .resolves(generateCommissionedSalaryEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postSalesReceipt(

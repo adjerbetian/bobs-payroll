@@ -1,12 +1,17 @@
 import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateMonthlySalaryEmployee, generateSalesReceipt } from "../test/generators";
+import {
+    generateCommissionedSalaryEmployee,
+    generateMonthlySalaryEmployee,
+    generateSalesReceipt
+} from "../test/generators";
 import { employeeRepository } from "../src/mongo";
 import { SalesReceipt } from "../src/entities";
 import { salesReceiptRepository } from "../src/mongo/salesReceiptRepository";
+import { ExecuteOptions } from "../test/utils";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {
-        const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+        const employee = generateCommissionedSalaryEmployee();
         await employeeRepository.insertOne(employee);
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
@@ -38,7 +43,7 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         expect(salesReceipts).to.be.empty;
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+        const employee = generateCommissionedSalaryEmployee();
         await employeeRepository.insertOne(employee);
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
@@ -52,9 +57,13 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         expect(salesReceipts).to.be.empty;
     });
 
-    async function executePostSalesReceipt(salesReceipt: SalesReceipt): Promise<void> {
+    async function executePostSalesReceipt(
+        salesReceipt: SalesReceipt,
+        options?: ExecuteOptions
+    ): Promise<void> {
         await executePayrollCommand(
-            `SalesReceipt ${salesReceipt.employeeId} ${salesReceipt.date} ${salesReceipt.amount}`
+            `SalesReceipt ${salesReceipt.employeeId} ${salesReceipt.date} ${salesReceipt.amount}`,
+            options
         );
     }
 });

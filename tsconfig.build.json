@@ -1,9 +1,7 @@
 {
     "extends": "./tsconfig.json",
-    "exclude": [
-        "e2e",
-        "./src/**/*.spec.ts",
-        "./src/**/*.unit.ts",
-        "test"
-    ]
+    "compilerOptions": {
+        "noEmit": false
+    },
+    "exclude": ["e2e", "./src/**/*.spec.ts", "./src/**/*.unit.ts", "test"]
 }

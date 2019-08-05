@@ -6,6 +6,7 @@ import {
 } from "../test/generators";
 import { employeeRepository, timeCardRepository } from "../src/mongo";
 import { TimeCard } from "../src/entities";
+import { ExecuteOptions } from "../test/utils";
 
 describe("Use Case 3: Post a Time Card", () => {
     it("should insert the time card in the db", async () => {
@@ -49,9 +50,13 @@ describe("Use Case 3: Post a Time Card", () => {
         expect(timeCards).to.be.empty;
     });
 
-    async function executePostTimeCard(timeCard: TimeCard): Promise<void> {
+    async function executePostTimeCard(
+        timeCard: TimeCard,
+        options?: ExecuteOptions
+    ): Promise<void> {
         await executePayrollCommand(
-            `TimeCard ${timeCard.employeeId} ${timeCard.date} ${timeCard.hours}`
+            `TimeCard ${timeCard.employeeId} ${timeCard.date} ${timeCard.hours}`,
+            options
         );
     }
 });

@@ -1,6 +1,11 @@
 import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateHourlyRateEmployee, generateMonthlySalaryEmployee } from "../test/generators";
+import {
+    generateCommissionedSalaryEmployee,
+    generateHourlyRateEmployee,
+    generateMonthlySalaryEmployee
+} from "../test/generators";
 import { employeeRepository } from "../src/mongo";
+import { Employee } from "../src/entities";
 
 describe("Use Case 1: Add New Employee", () => {
     it("should add an employee with a hourly rate", async () => {
@@ -10,8 +15,7 @@ describe("Use Case 1: Add New Employee", () => {
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" H ${employee.hourlyRate}`
         );
 
-        const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
-        expect(dbEmployee).to.deep.equal(employee);
+        await expectUserToExistInDB(employee);
     });
     it("should add an employee with a monthly salary", async () => {
         const employee = generateMonthlySalaryEmployee();
@@ -20,21 +24,19 @@ describe("Use Case 1: Add New Employee", () => {
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" S ${employee.monthlySalary}`
         );
 
-        const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
-        expect(dbEmployee).to.deep.equal(employee);
+        await expectUserToExistInDB(employee);
     });
-    it("should add an employee with a monthly salary and a commission rate", async () => {
-        const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+    it("should add an employee with a monthly commission rate", async () => {
+        const employee = generateCommissionedSalaryEmployee();
 
         await executePayrollCommand(
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary} ${employee.commissionRate}`
         );
 
-        const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
-        expect(dbEmployee).to.have.property("commissionRate", 10);
+        await expectUserToExistInDB(employee);
     });
     it("should do nothing when the transaction is wrongly put", async () => {
-        const employee = generateMonthlySalaryEmployee({ commissionRate: 10 });
+        const employee = generateCommissionedSalaryEmployee();
 
         await executePayrollCommand(
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary}`
@@ -43,4 +45,9 @@ describe("Use Case 1: Add New Employee", () => {
         const employeeExistsInDB = await employeeRepository.exists({ id: employee.id });
         expect(employeeExistsInDB).to.be.false;
     });
+
+    async function expectUserToExistInDB(employee: Employee): Promise<void> {
+        const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
+        expect(dbEmployee).to.deep.equal(employee);
+    }
 });
