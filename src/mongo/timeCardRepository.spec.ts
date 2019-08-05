@@ -4,7 +4,7 @@ import { generateTimeCard } from "../../test/generators";
 import { timeCardRepository } from "./timeCardRepository";
 import { TimeCard } from "../entities";
 import { dbTimeCards } from "./db";
-import * as _ from "lodash";
+import { cloneDeep } from "lodash";
 
 describe("timeCardRepository", () => {
     describe("fetchAllOfEmployee", () => {
@@ -29,7 +29,7 @@ describe("timeCardRepository", () => {
 
         async function dbGenerateTimeCard(): Promise<TimeCard> {
             const timeCard = generateTimeCard();
-            await dbTimeCards.insertOne(_.cloneDeep(timeCard));
+            await dbTimeCards.insertOne(cloneDeep(timeCard));
             return timeCard;
         }
     });

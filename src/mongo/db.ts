@@ -1,9 +1,10 @@
 import { Collection, MongoClient, ObjectID } from "mongodb";
 import * as config from "../config.json";
-import { Employee, TimeCard } from "../entities";
+import { Employee, SalesReceipt, TimeCard } from "../entities";
 
 export let dbEmployees: Collection<DBEmployee>;
 export let dbTimeCards: Collection<DBTimeCard>;
+export let dbSalesReceipt: Collection<DBSalesReceipt>;
 
 const client = new MongoClient(config.db.url);
 
@@ -12,6 +13,7 @@ export async function initConnection(): Promise<void> {
     const db = client.db(config.db.dbName);
     dbEmployees = db.collection<DBEmployee>("employees");
     dbTimeCards = db.collection<DBTimeCard>("timecards");
+    dbSalesReceipt = db.collection<DBSalesReceipt>("salesreceipts");
 }
 
 export async function closeConnection(): Promise<void> {
@@ -27,5 +29,8 @@ interface DBEmployee extends Employee {
     _id?: ObjectID;
 }
 interface DBTimeCard extends TimeCard {
+    _id?: ObjectID;
+}
+interface DBSalesReceipt extends SalesReceipt {
     _id?: ObjectID;
 }

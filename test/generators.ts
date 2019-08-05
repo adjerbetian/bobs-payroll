@@ -1,4 +1,4 @@
-import { Employee, TimeCard } from "../src/entities";
+import { Employee, SalesReceipt, TimeCard } from "../src/entities";
 import * as _ from "lodash";
 import { generateIndex } from "./utils";
 import * as moment from "moment";
@@ -35,6 +35,16 @@ export function generateTimeCard(overridingParams: Partial<TimeCard> = {}): Time
         employeeId: index,
         date: moment().format("YYYY-MM-DD"),
         hours: generateFloatBetween(2, 10),
+        ...overridingParams
+    };
+}
+
+export function generateSalesReceipt(overridingParams: Partial<SalesReceipt> = {}): SalesReceipt {
+    const index = generateIndex();
+    return {
+        employeeId: index,
+        date: moment().format("YYYY-MM-DD"),
+        amount: generateFloatBetween(2, 10),
         ...overridingParams
     };
 }
