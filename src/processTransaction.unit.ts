@@ -1,5 +1,9 @@
 import { expect } from "../test/unitTest";
-import { generateHourlyRateEmployee, generateTimeCard } from "../test/generators";
+import {
+    generateHourlyRateEmployee,
+    generateSalesReceipt,
+    generateTimeCard
+} from "../test/generators";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
 import { buildFakeTransactions, FakeTransactions } from "../test/fakeBuilders";
 import { generateIndex } from "../test/utils";
@@ -62,6 +66,25 @@ describe("processTransaction", () => {
                 `${timeCard.employeeId}`,
                 `${timeCard.date}`,
                 `${timeCard.hours}`
+            );
+        });
+    });
+    describe("SalesReceipt", () => {
+        it("should call the postSalesReceipt transaction", async () => {
+            fakeTransactions.postSalesReceipt.resolves();
+            const salesReceipt = generateSalesReceipt();
+
+            await processTransaction(
+                "SalesReceipt",
+                `${salesReceipt.employeeId}`,
+                `${salesReceipt.date}`,
+                `${salesReceipt.amount}`
+            );
+
+            expect(fakeTransactions.postSalesReceipt).to.have.been.calledOnceWith(
+                `${salesReceipt.employeeId}`,
+                `${salesReceipt.date}`,
+                `${salesReceipt.amount}`
             );
         });
     });

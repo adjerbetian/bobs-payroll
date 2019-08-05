@@ -35,13 +35,15 @@ export interface FakeTransactions extends Transactions {
     addEmployee: SinonStub;
     deleteEmployee: SinonStub;
     postTimeCard: SinonStub;
+    postSalesReceipt: SinonStub;
 }
 
 export function buildFakeTransactions(): FakeTransactions {
     return {
         addEmployee: buildStubFor("addEmployee"),
-        deleteEmployee: buildStubFor("addEmployee"),
-        postTimeCard: buildStubFor("addEmployee")
+        deleteEmployee: buildStubFor("deleteEmployee"),
+        postTimeCard: buildStubFor("postTimeCard"),
+        postSalesReceipt: buildStubFor("postSalesReceipt")
     };
 }
 

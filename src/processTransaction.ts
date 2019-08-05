@@ -13,5 +13,8 @@ export function buildProcessTransaction(transactions: Transactions): ProcessTran
         if (transactionName === "TimeCard") {
             return transactions.postTimeCard(...args);
         }
+        if (transactionName === "SalesReceipt") {
+            return transactions.postSalesReceipt(...args);
+        }
     };
 }
