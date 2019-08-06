@@ -1,9 +1,7 @@
-import { Employee, SalesReceipt, TimeCard } from "../src/entities";
+import { Employee, EmployeeType, SalesReceipt, ServiceCharge, TimeCard } from "../src/entities";
 import * as _ from "lodash";
 import { generateIndex } from "./utils";
 import * as moment from "moment";
-import { EmployeeType } from "../src/entities/Employee";
-import { ServiceCharge } from "../src/entities/ServiceCharge";
 
 type PEmployee = Partial<Employee>;
 

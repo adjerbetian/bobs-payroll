@@ -12,7 +12,7 @@ import {
 } from "../../test/fakeBuilders";
 import { UnionMemberError } from "../errors";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
-import { ServiceCharge } from "../entities/ServiceCharge";
+import { ServiceCharge } from "../entities";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 

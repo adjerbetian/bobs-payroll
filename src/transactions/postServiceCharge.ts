@@ -1,5 +1,5 @@
 import { Transaction } from "./Transactions";
-import { ServiceCharge } from "../entities/ServiceCharge";
+import { ServiceCharge } from "../entities";
 import { ServiceChargeRepository } from "../repositories";
 
 interface Dependencies {

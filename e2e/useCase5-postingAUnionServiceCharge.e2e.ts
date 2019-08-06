@@ -1,6 +1,6 @@
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { createHourlyRateEmployee, createUnionEmployee } from "../test/creators";
-import { ServiceCharge } from "../src/entities/ServiceCharge";
+import { ServiceCharge } from "../src/entities";
 import { generateServiceCharge } from "../test/generators";
 import { serviceChargeRepository } from "../src/mongo";
 

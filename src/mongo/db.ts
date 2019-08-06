@@ -1,7 +1,6 @@
 import { Collection, Db, MongoClient, ObjectID } from "mongodb";
 import * as config from "../config.json";
-import { Employee, SalesReceipt, TimeCard } from "../entities";
-import { ServiceCharge } from "../entities/ServiceCharge";
+import { Employee, SalesReceipt, ServiceCharge, TimeCard } from "../entities";
 
 export let dbEmployees: Collection<DBEmployee>;
 export let dbTimeCards: Collection<DBTimeCard>;

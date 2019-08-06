@@ -1,10 +1,9 @@
 import { Transaction } from "./Transactions";
 import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
-import { EmployeeType } from "../entities/Employee";
+import { EmployeeType, SalesReceipt } from "../entities";
 import { EmployeeTypeError } from "../errors";
 import { assertIsISODate, assertIsNotEmpty } from "../common/utils";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
-import { SalesReceipt } from "../entities";
 
 interface Dependencies {
     salesReceiptRepository: SalesReceiptRepository;

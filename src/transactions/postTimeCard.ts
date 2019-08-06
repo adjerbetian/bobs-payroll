@@ -2,9 +2,8 @@ import { Transaction } from "./Transactions";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { EmployeeTypeError } from "../errors";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
-import { EmployeeType } from "../entities/Employee";
+import { EmployeeType, TimeCard } from "../entities";
 import { assertIsISODate, assertIsNotEmpty } from "../common/utils";
-import { TimeCard } from "../entities";
 
 interface Dependencies {
     timeCardRepository: TimeCardRepository;

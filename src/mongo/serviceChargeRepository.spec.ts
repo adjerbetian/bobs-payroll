@@ -4,7 +4,7 @@ import { generateServiceCharge } from "../../test/generators";
 import { serviceChargeRepository } from "./serviceChargeRepository";
 import { dbServiceCharge } from "./db";
 import { cloneDeep } from "lodash";
-import { ServiceCharge } from "../entities/ServiceCharge";
+import { ServiceCharge } from "../entities";
 
 describe("serviceChargeRepository", () => {
     describe("fetchAllOfEmployee", () => {
