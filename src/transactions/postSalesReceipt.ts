@@ -1,4 +1,4 @@
-import { assertIsISODate, assertIsNotEmpty } from "../common/utils";
+import { assertIsISODate, assertIsNotEmpty } from "../common";
 import { EmployeeType, SalesReceipt } from "../entities";
 import { EmployeeTypeError, TransactionFormatError } from "../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../repositories";

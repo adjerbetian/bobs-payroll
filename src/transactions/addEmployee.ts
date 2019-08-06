@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { assertIsIncludedIn, assertIsNotEmpty, stripQuotationMarks } from "../common/utils";
+import { assertIsIncludedIn, assertIsNotEmpty, stripQuotationMarks } from "../common";
 import { Employee, EmployeeType } from "../entities";
 import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";

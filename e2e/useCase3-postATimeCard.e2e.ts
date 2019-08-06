@@ -1,5 +1,4 @@
-import { TimeCard } from "../src/entities";
-import { timeCardRepository } from "../src/mongo";
+import { TimeCard, timeCardRepository } from "../src";
 import { createHourlyRateEmployee, createMonthlySalaryEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateTimeCard } from "../test/generators";

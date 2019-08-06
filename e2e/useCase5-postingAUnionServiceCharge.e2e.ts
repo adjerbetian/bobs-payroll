@@ -1,5 +1,4 @@
-import { ServiceCharge } from "../src/entities";
-import { serviceChargeRepository } from "../src/mongo";
+import { ServiceCharge, serviceChargeRepository } from "../src";
 import { createHourlyRateEmployee, createUnionEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateServiceCharge } from "../test/generators";

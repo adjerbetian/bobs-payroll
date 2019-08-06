@@ -1,5 +1,4 @@
-import { Employee } from "../src/entities";
-import { employeeRepository } from "../src/mongo";
+import { Employee, employeeRepository } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import {
     generateCommissionedSalaryEmployee,

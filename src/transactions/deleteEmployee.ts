@@ -1,4 +1,4 @@
-import { assertIsNotEmpty } from "../common/utils";
+import { assertIsNotEmpty } from "../common";
 import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { Transaction } from "./Transactions";

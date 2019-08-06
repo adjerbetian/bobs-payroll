@@ -1,4 +1,4 @@
-import { employeeRepository } from "../src/mongo";
+import { employeeRepository } from "../src";
 import { createHourlyRateEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 

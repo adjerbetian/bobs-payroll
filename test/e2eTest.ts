@@ -12,5 +12,5 @@ export async function executePayrollCommand(
     command: string,
     options?: ExecuteOptions
 ): Promise<void> {
-    await execute("node dist/index.js " + command, options);
+    await execute("node dist/main.js " + command, options);
 }

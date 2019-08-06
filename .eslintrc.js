@@ -10,13 +10,16 @@ module.exports = {
         mocha: true,
         node: true
     },
-    plugins: ["@typescript-eslint"],
+    plugins: ["import", "@typescript-eslint"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier",
-        "prettier/@typescript-eslint"
+        "prettier/@typescript-eslint",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript"
     ],
     globals: {
         Atomics: "readonly",
@@ -26,6 +29,9 @@ module.exports = {
         // eslint
         "no-unused-expressions": "error",
         "no-unused-vars": ["error", { args: "after-used" }],
+
+        // import
+        "import/no-internal-modules": ["error", { allow: ["test/*"] }],
 
         // typescript-eslint
         "@typescript-eslint/explicit-function-return-type": [

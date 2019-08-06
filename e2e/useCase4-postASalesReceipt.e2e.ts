@@ -1,5 +1,4 @@
-import { SalesReceipt } from "../src/entities";
-import { salesReceiptRepository } from "../src/mongo";
+import { SalesReceipt, salesReceiptRepository } from "../src";
 import { createCommissionedEmployee, createMonthlySalaryEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateSalesReceipt } from "../test/generators";
