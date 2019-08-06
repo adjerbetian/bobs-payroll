@@ -10,8 +10,7 @@ import {
 } from "../../test/generators";
 import { expect } from "../../test/unitTest";
 import { ServiceCharge } from "../entities";
-import { UnionMemberError } from "../errors";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { TransactionFormatError, UnionMemberError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 import { Transaction } from "./Transactions";

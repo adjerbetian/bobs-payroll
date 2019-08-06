@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { assertIsIncludedIn, assertIsNotEmpty, stripQuotationMarks } from "../common/utils";
 import { Employee, EmployeeType } from "../entities";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
 

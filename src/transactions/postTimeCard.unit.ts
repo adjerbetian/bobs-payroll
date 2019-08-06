@@ -11,8 +11,7 @@ import {
 } from "../../test/generators";
 import { expect } from "../../test/unitTest";
 import { TimeCard } from "../entities";
-import { EmployeeTypeError } from "../errors";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeTypeError, TransactionFormatError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildPostTimeCardTransaction } from "./postTimeCard";
 import { Transaction } from "./Transactions";

@@ -1,5 +1,5 @@
 import { assertIsNotEmpty } from "../common/utils";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
 

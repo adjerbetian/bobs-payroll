@@ -1,7 +1,7 @@
 import { buildFakeEmployeeRepository, Fake } from "../../test/fakeBuilders";
 import { generateHourlyRateEmployee } from "../../test/generators";
 import { expect } from "../../test/unitTest";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { Transaction } from "./Transactions";

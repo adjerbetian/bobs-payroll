@@ -1,7 +1,6 @@
 import { assertIsISODate, assertIsNotEmpty } from "../common/utils";
 import { EmployeeType, SalesReceipt } from "../entities";
-import { EmployeeTypeError } from "../errors";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeTypeError, TransactionFormatError } from "../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
 import { Transaction } from "./Transactions";
 

@@ -11,8 +11,7 @@ import {
 } from "../../test/generators";
 import { expect } from "../../test/unitTest";
 import { SalesReceipt } from "../entities";
-import { EmployeeTypeError } from "../errors";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeTypeError, TransactionFormatError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
 import { Transaction } from "./Transactions";

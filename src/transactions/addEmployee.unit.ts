@@ -5,7 +5,7 @@ import {
     generateMonthlySalaryEmployee
 } from "../../test/generators";
 import { expect } from "../../test/unitTest";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 import { Transaction } from "./Transactions";

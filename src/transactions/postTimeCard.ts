@@ -1,7 +1,6 @@
 import { assertIsISODate, assertIsNotEmpty } from "../common/utils";
 import { EmployeeType, TimeCard } from "../entities";
-import { EmployeeTypeError } from "../errors";
-import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeTypeError, TransactionFormatError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { Transaction } from "./Transactions";
 
