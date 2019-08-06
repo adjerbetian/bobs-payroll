@@ -4,23 +4,23 @@ import { EmployeeType } from "../entities/Employee";
 import { EmployeeTypeError } from "../errors";
 import { assertIsISODate, assertIsNotEmpty } from "../common/utils";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { SalesReceipt } from "../entities";
+
+interface Dependencies {
+    salesReceiptRepository: SalesReceiptRepository;
+    employeeRepository: EmployeeRepository;
+}
 
 export function buildPostSalesReceiptTransaction({
     salesReceiptRepository,
     employeeRepository
-}: {
-    salesReceiptRepository: SalesReceiptRepository;
-    employeeRepository: EmployeeRepository;
-}): Transaction {
+}: Dependencies): Transaction {
     return async function(employeeId: string, date: string, amount: string): Promise<void> {
         assertTransactionIsValid();
-        await assertEmployeeIsCommissioned(parseInt(employeeId));
+        await assertEmployeeIsCommissioned(employeeId);
 
-        return salesReceiptRepository.insertOne({
-            employeeId: parseInt(employeeId),
-            date: date,
-            amount: parseFloat(amount)
-        });
+        const salesReceipt = buildSalesReceipt(employeeId, date, amount);
+        return salesReceiptRepository.insertOne(salesReceipt);
 
         function assertTransactionIsValid(): void {
             try {
@@ -34,10 +34,18 @@ export function buildPostSalesReceiptTransaction({
         }
     };
 
-    async function assertEmployeeIsCommissioned(employeeId: number): Promise<void> {
-        const employee = await employeeRepository.fetchEmployeeById(employeeId);
+    async function assertEmployeeIsCommissioned(employeeId: string): Promise<void> {
+        const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
         if (employee.type !== EmployeeType.COMMISSIONED) {
             throw new EmployeeTypeError(employee, EmployeeType.COMMISSIONED);
         }
+    }
+
+    function buildSalesReceipt(employeeId: string, date: string, amount: string): SalesReceipt {
+        return {
+            employeeId: parseInt(employeeId),
+            date: date,
+            amount: parseFloat(amount)
+        };
     }
 }

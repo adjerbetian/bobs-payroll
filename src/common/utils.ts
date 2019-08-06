@@ -16,3 +16,7 @@ export function assertIsNotEmpty(value?: any | null): void {
 export function assertIsISODate(date?: string | null): void {
     assert(moment(date || "", "YYYY-MM-DD", true).isValid());
 }
+
+export function assertIsIncludedIn(value: any, array: any[]): void {
+    assert(array.includes(value));
+}

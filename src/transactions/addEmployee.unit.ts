@@ -15,7 +15,7 @@ describe("addEmployee", () => {
 
     beforeEach(() => {
         fakeEmployeeRepository = buildFakeEmployeeRepository();
-        addEmployee = buildAddEmployeeTransaction(fakeEmployeeRepository);
+        addEmployee = buildAddEmployeeTransaction({ employeeRepository: fakeEmployeeRepository });
 
         fakeEmployeeRepository.insertOne.resolves();
     });

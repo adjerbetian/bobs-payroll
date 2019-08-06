@@ -11,7 +11,9 @@ describe("deleteEmployee", () => {
 
     beforeEach(() => {
         fakeEmployeeRepository = buildFakeEmployeeRepository();
-        deleteEmployee = buildDeleteEmployeeTransaction(fakeEmployeeRepository);
+        deleteEmployee = buildDeleteEmployeeTransaction({
+            employeeRepository: fakeEmployeeRepository
+        });
 
         fakeEmployeeRepository.deleteById.resolves();
     });

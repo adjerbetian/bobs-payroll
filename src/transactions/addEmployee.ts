@@ -1,9 +1,92 @@
 import { EmployeeRepository } from "../repositories";
-import { assertIsNotEmpty, stripQuotationMarks } from "../common/utils";
+import { assertIsIncludedIn, assertIsNotEmpty, stripQuotationMarks } from "../common/utils";
 import { Transaction } from "./Transactions";
-import { EmployeeType } from "../entities/Employee";
+import { Employee, EmployeeType } from "../entities/Employee";
 import * as assert from "assert";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
+
+interface Dependencies {
+    employeeRepository: EmployeeRepository;
+}
+
+export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies): Transaction {
+    return async function(
+        id: string,
+        name: string,
+        address: string,
+        type: string,
+        rate: string,
+        commissionRate?: string
+    ): Promise<void> {
+        assertTransactionIsValid();
+
+        await addEmployee({
+            id: parseInt(id),
+            name: stripQuotationMarks(name),
+            address: stripQuotationMarks(address),
+            type: type,
+            rate: parseFloat(rate),
+            commissionRate: commissionRate ? parseFloat(commissionRate) : null
+        });
+
+        function assertTransactionIsValid(): void {
+            try {
+                assertIsNotEmpty(id);
+                assertIsNotEmpty(name);
+                assertIsNotEmpty(address);
+                assertIsNotEmpty(type);
+                assertIsNotEmpty(rate);
+                assertIsIncludedIn(type, ["H", "S", "C"]);
+                assert(type !== "C" || !!commissionRate);
+            } catch (err) {
+                throw new TransactionFormatError("AddEmp");
+            }
+        }
+    };
+
+    async function addEmployee(args: AddEmployeeArgs): Promise<void> {
+        const employee = buildEmployee(args);
+        await employeeRepository.insertOne(employee);
+    }
+
+    function buildEmployee(args: AddEmployeeArgs): Employee {
+        if (args.type === "H") return buildHourlyRateEmployee();
+        if (args.type === "S") return buildMonthlySalaryEmployee();
+        if (args.type === "C") return buildCommissionedEmployee();
+        throw new TransactionFormatError("AddEmp");
+
+        function buildHourlyRateEmployee(): Employee {
+            return {
+                id: args.id,
+                name: args.name,
+                address: args.address,
+                type: EmployeeType.HOURLY_RATE,
+                hourlyRate: args.rate
+            };
+        }
+
+        function buildMonthlySalaryEmployee(): Employee {
+            return {
+                id: args.id,
+                name: args.name,
+                address: args.address,
+                type: EmployeeType.MONTHLY_SALARY,
+                monthlySalary: args.rate
+            };
+        }
+
+        function buildCommissionedEmployee(): Employee {
+            return {
+                id: args.id,
+                name: args.name,
+                address: args.address,
+                type: EmployeeType.COMMISSIONED,
+                monthlySalary: args.rate,
+                commissionRate: args.commissionRate
+            };
+        }
+    }
+}
 
 interface AddEmployeeArgs {
     id: number;
@@ -12,78 +95,4 @@ interface AddEmployeeArgs {
     type: string;
     rate: number;
     commissionRate: number | null;
-}
-
-export function buildAddEmployeeTransaction(employeeRepository: EmployeeRepository): Transaction {
-    return async function(...rawArgs: string[]): Promise<void> {
-        assertIsAddEmpTransaction(rawArgs);
-
-        const args = convertArgs(rawArgs);
-        await addEmployee({
-            id: parseInt(args.id),
-            name: stripQuotationMarks(args.name),
-            address: stripQuotationMarks(args.address),
-            type: args.type,
-            rate: parseFloat(args.rate),
-            commissionRate: args.commissionRate ? parseFloat(args.commissionRate) : null
-        });
-    };
-
-    function assertIsAddEmpTransaction(rawArgs: string[]): void {
-        const args = convertArgs(rawArgs);
-        try {
-            assertIsNotEmpty(args.id);
-            assertIsNotEmpty(args.name);
-            assertIsNotEmpty(args.address);
-            assertIsNotEmpty(args.type);
-            assertIsNotEmpty(args.rate);
-            assert(["H", "S", "C"].includes(args.type || ""));
-            assert(args.type !== "C" || !!args.commissionRate);
-        } catch (err) {
-            throw new TransactionFormatError("AddEmp");
-        }
-    }
-
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    function convertArgs(args: string[]) {
-        return {
-            id: args[0],
-            name: args[1],
-            address: args[2],
-            type: args[3],
-            rate: args[4],
-            commissionRate: args[5] || null
-        };
-    }
-
-    async function addEmployee(args: AddEmployeeArgs): Promise<void> {
-        if (args.type === "H") {
-            await employeeRepository.insertOne({
-                id: args.id,
-                name: args.name,
-                address: args.address,
-                type: EmployeeType.HOURLY_RATE,
-                hourlyRate: args.rate
-            });
-        }
-        if (args.type === "S") {
-            await employeeRepository.insertOne({
-                id: args.id,
-                name: args.name,
-                address: args.address,
-                type: EmployeeType.MONTHLY_SALARY,
-                monthlySalary: args.rate
-            });
-        }
-        if (args.type === "C") {
-            await employeeRepository.insertOne({
-                id: args.id,
-                name: args.name,
-                address: args.address,
-                type: EmployeeType.COMMISSIONED,
-                monthlySalary: args.rate,
-                commissionRate: args.commissionRate
-            });
-        }
-    }
 }

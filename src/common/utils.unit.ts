@@ -1,5 +1,10 @@
 import { expect } from "../../test/unitTest";
-import { assertIsISODate, assertIsNotEmpty, stripQuotationMarks } from "./utils";
+import {
+    assertIsIncludedIn,
+    assertIsISODate,
+    assertIsNotEmpty,
+    stripQuotationMarks
+} from "./utils";
 
 describe("utils", () => {
     describe("stripQuotationMarks", () => {
@@ -42,6 +47,17 @@ describe("utils", () => {
         });
         it("should throw when given something else than a date", () => {
             expect(() => assertIsISODate("a")).to.throw();
+        });
+    });
+    describe("assertIsIncludedIn", () => {
+        it("should do nothing when it is included", () => {
+            assertIsIncludedIn("a", ["a", "b"]);
+        });
+        it("should throw when given a non valid date", () => {
+            expect(() => assertIsIncludedIn("c", ["a", "b"])).to.throw();
+        });
+        it("should throw when given a date in the wrong format", () => {
+            expect(() => assertIsIncludedIn(undefined, ["a", "b"])).to.throw();
         });
     });
 });

@@ -4,30 +4,26 @@ import { EmployeeTypeError } from "../errors";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
 import { EmployeeType } from "../entities/Employee";
 import { assertIsISODate, assertIsNotEmpty } from "../common/utils";
+import { TimeCard } from "../entities";
+
+interface Dependencies {
+    timeCardRepository: TimeCardRepository;
+    employeeRepository: EmployeeRepository;
+}
 
 export function buildPostTimeCardTransaction({
     timeCardRepository,
     employeeRepository
-}: {
-    timeCardRepository: TimeCardRepository;
-    employeeRepository: EmployeeRepository;
-}): Transaction {
+}: Dependencies): Transaction {
     return async function(employeeId: string, date: string, hours: string): Promise<void> {
-        assertIsPostTimeCardTransaction(employeeId, date, hours);
-        await assertEmployeeIsInHourlyRate(parseInt(employeeId));
+        assertTransactionValid(employeeId, date, hours);
+        await assertEmployeeIsInHourlyRate(employeeId);
 
-        await timeCardRepository.insertOne({
-            employeeId: parseInt(employeeId),
-            date: date,
-            hours: parseFloat(hours)
-        });
+        const timeCard = buildTimeCard(employeeId, date, hours);
+        await timeCardRepository.insertOne(timeCard);
     };
 
-    function assertIsPostTimeCardTransaction(
-        employeeId?: string,
-        date?: string,
-        hours?: string
-    ): void {
+    function assertTransactionValid(employeeId: string, date: string, hours: string): void {
         try {
             assertIsNotEmpty(employeeId);
             assertIsNotEmpty(date);
@@ -38,10 +34,18 @@ export function buildPostTimeCardTransaction({
         }
     }
 
-    async function assertEmployeeIsInHourlyRate(employeeId: number): Promise<void> {
-        const employee = await employeeRepository.fetchEmployeeById(employeeId);
+    async function assertEmployeeIsInHourlyRate(employeeId: string): Promise<void> {
+        const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
         if (employee.type !== EmployeeType.HOURLY_RATE) {
             throw new EmployeeTypeError(employee, EmployeeType.HOURLY_RATE);
         }
+    }
+
+    function buildTimeCard(employeeId: string, date: string, hours: string): TimeCard {
+        return {
+            employeeId: parseInt(employeeId),
+            date: date,
+            hours: parseFloat(hours)
+        };
     }
 }

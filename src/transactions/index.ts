@@ -11,8 +11,8 @@ export { Transactions } from "./Transactions";
 
 export function buildTransactions(employeeRepository: EmployeeRepository): Transactions {
     return {
-        addEmployee: buildAddEmployeeTransaction(employeeRepository),
-        deleteEmployee: buildDeleteEmployeeTransaction(employeeRepository),
+        addEmployee: buildAddEmployeeTransaction({ employeeRepository }),
+        deleteEmployee: buildDeleteEmployeeTransaction({ employeeRepository }),
         postTimeCard: buildPostTimeCardTransaction({ timeCardRepository, employeeRepository }),
         postSalesReceipt: buildPostSalesReceiptTransaction({
             salesReceiptRepository,
