@@ -1,69 +1,60 @@
 import { executePayrollCommand, expect } from "../test/e2eTest";
-import {
-    generateCommissionedSalaryEmployee,
-    generateMonthlySalaryEmployee,
-    generateSalesReceipt
-} from "../test/generators";
-import { employeeRepository } from "../src/mongo";
+import { generateSalesReceipt } from "../test/generators";
 import { SalesReceipt } from "../src/entities";
 import { salesReceiptRepository } from "../src/mongo/salesReceiptRepository";
-import { ExecuteOptions } from "../test/utils";
+import { createCommissionedEmployee, createMonthlySalaryEmployee } from "../test/creators";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {
-        const employee = generateCommissionedSalaryEmployee();
-        await employeeRepository.insertOne(employee);
+        const employee = await createCommissionedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePostSalesReceipt(salesReceipt);
 
-        const salesReceipts = await salesReceiptRepository.fetchAllOfEmployee(
-            salesReceipt.employeeId
-        );
-        expect(salesReceipts).to.deep.equal([salesReceipt]);
+        await expectEmployeeToHaveSalesReceipt(employee.id, salesReceipt);
     });
     it("should do nothing when the employee is not commissioned", async () => {
-        const employee = generateMonthlySalaryEmployee();
-        await employeeRepository.insertOne(employee);
+        const employee = await createMonthlySalaryEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePostSalesReceipt(salesReceipt);
 
-        const timeCards = await salesReceiptRepository.fetchAllOfEmployee(salesReceipt.employeeId);
-        expect(timeCards).to.be.empty;
+        await expectEmployeeToHaveNoSalesReceipt(employee.id);
     });
     it("should do nothing when the employee does not exist", async () => {
         const salesReceipt = generateSalesReceipt();
 
         await executePostSalesReceipt(salesReceipt);
 
-        const salesReceipts = await salesReceiptRepository.fetchAllOfEmployee(
-            salesReceipt.employeeId
-        );
-        expect(salesReceipts).to.be.empty;
+        await expectEmployeeToHaveNoSalesReceipt(salesReceipt.employeeId);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = generateCommissionedSalaryEmployee();
-        await employeeRepository.insertOne(employee);
+        const employee = await createCommissionedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePayrollCommand(
             `TimeCard ${salesReceipt.employeeId} ${salesReceipt.amount} ${salesReceipt.date}`
         );
 
-        const salesReceipts = await salesReceiptRepository.fetchAllOfEmployee(
-            salesReceipt.employeeId
-        );
-        expect(salesReceipts).to.be.empty;
+        await expectEmployeeToHaveNoSalesReceipt(employee.id);
     });
-
-    async function executePostSalesReceipt(
-        salesReceipt: SalesReceipt,
-        options?: ExecuteOptions
-    ): Promise<void> {
-        await executePayrollCommand(
-            `SalesReceipt ${salesReceipt.employeeId} ${salesReceipt.date} ${salesReceipt.amount}`,
-            options
-        );
-    }
 });
+
+async function executePostSalesReceipt(salesReceipt: SalesReceipt): Promise<void> {
+    await executePayrollCommand(
+        `SalesReceipt ${salesReceipt.employeeId} ${salesReceipt.date} ${salesReceipt.amount}`
+    );
+}
+
+async function expectEmployeeToHaveSalesReceipt(
+    employeeId: number,
+    salesReceipt: SalesReceipt
+): Promise<void> {
+    const dbSalesReceipts = await salesReceiptRepository.fetchAllOfEmployee(employeeId);
+    expect(dbSalesReceipts).to.deep.include(salesReceipt);
+}
+
+async function expectEmployeeToHaveNoSalesReceipt(employeeId: number): Promise<void> {
+    const dbSalesReceipts = await salesReceiptRepository.fetchAllOfEmployee(employeeId);
+    expect(dbSalesReceipts).to.be.empty;
+}

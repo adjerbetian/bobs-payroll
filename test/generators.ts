@@ -4,59 +4,60 @@ import { generateIndex } from "./utils";
 import * as moment from "moment";
 import { EmployeeType } from "../src/entities/Employee";
 
-export function generateHourlyRateEmployee(): Employee {
+type PEmployee = Partial<Employee>;
+
+export function generateHourlyRateEmployee(args: PEmployee = {}): Employee {
     return generateEmployee({
         type: EmployeeType.HOURLY_RATE,
-        hourlyRate: generateFloatBetween(0, 10)
+        hourlyRate: generateFloatBetween(0, 10),
+        ...args
     });
 }
 
-export function generateMonthlySalaryEmployee(overridingParams: Partial<Employee> = {}): Employee {
+export function generateMonthlySalaryEmployee(args: PEmployee = {}): Employee {
     return generateEmployee({
         type: EmployeeType.MONTHLY_SALARY,
         monthlySalary: generateFloatBetween(10, 20),
-        ...overridingParams
+        ...args
     });
 }
 
-export function generateCommissionedSalaryEmployee(
-    overridingParams: Partial<Employee> = {}
-): Employee {
+export function generateCommissionedSalaryEmployee(args: PEmployee = {}): Employee {
     return generateEmployee({
         type: EmployeeType.COMMISSIONED,
         monthlySalary: generateFloatBetween(10, 20),
         commissionRate: generateFloatBetween(20, 30),
-        ...overridingParams
+        ...args
     });
 }
 
-function generateEmployee(overridingFields: Partial<Employee> & { type: EmployeeType }): Employee {
+function generateEmployee(args: PEmployee & { type: EmployeeType }): Employee {
     const index = generateIndex();
     return {
         id: index,
         name: `name of employee ${index}`,
         address: `address of employee ${index}`,
-        ...overridingFields
+        ...args
     };
 }
 
-export function generateTimeCard(overridingParams: Partial<TimeCard> = {}): TimeCard {
+export function generateTimeCard(args: Partial<TimeCard> = {}): TimeCard {
     const index = generateIndex();
     return {
         employeeId: index,
         date: moment().format("YYYY-MM-DD"),
         hours: generateFloatBetween(2, 10),
-        ...overridingParams
+        ...args
     };
 }
 
-export function generateSalesReceipt(overridingParams: Partial<SalesReceipt> = {}): SalesReceipt {
+export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesReceipt {
     const index = generateIndex();
     return {
         employeeId: index,
         date: moment().format("YYYY-MM-DD"),
         amount: generateFloatBetween(2, 10),
-        ...overridingParams
+        ...args
     };
 }
 

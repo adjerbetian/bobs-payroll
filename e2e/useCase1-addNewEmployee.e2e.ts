@@ -45,9 +45,9 @@ describe("Use Case 1: Add New Employee", () => {
         const employeeExistsInDB = await employeeRepository.exists({ id: employee.id });
         expect(employeeExistsInDB).to.be.false;
     });
-
-    async function expectUserToExistInDB(employee: Employee): Promise<void> {
-        const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
-        expect(dbEmployee).to.deep.equal(employee);
-    }
 });
+
+async function expectUserToExistInDB(employee: Employee): Promise<void> {
+    const dbEmployee = await employeeRepository.fetchEmployeeById(employee.id);
+    expect(dbEmployee).to.deep.equal(employee);
+}
