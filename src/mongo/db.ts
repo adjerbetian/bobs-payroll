@@ -32,15 +32,8 @@ function getDB(): Db {
     return client.db(config.db.dbName);
 }
 
-interface DBEmployee extends Employee {
-    _id?: ObjectID;
-}
-interface DBTimeCard extends TimeCard {
-    _id?: ObjectID;
-}
-interface DBSalesReceipt extends SalesReceipt {
-    _id?: ObjectID;
-}
-interface DBServiceCharge extends ServiceCharge {
-    _id?: ObjectID;
-}
+type DBModel<T> = T & { _id?: ObjectID };
+type DBEmployee = DBModel<Employee>;
+type DBTimeCard = DBModel<TimeCard>;
+type DBSalesReceipt = DBModel<SalesReceipt>;
+type DBServiceCharge = DBModel<ServiceCharge>;
