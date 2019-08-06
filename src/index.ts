@@ -1,5 +1,5 @@
-import { buildProcessTransaction } from "./processTransaction";
 import { closeConnection, employeeRepository, initConnection } from "./mongo";
+import { buildProcessTransaction } from "./processTransaction";
 import { buildTransactions } from "./transactions";
 
 const [, , ...transactionParams] = process.argv;

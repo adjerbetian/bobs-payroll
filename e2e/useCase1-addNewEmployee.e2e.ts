@@ -1,11 +1,11 @@
+import { Employee } from "../src/entities";
+import { employeeRepository } from "../src/mongo";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import {
     generateCommissionedSalaryEmployee,
     generateHourlyRateEmployee,
     generateMonthlySalaryEmployee
 } from "../test/generators";
-import { employeeRepository } from "../src/mongo";
-import { Employee } from "../src/entities";
 
 describe("Use Case 1: Add New Employee", () => {
     it("should add an employee with a hourly rate", async () => {

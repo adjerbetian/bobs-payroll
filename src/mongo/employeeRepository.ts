@@ -1,8 +1,8 @@
-import { Employee } from "../entities";
-import { dbEmployees } from "./db";
 import { FilterQuery } from "mongodb";
+import { Employee } from "../entities";
 import { NotFoundError } from "../errors";
 import { EmployeeRepository } from "../repositories";
+import { dbEmployees } from "./db";
 import { cleanMongoEntity } from "./utils";
 
 export const employeeRepository: EmployeeRepository = {

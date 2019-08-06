@@ -1,10 +1,10 @@
+import { cloneDeep } from "lodash";
+import { generateSalesReceipt } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
-import { generateSalesReceipt } from "../../test/generators";
-import { salesReceiptRepository } from "./salesReceiptRepository";
-import { dbSalesReceipt } from "./db";
 import { SalesReceipt } from "../entities";
-import { cloneDeep } from "lodash";
+import { dbSalesReceipt } from "./db";
+import { salesReceiptRepository } from "./salesReceiptRepository";
 
 describe("salesReceiptRepository", () => {
     describe("fetchAllOfEmployee", () => {

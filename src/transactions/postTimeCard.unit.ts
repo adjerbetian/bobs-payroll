@@ -1,21 +1,21 @@
-import { expect } from "../../test/unitTest";
-import {
-    generateHourlyRateEmployee,
-    generateMonthlySalaryEmployee,
-    generateTimeCard
-} from "../../test/generators";
-import { Transaction } from "./Transactions";
-import { buildPostTimeCardTransaction } from "./postTimeCard";
+import * as moment from "moment";
 import {
     buildFakeEmployeeRepository,
     buildFakeTimeCardRepository,
     Fake
 } from "../../test/fakeBuilders";
-import { EmployeeTypeError } from "../errors";
+import {
+    generateHourlyRateEmployee,
+    generateMonthlySalaryEmployee,
+    generateTimeCard
+} from "../../test/generators";
+import { expect } from "../../test/unitTest";
 import { TimeCard } from "../entities";
-import * as moment from "moment";
+import { EmployeeTypeError } from "../errors";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
+import { buildPostTimeCardTransaction } from "./postTimeCard";
+import { Transaction } from "./Transactions";
 
 describe("postTimeCard", () => {
     let fakeTimeCardRepository: Fake<TimeCardRepository>;

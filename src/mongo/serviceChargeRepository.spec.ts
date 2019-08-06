@@ -1,10 +1,10 @@
+import { cloneDeep } from "lodash";
+import { generateServiceCharge } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
-import { generateServiceCharge } from "../../test/generators";
-import { serviceChargeRepository } from "./serviceChargeRepository";
-import { dbServiceCharge } from "./db";
-import { cloneDeep } from "lodash";
 import { ServiceCharge } from "../entities";
+import { dbServiceCharge } from "./db";
+import { serviceChargeRepository } from "./serviceChargeRepository";
 
 describe("serviceChargeRepository", () => {
     describe("fetchAllOfEmployee", () => {

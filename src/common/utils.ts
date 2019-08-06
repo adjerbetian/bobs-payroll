@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { isUndefined, isNull } from "lodash";
+import { isNull, isUndefined } from "lodash";
 import * as moment from "moment";
 
 export function stripQuotationMarks(s: string): string {

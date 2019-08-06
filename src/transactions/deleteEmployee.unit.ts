@@ -1,10 +1,10 @@
-import { expect } from "../../test/unitTest";
-import { generateHourlyRateEmployee } from "../../test/generators";
 import { buildFakeEmployeeRepository, Fake } from "../../test/fakeBuilders";
-import { Transaction } from "./Transactions";
-import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
+import { generateHourlyRateEmployee } from "../../test/generators";
+import { expect } from "../../test/unitTest";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
 import { EmployeeRepository } from "../repositories";
+import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
+import { Transaction } from "./Transactions";
 
 describe("deleteEmployee", () => {
     let fakeEmployeeRepository: Fake<EmployeeRepository>;

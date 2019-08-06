@@ -1,9 +1,9 @@
-import { EmployeeRepository } from "../repositories";
-import { assertIsIncludedIn, assertIsNotEmpty, stripQuotationMarks } from "../common/utils";
-import { Transaction } from "./Transactions";
-import { Employee, EmployeeType } from "../entities";
 import * as assert from "assert";
+import { assertIsIncludedIn, assertIsNotEmpty, stripQuotationMarks } from "../common/utils";
+import { Employee, EmployeeType } from "../entities";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeRepository } from "../repositories";
+import { Transaction } from "./Transactions";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;

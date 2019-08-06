@@ -1,9 +1,9 @@
+import { generateHourlyRateEmployee } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
-import { generateHourlyRateEmployee } from "../../test/generators";
+import { generateIndex } from "../../test/utils";
 import { NotFoundError } from "../errors";
 import { employeeRepository } from "./employeeRepository";
-import { generateIndex } from "../../test/utils";
 
 describe("employeeRepository", () => {
     describe("fetchEmployeeById", () => {

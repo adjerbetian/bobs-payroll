@@ -1,5 +1,5 @@
-import { SalesReceiptRepository } from "../repositories";
 import { SalesReceipt } from "../entities";
+import { SalesReceiptRepository } from "../repositories";
 import { dbSalesReceipt } from "./db";
 import { cleanMongoEntity } from "./utils";
 

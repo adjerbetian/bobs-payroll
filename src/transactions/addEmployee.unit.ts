@@ -1,14 +1,14 @@
-import { expect } from "../../test/unitTest";
+import { buildFakeEmployeeRepository, Fake } from "../../test/fakeBuilders";
 import {
     generateCommissionedSalaryEmployee,
     generateHourlyRateEmployee,
     generateMonthlySalaryEmployee
 } from "../../test/generators";
-import { buildFakeEmployeeRepository, Fake } from "../../test/fakeBuilders";
-import { buildAddEmployeeTransaction } from "./addEmployee";
-import { Transaction } from "./Transactions";
+import { expect } from "../../test/unitTest";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
 import { EmployeeRepository } from "../repositories";
+import { buildAddEmployeeTransaction } from "./addEmployee";
+import { Transaction } from "./Transactions";
 
 describe("addEmployee", () => {
     let fakeEmployeeRepository: Fake<EmployeeRepository>;

@@ -1,7 +1,7 @@
+import { ServiceCharge } from "../entities";
 import { ServiceChargeRepository } from "../repositories";
 import { dbServiceCharge } from "./db";
 import { cleanMongoEntity } from "./utils";
-import { ServiceCharge } from "../entities";
 
 export const serviceChargeRepository: ServiceChargeRepository = {
     async fetchAllOfEmployee(employeeId: number): Promise<ServiceCharge[]> {

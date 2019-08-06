@@ -1,10 +1,10 @@
+import { cloneDeep } from "lodash";
+import { generateTimeCard } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
-import { generateTimeCard } from "../../test/generators";
-import { timeCardRepository } from "./timeCardRepository";
 import { TimeCard } from "../entities";
 import { dbTimeCards } from "./db";
-import { cloneDeep } from "lodash";
+import { timeCardRepository } from "./timeCardRepository";
 
 describe("timeCardRepository", () => {
     describe("fetchAllOfEmployee", () => {

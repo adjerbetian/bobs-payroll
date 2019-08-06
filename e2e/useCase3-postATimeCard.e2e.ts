@@ -1,8 +1,8 @@
+import { TimeCard } from "../src/entities";
+import { timeCardRepository } from "../src/mongo";
+import { createHourlyRateEmployee, createMonthlySalaryEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateTimeCard } from "../test/generators";
-import { timeCardRepository } from "../src/mongo";
-import { TimeCard } from "../src/entities";
-import { createHourlyRateEmployee, createMonthlySalaryEmployee } from "../test/creators";
 
 describe("Use Case 3: Post a Time Card", () => {
     it("should insert the time card in the db", async () => {

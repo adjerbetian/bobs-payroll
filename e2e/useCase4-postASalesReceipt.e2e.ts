@@ -1,8 +1,8 @@
-import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateSalesReceipt } from "../test/generators";
 import { SalesReceipt } from "../src/entities";
 import { salesReceiptRepository } from "../src/mongo";
 import { createCommissionedEmployee, createMonthlySalaryEmployee } from "../test/creators";
+import { executePayrollCommand, expect } from "../test/e2eTest";
+import { generateSalesReceipt } from "../test/generators";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {

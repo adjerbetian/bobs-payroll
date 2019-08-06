@@ -1,20 +1,20 @@
-import { expect } from "../../test/unitTest";
-import {
-    generateHourlyRateEmployee,
-    generateServiceCharge,
-    generateUnionEmployee
-} from "../../test/generators";
-import { Transaction } from "./Transactions";
 import {
     buildFakeEmployeeRepository,
     buildFakeServiceChargeRepository,
     Fake
 } from "../../test/fakeBuilders";
+import {
+    generateHourlyRateEmployee,
+    generateServiceCharge,
+    generateUnionEmployee
+} from "../../test/generators";
+import { expect } from "../../test/unitTest";
+import { ServiceCharge } from "../entities";
 import { UnionMemberError } from "../errors";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
-import { ServiceCharge } from "../entities";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
+import { Transaction } from "./Transactions";
 
 describe("postServiceCharge", () => {
     let fakeServiceChargeRepository: Fake<TimeCardRepository>;

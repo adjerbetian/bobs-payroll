@@ -1,13 +1,13 @@
-import { expect } from "../test/unitTest";
+import { buildFakeTransactions, Fake } from "../test/fakeBuilders";
 import {
     generateHourlyRateEmployee,
     generateSalesReceipt,
     generateServiceCharge,
     generateTimeCard
 } from "../test/generators";
-import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
-import { buildFakeTransactions, Fake } from "../test/fakeBuilders";
+import { expect } from "../test/unitTest";
 import { generateIndex } from "../test/utils";
+import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
 import { Transactions } from "./transactions";
 
 describe("processTransaction", () => {
