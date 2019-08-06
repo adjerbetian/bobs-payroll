@@ -1,4 +1,4 @@
-import { Transactions } from "./transactions/Transactions";
+import { Transactions } from "./transactions";
 
 export type ProcessTransaction = (...args: string[]) => Promise<void>;
 

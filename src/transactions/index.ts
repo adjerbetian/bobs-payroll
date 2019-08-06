@@ -3,11 +3,9 @@ import { buildAddEmployeeTransaction } from "./addEmployee";
 import { Transactions } from "./Transactions";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { buildPostTimeCardTransaction } from "./postTimeCard";
-import { timeCardRepository } from "../mongo";
+import { salesReceiptRepository, serviceChargeRepository, timeCardRepository } from "../mongo";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
-import { salesReceiptRepository } from "../mongo/salesReceiptRepository";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
-import { serviceChargeRepository } from "../mongo/serviceChargeRepository";
 
 export { Transactions } from "./Transactions";
 

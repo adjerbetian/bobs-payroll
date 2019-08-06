@@ -1,7 +1,7 @@
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateSalesReceipt } from "../test/generators";
 import { SalesReceipt } from "../src/entities";
-import { salesReceiptRepository } from "../src/mongo/salesReceiptRepository";
+import { salesReceiptRepository } from "../src/mongo";
 import { createCommissionedEmployee, createMonthlySalaryEmployee } from "../test/creators";
 
 describe("Use Case 4: Post a Sales Receipt", () => {

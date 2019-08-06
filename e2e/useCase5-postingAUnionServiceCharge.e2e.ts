@@ -2,7 +2,7 @@ import { executePayrollCommand, expect } from "../test/e2eTest";
 import { createHourlyRateEmployee, createUnionEmployee } from "../test/creators";
 import { ServiceCharge } from "../src/entities/ServiceCharge";
 import { generateServiceCharge } from "../test/generators";
-import { serviceChargeRepository } from "../src/mongo/serviceChargeRepository";
+import { serviceChargeRepository } from "../src/mongo";
 
 describe.only("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
