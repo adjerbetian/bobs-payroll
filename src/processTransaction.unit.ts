@@ -2,6 +2,7 @@ import { expect } from "../test/unitTest";
 import {
     generateHourlyRateEmployee,
     generateSalesReceipt,
+    generateServiceCharge,
     generateTimeCard
 } from "../test/generators";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
@@ -85,6 +86,23 @@ describe("processTransaction", () => {
                 `${salesReceipt.employeeId}`,
                 `${salesReceipt.date}`,
                 `${salesReceipt.amount}`
+            );
+        });
+    });
+    describe("ServiceCharge", () => {
+        it("should call the postServiceCharge transaction", async () => {
+            fakeTransactions.postServiceCharge.resolves();
+            const serviceCharge = generateServiceCharge();
+
+            await processTransaction(
+                "ServiceCharge",
+                `${serviceCharge.employeeId}`,
+                `${serviceCharge.amount}`
+            );
+
+            expect(fakeTransactions.postServiceCharge).to.have.been.calledOnceWith(
+                `${serviceCharge.employeeId}`,
+                `${serviceCharge.amount}`
             );
         });
     });

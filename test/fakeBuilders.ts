@@ -1,7 +1,7 @@
 import { sandbox } from "./unitTest";
 import { SinonStub } from "sinon";
 import { EmployeeRepository, TimeCardRepository } from "../src/repositories";
-import { Transactions } from "../src/transactions";
+import { Transactions } from "../src/transactions/Transactions";
 
 export interface FakeEmployeeRepository extends EmployeeRepository {
     fetchEmployeeById: SinonStub;
@@ -36,6 +36,7 @@ export interface FakeTransactions extends Transactions {
     deleteEmployee: SinonStub;
     postTimeCard: SinonStub;
     postSalesReceipt: SinonStub;
+    postServiceCharge: SinonStub;
 }
 
 export function buildFakeTransactions(): FakeTransactions {
@@ -43,7 +44,8 @@ export function buildFakeTransactions(): FakeTransactions {
         addEmployee: buildStubFor("addEmployee"),
         deleteEmployee: buildStubFor("deleteEmployee"),
         postTimeCard: buildStubFor("postTimeCard"),
-        postSalesReceipt: buildStubFor("postSalesReceipt")
+        postSalesReceipt: buildStubFor("postSalesReceipt"),
+        postServiceCharge: buildStubFor("postServiceCharge")
     };
 }
 

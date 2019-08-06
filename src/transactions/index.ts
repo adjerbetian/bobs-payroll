@@ -17,6 +17,7 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
         postSalesReceipt: buildPostSalesReceiptTransaction({
             salesReceiptRepository,
             employeeRepository
-        })
+        }),
+        postServiceCharge: async () => {}
     };
 }

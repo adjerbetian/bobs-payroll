@@ -1,4 +1,4 @@
-import { Transactions } from "./transactions";
+import { Transactions } from "./transactions/Transactions";
 
 export type ProcessTransaction = (...args: string[]) => Promise<void>;
 
@@ -15,6 +15,9 @@ export function buildProcessTransaction(transactions: Transactions): ProcessTran
         }
         if (transactionName === "SalesReceipt") {
             return transactions.postSalesReceipt(...args);
+        }
+        if (transactionName === "ServiceCharge") {
+            return transactions.postServiceCharge(...args);
         }
     };
 }
