@@ -1,6 +1,10 @@
 import { sandbox } from "./unitTest";
 import { SinonStub } from "sinon";
-import { EmployeeRepository, TimeCardRepository } from "../src/repositories";
+import {
+    EmployeeRepository,
+    ServiceChargeRepository,
+    TimeCardRepository
+} from "../src/repositories";
 import { Transactions } from "../src/transactions";
 
 export type Fake<T> = {
@@ -17,6 +21,13 @@ export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
 }
 
 export function buildFakeTimeCardRepository(): Fake<TimeCardRepository> {
+    return {
+        insertOne: buildStubFor("insertOne"),
+        fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee")
+    };
+}
+
+export function buildFakeServiceChargeRepository(): Fake<ServiceChargeRepository> {
     return {
         insertOne: buildStubFor("insertOne"),
         fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee")

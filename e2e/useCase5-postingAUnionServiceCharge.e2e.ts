@@ -4,7 +4,7 @@ import { ServiceCharge } from "../src/entities/ServiceCharge";
 import { generateServiceCharge } from "../test/generators";
 import { serviceChargeRepository } from "../src/mongo/serviceChargeRepository";
 
-describe("Use Case 5: Posting a Union Service Charge", () => {
+describe.only("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
         const employee = await createUnionEmployee();
         const serviceCharge = generateServiceCharge({ employeeId: employee.id });
@@ -13,7 +13,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
 
         await expectEmployeeToHaveServiceCharge(employee.id, serviceCharge);
     });
-    it.skip("should do nothing when the employee is not a union member", async () => {
+    it("should do nothing when the employee is not a union member", async () => {
         const employee = await createHourlyRateEmployee();
         const serviceCharge = generateServiceCharge({ employeeId: employee.id });
 

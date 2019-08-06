@@ -6,6 +6,8 @@ import { buildPostTimeCardTransaction } from "./postTimeCard";
 import { timeCardRepository } from "../mongo";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
 import { salesReceiptRepository } from "../mongo/salesReceiptRepository";
+import { buildPostServiceChargeTransaction } from "./postServiceCharge";
+import { serviceChargeRepository } from "../mongo/serviceChargeRepository";
 
 export { Transactions } from "./Transactions";
 
@@ -18,6 +20,6 @@ export function buildTransactions(employeeRepository: EmployeeRepository): Trans
             salesReceiptRepository,
             employeeRepository
         }),
-        postServiceCharge: async () => {}
+        postServiceCharge: buildPostServiceChargeTransaction({ serviceChargeRepository })
     };
 }
