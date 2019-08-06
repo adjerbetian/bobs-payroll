@@ -1,12 +1,13 @@
 import { expect } from "../../test/unitTest";
 import { generateHourlyRateEmployee } from "../../test/generators";
-import { buildFakeEmployeeRepository, FakeEmployeeRepository } from "../../test/fakeBuilders";
+import { buildFakeEmployeeRepository, Fake } from "../../test/fakeBuilders";
 import { Transaction } from "./Transactions";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeRepository } from "../repositories";
 
 describe("deleteEmployee", () => {
-    let fakeEmployeeRepository: FakeEmployeeRepository;
+    let fakeEmployeeRepository: Fake<EmployeeRepository>;
     let deleteEmployee: Transaction;
 
     beforeEach(() => {

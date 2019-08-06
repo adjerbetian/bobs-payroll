@@ -1,16 +1,13 @@
 import { sandbox } from "./unitTest";
 import { SinonStub } from "sinon";
 import { EmployeeRepository, TimeCardRepository } from "../src/repositories";
-import { Transactions } from "../src/transactions/Transactions";
+import { Transactions } from "../src/transactions";
 
-export interface FakeEmployeeRepository extends EmployeeRepository {
-    fetchEmployeeById: SinonStub;
-    insertOne: SinonStub;
-    exists: SinonStub;
-    deleteById: SinonStub;
-}
+export type Fake<T> = {
+    [K in keyof T]: SinonStub;
+};
 
-export function buildFakeEmployeeRepository(): FakeEmployeeRepository {
+export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
     return {
         fetchEmployeeById: buildStubFor("fetchEmployeeById"),
         insertOne: buildStubFor("insertOne"),
@@ -19,27 +16,14 @@ export function buildFakeEmployeeRepository(): FakeEmployeeRepository {
     };
 }
 
-export interface FakeTimeCardRepository extends TimeCardRepository {
-    insertOne: SinonStub;
-    fetchAllOfEmployee: SinonStub;
-}
-
-export function buildFakeTimeCardRepository(): FakeTimeCardRepository {
+export function buildFakeTimeCardRepository(): Fake<TimeCardRepository> {
     return {
         insertOne: buildStubFor("insertOne"),
         fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee")
     };
 }
 
-export interface FakeTransactions extends Transactions {
-    addEmployee: SinonStub;
-    deleteEmployee: SinonStub;
-    postTimeCard: SinonStub;
-    postSalesReceipt: SinonStub;
-    postServiceCharge: SinonStub;
-}
-
-export function buildFakeTransactions(): FakeTransactions {
+export function buildFakeTransactions(): Fake<Transactions> {
     return {
         addEmployee: buildStubFor("addEmployee"),
         deleteEmployee: buildStubFor("deleteEmployee"),

@@ -6,12 +6,13 @@ import {
     generateTimeCard
 } from "../test/generators";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
-import { buildFakeTransactions, FakeTransactions } from "../test/fakeBuilders";
+import { buildFakeTransactions, Fake } from "../test/fakeBuilders";
 import { generateIndex } from "../test/utils";
+import { Transactions } from "./transactions";
 
 describe("processTransaction", () => {
     let processTransaction: ProcessTransaction;
-    let fakeTransactions: FakeTransactions;
+    let fakeTransactions: Fake<Transactions>;
 
     beforeEach(() => {
         fakeTransactions = buildFakeTransactions();

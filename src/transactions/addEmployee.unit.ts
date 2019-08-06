@@ -4,13 +4,14 @@ import {
     generateHourlyRateEmployee,
     generateMonthlySalaryEmployee
 } from "../../test/generators";
-import { buildFakeEmployeeRepository, FakeEmployeeRepository } from "../../test/fakeBuilders";
+import { buildFakeEmployeeRepository, Fake } from "../../test/fakeBuilders";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 import { Transaction } from "./Transactions";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeRepository } from "../repositories";
 
 describe("addEmployee", () => {
-    let fakeEmployeeRepository: FakeEmployeeRepository;
+    let fakeEmployeeRepository: Fake<EmployeeRepository>;
     let addEmployee: Transaction;
 
     beforeEach(() => {

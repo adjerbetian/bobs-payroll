@@ -9,17 +9,17 @@ import { buildPostTimeCardTransaction } from "./postTimeCard";
 import {
     buildFakeEmployeeRepository,
     buildFakeTimeCardRepository,
-    FakeEmployeeRepository,
-    FakeTimeCardRepository
+    Fake
 } from "../../test/fakeBuilders";
 import { EmployeeTypeError } from "../errors";
 import { TimeCard } from "../entities";
 import * as moment from "moment";
 import { TransactionFormatError } from "../errors/TransactionFormatError";
+import { EmployeeRepository, TimeCardRepository } from "../repositories";
 
 describe("postTimeCard", () => {
-    let fakeTimeCardRepository: FakeTimeCardRepository;
-    let fakeEmployeeRepository: FakeEmployeeRepository;
+    let fakeTimeCardRepository: Fake<TimeCardRepository>;
+    let fakeEmployeeRepository: Fake<EmployeeRepository>;
     let postTimeCard: Transaction;
 
     beforeEach(() => {
