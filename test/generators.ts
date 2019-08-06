@@ -3,8 +3,15 @@ import * as _ from "lodash";
 import { generateIndex } from "./utils";
 import * as moment from "moment";
 import { EmployeeType } from "../src/entities/Employee";
+import { ServiceCharge } from "../src/entities/ServiceCharge";
 
 type PEmployee = Partial<Employee>;
+
+export function generateUnionEmployee(args: PEmployee = {}): Employee {
+    return generateHourlyRateEmployee({
+        ...args
+    });
+}
 
 export function generateHourlyRateEmployee(args: PEmployee = {}): Employee {
     return generateEmployee({
@@ -56,6 +63,15 @@ export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesRec
     return {
         employeeId: index,
         date: moment().format("YYYY-MM-DD"),
+        amount: generateFloatBetween(2, 10),
+        ...args
+    };
+}
+
+export function generateServiceCharge(args: Partial<ServiceCharge> = {}): ServiceCharge {
+    const index = generateIndex();
+    return {
+        employeeId: index,
         amount: generateFloatBetween(2, 10),
         ...args
     };

@@ -34,7 +34,7 @@ describe("timeCardRepository", () => {
         }
     });
     describe("insertOne", () => {
-        it("insert the given employee", async () => {
+        it("insert the given time card", async () => {
             const timeCard = generateTimeCard();
 
             await timeCardRepository.insertOne(timeCard);

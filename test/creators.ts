@@ -2,7 +2,8 @@ import { Employee } from "../src/entities";
 import {
     generateCommissionedSalaryEmployee,
     generateHourlyRateEmployee,
-    generateMonthlySalaryEmployee
+    generateMonthlySalaryEmployee,
+    generateUnionEmployee
 } from "./generators";
 import { employeeRepository } from "../src/mongo";
 
@@ -22,6 +23,12 @@ export async function createMonthlySalaryEmployee(args: PEmployee = {}): Promise
 
 export async function createCommissionedEmployee(args: PEmployee = {}): Promise<Employee> {
     const employee = generateCommissionedSalaryEmployee(args);
+    await employeeRepository.insertOne(employee);
+    return employee;
+}
+
+export async function createUnionEmployee(args: PEmployee = {}): Promise<Employee> {
+    const employee = generateUnionEmployee(args);
     await employeeRepository.insertOne(employee);
     return employee;
 }
