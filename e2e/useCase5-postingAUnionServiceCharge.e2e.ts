@@ -1,4 +1,4 @@
-import { ServiceCharge, serviceChargeRepository } from "../src";
+import { ServiceCharge, mongoServiceChargeRepository } from "../src";
 import { createHourlyRateEmployee, createUnionEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateServiceCharge } from "../test/generators";
@@ -47,11 +47,11 @@ async function expectEmployeeToHaveServiceCharge(
     employeeId: number,
     serviceCharge: ServiceCharge
 ): Promise<void> {
-    const dbServiceCharges = await serviceChargeRepository.fetchAllOfEmployee(employeeId);
+    const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfEmployee(employeeId);
     expect(dbServiceCharges).to.deep.include(serviceCharge);
 }
 
 async function expectEmployeeToHaveNoServiceCharge(employeeId: number): Promise<void> {
-    const dbServiceCharges = await serviceChargeRepository.fetchAllOfEmployee(employeeId);
+    const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfEmployee(employeeId);
     expect(dbServiceCharges).to.be.empty;
 }

@@ -5,7 +5,7 @@ import {
     mongoEmployeeRepository,
     initConnection,
     mongoSalesReceiptRepository,
-    serviceChargeRepository,
+    mongoServiceChargeRepository,
     timeCardRepository
 } from "./mongo";
 import { buildProcessTransaction } from "./processTransaction";
@@ -13,7 +13,7 @@ import { buildProcessTransaction } from "./processTransaction";
 const transactions = buildTransactions({
     salesReceiptRepository: mongoSalesReceiptRepository,
     employeeRepository: mongoEmployeeRepository,
-    serviceChargeRepository,
+    serviceChargeRepository: mongoServiceChargeRepository,
     timeCardRepository
 });
 const processTransaction = buildProcessTransaction(transactions);
