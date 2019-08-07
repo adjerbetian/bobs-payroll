@@ -1,4 +1,4 @@
-import { TimeCard, timeCardRepository } from "../src";
+import { TimeCard, mongoTimeCardRepository } from "../src";
 import { createHourlyRateEmployee, createMonthlySalaryEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateTimeCard } from "../test/generators";
@@ -46,11 +46,11 @@ async function executePostTimeCard(timeCard: TimeCard): Promise<void> {
 }
 
 async function expectEmployeeToHaveTimeCard(employeeId: number, timeCard: TimeCard): Promise<void> {
-    const dbTimeCards = await timeCardRepository.fetchAllOfEmployee(employeeId);
+    const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(employeeId);
     expect(dbTimeCards).to.deep.include(timeCard);
 }
 
 async function expectEmployeeToHaveNoTimeCards(employeeId: number): Promise<void> {
-    const dbTimeCards = await timeCardRepository.fetchAllOfEmployee(employeeId);
+    const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(employeeId);
     expect(dbTimeCards).to.be.empty;
 }

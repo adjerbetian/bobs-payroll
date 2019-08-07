@@ -4,14 +4,14 @@ import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
 import { TimeCard } from "../core";
 import { dbTimeCards } from "./db";
-import { timeCardRepository } from "./timeCardRepository";
+import { mongoTimeCardRepository } from "./mongoTimeCardRepository";
 
-describe("timeCardRepository", () => {
+describe("mongoTimeCardRepository", () => {
     describe("fetchAllOfEmployee", () => {
         it("should return all the employee's time cards", async () => {
             const salesReceipt = await dbGenerateTimeCard();
 
-            const salesReceipts = await timeCardRepository.fetchAllOfEmployee(
+            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(
                 salesReceipt.employeeId
             );
 
@@ -20,7 +20,7 @@ describe("timeCardRepository", () => {
         it("should not return other employees' time cards", async () => {
             const salesReceipt = await dbGenerateTimeCard();
 
-            const salesReceipts = await timeCardRepository.fetchAllOfEmployee(
+            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(
                 salesReceipt.employeeId + 1
             );
 
@@ -37,15 +37,17 @@ describe("timeCardRepository", () => {
         it("insert the given time card", async () => {
             const timeCard = generateTimeCard();
 
-            await timeCardRepository.insertOne(timeCard);
+            await mongoTimeCardRepository.insertOne(timeCard);
 
-            const dbTimeCards = await timeCardRepository.fetchAllOfEmployee(timeCard.employeeId);
+            const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(
+                timeCard.employeeId
+            );
             expect(dbTimeCards).to.deep.equal([timeCard]);
         });
         it("should not add the _id field to the entity", async () => {
             const timeCard = generateTimeCard();
 
-            await timeCardRepository.insertOne(timeCard);
+            await mongoTimeCardRepository.insertOne(timeCard);
 
             expect(timeCard).not.to.have.property("_id");
         });

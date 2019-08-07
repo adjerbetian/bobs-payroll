@@ -2,7 +2,7 @@ import { TimeCard, TimeCardRepository } from "../core";
 import { dbTimeCards } from "./db";
 import { cleanMongoEntity } from "./utils";
 
-export const timeCardRepository: TimeCardRepository = {
+export const mongoTimeCardRepository: TimeCardRepository = {
     async fetchAllOfEmployee(employeeId: number): Promise<TimeCard[]> {
         const timeCards = await dbTimeCards.find({ employeeId }).toArray();
         return timeCards.map(e => cleanMongoEntity(e));
