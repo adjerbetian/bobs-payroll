@@ -1,11 +1,11 @@
-import { sandbox } from "./unitTest";
 import { SinonStub } from "sinon";
 import {
     EmployeeRepository,
     ServiceChargeRepository,
-    TimeCardRepository
-} from "../src/repositories";
-import { Transactions } from "../src/transactions";
+    TimeCardRepository,
+    Transactions
+} from "../src";
+import { sandbox } from "./unitTest";
 
 export type Fake<T> = {
     [K in keyof T]: SinonStub;

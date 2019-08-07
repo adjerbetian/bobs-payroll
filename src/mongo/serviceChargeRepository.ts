@@ -1,5 +1,4 @@
-import { ServiceCharge } from "../entities";
-import { ServiceChargeRepository } from "../repositories";
+import { ServiceCharge, ServiceChargeRepository } from "../core";
 import { dbServiceCharge } from "./db";
 import { cleanMongoEntity } from "./utils";
 

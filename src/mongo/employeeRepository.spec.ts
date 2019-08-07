@@ -2,7 +2,7 @@ import { generateHourlyRateEmployee } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
 import { generateIndex } from "../../test/utils";
-import { NotFoundError } from "../errors";
+import { NotFoundError } from "../core";
 import { employeeRepository } from "./employeeRepository";
 
 describe("employeeRepository", () => {

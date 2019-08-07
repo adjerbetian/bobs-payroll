@@ -2,7 +2,7 @@ import { cloneDeep } from "lodash";
 import { generateSalesReceipt } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
-import { SalesReceipt } from "../entities";
+import { SalesReceipt } from "../core";
 import { dbSalesReceipt } from "./db";
 import { salesReceiptRepository } from "./salesReceiptRepository";
 

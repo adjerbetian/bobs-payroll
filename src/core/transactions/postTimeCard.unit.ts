@@ -3,13 +3,13 @@ import {
     buildFakeEmployeeRepository,
     buildFakeTimeCardRepository,
     Fake
-} from "../../test/fakeBuilders";
+} from "../../../test/fakeBuilders";
 import {
     generateHourlyRateEmployee,
     generateMonthlySalaryEmployee,
     generateTimeCard
-} from "../../test/generators";
-import { expect } from "../../test/unitTest";
+} from "../../../test/generators";
+import { expect } from "../../../test/unitTest";
 import { TimeCard } from "../entities";
 import { EmployeeTypeError, TransactionFormatError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";

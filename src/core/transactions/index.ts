@@ -1,5 +1,9 @@
-import { salesReceiptRepository, serviceChargeRepository, timeCardRepository } from "../mongo";
-import { EmployeeRepository } from "../repositories";
+import {
+    EmployeeRepository,
+    SalesReceiptRepository,
+    ServiceChargeRepository,
+    TimeCardRepository
+} from "../repositories";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
@@ -9,7 +13,19 @@ import { Transactions } from "./Transactions";
 
 export { Transactions } from "./Transactions";
 
-export function buildTransactions(employeeRepository: EmployeeRepository): Transactions {
+interface Dependencies {
+    employeeRepository: EmployeeRepository;
+    timeCardRepository: TimeCardRepository;
+    salesReceiptRepository: SalesReceiptRepository;
+    serviceChargeRepository: ServiceChargeRepository;
+}
+
+export function buildTransactions({
+    serviceChargeRepository,
+    employeeRepository,
+    salesReceiptRepository,
+    timeCardRepository
+}: Dependencies): Transactions {
     return {
         addEmployee: buildAddEmployeeTransaction({ employeeRepository }),
         deleteEmployee: buildDeleteEmployeeTransaction({ employeeRepository }),

@@ -1,23 +1,28 @@
-import { Transactions } from "./transactions";
+import { Transactions } from "./core";
 
-export type ProcessTransaction = (...args: string[]) => Promise<void>;
+export type ProcessTransaction = (args: string[]) => Promise<void>;
 
 export function buildProcessTransaction(transactions: Transactions): ProcessTransaction {
-    return async (transactionName: string, ...args: string[]) => {
-        if (transactionName === "AddEmp") {
-            return transactions.addEmployee(...args);
-        }
-        if (transactionName === "DelEmp") {
-            return transactions.deleteEmployee(...args);
-        }
-        if (transactionName === "TimeCard") {
-            return transactions.postTimeCard(...args);
-        }
-        if (transactionName === "SalesReceipt") {
-            return transactions.postSalesReceipt(...args);
-        }
-        if (transactionName === "ServiceCharge") {
-            return transactions.postServiceCharge(...args);
+    return async ([transactionName, ...args]: string[]) => {
+        try {
+            if (transactionName === "AddEmp") {
+                await transactions.addEmployee(...args);
+            }
+            if (transactionName === "DelEmp") {
+                await transactions.deleteEmployee(...args);
+            }
+            if (transactionName === "TimeCard") {
+                await transactions.postTimeCard(...args);
+            }
+            if (transactionName === "SalesReceipt") {
+                await transactions.postSalesReceipt(...args);
+            }
+            if (transactionName === "ServiceCharge") {
+                await transactions.postServiceCharge(...args);
+            }
+        } catch (err) {
+            console.log("AN ERROR HAS OCCURED");
+            console.log({ err });
         }
     };
 }

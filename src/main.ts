@@ -1,19 +1,23 @@
-import { closeConnection, employeeRepository, initConnection } from "./mongo";
+import { buildApp } from "./app";
+import { buildTransactions } from "./core";
+import {
+    closeConnection,
+    employeeRepository,
+    initConnection,
+    salesReceiptRepository,
+    serviceChargeRepository,
+    timeCardRepository
+} from "./mongo";
 import { buildProcessTransaction } from "./processTransaction";
-import { buildTransactions } from "./transactions";
 
-const [, , ...transactionParams] = process.argv;
-
-const transactions = buildTransactions(employeeRepository);
+const transactions = buildTransactions({
+    salesReceiptRepository,
+    employeeRepository,
+    serviceChargeRepository,
+    timeCardRepository
+});
 const processTransaction = buildProcessTransaction(transactions);
+const app = buildApp({ initConnection, closeConnection, processTransaction });
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
-initConnection()
-    .then(async () => {
-        await processTransaction(...transactionParams);
-    })
-    .catch(err => {
-        console.log("AN ERROR HAS OCCURED");
-        console.log({ err });
-    })
-    .then(async () => closeConnection());
+app.run().then(() => console.log("done"));

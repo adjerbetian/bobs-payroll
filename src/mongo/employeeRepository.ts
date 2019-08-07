@@ -1,7 +1,5 @@
 import { FilterQuery } from "mongodb";
-import { Employee } from "../entities";
-import { NotFoundError } from "../errors";
-import { EmployeeRepository } from "../repositories";
+import { Employee, EmployeeRepository, NotFoundError } from "../core";
 import { dbEmployees } from "./db";
 import { cleanMongoEntity } from "./utils";
 

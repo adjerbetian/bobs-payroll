@@ -1,5 +1,4 @@
-import { SalesReceipt } from "../entities";
-import { SalesReceiptRepository } from "../repositories";
+import { SalesReceipt, SalesReceiptRepository } from "../core";
 import { dbSalesReceipt } from "./db";
 import { cleanMongoEntity } from "./utils";
 

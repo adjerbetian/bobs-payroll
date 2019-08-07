@@ -1,10 +1,10 @@
-import { buildFakeEmployeeRepository, Fake } from "../../test/fakeBuilders";
+import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
 import {
     generateCommissionedSalaryEmployee,
     generateHourlyRateEmployee,
     generateMonthlySalaryEmployee
-} from "../../test/generators";
-import { expect } from "../../test/unitTest";
+} from "../../../test/generators";
+import { expect } from "../../../test/unitTest";
 import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { buildAddEmployeeTransaction } from "./addEmployee";

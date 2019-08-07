@@ -2,13 +2,13 @@ import {
     buildFakeEmployeeRepository,
     buildFakeServiceChargeRepository,
     Fake
-} from "../../test/fakeBuilders";
+} from "../../../test/fakeBuilders";
 import {
     generateHourlyRateEmployee,
     generateServiceCharge,
     generateUnionEmployee
-} from "../../test/generators";
-import { expect } from "../../test/unitTest";
+} from "../../../test/generators";
+import { expect } from "../../../test/unitTest";
 import { ServiceCharge } from "../entities";
 import { TransactionFormatError, UnionMemberError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";

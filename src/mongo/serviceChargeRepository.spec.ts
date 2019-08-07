@@ -2,7 +2,7 @@ import { cloneDeep } from "lodash";
 import { generateServiceCharge } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
-import { ServiceCharge } from "../entities";
+import { ServiceCharge } from "../core";
 import { dbServiceCharge } from "./db";
 import { serviceChargeRepository } from "./serviceChargeRepository";
 

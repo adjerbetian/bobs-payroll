@@ -8,7 +8,7 @@ import {
 import { expect } from "../test/unitTest";
 import { generateIndex } from "../test/utils";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
-import { Transactions } from "./transactions";
+import { Transactions } from "./core";
 
 describe("processTransaction", () => {
     let processTransaction: ProcessTransaction;
@@ -24,14 +24,14 @@ describe("processTransaction", () => {
             fakeTransactions.addEmployee.resolves();
             const employee = generateHourlyRateEmployee();
 
-            await processTransaction(
+            await processTransaction([
                 "AddEmp",
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
                 "H",
                 `${employee.hourlyRate}`
-            );
+            ]);
 
             expect(fakeTransactions.addEmployee).to.have.been.calledOnceWith(
                 `${employee.id}`,
@@ -47,7 +47,7 @@ describe("processTransaction", () => {
             fakeTransactions.deleteEmployee.resolves();
             const employeeId = generateIndex();
 
-            await processTransaction("DelEmp", `${employeeId}`);
+            await processTransaction(["DelEmp", `${employeeId}`]);
 
             expect(fakeTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
         });
@@ -57,12 +57,12 @@ describe("processTransaction", () => {
             fakeTransactions.postTimeCard.resolves();
             const timeCard = generateTimeCard();
 
-            await processTransaction(
+            await processTransaction([
                 "TimeCard",
                 `${timeCard.employeeId}`,
                 `${timeCard.date}`,
                 `${timeCard.hours}`
-            );
+            ]);
 
             expect(fakeTransactions.postTimeCard).to.have.been.calledOnceWith(
                 `${timeCard.employeeId}`,
@@ -76,12 +76,12 @@ describe("processTransaction", () => {
             fakeTransactions.postSalesReceipt.resolves();
             const salesReceipt = generateSalesReceipt();
 
-            await processTransaction(
+            await processTransaction([
                 "SalesReceipt",
                 `${salesReceipt.employeeId}`,
                 `${salesReceipt.date}`,
                 `${salesReceipt.amount}`
-            );
+            ]);
 
             expect(fakeTransactions.postSalesReceipt).to.have.been.calledOnceWith(
                 `${salesReceipt.employeeId}`,
@@ -95,11 +95,11 @@ describe("processTransaction", () => {
             fakeTransactions.postServiceCharge.resolves();
             const serviceCharge = generateServiceCharge();
 
-            await processTransaction(
+            await processTransaction([
                 "ServiceCharge",
                 `${serviceCharge.employeeId}`,
                 `${serviceCharge.amount}`
-            );
+            ]);
 
             expect(fakeTransactions.postServiceCharge).to.have.been.calledOnceWith(
                 `${serviceCharge.employeeId}`,
