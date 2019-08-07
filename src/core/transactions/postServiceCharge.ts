@@ -29,7 +29,7 @@ export function buildPostServiceChargeTransaction({
     // }
     //
     // async function assertEmployeeIsInHourlyRate(employeeId: string): Promise<void> {
-    //     const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
+    //     const employee = await mongoEmployeeRepository.fetchEmployeeById(parseInt(employeeId));
     //     if (employee.type !== EmployeeType.HOURLY_RATE) {
     //         throw new EmployeeTypeError(employee, EmployeeType.HOURLY_RATE);
     //     }

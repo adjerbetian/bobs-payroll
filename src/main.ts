@@ -2,7 +2,7 @@ import { buildApp } from "./app";
 import { buildTransactions } from "./core";
 import {
     closeConnection,
-    employeeRepository,
+    mongoEmployeeRepository,
     initConnection,
     salesReceiptRepository,
     serviceChargeRepository,
@@ -12,7 +12,7 @@ import { buildProcessTransaction } from "./processTransaction";
 
 const transactions = buildTransactions({
     salesReceiptRepository,
-    employeeRepository,
+    employeeRepository: mongoEmployeeRepository,
     serviceChargeRepository,
     timeCardRepository
 });

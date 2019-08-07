@@ -3,7 +3,7 @@ import { Employee, EmployeeRepository, NotFoundError } from "../core";
 import { dbEmployees } from "./db";
 import { cleanMongoEntity } from "./utils";
 
-export const employeeRepository: EmployeeRepository = {
+export const mongoEmployeeRepository: EmployeeRepository = {
     async fetchEmployeeById(id: number): Promise<Employee> {
         return fetchIt({ id });
     },
