@@ -1,4 +1,4 @@
-import { SalesReceipt, salesReceiptRepository } from "../src";
+import { SalesReceipt, mongoSalesReceiptRepository } from "../src";
 import { createCommissionedEmployee, createMonthlySalaryEmployee } from "../test/creators";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateSalesReceipt } from "../test/generators";
@@ -49,11 +49,11 @@ async function expectEmployeeToHaveSalesReceipt(
     employeeId: number,
     salesReceipt: SalesReceipt
 ): Promise<void> {
-    const dbSalesReceipts = await salesReceiptRepository.fetchAllOfEmployee(employeeId);
+    const dbSalesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(employeeId);
     expect(dbSalesReceipts).to.deep.include(salesReceipt);
 }
 
 async function expectEmployeeToHaveNoSalesReceipt(employeeId: number): Promise<void> {
-    const dbSalesReceipts = await salesReceiptRepository.fetchAllOfEmployee(employeeId);
+    const dbSalesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(employeeId);
     expect(dbSalesReceipts).to.be.empty;
 }

@@ -1,5 +1,5 @@
 export { initConnection, closeConnection, cleanCollections } from "./db";
 export { mongoEmployeeRepository } from "./mongoEmployeeRepository";
 export { timeCardRepository } from "./timeCardRepository";
-export { salesReceiptRepository } from "./salesReceiptRepository";
+export { mongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 export { serviceChargeRepository } from "./serviceChargeRepository";

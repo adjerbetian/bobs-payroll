@@ -4,14 +4,14 @@ import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
 import { SalesReceipt } from "../core";
 import { dbSalesReceipt } from "./db";
-import { salesReceiptRepository } from "./salesReceiptRepository";
+import { mongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 
-describe("salesReceiptRepository", () => {
+describe("mongoSalesReceiptRepository", () => {
     describe("fetchAllOfEmployee", () => {
         it("should return all the employee's sales receipt", async () => {
             const salesReceipt = await dbGenerateSalesReceipt();
 
-            const salesReceipts = await salesReceiptRepository.fetchAllOfEmployee(
+            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(
                 salesReceipt.employeeId
             );
 
@@ -20,7 +20,7 @@ describe("salesReceiptRepository", () => {
         it("should not return other employees' sales receipt", async () => {
             const salesReceipt = await dbGenerateSalesReceipt();
 
-            const salesReceipts = await salesReceiptRepository.fetchAllOfEmployee(
+            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(
                 salesReceipt.employeeId + 1
             );
 
@@ -37,9 +37,9 @@ describe("salesReceiptRepository", () => {
         it("insert the given sales receipt", async () => {
             const salesReceipt = generateSalesReceipt();
 
-            await salesReceiptRepository.insertOne(salesReceipt);
+            await mongoSalesReceiptRepository.insertOne(salesReceipt);
 
-            const salesReceipts = await salesReceiptRepository.fetchAllOfEmployee(
+            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(
                 salesReceipt.employeeId
             );
             expect(salesReceipts).to.deep.equal([salesReceipt]);
@@ -47,7 +47,7 @@ describe("salesReceiptRepository", () => {
         it("should not add the _id field to the entity", async () => {
             const salesReceipt = generateSalesReceipt();
 
-            await salesReceiptRepository.insertOne(salesReceipt);
+            await mongoSalesReceiptRepository.insertOne(salesReceipt);
 
             expect(salesReceipt).not.to.have.property("_id");
         });
