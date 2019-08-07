@@ -1,4 +1,4 @@
-import { Employee, EmployeeType, SalesReceipt, ServiceCharge, TimeCard } from "../src/entities";
+import { Employee, EmployeeType, SalesReceipt, ServiceCharge, TimeCard } from "../src";
 import * as _ from "lodash";
 import { generateIndex } from "./utils";
 import * as moment from "moment";

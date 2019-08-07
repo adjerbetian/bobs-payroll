@@ -3,7 +3,7 @@ import { createHourlyRateEmployee, createUnionEmployee } from "../test/creators"
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateServiceCharge } from "../test/generators";
 
-describe.only("Use Case 5: Posting a Union Service Charge", () => {
+describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
         const employee = await createUnionEmployee();
         const serviceCharge = generateServiceCharge({ employeeId: employee.id });

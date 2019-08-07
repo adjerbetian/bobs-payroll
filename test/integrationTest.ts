@@ -1,5 +1,5 @@
 import "./unitTest";
-import { closeConnection, initConnection, cleanCollections } from "../src/mongo";
+import { closeConnection, initConnection, cleanCollections } from "../src";
 
 export { expect } from "./unitTest";
 

@@ -1,11 +1,10 @@
-import { Employee } from "../src/entities";
+import { Employee, employeeRepository } from "../src";
 import {
     generateCommissionedSalaryEmployee,
     generateHourlyRateEmployee,
     generateMonthlySalaryEmployee,
     generateUnionEmployee
 } from "./generators";
-import { employeeRepository } from "../src/mongo";
 
 type PEmployee = Partial<Employee>;
 
