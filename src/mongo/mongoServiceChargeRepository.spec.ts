@@ -7,31 +7,37 @@ import { dbServiceCharge } from "./db";
 import { mongoServiceChargeRepository } from "./mongoServiceChargeRepository";
 
 describe("mongoServiceChargeRepository", () => {
-    describe("fetchAllOfEmployee", () => {
-        it("should return all the employee's service charges", async () => {
-            const salesReceipt = await dbGenerateServiceCharge();
+    describe("fetchAll", () => {
+        it("should return all the service charges", async () => {
+            const serviceCharges = [
+                await dbGenerateServiceCharge(),
+                await dbGenerateServiceCharge()
+            ];
 
-            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfEmployee(
-                salesReceipt.employeeId
+            const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
+
+            expect(dbServiceCharges).to.deep.equal(serviceCharges);
+        });
+    });
+    describe("fetchAllOfMember", () => {
+        it("should return all the employee's service charges", async () => {
+            const serviceCharge = await dbGenerateServiceCharge();
+
+            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(
+                serviceCharge.memberId
             );
 
-            expect(salesReceipts).to.deep.equal([salesReceipt]);
+            expect(salesReceipts).to.deep.equal([serviceCharge]);
         });
         it("should not return other employees' time cards", async () => {
-            const salesReceipt = await dbGenerateServiceCharge();
+            const serviceCharge = await dbGenerateServiceCharge();
 
-            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfEmployee(
-                salesReceipt.employeeId + 1
+            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(
+                serviceCharge.memberId + "x"
             );
 
             expect(salesReceipts).to.be.empty;
         });
-
-        async function dbGenerateServiceCharge(): Promise<ServiceCharge> {
-            const serviceCharge = generateServiceCharge();
-            await dbServiceCharge.insertOne(cloneDeep(serviceCharge));
-            return serviceCharge;
-        }
     });
     describe("insertOne", () => {
         it("insert the given service charge", async () => {
@@ -39,8 +45,8 @@ describe("mongoServiceChargeRepository", () => {
 
             await mongoServiceChargeRepository.insertOne(serviceCharge);
 
-            const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfEmployee(
-                serviceCharge.employeeId
+            const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfMember(
+                serviceCharge.memberId
             );
             expect(dbServiceCharges).to.deep.equal([serviceCharge]);
         });
@@ -53,3 +59,9 @@ describe("mongoServiceChargeRepository", () => {
         });
     });
 });
+
+async function dbGenerateServiceCharge(): Promise<ServiceCharge> {
+    const serviceCharge = generateServiceCharge();
+    await dbServiceCharge.insertOne(cloneDeep(serviceCharge));
+    return serviceCharge;
+}

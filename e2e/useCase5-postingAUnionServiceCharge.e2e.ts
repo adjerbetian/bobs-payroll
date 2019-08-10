@@ -6,52 +6,49 @@ import { generateServiceCharge } from "../test/generators";
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
         const employee = await createUnionEmployee();
-        const serviceCharge = generateServiceCharge({ employeeId: employee.id });
+        const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
 
         await executePostServiceCharge(serviceCharge);
 
-        await expectEmployeeToHaveServiceCharge(employee.id, serviceCharge);
+        await expectServiceChargeToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the employee is not a union member", async () => {
         const employee = await createHourlyRateEmployee();
-        const serviceCharge = generateServiceCharge({ employeeId: employee.id });
+        const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
 
         await executePostServiceCharge(serviceCharge);
 
-        await expectEmployeeToHaveNoServiceCharge(employee.id);
+        await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the employee does not exist", async () => {
         const serviceCharge = generateServiceCharge();
 
         await executePostServiceCharge(serviceCharge);
 
-        await expectEmployeeToHaveNoServiceCharge(serviceCharge.employeeId);
+        await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
         const employee = await createUnionEmployee();
-        const serviceCharge = generateServiceCharge({ employeeId: employee.id });
+        const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
 
-        await executePayrollCommand(`ServiceCharge ${serviceCharge.employeeId}`);
+        await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId}`);
 
-        await expectEmployeeToHaveNoServiceCharge(serviceCharge.employeeId);
+        await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
 });
 
 async function executePostServiceCharge(serviceCharge: ServiceCharge): Promise<void> {
-    await executePayrollCommand(
-        `ServiceCharge ${serviceCharge.employeeId} ${serviceCharge.amount}`
-    );
+    await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId} ${serviceCharge.amount}`);
 }
 
-async function expectEmployeeToHaveServiceCharge(
-    employeeId: number,
-    serviceCharge: ServiceCharge
-): Promise<void> {
-    const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfEmployee(employeeId);
+async function expectServiceChargeToHaveBeenInserted(serviceCharge: ServiceCharge): Promise<void> {
+    const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
     expect(dbServiceCharges).to.deep.include(serviceCharge);
 }
 
-async function expectEmployeeToHaveNoServiceCharge(employeeId: number): Promise<void> {
-    const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfEmployee(employeeId);
-    expect(dbServiceCharges).to.be.empty;
+async function expectServiceChargeNotToHaveBeenInserted(
+    serviceCharge: ServiceCharge
+): Promise<void> {
+    const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
+    expect(dbServiceCharges).not.to.deep.include(serviceCharge);
 }

@@ -3,20 +3,16 @@ import {
     buildFakeServiceChargeRepository,
     Fake
 } from "../../../test/fakeBuilders";
-import {
-    generateHourlyRateEmployee,
-    generateServiceCharge,
-    generateUnionEmployee
-} from "../../../test/generators";
+import { generateServiceCharge, generateUnionEmployee } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { ServiceCharge } from "../entities";
-import { TransactionFormatError, UnionMemberError } from "../errors";
-import { EmployeeRepository, TimeCardRepository } from "../repositories";
+import { NotFoundError, TransactionFormatError, UnionMemberError } from "../errors";
+import { EmployeeRepository, ServiceChargeRepository } from "../repositories";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 import { Transaction } from "./Transactions";
 
 describe("postServiceCharge", () => {
-    let fakeServiceChargeRepository: Fake<TimeCardRepository>;
+    let fakeServiceChargeRepository: Fake<ServiceChargeRepository>;
     let fakeEmployeeRepository: Fake<EmployeeRepository>;
     let postServiceCharge: Transaction;
 
@@ -33,19 +29,19 @@ describe("postServiceCharge", () => {
 
     it("should create a service charge for the employee", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchEmployeeById
-            .withArgs(serviceCharge.employeeId)
+        fakeEmployeeRepository.fetchEmployeeByMemberId
+            .withArgs(serviceCharge.memberId)
             .resolves(generateUnionEmployee());
 
         await postServiceChargeEntity(serviceCharge);
 
         expect(fakeServiceChargeRepository.insertOne).to.have.been.calledOnceWith(serviceCharge);
     });
-    it("should throw a EmployeeTypeError if the employee is not a union member", async () => {
+    it("should throw a EmployeeTypeError if no union member with this if was found", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchEmployeeById
-            .withArgs(serviceCharge.employeeId)
-            .resolves(generateHourlyRateEmployee());
+        fakeEmployeeRepository.fetchEmployeeByMemberId
+            .withArgs(serviceCharge.memberId)
+            .rejects(new NotFoundError("no union member found"));
 
         // noinspection ES6MissingAwait
         const promise = postServiceChargeEntity(serviceCharge);
@@ -54,17 +50,17 @@ describe("postServiceCharge", () => {
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchEmployeeById
-            .withArgs(serviceCharge.employeeId)
+        fakeEmployeeRepository.fetchEmployeeByMemberId
+            .withArgs(serviceCharge.memberId)
             .resolves(generateUnionEmployee());
 
         // noinspection ES6MissingAwait
-        const promise = postServiceCharge(`${serviceCharge.employeeId}`, ``);
+        const promise = postServiceCharge(`${serviceCharge.memberId}`, ``);
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError);
     });
 
     async function postServiceChargeEntity(serviceCharge: ServiceCharge): Promise<void> {
-        return postServiceCharge(`${serviceCharge.employeeId}`, `${serviceCharge.amount}`);
+        return postServiceCharge(`${serviceCharge.memberId}`, `${serviceCharge.amount}`);
     }
 });

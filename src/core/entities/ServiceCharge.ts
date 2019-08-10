@@ -1,4 +1,4 @@
 export interface ServiceCharge {
-    employeeId: number;
+    memberId: string;
     amount: number;
 }

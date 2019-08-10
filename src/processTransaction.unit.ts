@@ -97,12 +97,12 @@ describe("processTransaction", () => {
 
             await processTransaction([
                 "ServiceCharge",
-                `${serviceCharge.employeeId}`,
+                `${serviceCharge.memberId}`,
                 `${serviceCharge.amount}`
             ]);
 
             expect(fakeTransactions.postServiceCharge).to.have.been.calledOnceWith(
-                `${serviceCharge.employeeId}`,
+                `${serviceCharge.memberId}`,
                 `${serviceCharge.amount}`
             );
         });

@@ -6,8 +6,9 @@ import * as moment from "moment";
 type PEmployee = Partial<Employee>;
 
 export function generateUnionEmployee(args: PEmployee = {}): Employee {
+    const index = generateIndex();
     return generateHourlyRateEmployee({
-        union: true,
+        memberId: `member-${index}`,
         ...args
     });
 }
@@ -70,7 +71,7 @@ export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesRec
 export function generateServiceCharge(args: Partial<ServiceCharge> = {}): ServiceCharge {
     const index = generateIndex();
     return {
-        employeeId: index,
+        memberId: `member-${index}`,
         amount: generateFloatBetween(2, 10),
         ...args
     };

@@ -32,14 +32,14 @@ export function buildPostServiceChargeTransaction({
 
     async function assertEmployeeIsAUnionMember(employeeId: string): Promise<void> {
         const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
-        if (!employee.union) {
-            throw new UnionMemberError(employee);
-        }
+        // if (!employee.union) {
+        //     throw new UnionMemberError(employee);
+        // }
     }
 
     function buildServiceCharge(employeeId: string, amount: string): ServiceCharge {
         return {
-            employeeId: parseInt(employeeId),
+            memberId: "coucou",
             amount: parseFloat(amount)
         };
     }

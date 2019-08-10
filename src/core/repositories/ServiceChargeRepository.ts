@@ -1,6 +1,7 @@
 import { ServiceCharge } from "../entities";
 
 export interface ServiceChargeRepository {
-    fetchAllOfEmployee(employeeId: number): Promise<ServiceCharge[]>;
+    fetchAll(): Promise<ServiceCharge[]>;
+    fetchAllOfMember(memberId: string): Promise<ServiceCharge[]>;
     insertOne(serviceCharge: ServiceCharge): Promise<void>;
 }
