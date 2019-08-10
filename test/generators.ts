@@ -7,6 +7,7 @@ type PEmployee = Partial<Employee>;
 
 export function generateUnionEmployee(args: PEmployee = {}): Employee {
     return generateHourlyRateEmployee({
+        union: true,
         ...args
     });
 }

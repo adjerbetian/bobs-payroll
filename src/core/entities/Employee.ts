@@ -6,6 +6,7 @@ export interface Employee {
     hourlyRate?: number;
     monthlySalary?: number;
     commissionRate?: number | null;
+    union?: boolean;
 }
 
 export enum EmployeeType {

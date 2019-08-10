@@ -24,7 +24,8 @@ describe("postServiceCharge", () => {
         fakeServiceChargeRepository = buildFakeServiceChargeRepository();
         fakeEmployeeRepository = buildFakeEmployeeRepository();
         postServiceCharge = buildPostServiceChargeTransaction({
-            serviceChargeRepository: fakeServiceChargeRepository
+            serviceChargeRepository: fakeServiceChargeRepository,
+            employeeRepository: fakeEmployeeRepository
         });
 
         fakeServiceChargeRepository.insertOne.resolves();
@@ -40,7 +41,7 @@ describe("postServiceCharge", () => {
 
         expect(fakeServiceChargeRepository.insertOne).to.have.been.calledOnceWith(serviceCharge);
     });
-    it.skip("should throw a EmployeeTypeError if the employee is not a union member", async () => {
+    it("should throw a EmployeeTypeError if the employee is not a union member", async () => {
         const serviceCharge = generateServiceCharge();
         fakeEmployeeRepository.fetchEmployeeById
             .withArgs(serviceCharge.employeeId)

@@ -34,6 +34,9 @@ export function buildTransactions({
             salesReceiptRepository,
             employeeRepository
         }),
-        postServiceCharge: buildPostServiceChargeTransaction({ serviceChargeRepository })
+        postServiceCharge: buildPostServiceChargeTransaction({
+            serviceChargeRepository,
+            employeeRepository
+        })
     };
 }

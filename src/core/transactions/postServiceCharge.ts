@@ -1,17 +1,20 @@
 import { ServiceCharge } from "../entities";
-import { ServiceChargeRepository } from "../repositories";
+import { UnionMemberError } from "../errors";
+import { EmployeeRepository, ServiceChargeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
 
 interface Dependencies {
     serviceChargeRepository: ServiceChargeRepository;
+    employeeRepository: EmployeeRepository;
 }
 
 export function buildPostServiceChargeTransaction({
-    serviceChargeRepository
+    serviceChargeRepository,
+    employeeRepository
 }: Dependencies): Transaction {
     return async function(employeeId: string, amount: string): Promise<void> {
         // assertTransactionValid(employeeId, date, hours);
-        // await assertEmployeeIsInHourlyRate(employeeId);
+        await assertEmployeeIsAUnionMember(employeeId);
 
         const serviceCharge = buildServiceCharge(employeeId, amount);
         await serviceChargeRepository.insertOne(serviceCharge);
@@ -28,12 +31,12 @@ export function buildPostServiceChargeTransaction({
     //     }
     // }
     //
-    // async function assertEmployeeIsInHourlyRate(employeeId: string): Promise<void> {
-    //     const employee = await mongoEmployeeRepository.fetchEmployeeById(parseInt(employeeId));
-    //     if (employee.type !== EmployeeType.HOURLY_RATE) {
-    //         throw new EmployeeTypeError(employee, EmployeeType.HOURLY_RATE);
-    //     }
-    // }
+    async function assertEmployeeIsAUnionMember(employeeId: string): Promise<void> {
+        const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
+        if (!employee.union) {
+            throw new UnionMemberError(employee);
+        }
+    }
 
     function buildServiceCharge(employeeId: string, amount: string): ServiceCharge {
         return {
