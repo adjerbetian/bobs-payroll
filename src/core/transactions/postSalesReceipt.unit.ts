@@ -34,7 +34,7 @@ describe("postTimeCard", () => {
 
     it("should create a sales receipt for the employee", async () => {
         const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchEmployeeById
+        fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
             .resolves(generateCommissionedSalaryEmployee());
 
@@ -44,7 +44,7 @@ describe("postTimeCard", () => {
     });
     it("should throw a EmployeeTypeError if the employee is not a commissioned employee", async () => {
         const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchEmployeeById
+        fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
             .resolves(generateMonthlySalaryEmployee());
 
@@ -55,7 +55,7 @@ describe("postTimeCard", () => {
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchEmployeeById
+        fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
             .resolves(generateCommissionedSalaryEmployee());
 
@@ -66,7 +66,7 @@ describe("postTimeCard", () => {
     });
     it("should throw a TransactionFormatError if the date is not in the right format", async () => {
         const salesReceipt = generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
-        fakeEmployeeRepository.fetchEmployeeById
+        fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
             .resolves(generateCommissionedSalaryEmployee());
 

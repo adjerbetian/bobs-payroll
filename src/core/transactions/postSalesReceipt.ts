@@ -33,7 +33,7 @@ export function buildPostSalesReceiptTransaction({
     };
 
     async function assertEmployeeIsCommissioned(employeeId: string): Promise<void> {
-        const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
+        const employee = await employeeRepository.fetchById(parseInt(employeeId));
         if (employee.type !== EmployeeType.COMMISSIONED) {
             throw new EmployeeTypeError(employee, EmployeeType.COMMISSIONED);
         }

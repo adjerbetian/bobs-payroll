@@ -6,12 +6,12 @@ import { NotFoundError } from "../core";
 import { mongoEmployeeRepository } from "./mongoEmployeeRepository";
 
 describe("mongoEmployeeRepository", () => {
-    describe("fetchEmployeeById", () => {
+    describe("fetchById", () => {
         it("should return the employee", async () => {
             const employee = generateHourlyRateEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
-            const dbEmployee = await mongoEmployeeRepository.fetchEmployeeById(employee.id);
+            const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
 
             expect(dbEmployee).to.deep.equal(employee);
         });
@@ -19,13 +19,13 @@ describe("mongoEmployeeRepository", () => {
             const employee = generateHourlyRateEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
-            const dbEmployee = await mongoEmployeeRepository.fetchEmployeeById(employee.id);
+            const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
 
             expect(dbEmployee).not.to.have.property("_id");
         });
         it("should throw a not found error when the employee was not found", async () => {
             // noinspection ES6MissingAwait
-            const promise = mongoEmployeeRepository.fetchEmployeeById(1234);
+            const promise = mongoEmployeeRepository.fetchById(1234);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });
@@ -57,7 +57,7 @@ describe("mongoEmployeeRepository", () => {
 
             await mongoEmployeeRepository.insertOne(employee);
 
-            const dbEmployee = await mongoEmployeeRepository.fetchEmployeeById(employee.id);
+            const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
             expect(dbEmployee).to.deep.equal(employee);
         });
         it("should not add the _id field to the entity", async () => {

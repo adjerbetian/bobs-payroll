@@ -13,7 +13,7 @@ export type Fake<T> = {
 
 export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
     return {
-        fetchEmployeeById: buildStubFor("fetchEmployeeById"),
+        fetchById: buildStubFor("fetchById"),
         fetchEmployeeByMemberId: buildStubFor("fetchEmployeeByMemberId"),
         insertOne: buildStubFor("insertOne"),
         exists: buildStubFor("exists"),

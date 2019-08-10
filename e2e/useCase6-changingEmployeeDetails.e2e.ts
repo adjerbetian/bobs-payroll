@@ -8,7 +8,7 @@ describe("Use Case 6: Changing Employee Details", () => {
 
         await executePayrollCommand(`ChgEmp ${employee.id} "James Bond"`);
 
-        const dbEmployee = await mongoEmployeeRepository.fetchEmployeeById(employee.id);
+        const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
         expect(dbEmployee.name).to.equal("James Bond");
     });
     it("should change the employee's address", async () => {});

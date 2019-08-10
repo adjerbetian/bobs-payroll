@@ -4,7 +4,7 @@ import { dbEmployees } from "./db";
 import { cleanMongoEntity } from "./utils";
 
 export const mongoEmployeeRepository: EmployeeRepository = {
-    async fetchEmployeeById(id: number): Promise<Employee> {
+    async fetchById(id: number): Promise<Employee> {
         return fetchIt({ id });
     },
     async fetchEmployeeByMemberId(memberId: string | undefined): Promise<Employee> {

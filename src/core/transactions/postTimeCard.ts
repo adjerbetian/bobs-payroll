@@ -33,7 +33,7 @@ export function buildPostTimeCardTransaction({
     }
 
     async function assertEmployeeIsInHourlyRate(employeeId: string): Promise<void> {
-        const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
+        const employee = await employeeRepository.fetchById(parseInt(employeeId));
         if (employee.type !== EmployeeType.HOURLY_RATE) {
             throw new EmployeeTypeError(employee, EmployeeType.HOURLY_RATE);
         }

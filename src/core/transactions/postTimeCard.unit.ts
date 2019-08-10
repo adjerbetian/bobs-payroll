@@ -34,7 +34,7 @@ describe("postTimeCard", () => {
 
     it("should create a time card for the employee", async () => {
         const timeCard = generateTimeCard();
-        fakeEmployeeRepository.fetchEmployeeById
+        fakeEmployeeRepository.fetchById
             .withArgs(timeCard.employeeId)
             .resolves(generateHourlyRateEmployee());
 
@@ -44,7 +44,7 @@ describe("postTimeCard", () => {
     });
     it("should throw a EmployeeTypeError if the employee is not in hourly rate", async () => {
         const timeCard = generateTimeCard();
-        fakeEmployeeRepository.fetchEmployeeById
+        fakeEmployeeRepository.fetchById
             .withArgs(timeCard.employeeId)
             .resolves(generateMonthlySalaryEmployee());
 
@@ -55,7 +55,7 @@ describe("postTimeCard", () => {
     });
     it("should throw a TransactionFormatError if the date is not in good format", async () => {
         const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
-        fakeEmployeeRepository.fetchEmployeeById
+        fakeEmployeeRepository.fetchById
             .withArgs(timeCard.employeeId)
             .resolves(generateHourlyRateEmployee());
 
