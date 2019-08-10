@@ -29,7 +29,7 @@ describe("postServiceCharge", () => {
 
     it("should create a service charge for the employee", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchEmployeeByMemberId
+        fakeEmployeeRepository.fetchByMemberId
             .withArgs(serviceCharge.memberId)
             .resolves(generateUnionEmployee());
 
@@ -39,7 +39,7 @@ describe("postServiceCharge", () => {
     });
     it("should throw a EmployeeTypeError if no union member with this if was found", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchEmployeeByMemberId
+        fakeEmployeeRepository.fetchByMemberId
             .withArgs(serviceCharge.memberId)
             .rejects(new NotFoundError("no union member found"));
 
@@ -50,7 +50,7 @@ describe("postServiceCharge", () => {
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchEmployeeByMemberId
+        fakeEmployeeRepository.fetchByMemberId
             .withArgs(serviceCharge.memberId)
             .resolves(generateUnionEmployee());
 

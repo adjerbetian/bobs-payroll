@@ -31,7 +31,7 @@ export function buildPostServiceChargeTransaction({
     }
 
     async function assertUnionMemberExists(memberId: string): Promise<void> {
-        await employeeRepository.fetchEmployeeByMemberId(memberId);
+        await employeeRepository.fetchByMemberId(memberId);
     }
 
     function buildServiceCharge(memberId: string, amount: string): ServiceCharge {

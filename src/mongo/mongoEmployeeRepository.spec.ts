@@ -30,14 +30,12 @@ describe("mongoEmployeeRepository", () => {
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });
     });
-    describe("fetchEmployeeByMemberId", () => {
+    describe("fetchByMemberId", () => {
         it("should return the employee matching the memberId", async () => {
             const employee = generateUnionEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
-            const dbEmployee = await mongoEmployeeRepository.fetchEmployeeByMemberId(
-                employee.memberId
-            );
+            const dbEmployee = await mongoEmployeeRepository.fetchByMemberId(employee.memberId);
 
             expect(dbEmployee).to.deep.equal(employee);
         });
@@ -46,7 +44,7 @@ describe("mongoEmployeeRepository", () => {
             await mongoEmployeeRepository.insertOne(employee);
 
             // noinspection ES6MissingAwait
-            const promise = mongoEmployeeRepository.fetchEmployeeByMemberId(employee.memberId);
+            const promise = mongoEmployeeRepository.fetchByMemberId(employee.memberId);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });

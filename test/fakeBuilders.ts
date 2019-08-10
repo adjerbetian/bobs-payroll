@@ -14,7 +14,7 @@ export type Fake<T> = {
 export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
     return {
         fetchById: buildStubFor("fetchById"),
-        fetchEmployeeByMemberId: buildStubFor("fetchEmployeeByMemberId"),
+        fetchByMemberId: buildStubFor("fetchByMemberId"),
         insertOne: buildStubFor("insertOne"),
         exists: buildStubFor("exists"),
         deleteById: buildStubFor("deleteById")
