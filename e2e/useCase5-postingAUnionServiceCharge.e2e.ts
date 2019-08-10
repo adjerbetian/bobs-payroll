@@ -1,11 +1,11 @@
 import { ServiceCharge, mongoServiceChargeRepository } from "../src";
-import { createHourlyRateEmployee, createUnionEmployee } from "../test/creators";
+import { seedHourlyRateEmployee, seedUnionEmployee } from "../test/seeders";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateServiceCharge } from "../test/generators";
 
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
-        const employee = await createUnionEmployee();
+        const employee = await seedUnionEmployee();
         const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
 
         await executePostServiceCharge(serviceCharge);
@@ -13,7 +13,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
         await expectServiceChargeToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the employee is not a union member", async () => {
-        const employee = await createHourlyRateEmployee();
+        const employee = await seedHourlyRateEmployee();
         const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
 
         await executePostServiceCharge(serviceCharge);
@@ -28,7 +28,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
         await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = await createUnionEmployee();
+        const employee = await seedUnionEmployee();
         const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
 
         await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId}`);

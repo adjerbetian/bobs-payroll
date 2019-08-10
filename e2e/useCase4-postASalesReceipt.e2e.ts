@@ -1,11 +1,11 @@
 import { SalesReceipt, mongoSalesReceiptRepository } from "../src";
-import { createCommissionedEmployee, createMonthlySalaryEmployee } from "../test/creators";
+import { seedCommissionedEmployee, seedMonthlySalaryEmployee } from "../test/seeders";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateSalesReceipt } from "../test/generators";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {
-        const employee = await createCommissionedEmployee();
+        const employee = await seedCommissionedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePostSalesReceipt(salesReceipt);
@@ -13,7 +13,7 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         await expectEmployeeToHaveSalesReceipt(employee.id, salesReceipt);
     });
     it("should do nothing when the employee is not commissioned", async () => {
-        const employee = await createMonthlySalaryEmployee();
+        const employee = await seedMonthlySalaryEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePostSalesReceipt(salesReceipt);
@@ -28,7 +28,7 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         await expectEmployeeToHaveNoSalesReceipt(salesReceipt.employeeId);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = await createCommissionedEmployee();
+        const employee = await seedCommissionedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePayrollCommand(
