@@ -1,4 +1,4 @@
-import { generateHourlyRateEmployee } from "../../test/generators";
+import { generateHourlyRateEmployee, generateUnionEmployee } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
 import { generateIndex } from "../../test/utils";
@@ -26,6 +26,27 @@ describe("mongoEmployeeRepository", () => {
         it("should throw a not found error when the employee was not found", async () => {
             // noinspection ES6MissingAwait
             const promise = mongoEmployeeRepository.fetchEmployeeById(1234);
+
+            await expect(promise).to.be.rejectedWith(NotFoundError);
+        });
+    });
+    describe("fetchEmployeeByMemberId", () => {
+        it("should return the employee matching the memberId", async () => {
+            const employee = generateUnionEmployee();
+            await mongoEmployeeRepository.insertOne(employee);
+
+            const dbEmployee = await mongoEmployeeRepository.fetchEmployeeByMemberId(
+                employee.memberId
+            );
+
+            expect(dbEmployee).to.deep.equal(employee);
+        });
+        it("should throw a not found error when the employee was not found", async () => {
+            const employee = generateHourlyRateEmployee();
+            await mongoEmployeeRepository.insertOne(employee);
+
+            // noinspection ES6MissingAwait
+            const promise = mongoEmployeeRepository.fetchEmployeeByMemberId(employee.memberId);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });

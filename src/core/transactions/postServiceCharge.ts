@@ -1,6 +1,6 @@
 import { assertIsNotEmpty } from "../common";
 import { ServiceCharge } from "../entities";
-import { TransactionFormatError, UnionMemberError } from "../errors";
+import { TransactionFormatError } from "../errors";
 import { EmployeeRepository, ServiceChargeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
 
@@ -13,33 +13,30 @@ export function buildPostServiceChargeTransaction({
     serviceChargeRepository,
     employeeRepository
 }: Dependencies): Transaction {
-    return async function(employeeId: string, amount: string): Promise<void> {
-        assertTransactionValid(employeeId, amount);
-        await assertEmployeeIsAUnionMember(employeeId);
+    return async function(memberId: string, amount: string): Promise<void> {
+        assertTransactionValid(memberId, amount);
+        await assertUnionMemberExists(memberId);
 
-        const serviceCharge = buildServiceCharge(employeeId, amount);
+        const serviceCharge = buildServiceCharge(memberId, amount);
         await serviceChargeRepository.insertOne(serviceCharge);
     };
 
-    function assertTransactionValid(employeeId: string, amount: string): void {
+    function assertTransactionValid(memberId: string, amount: string): void {
         try {
-            assertIsNotEmpty(employeeId);
+            assertIsNotEmpty(memberId);
             assertIsNotEmpty(amount);
         } catch (err) {
             throw new TransactionFormatError("ServiceCharge");
         }
     }
 
-    async function assertEmployeeIsAUnionMember(employeeId: string): Promise<void> {
-        const employee = await employeeRepository.fetchEmployeeById(parseInt(employeeId));
-        // if (!employee.union) {
-        //     throw new UnionMemberError(employee);
-        // }
+    async function assertUnionMemberExists(memberId: string): Promise<void> {
+        await employeeRepository.fetchEmployeeByMemberId(memberId);
     }
 
-    function buildServiceCharge(employeeId: string, amount: string): ServiceCharge {
+    function buildServiceCharge(memberId: string, amount: string): ServiceCharge {
         return {
-            memberId: "coucou",
+            memberId: memberId,
             amount: parseFloat(amount)
         };
     }

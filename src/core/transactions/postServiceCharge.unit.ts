@@ -6,7 +6,7 @@ import {
 import { generateServiceCharge, generateUnionEmployee } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { ServiceCharge } from "../entities";
-import { NotFoundError, TransactionFormatError, UnionMemberError } from "../errors";
+import { NotFoundError, TransactionFormatError } from "../errors";
 import { EmployeeRepository, ServiceChargeRepository } from "../repositories";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 import { Transaction } from "./Transactions";
@@ -46,7 +46,7 @@ describe("postServiceCharge", () => {
         // noinspection ES6MissingAwait
         const promise = postServiceChargeEntity(serviceCharge);
 
-        await expect(promise).to.be.rejectedWith(UnionMemberError);
+        await expect(promise).to.be.rejectedWith(NotFoundError);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generateServiceCharge();
