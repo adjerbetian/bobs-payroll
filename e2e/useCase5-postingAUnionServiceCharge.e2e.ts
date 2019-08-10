@@ -20,7 +20,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
 
         await expectEmployeeToHaveNoServiceCharge(employee.id);
     });
-    it.skip("should do nothing when the employee does not exist", async () => {
+    it("should do nothing when the employee does not exist", async () => {
         const serviceCharge = generateServiceCharge();
 
         await executePostServiceCharge(serviceCharge);
