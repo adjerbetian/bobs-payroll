@@ -27,7 +27,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
 
         await expectEmployeeToHaveNoServiceCharge(serviceCharge.employeeId);
     });
-    it.skip("should do nothing when the transaction is not of the right format", async () => {
+    it("should do nothing when the transaction is not of the right format", async () => {
         const employee = await createUnionEmployee();
         const serviceCharge = generateServiceCharge({ employeeId: employee.id });
 
