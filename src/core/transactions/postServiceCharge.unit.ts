@@ -52,7 +52,7 @@ describe("postServiceCharge", () => {
 
         await expect(promise).to.be.rejectedWith(UnionMemberError);
     });
-    it.skip("should throw a TransactionFormatError if the amount is missing", async () => {
+    it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generateServiceCharge();
         fakeEmployeeRepository.fetchEmployeeById
             .withArgs(serviceCharge.employeeId)
