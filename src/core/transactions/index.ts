@@ -5,6 +5,7 @@ import {
     TimeCardRepository
 } from "../repositories";
 import { buildAddEmployeeTransaction } from "./addEmployee";
+import { buildChangeEmployeeTransaction } from "./changeEmployee";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
@@ -37,6 +38,7 @@ export function buildTransactions({
         postServiceCharge: buildPostServiceChargeTransaction({
             serviceChargeRepository,
             employeeRepository
-        })
+        }),
+        changeEmployee: buildChangeEmployeeTransaction({ employeeRepository })
     };
 }

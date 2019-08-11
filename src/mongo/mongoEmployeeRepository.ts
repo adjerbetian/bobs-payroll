@@ -5,11 +5,11 @@ import { cleanMongoEntity } from "./utils";
 
 export const mongoEmployeeRepository: EmployeeRepository = {
     async fetchById(id: number): Promise<Employee> {
-        return fetchIt({ id });
+        return fetchByQuery({ id });
     },
     async fetchByMemberId(memberId: string | undefined): Promise<Employee> {
         if (!memberId) throw new NotFoundError(`the memberId is not defined`);
-        return fetchIt({ memberId });
+        return fetchByQuery({ memberId });
     },
     async insertOne(employee: Employee): Promise<void> {
         await dbEmployees.insertOne(employee);
@@ -20,13 +20,15 @@ export const mongoEmployeeRepository: EmployeeRepository = {
     },
     async deleteById(id: number): Promise<void> {
         const a = await dbEmployees.deleteOne({ id });
-        if (a.deletedCount === 0) {
-            throw new NotFoundError(`the employee ${id} does not exist`);
-        }
+        if (a.deletedCount === 0) throw new NotFoundError(`the employee ${id} does not exist`);
+    },
+    async updateById(id: number, update: Partial<Employee>): Promise<void> {
+        const { matchedCount } = await dbEmployees.updateOne({ id }, { $set: update });
+        if (matchedCount === 0) throw new NotFoundError(`the employee ${id} does not exist`);
     }
 };
 
-async function fetchIt(query: FilterQuery<Employee>): Promise<Employee> {
+async function fetchByQuery(query: FilterQuery<Employee>): Promise<Employee> {
     const employee = await dbEmployees.findOne(query);
     if (!employee) {
         throw new NotFoundError(`no employee matching ${JSON.stringify(query)} was found`);

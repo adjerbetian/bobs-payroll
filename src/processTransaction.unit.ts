@@ -107,4 +107,18 @@ describe("processTransaction", () => {
             );
         });
     });
+    describe("ChgEmp", () => {
+        it("should call the changeEmployee's name transaction", async () => {
+            fakeTransactions.changeEmployee.resolves();
+            const employee = generateHourlyRateEmployee();
+
+            await processTransaction(["ChgEmp", `${employee.id}`, "Name", "James Bond"]);
+
+            expect(fakeTransactions.changeEmployee).to.have.been.calledOnceWith(
+                `${employee.id}`,
+                "Name",
+                "James Bond"
+            );
+        });
+    });
 });

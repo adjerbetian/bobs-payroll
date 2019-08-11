@@ -6,7 +6,7 @@ describe("Use Case 6: Changing Employee Details", () => {
     it("should change the employee's name", async () => {
         const employee = await seedHourlyRateEmployee();
 
-        await executePayrollCommand(`ChgEmp ${employee.id} "James Bond"`);
+        await executePayrollCommand(`ChgEmp ${employee.id} Name "James Bond"`);
 
         const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
         expect(dbEmployee.name).to.equal("James Bond");

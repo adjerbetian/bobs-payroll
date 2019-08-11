@@ -17,7 +17,8 @@ export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
         fetchByMemberId: buildStubFor("fetchByMemberId"),
         insertOne: buildStubFor("insertOne"),
         exists: buildStubFor("exists"),
-        deleteById: buildStubFor("deleteById")
+        deleteById: buildStubFor("deleteById"),
+        updateById: buildStubFor("updateById")
     };
 }
 
@@ -42,7 +43,8 @@ export function buildFakeTransactions(): Fake<Transactions> {
         deleteEmployee: buildStubFor("deleteEmployee"),
         postTimeCard: buildStubFor("postTimeCard"),
         postSalesReceipt: buildStubFor("postSalesReceipt"),
-        postServiceCharge: buildStubFor("postServiceCharge")
+        postServiceCharge: buildStubFor("postServiceCharge"),
+        changeEmployee: buildStubFor("changeEmployee")
     };
 }
 

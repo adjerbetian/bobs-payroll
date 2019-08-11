@@ -1,5 +1,6 @@
 import { generateHourlyRateEmployee, generateUnionEmployee } from "../../test/generators";
 import "../../test/integrationTest";
+import { seedHourlyRateEmployee } from "../../test/seeders";
 import { expect } from "../../test/unitTest";
 import { generateIndex } from "../../test/utils";
 import { NotFoundError } from "../core";
@@ -96,6 +97,24 @@ describe("mongoEmployeeRepository", () => {
         it("throw a NotFoundError when the employee does not exists", async () => {
             // noinspection ES6MissingAwait
             const promise = mongoEmployeeRepository.deleteById(generateIndex());
+
+            await expect(promise).to.be.rejectedWith(NotFoundError);
+        });
+    });
+    describe("updateById", () => {
+        it("update the employee when it exists", async () => {
+            const employee = await seedHourlyRateEmployee();
+
+            await mongoEmployeeRepository.updateById(employee.id, { name: "James Bond" });
+
+            const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
+            expect(dbEmployee.name).to.equal("James Bond");
+        });
+        it("throw a NotFoundError when the employee does not exists", async () => {
+            // noinspection ES6MissingAwait
+            const promise = mongoEmployeeRepository.updateById(generateIndex(), {
+                name: "James Bond"
+            });
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });

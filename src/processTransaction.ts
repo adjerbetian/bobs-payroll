@@ -20,6 +20,9 @@ export function buildProcessTransaction(transactions: Transactions): ProcessTran
             if (transactionName === "ServiceCharge") {
                 await transactions.postServiceCharge(...args);
             }
+            if (transactionName === "ChgEmp") {
+                await transactions.changeEmployee(...args);
+            }
         } catch (err) {
             console.log("AN ERROR HAS OCCURED");
             console.log({ err });

@@ -4,6 +4,7 @@ export interface Transactions {
     postTimeCard: Transaction;
     postSalesReceipt: Transaction;
     postServiceCharge: Transaction;
+    changeEmployee: Transaction;
 }
 
 export type Transaction = (...args: string[]) => Promise<void>;
