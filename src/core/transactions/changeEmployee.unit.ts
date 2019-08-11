@@ -27,4 +27,13 @@ describe("addEmployee", () => {
             name: "James Bond"
         });
     });
+    it("should update the employee's address", async () => {
+        const employee = generateHourlyRateEmployee();
+
+        await changeEmployee(`${employee.id}`, "Address", "my new address");
+
+        expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
+            address: "my new address"
+        });
+    });
 });
