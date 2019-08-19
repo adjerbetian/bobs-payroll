@@ -62,7 +62,7 @@ describe("postTimeCard", () => {
         // noinspection ES6MissingAwait
         const promise = postSalesReceipt(`${salesReceipt.employeeId}`, `${salesReceipt.date}`, ``);
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError);
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "SalesReceipt");
     });
     it("should throw a TransactionFormatError if the date is not in the right format", async () => {
         const salesReceipt = generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
@@ -77,7 +77,7 @@ describe("postTimeCard", () => {
             `${salesReceipt.amount}`
         );
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError);
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "SalesReceipt");
     });
 
     async function postSalesReceiptEntity(salesReceipt: SalesReceipt): Promise<void> {

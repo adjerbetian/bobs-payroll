@@ -1,11 +1,11 @@
-import { assertIsNotEmpty } from "../common";
-import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
+import { buildTransactionValidator } from "./transactionValidator";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
+const transactionValidator = buildTransactionValidator("DelEmp");
 
 export function buildDeleteEmployeeTransaction({ employeeRepository }: Dependencies): Transaction {
     return async function(employeeId: string): Promise<void> {
@@ -13,11 +13,7 @@ export function buildDeleteEmployeeTransaction({ employeeRepository }: Dependenc
         await employeeRepository.deleteById(parseInt(employeeId));
 
         function assertTransactionIsValid(): void {
-            try {
-                assertIsNotEmpty(employeeId);
-            } catch (err) {
-                throw new TransactionFormatError("DelEmp");
-            }
+            transactionValidator.assertIsNotEmpty(employeeId);
         }
     };
 }

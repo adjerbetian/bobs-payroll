@@ -57,7 +57,7 @@ describe("postServiceCharge", () => {
         // noinspection ES6MissingAwait
         const promise = postServiceCharge(`${serviceCharge.memberId}`, ``);
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError);
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "ServiceCharge");
     });
 
     async function postServiceChargeEntity(serviceCharge: ServiceCharge): Promise<void> {

@@ -62,7 +62,7 @@ describe("postTimeCard", () => {
         // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError);
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "TimeCard");
     });
 
     async function postTimeCardEntity(timeCard: TimeCard): Promise<void> {

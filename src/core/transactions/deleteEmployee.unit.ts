@@ -30,6 +30,6 @@ describe("deleteEmployee", () => {
         // noinspection ES6MissingAwait
         const promise = deleteEmployee(``);
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError);
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "DelEmp");
     });
 });

@@ -73,6 +73,6 @@ describe("addEmployee", () => {
             `${employee.monthlySalary}`
         );
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError);
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "AddEmp");
     });
 });

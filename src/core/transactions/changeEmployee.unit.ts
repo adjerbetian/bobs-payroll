@@ -1,6 +1,11 @@
 import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
-import { generateHourlyRateEmployee } from "../../../test/generators";
+import {
+    generateHourlyRateEmployee,
+    generateMonthlySalaryEmployee
+} from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
+import { EmployeeType } from "../entities";
+import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 import { Transaction } from "./Transactions";
@@ -35,5 +40,23 @@ describe("addEmployee", () => {
         expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
             address: "my new address"
         });
+    });
+    it("should change the employee's type to hourly and set the rate", async () => {
+        const employee = generateMonthlySalaryEmployee();
+
+        await changeEmployee(`${employee.id}`, "Hourly", "10.5");
+
+        expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
+            type: EmployeeType.HOURLY_RATE,
+            hourlyRate: 10.5
+        });
+    });
+    it("should throw an error if the rate is not defined", async () => {
+        const employee = generateMonthlySalaryEmployee();
+
+        // noinspection ES6MissingAwait
+        const promise = changeEmployee(`${employee.id}`, "Hourly", "");
+
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
     });
 });

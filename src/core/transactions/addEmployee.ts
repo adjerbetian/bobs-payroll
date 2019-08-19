@@ -1,13 +1,15 @@
-import * as assert from "assert";
-import { assertIsIncludedIn, assertIsNotEmpty, stripQuotationMarks } from "../common";
+import { stripQuotationMarks } from "../common";
 import { Employee, EmployeeType } from "../entities";
 import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
+import { buildTransactionValidator } from "./transactionValidator";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
+
+const transactionValidator = buildTransactionValidator("AddEmp");
 
 export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies): Transaction {
     return async function(
@@ -30,17 +32,13 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
         });
 
         function assertTransactionIsValid(): void {
-            try {
-                assertIsNotEmpty(id);
-                assertIsNotEmpty(name);
-                assertIsNotEmpty(address);
-                assertIsNotEmpty(type);
-                assertIsNotEmpty(rate);
-                assertIsIncludedIn(type, ["H", "S", "C"]);
-                assert(type !== "C" || !!commissionRate);
-            } catch (err) {
-                throw new TransactionFormatError("AddEmp");
-            }
+            transactionValidator.assertIsNotEmpty(id);
+            transactionValidator.assertIsNotEmpty(name);
+            transactionValidator.assertIsNotEmpty(address);
+            transactionValidator.assertIsNotEmpty(type);
+            transactionValidator.assertIsNotEmpty(rate);
+            transactionValidator.assertIsIncludedIn(type, ["H", "S", "C"]);
+            transactionValidator.assertIsTrue(type !== "C" || !!commissionRate);
         }
     };
 

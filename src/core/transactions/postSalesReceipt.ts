@@ -1,13 +1,14 @@
-import { assertIsISODate, assertIsNotEmpty } from "../common";
 import { EmployeeType, SalesReceipt } from "../entities";
-import { EmployeeTypeError, TransactionFormatError } from "../errors";
+import { EmployeeTypeError } from "../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
 import { Transaction } from "./Transactions";
+import { buildTransactionValidator } from "./transactionValidator";
 
 interface Dependencies {
     salesReceiptRepository: SalesReceiptRepository;
     employeeRepository: EmployeeRepository;
 }
+const transactionValidator = buildTransactionValidator("SalesReceipt");
 
 export function buildPostSalesReceiptTransaction({
     salesReceiptRepository,
@@ -21,14 +22,10 @@ export function buildPostSalesReceiptTransaction({
         return salesReceiptRepository.insertOne(salesReceipt);
 
         function assertTransactionIsValid(): void {
-            try {
-                assertIsNotEmpty(employeeId);
-                assertIsNotEmpty(date);
-                assertIsNotEmpty(amount);
-                assertIsISODate(date);
-            } catch (err) {
-                throw new TransactionFormatError("SalesReceipt");
-            }
+            transactionValidator.assertIsNotEmpty(employeeId);
+            transactionValidator.assertIsNotEmpty(date);
+            transactionValidator.assertIsNotEmpty(amount);
+            transactionValidator.assertIsISODate(date);
         }
     };
 

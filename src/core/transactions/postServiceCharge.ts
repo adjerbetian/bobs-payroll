@@ -1,13 +1,13 @@
-import { assertIsNotEmpty } from "../common";
 import { ServiceCharge } from "../entities";
-import { TransactionFormatError } from "../errors";
 import { EmployeeRepository, ServiceChargeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
+import { buildTransactionValidator } from "./transactionValidator";
 
 interface Dependencies {
     serviceChargeRepository: ServiceChargeRepository;
     employeeRepository: EmployeeRepository;
 }
+const transactionValidator = buildTransactionValidator("ServiceCharge");
 
 export function buildPostServiceChargeTransaction({
     serviceChargeRepository,
@@ -22,12 +22,8 @@ export function buildPostServiceChargeTransaction({
     };
 
     function assertTransactionValid(memberId: string, amount: string): void {
-        try {
-            assertIsNotEmpty(memberId);
-            assertIsNotEmpty(amount);
-        } catch (err) {
-            throw new TransactionFormatError("ServiceCharge");
-        }
+        transactionValidator.assertIsNotEmpty(memberId);
+        transactionValidator.assertIsNotEmpty(amount);
     }
 
     async function assertUnionMemberExists(memberId: string): Promise<void> {

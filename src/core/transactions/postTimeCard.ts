@@ -1,13 +1,14 @@
-import { assertIsISODate, assertIsNotEmpty } from "../common";
 import { EmployeeType, TimeCard } from "../entities";
-import { EmployeeTypeError, TransactionFormatError } from "../errors";
+import { EmployeeTypeError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { Transaction } from "./Transactions";
+import { buildTransactionValidator } from "./transactionValidator";
 
 interface Dependencies {
     timeCardRepository: TimeCardRepository;
     employeeRepository: EmployeeRepository;
 }
+const transactionValidator = buildTransactionValidator("TimeCard");
 
 export function buildPostTimeCardTransaction({
     timeCardRepository,
@@ -22,14 +23,10 @@ export function buildPostTimeCardTransaction({
     };
 
     function assertTransactionValid(employeeId: string, date: string, hours: string): void {
-        try {
-            assertIsNotEmpty(employeeId);
-            assertIsNotEmpty(date);
-            assertIsNotEmpty(hours);
-            assertIsISODate(date);
-        } catch (err) {
-            throw new TransactionFormatError("TimeCard");
-        }
+        transactionValidator.assertIsNotEmpty(employeeId);
+        transactionValidator.assertIsNotEmpty(date);
+        transactionValidator.assertIsNotEmpty(hours);
+        transactionValidator.assertIsISODate(date);
     }
 
     async function assertEmployeeIsInHourlyRate(employeeId: string): Promise<void> {
