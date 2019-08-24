@@ -1,6 +1,9 @@
 import { EmployeeRepository, SalesReceiptRepository, ServiceChargeRepository, TimeCardRepository } from "../core";
-import { Transaction } from "./Transaction";
-import * as transactions from "./transactions";
+import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
+import { buildTransactions } from "./transactions";
+
+export { ProcessTransaction } from "./processTransaction";
+export { Transactions } from "./transactions";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
@@ -9,33 +12,19 @@ interface Dependencies {
     serviceChargeRepository: ServiceChargeRepository;
 }
 
-export function buildTransactions({
-    serviceChargeRepository,
+export function buildTransactionDomain({
     employeeRepository,
     salesReceiptRepository,
+    serviceChargeRepository,
     timeCardRepository
-}: Dependencies): Transactions {
+}: Dependencies): { processTransaction: ProcessTransaction } {
+    const transactions = buildTransactions({
+        employeeRepository,
+        salesReceiptRepository,
+        serviceChargeRepository,
+        timeCardRepository
+    });
     return {
-        addEmployee: transactions.buildAddEmployeeTransaction({ employeeRepository }),
-        deleteEmployee: transactions.buildDeleteEmployeeTransaction({ employeeRepository }),
-        postTimeCard: transactions.buildPostTimeCardTransaction({ timeCardRepository, employeeRepository }),
-        postSalesReceipt: transactions.buildPostSalesReceiptTransaction({
-            salesReceiptRepository,
-            employeeRepository
-        }),
-        postServiceCharge: transactions.buildPostServiceChargeTransaction({
-            serviceChargeRepository,
-            employeeRepository
-        }),
-        changeEmployee: transactions.buildChangeEmployeeTransaction({ employeeRepository })
+        processTransaction: buildProcessTransaction(transactions)
     };
-}
-
-export interface Transactions {
-    addEmployee: Transaction;
-    deleteEmployee: Transaction;
-    postTimeCard: Transaction;
-    postSalesReceipt: Transaction;
-    postServiceCharge: Transaction;
-    changeEmployee: Transaction;
 }

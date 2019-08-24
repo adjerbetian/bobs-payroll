@@ -1,2 +1,2 @@
 export * from "./core";
-export * from "./transactions";
+export { Transactions, ProcessTransaction, buildTransactionDomain } from "./transactions";

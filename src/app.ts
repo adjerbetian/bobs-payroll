@@ -1,4 +1,4 @@
-import { ProcessTransaction } from "./processTransaction";
+import { ProcessTransaction } from "./domain";
 
 export interface App {
     run(): Promise<void>;

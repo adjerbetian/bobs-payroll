@@ -1,3 +1,2 @@
-export * from "./domain/core";
-export * from "./domain/transactions";
+export * from "./domain";
 export * from "./mongo";

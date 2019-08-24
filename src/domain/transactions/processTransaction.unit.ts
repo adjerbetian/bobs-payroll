@@ -1,14 +1,14 @@
-import { buildFakeTransactions, Fake } from "../test/fakeBuilders";
+import { buildFakeTransactions, Fake } from "../../../test/fakeBuilders";
 import {
     generateHourlyEmployee,
     generateSalesReceipt,
     generateServiceCharge,
     generateTimeCard
-} from "../test/generators";
-import { expect } from "../test/unitTest";
-import { generateIndex } from "../test/utils";
+} from "../../../test/generators";
+import { expect } from "../../../test/unitTest";
+import { generateIndex } from "../../../test/utils";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
-import { Transactions } from "./domain";
+import { Transactions } from "./transactions";
 
 describe("processTransaction", () => {
     let processTransaction: ProcessTransaction;

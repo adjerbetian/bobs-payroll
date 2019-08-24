@@ -1,5 +1,5 @@
 import { buildApp } from "./app";
-import { buildTransactions } from "./domain";
+import { buildTransactionDomain } from "./domain";
 import {
     closeConnection,
     mongoEmployeeRepository,
@@ -8,16 +8,14 @@ import {
     mongoServiceChargeRepository,
     mongoTimeCardRepository
 } from "./mongo";
-import { buildProcessTransaction } from "./processTransaction";
 
-const transactions = buildTransactions({
+const transactionDomain = buildTransactionDomain({
     salesReceiptRepository: mongoSalesReceiptRepository,
     employeeRepository: mongoEmployeeRepository,
     serviceChargeRepository: mongoServiceChargeRepository,
     timeCardRepository: mongoTimeCardRepository
 });
-const processTransaction = buildProcessTransaction(transactions);
-const app = buildApp({ initConnection, closeConnection, processTransaction });
+const app = buildApp({ initConnection, closeConnection, processTransaction: transactionDomain.processTransaction });
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 app.run().then(() => console.log("done"));
