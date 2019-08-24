@@ -1,4 +1,4 @@
-import { buildFakeTransactions, Fake } from "../../../test/fakeBuilders";
+import { buildStubFor, Fake } from "../../../test/fakeBuilders";
 import {
     generateHourlyEmployee,
     generateSalesReceipt,
@@ -109,3 +109,14 @@ describe("processTransaction", () => {
         });
     });
 });
+
+export function buildFakeTransactions(): Fake<Transactions> {
+    return {
+        addEmployee: buildStubFor("addEmployee"),
+        deleteEmployee: buildStubFor("deleteEmployee"),
+        postTimeCard: buildStubFor("postTimeCard"),
+        postSalesReceipt: buildStubFor("postSalesReceipt"),
+        postServiceCharge: buildStubFor("postServiceCharge"),
+        changeEmployee: buildStubFor("changeEmployee")
+    };
+}
