@@ -55,4 +55,20 @@ describe("asserter", () => {
             expect(() => asserter.assertIsTrue(false)).to.throw();
         });
     });
+    describe("assertEquals", () => {
+        it("should do nothing when values are equal", () => {
+            asserter.assertEquals("a", "a");
+            asserter.assertEquals(10, 10);
+            asserter.assertEquals(null, null);
+        });
+        it("should throw when values are not equal", () => {
+            expect(() => asserter.assertEquals("a", "b")).to.throw();
+            expect(() => asserter.assertEquals(10, 11)).to.throw();
+            expect(() => asserter.assertEquals(null, 10)).to.throw();
+            expect(() => asserter.assertEquals(null, undefined)).to.throw();
+        });
+        it("should throw when given undefined", () => {
+            expect(() => asserter.assertEquals(undefined, undefined)).to.throw();
+        });
+    });
 });
