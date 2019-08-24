@@ -31,18 +31,14 @@ describe("Use Case 3: Post a Time Card", () => {
         const employee = await seedHourlyEmployee();
         const timeCard = generateTimeCard({ employeeId: employee.id });
 
-        await executePayrollCommand(
-            `TimeCard ${timeCard.employeeId} ${timeCard.hours} ${timeCard.date}`
-        );
+        await executePayrollCommand(`TimeCard ${timeCard.employeeId} ${timeCard.hours} ${timeCard.date}`);
 
         await expectEmployeeToHaveNoTimeCards(timeCard.employeeId);
     });
 });
 
 async function executePostTimeCard(timeCard: TimeCard): Promise<void> {
-    await executePayrollCommand(
-        `TimeCard ${timeCard.employeeId} ${timeCard.date} ${timeCard.hours}`
-    );
+    await executePayrollCommand(`TimeCard ${timeCard.employeeId} ${timeCard.date} ${timeCard.hours}`);
 }
 
 async function expectEmployeeToHaveTimeCard(employeeId: number, timeCard: TimeCard): Promise<void> {

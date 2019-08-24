@@ -1,10 +1,5 @@
 import { SinonStub } from "sinon";
-import {
-    EmployeeRepository,
-    ServiceChargeRepository,
-    TimeCardRepository,
-    Transactions
-} from "../src";
+import { EmployeeRepository, ServiceChargeRepository, TimeCardRepository, Transactions } from "../src";
 import { sandbox } from "./unitTest";
 
 export type Fake<T> = {

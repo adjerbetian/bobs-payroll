@@ -1,8 +1,4 @@
-import {
-    buildFakeEmployeeRepository,
-    buildFakeServiceChargeRepository,
-    Fake
-} from "../../../test/fakeBuilders";
+import { buildFakeEmployeeRepository, buildFakeServiceChargeRepository, Fake } from "../../../test/fakeBuilders";
 import { generateServiceCharge, generateUnionEmployee } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { ServiceCharge } from "../entities";
@@ -29,9 +25,7 @@ describe("postServiceCharge", () => {
 
     it("should create a service charge for the employee", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchByMemberId
-            .withArgs(serviceCharge.memberId)
-            .resolves(generateUnionEmployee());
+        fakeEmployeeRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionEmployee());
 
         await postServiceChargeEntity(serviceCharge);
 
@@ -50,9 +44,7 @@ describe("postServiceCharge", () => {
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchByMemberId
-            .withArgs(serviceCharge.memberId)
-            .resolves(generateUnionEmployee());
+        fakeEmployeeRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postServiceCharge(`${serviceCharge.memberId}`, ``);

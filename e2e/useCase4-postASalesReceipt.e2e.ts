@@ -31,24 +31,17 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         const employee = await seedCommissionedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
-        await executePayrollCommand(
-            `TimeCard ${salesReceipt.employeeId} ${salesReceipt.amount} ${salesReceipt.date}`
-        );
+        await executePayrollCommand(`TimeCard ${salesReceipt.employeeId} ${salesReceipt.amount} ${salesReceipt.date}`);
 
         await expectEmployeeToHaveNoSalesReceipt(employee.id);
     });
 });
 
 async function executePostSalesReceipt(salesReceipt: SalesReceipt): Promise<void> {
-    await executePayrollCommand(
-        `SalesReceipt ${salesReceipt.employeeId} ${salesReceipt.date} ${salesReceipt.amount}`
-    );
+    await executePayrollCommand(`SalesReceipt ${salesReceipt.employeeId} ${salesReceipt.date} ${salesReceipt.amount}`);
 }
 
-async function expectEmployeeToHaveSalesReceipt(
-    employeeId: number,
-    salesReceipt: SalesReceipt
-): Promise<void> {
+async function expectEmployeeToHaveSalesReceipt(employeeId: number, salesReceipt: SalesReceipt): Promise<void> {
     const dbSalesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(employeeId);
     expect(dbSalesReceipts).to.deep.include(salesReceipt);
 }

@@ -11,18 +11,14 @@ describe("mongoTimeCardRepository", () => {
         it("should return all the employee's time cards", async () => {
             const salesReceipt = await dbGenerateTimeCard();
 
-            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(
-                salesReceipt.employeeId
-            );
+            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(salesReceipt.employeeId);
 
             expect(salesReceipts).to.deep.equal([salesReceipt]);
         });
         it("should not return other employees' time cards", async () => {
             const salesReceipt = await dbGenerateTimeCard();
 
-            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(
-                salesReceipt.employeeId + 1
-            );
+            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(salesReceipt.employeeId + 1);
 
             expect(salesReceipts).to.be.empty;
         });
@@ -39,9 +35,7 @@ describe("mongoTimeCardRepository", () => {
 
             await mongoTimeCardRepository.insertOne(timeCard);
 
-            const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(
-                timeCard.employeeId
-            );
+            const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(timeCard.employeeId);
             expect(dbTimeCards).to.deep.equal([timeCard]);
         });
         it("should not add the _id field to the entity", async () => {

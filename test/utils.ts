@@ -5,10 +5,7 @@ export interface ExecuteOptions {
     printOutput: boolean;
 }
 
-export async function execute(
-    command: string,
-    options: ExecuteOptions = { printOutput: false }
-): Promise<void> {
+export async function execute(command: string, options: ExecuteOptions = { printOutput: false }): Promise<void> {
     const output = await new Promise((resolve, reject) =>
         exec(command, { encoding: "utf8" }, (err, stdout) => {
             if (err) reject(err);

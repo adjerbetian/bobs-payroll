@@ -8,9 +8,6 @@ before(async () => {
     await execute("npm run build");
 });
 
-export async function executePayrollCommand(
-    command: string,
-    options?: ExecuteOptions
-): Promise<void> {
+export async function executePayrollCommand(command: string, options?: ExecuteOptions): Promise<void> {
     await execute("node dist/main.js " + command, options);
 }

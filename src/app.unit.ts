@@ -32,9 +32,7 @@ describe("app", () => {
             expect(fakeCloseConnection).to.have.been.calledAfter(fakeProcessTransaction);
         });
         it("should call processTransaction with the command arguments", async () => {
-            sandbox
-                .stub(process, "argv")
-                .value(["executionPath", "jsFile", "command", "arg1", "arg2"]);
+            sandbox.stub(process, "argv").value(["executionPath", "jsFile", "command", "arg1", "arg2"]);
 
             await app.run();
 

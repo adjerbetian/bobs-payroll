@@ -1,14 +1,6 @@
 import * as moment from "moment";
-import {
-    buildFakeEmployeeRepository,
-    buildFakeTimeCardRepository,
-    Fake
-} from "../../../test/fakeBuilders";
-import {
-    generateHourlyEmployee,
-    generateSalariedEmployee,
-    generateTimeCard
-} from "../../../test/generators";
+import { buildFakeEmployeeRepository, buildFakeTimeCardRepository, Fake } from "../../../test/fakeBuilders";
+import { generateHourlyEmployee, generateSalariedEmployee, generateTimeCard } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { TimeCard } from "../entities";
 import { EmployeeTypeError, TransactionFormatError } from "../errors";
@@ -34,9 +26,7 @@ describe("postTimeCard", () => {
 
     it("should create a time card for the employee", async () => {
         const timeCard = generateTimeCard();
-        fakeEmployeeRepository.fetchById
-            .withArgs(timeCard.employeeId)
-            .resolves(generateHourlyEmployee());
+        fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
 
         await postTimeCardEntity(timeCard);
 
@@ -44,9 +34,7 @@ describe("postTimeCard", () => {
     });
     it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
         const timeCard = generateTimeCard();
-        fakeEmployeeRepository.fetchById
-            .withArgs(timeCard.employeeId)
-            .resolves(generateSalariedEmployee());
+        fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateSalariedEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);
@@ -55,9 +43,7 @@ describe("postTimeCard", () => {
     });
     it("should throw a TransactionFormatError if the date is not in good format", async () => {
         const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
-        fakeEmployeeRepository.fetchById
-            .withArgs(timeCard.employeeId)
-            .resolves(generateHourlyEmployee());
+        fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);

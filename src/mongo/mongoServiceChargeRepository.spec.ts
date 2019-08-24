@@ -9,10 +9,7 @@ import { mongoServiceChargeRepository } from "./mongoServiceChargeRepository";
 describe("mongoServiceChargeRepository", () => {
     describe("fetchAll", () => {
         it("should return all the service charges", async () => {
-            const serviceCharges = [
-                await dbGenerateServiceCharge(),
-                await dbGenerateServiceCharge()
-            ];
+            const serviceCharges = [await dbGenerateServiceCharge(), await dbGenerateServiceCharge()];
 
             const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
 
@@ -23,18 +20,14 @@ describe("mongoServiceChargeRepository", () => {
         it("should return all the employee's service charges", async () => {
             const serviceCharge = await dbGenerateServiceCharge();
 
-            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(
-                serviceCharge.memberId
-            );
+            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(serviceCharge.memberId);
 
             expect(salesReceipts).to.deep.equal([serviceCharge]);
         });
         it("should not return other employees' time cards", async () => {
             const serviceCharge = await dbGenerateServiceCharge();
 
-            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(
-                serviceCharge.memberId + "x"
-            );
+            const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(serviceCharge.memberId + "x");
 
             expect(salesReceipts).to.be.empty;
         });
@@ -45,9 +38,7 @@ describe("mongoServiceChargeRepository", () => {
 
             await mongoServiceChargeRepository.insertOne(serviceCharge);
 
-            const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfMember(
-                serviceCharge.memberId
-            );
+            const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfMember(serviceCharge.memberId);
             expect(dbServiceCharges).to.deep.equal([serviceCharge]);
         });
         it("should not add the _id field to the entity", async () => {

@@ -11,18 +11,14 @@ describe("mongoSalesReceiptRepository", () => {
         it("should return all the employee's sales receipt", async () => {
             const salesReceipt = await dbGenerateSalesReceipt();
 
-            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(
-                salesReceipt.employeeId
-            );
+            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(salesReceipt.employeeId);
 
             expect(salesReceipts).to.deep.equal([salesReceipt]);
         });
         it("should not return other employees' sales receipt", async () => {
             const salesReceipt = await dbGenerateSalesReceipt();
 
-            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(
-                salesReceipt.employeeId + 1
-            );
+            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(salesReceipt.employeeId + 1);
 
             expect(salesReceipts).to.be.empty;
         });
@@ -39,9 +35,7 @@ describe("mongoSalesReceiptRepository", () => {
 
             await mongoSalesReceiptRepository.insertOne(salesReceipt);
 
-            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(
-                salesReceipt.employeeId
-            );
+            const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(salesReceipt.employeeId);
             expect(salesReceipts).to.deep.equal([salesReceipt]);
         });
         it("should not add the _id field to the entity", async () => {

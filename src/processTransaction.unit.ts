@@ -57,12 +57,7 @@ describe("processTransaction", () => {
             fakeTransactions.postTimeCard.resolves();
             const timeCard = generateTimeCard();
 
-            await processTransaction([
-                "TimeCard",
-                `${timeCard.employeeId}`,
-                `${timeCard.date}`,
-                `${timeCard.hours}`
-            ]);
+            await processTransaction(["TimeCard", `${timeCard.employeeId}`, `${timeCard.date}`, `${timeCard.hours}`]);
 
             expect(fakeTransactions.postTimeCard).to.have.been.calledOnceWith(
                 `${timeCard.employeeId}`,
@@ -95,11 +90,7 @@ describe("processTransaction", () => {
             fakeTransactions.postServiceCharge.resolves();
             const serviceCharge = generateServiceCharge();
 
-            await processTransaction([
-                "ServiceCharge",
-                `${serviceCharge.memberId}`,
-                `${serviceCharge.amount}`
-            ]);
+            await processTransaction(["ServiceCharge", `${serviceCharge.memberId}`, `${serviceCharge.amount}`]);
 
             expect(fakeTransactions.postServiceCharge).to.have.been.calledOnceWith(
                 `${serviceCharge.memberId}`,
@@ -114,11 +105,7 @@ describe("processTransaction", () => {
 
             await processTransaction(["ChgEmp", `${employee.id}`, "Name", "James Bond"]);
 
-            expect(fakeTransactions.changeEmployee).to.have.been.calledOnceWith(
-                `${employee.id}`,
-                "Name",
-                "James Bond"
-            );
+            expect(fakeTransactions.changeEmployee).to.have.been.calledOnceWith(`${employee.id}`, "Name", "James Bond");
         });
     });
 });

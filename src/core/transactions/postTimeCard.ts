@@ -10,10 +10,7 @@ interface Dependencies {
 }
 const transactionValidator = buildTransactionValidator("TimeCard");
 
-export function buildPostTimeCardTransaction({
-    timeCardRepository,
-    employeeRepository
-}: Dependencies): Transaction {
+export function buildPostTimeCardTransaction({ timeCardRepository, employeeRepository }: Dependencies): Transaction {
     return async function(employeeId: string, date: string, hours: string): Promise<void> {
         assertTransactionValid(employeeId, date, hours);
         await assertEmployeeIsHourly(employeeId);

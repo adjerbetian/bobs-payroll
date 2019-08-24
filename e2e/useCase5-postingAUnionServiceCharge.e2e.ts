@@ -46,9 +46,7 @@ async function expectServiceChargeToHaveBeenInserted(serviceCharge: ServiceCharg
     expect(dbServiceCharges).to.deep.include(serviceCharge);
 }
 
-async function expectServiceChargeNotToHaveBeenInserted(
-    serviceCharge: ServiceCharge
-): Promise<void> {
+async function expectServiceChargeNotToHaveBeenInserted(serviceCharge: ServiceCharge): Promise<void> {
     const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
     expect(dbServiceCharges).not.to.deep.include(serviceCharge);
 }
