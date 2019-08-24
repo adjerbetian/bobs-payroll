@@ -1,4 +1,4 @@
-import { TimeCard, TimeCardRepository } from "../core";
+import { TimeCard, TimeCardRepository } from "../domain";
 import { dbTimeCards } from "./db";
 import { cleanMongoEntity } from "./utils";
 

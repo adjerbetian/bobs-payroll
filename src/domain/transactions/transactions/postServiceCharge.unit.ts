@@ -1,11 +1,10 @@
-import { buildFakeEmployeeRepository, buildFakeServiceChargeRepository, Fake } from "../../../test/fakeBuilders";
-import { generateServiceCharge, generateUnionEmployee } from "../../../test/generators";
-import { expect } from "../../../test/unitTest";
-import { ServiceCharge } from "../entities";
-import { NotFoundError, TransactionFormatError } from "../errors";
-import { EmployeeRepository, ServiceChargeRepository } from "../repositories";
+import { buildFakeEmployeeRepository, buildFakeServiceChargeRepository, Fake } from "../../../../test/fakeBuilders";
+import { generateServiceCharge, generateUnionEmployee } from "../../../../test/generators";
+import { expect } from "../../../../test/unitTest";
+import { EmployeeRepository, NotFoundError, ServiceCharge, ServiceChargeRepository } from "../../core";
+import { TransactionFormatError } from "../errors";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
-import { Transaction } from "./Transactions";
+import { Transaction } from "../Transaction";
 
 describe("postServiceCharge", () => {
     let fakeServiceChargeRepository: Fake<ServiceChargeRepository>;

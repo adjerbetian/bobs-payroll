@@ -1,8 +1,7 @@
-import { EmployeeType, TimeCard } from "../entities";
+import { EmployeeRepository, EmployeeType, TimeCard, TimeCardRepository } from "../../core";
 import { EmployeeTypeError } from "../errors";
-import { EmployeeRepository, TimeCardRepository } from "../repositories";
-import { Transaction } from "./Transactions";
-import { buildTransactionValidator } from "./transactionValidator";
+import { Transaction } from "../Transaction";
+import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
     timeCardRepository: TimeCardRepository;

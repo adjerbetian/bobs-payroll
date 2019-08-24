@@ -1,11 +1,10 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
-import { generateHourlyEmployee, generateSalariedEmployee } from "../../../test/generators";
-import { expect } from "../../../test/unitTest";
-import { EmployeeType } from "../entities";
+import { buildFakeEmployeeRepository, Fake } from "../../../../test/fakeBuilders";
+import { generateHourlyEmployee, generateSalariedEmployee } from "../../../../test/generators";
+import { expect } from "../../../../test/unitTest";
+import { EmployeeRepository, EmployeeType } from "../../core";
 import { TransactionFormatError } from "../errors";
-import { EmployeeRepository } from "../repositories";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
-import { Transaction } from "./Transactions";
+import { Transaction } from "../Transaction";
 
 describe("addEmployee", () => {
     let fakeEmployeeRepository: Fake<EmployeeRepository>;

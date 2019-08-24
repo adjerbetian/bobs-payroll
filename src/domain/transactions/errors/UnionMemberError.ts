@@ -1,4 +1,4 @@
-import { Employee } from "../entities";
+import { Employee } from "../../core";
 
 export class UnionMemberError extends Error {
     public constructor(employee: Employee) {

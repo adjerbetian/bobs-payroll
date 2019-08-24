@@ -1,12 +1,15 @@
 import * as moment from "moment";
-import { buildFakeEmployeeRepository, buildFakeTimeCardRepository, Fake } from "../../../test/fakeBuilders";
-import { generateCommissionedEmployee, generateSalariedEmployee, generateSalesReceipt } from "../../../test/generators";
-import { expect } from "../../../test/unitTest";
-import { SalesReceipt } from "../entities";
+import { buildFakeEmployeeRepository, buildFakeTimeCardRepository, Fake } from "../../../../test/fakeBuilders";
+import {
+    generateCommissionedEmployee,
+    generateSalariedEmployee,
+    generateSalesReceipt
+} from "../../../../test/generators";
+import { expect } from "../../../../test/unitTest";
+import { EmployeeRepository, SalesReceipt, TimeCardRepository } from "../../core";
 import { EmployeeTypeError, TransactionFormatError } from "../errors";
-import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
-import { Transaction } from "./Transactions";
+import { Transaction } from "../Transaction";
 
 describe("postTimeCard", () => {
     let fakeSalesReceiptRepository: Fake<TimeCardRepository>;

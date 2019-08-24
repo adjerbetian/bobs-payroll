@@ -1,9 +1,14 @@
-import { stripQuotationMarks } from "../common";
-import { CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../entities";
+import {
+    CommissionedEmployee,
+    Employee,
+    EmployeeRepository,
+    EmployeeType,
+    HourlyEmployee,
+    SalariedEmployee
+} from "../../core";
 import { TransactionFormatError } from "../errors";
-import { EmployeeRepository } from "../repositories";
-import { Transaction } from "./Transactions";
-import { buildTransactionValidator } from "./transactionValidator";
+import { Transaction } from "../Transaction";
+import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;

@@ -8,7 +8,7 @@ import {
 import { expect } from "../test/unitTest";
 import { generateIndex } from "../test/utils";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
-import { Transactions } from "./core";
+import { Transactions } from "./domain";
 
 describe("processTransaction", () => {
     let processTransaction: ProcessTransaction;

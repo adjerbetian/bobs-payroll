@@ -1,4 +1,4 @@
-import { Transactions } from "./core";
+import { Transactions } from "./domain";
 
 export type ProcessTransaction = (args: string[]) => Promise<void>;
 
@@ -24,7 +24,7 @@ export function buildProcessTransaction(transactions: Transactions): ProcessTran
                 await transactions.changeEmployee(...args);
             }
         } catch (err) {
-            console.log("AN ERROR HAS OCCURED");
+            console.log("AN ERROR HAS OCCURRED");
             console.log({ err });
         }
     };

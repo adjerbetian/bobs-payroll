@@ -1,5 +1,5 @@
 import { buildApp } from "./app";
-import { buildTransactions } from "./core";
+import { buildTransactions } from "./domain";
 import {
     closeConnection,
     mongoEmployeeRepository,

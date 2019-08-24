@@ -1,8 +1,7 @@
-import { EmployeeType, SalesReceipt } from "../entities";
+import { EmployeeRepository, EmployeeType, SalesReceipt, SalesReceiptRepository } from "../../core";
 import { EmployeeTypeError } from "../errors";
-import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
-import { Transaction } from "./Transactions";
-import { buildTransactionValidator } from "./transactionValidator";
+import { Transaction } from "../Transaction";
+import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
     salesReceiptRepository: SalesReceiptRepository;

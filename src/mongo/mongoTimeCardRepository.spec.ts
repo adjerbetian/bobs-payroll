@@ -2,7 +2,7 @@ import { cloneDeep } from "lodash";
 import { generateTimeCard } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
-import { TimeCard } from "../core";
+import { TimeCard } from "../domain";
 import { dbTimeCards } from "./db";
 import { mongoTimeCardRepository } from "./mongoTimeCardRepository";
 

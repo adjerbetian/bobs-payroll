@@ -1,7 +1,6 @@
-import { ServiceCharge } from "../entities";
-import { EmployeeRepository, ServiceChargeRepository } from "../repositories";
-import { Transaction } from "./Transactions";
-import { buildTransactionValidator } from "./transactionValidator";
+import { EmployeeRepository, ServiceCharge, ServiceChargeRepository } from "../../core";
+import { Transaction } from "../Transaction";
+import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
     serviceChargeRepository: ServiceChargeRepository;

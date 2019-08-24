@@ -1,5 +1,5 @@
 import { FilterQuery } from "mongodb";
-import { ServiceCharge, ServiceChargeRepository } from "../core";
+import { ServiceCharge, ServiceChargeRepository } from "../domain";
 import { dbServiceCharge } from "./db";
 import { cleanMongoEntity } from "./utils";
 

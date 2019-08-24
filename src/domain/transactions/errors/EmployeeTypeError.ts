@@ -1,4 +1,4 @@
-import { Employee, EmployeeType } from "../entities";
+import { Employee, EmployeeType } from "../../core";
 
 export class EmployeeTypeError extends Error {
     public constructor(employee: Employee, expectedType: EmployeeType) {

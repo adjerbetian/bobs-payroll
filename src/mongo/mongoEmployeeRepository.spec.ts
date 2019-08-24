@@ -3,7 +3,7 @@ import "../../test/integrationTest";
 import { seedHourlyEmployee } from "../../test/seeders";
 import { expect } from "../../test/unitTest";
 import { generateIndex } from "../../test/utils";
-import { NotFoundError } from "../core";
+import { NotFoundError } from "../domain";
 import { mongoEmployeeRepository } from "./mongoEmployeeRepository";
 
 describe("mongoEmployeeRepository", () => {

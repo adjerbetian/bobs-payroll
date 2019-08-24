@@ -1,6 +1,6 @@
-import { EmployeeRepository } from "../repositories";
-import { Transaction } from "./Transactions";
-import { buildTransactionValidator } from "./transactionValidator";
+import { EmployeeRepository } from "../../core";
+import { Transaction } from "../Transaction";
+import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
