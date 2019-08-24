@@ -24,8 +24,8 @@ export function buildChangeEmployeeTransaction({ employeeRepository }: Dependenc
             return employeeRepository.updateById(parseInt(id), {
                 type: EmployeeType.HOURLY,
                 hourlyRate: parseFloat(hourlyRate),
-                monthlySalary: undefined, // todo
-                commissionRate: undefined
+                monthlySalary: null,
+                commissionRate: null
             });
         }
     };
