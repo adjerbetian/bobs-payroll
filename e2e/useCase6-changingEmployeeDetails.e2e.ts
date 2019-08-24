@@ -39,7 +39,17 @@ describe("Use Case 6: Changing Employee Details", () => {
         expect(dbEmployee).to.have.property("monthlySalary", 10);
         expect(dbEmployee).not.to.have.property("hourlyRate");
     });
-    it.skip("should change the employee to commissioned", async () => {});
+    it("should change the employee to commissioned", async () => {
+        const employee = await seedHourlyEmployee();
+
+        await executePayrollCommand(`ChgEmp ${employee.id} Commissioned 10 30`);
+
+        const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
+        expect(dbEmployee).to.have.property("type", EmployeeType.COMMISSIONED);
+        expect(dbEmployee).to.have.property("monthlySalary", 10);
+        expect(dbEmployee).to.have.property("commissionRate", 30);
+        expect(dbEmployee).not.to.have.property("hourlyRate");
+    });
     it.skip("should change the employee to hold", async () => {});
     it.skip("should change the employee's direct deposit.skip infos ", async () => {});
     it.skip("should change the employee's paycheck mail ", async () => {});
