@@ -21,15 +21,15 @@ export function generateHourlyEmployee(args: PEmployee = {}): Employee {
     });
 }
 
-export function generateMonthlySalaryEmployee(args: PEmployee = {}): Employee {
+export function generateSalariedEmployee(args: PEmployee = {}): Employee {
     return generateEmployee({
-        type: EmployeeType.MONTHLY_SALARY,
+        type: EmployeeType.SALARIED,
         monthlySalary: generateFloatBetween(10, 20),
         ...args
     });
 }
 
-export function generateCommissionedSalaryEmployee(args: PEmployee = {}): Employee {
+export function generateCommissionedEmployee(args: PEmployee = {}): Employee {
     return generateEmployee({
         type: EmployeeType.COMMISSIONED,
         monthlySalary: generateFloatBetween(10, 20),

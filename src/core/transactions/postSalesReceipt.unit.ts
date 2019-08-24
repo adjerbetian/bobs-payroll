@@ -5,8 +5,8 @@ import {
     Fake
 } from "../../../test/fakeBuilders";
 import {
-    generateCommissionedSalaryEmployee,
-    generateMonthlySalaryEmployee,
+    generateCommissionedEmployee,
+    generateSalariedEmployee,
     generateSalesReceipt
 } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
@@ -36,7 +36,7 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt();
         fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
-            .resolves(generateCommissionedSalaryEmployee());
+            .resolves(generateCommissionedEmployee());
 
         await postSalesReceiptEntity(salesReceipt);
 
@@ -46,7 +46,7 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt();
         fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
-            .resolves(generateMonthlySalaryEmployee());
+            .resolves(generateSalariedEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postSalesReceiptEntity(salesReceipt);
@@ -57,7 +57,7 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt();
         fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
-            .resolves(generateCommissionedSalaryEmployee());
+            .resolves(generateCommissionedEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postSalesReceipt(`${salesReceipt.employeeId}`, `${salesReceipt.date}`, ``);
@@ -68,7 +68,7 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
         fakeEmployeeRepository.fetchById
             .withArgs(salesReceipt.employeeId)
-            .resolves(generateCommissionedSalaryEmployee());
+            .resolves(generateCommissionedEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postSalesReceipt(

@@ -1,5 +1,5 @@
 import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
-import { generateHourlyEmployee, generateMonthlySalaryEmployee } from "../../../test/generators";
+import { generateHourlyEmployee, generateSalariedEmployee } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { EmployeeType } from "../entities";
 import { TransactionFormatError } from "../errors";
@@ -39,7 +39,7 @@ describe("addEmployee", () => {
         });
     });
     it("should change the employee's type to hourly and set the rate", async () => {
-        const employee = generateMonthlySalaryEmployee();
+        const employee = generateSalariedEmployee();
 
         await changeEmployee(`${employee.id}`, "Hourly", "10.5");
 
@@ -51,7 +51,7 @@ describe("addEmployee", () => {
         });
     });
     it("should throw an error if the rate is not defined", async () => {
-        const employee = generateMonthlySalaryEmployee();
+        const employee = generateSalariedEmployee();
 
         // noinspection ES6MissingAwait
         const promise = changeEmployee(`${employee.id}`, "Hourly", "");

@@ -49,7 +49,7 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
 
     function buildEmployee(args: AddEmployeeArgs): Employee {
         if (args.type === "H") return buildHourlyEmployee();
-        if (args.type === "S") return buildMonthlySalaryEmployee();
+        if (args.type === "S") return buildSalariedEmployee();
         if (args.type === "C") return buildCommissionedEmployee();
         throw new TransactionFormatError("AddEmp");
 
@@ -66,12 +66,12 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
             };
         }
 
-        function buildMonthlySalaryEmployee(): Employee {
+        function buildSalariedEmployee(): Employee {
             return {
                 id: args.id,
                 name: args.name,
                 address: args.address,
-                type: EmployeeType.MONTHLY_SALARY,
+                type: EmployeeType.SALARIED,
                 monthlySalary: args.rate,
                 commissionRate: null,
                 hourlyRate: null,

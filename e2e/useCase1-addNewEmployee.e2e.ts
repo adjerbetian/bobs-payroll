@@ -1,9 +1,9 @@
 import { Employee, mongoEmployeeRepository } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import {
-    generateCommissionedSalaryEmployee,
+    generateCommissionedEmployee,
     generateHourlyEmployee,
-    generateMonthlySalaryEmployee
+    generateSalariedEmployee
 } from "../test/generators";
 
 describe("Use Case 1: Add New Employee", () => {
@@ -16,8 +16,8 @@ describe("Use Case 1: Add New Employee", () => {
 
         await expectUserToExistInDB(employee);
     });
-    it("should add an employee with a monthly salary", async () => {
-        const employee = generateMonthlySalaryEmployee();
+    it("should add a salaried employee", async () => {
+        const employee = generateSalariedEmployee();
 
         await executePayrollCommand(
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" S ${employee.monthlySalary}`
@@ -25,8 +25,8 @@ describe("Use Case 1: Add New Employee", () => {
 
         await expectUserToExistInDB(employee);
     });
-    it("should add an employee with a monthly commission rate", async () => {
-        const employee = generateCommissionedSalaryEmployee();
+    it("should add a salaried employee with a monthly commission rate", async () => {
+        const employee = generateCommissionedEmployee();
 
         await executePayrollCommand(
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary} ${employee.commissionRate}`
@@ -35,7 +35,7 @@ describe("Use Case 1: Add New Employee", () => {
         await expectUserToExistInDB(employee);
     });
     it("should do nothing when the transaction is wrongly put", async () => {
-        const employee = generateCommissionedSalaryEmployee();
+        const employee = generateCommissionedEmployee();
 
         await executePayrollCommand(
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary}`

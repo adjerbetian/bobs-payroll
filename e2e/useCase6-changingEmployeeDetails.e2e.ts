@@ -1,6 +1,6 @@
 import { EmployeeType, mongoEmployeeRepository } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
-import { seedHourlyEmployee, seedMonthlySalaryEmployee } from "../test/seeders";
+import { seedHourlyEmployee, seedSalariedEmployee } from "../test/seeders";
 
 describe("Use Case 6: Changing Employee Details", () => {
     it("should change the employee's name", async () => {
@@ -20,7 +20,7 @@ describe("Use Case 6: Changing Employee Details", () => {
         expect(dbEmployee.address).to.equal("my new address");
     });
     it("should change the employee to hourly", async () => {
-        const employee = await seedMonthlySalaryEmployee();
+        const employee = await seedSalariedEmployee();
 
         await executePayrollCommand(`ChgEmp ${employee.id} Hourly 10`);
 

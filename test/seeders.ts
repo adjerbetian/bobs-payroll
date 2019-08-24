@@ -1,8 +1,8 @@
 import { Employee, mongoEmployeeRepository } from "../src";
 import {
-    generateCommissionedSalaryEmployee,
+    generateCommissionedEmployee,
     generateHourlyEmployee,
-    generateMonthlySalaryEmployee,
+    generateSalariedEmployee,
     generateUnionEmployee
 } from "./generators";
 
@@ -14,14 +14,14 @@ export async function seedHourlyEmployee(args: PEmployee = {}): Promise<Employee
     return employee;
 }
 
-export async function seedMonthlySalaryEmployee(args: PEmployee = {}): Promise<Employee> {
-    const employee = generateMonthlySalaryEmployee(args);
+export async function seedSalariedEmployee(args: PEmployee = {}): Promise<Employee> {
+    const employee = generateSalariedEmployee(args);
     await mongoEmployeeRepository.insertOne(employee);
     return employee;
 }
 
 export async function seedCommissionedEmployee(args: PEmployee = {}): Promise<Employee> {
-    const employee = generateCommissionedSalaryEmployee(args);
+    const employee = generateCommissionedEmployee(args);
     await mongoEmployeeRepository.insertOne(employee);
     return employee;
 }

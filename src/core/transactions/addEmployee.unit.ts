@@ -1,8 +1,8 @@
 import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
 import {
-    generateCommissionedSalaryEmployee,
+    generateCommissionedEmployee,
     generateHourlyEmployee,
-    generateMonthlySalaryEmployee
+    generateSalariedEmployee
 } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { TransactionFormatError } from "../errors";
@@ -34,8 +34,8 @@ describe("addEmployee", () => {
 
         expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
     });
-    it("should insert an monthly salary employee", async () => {
-        const employee = generateMonthlySalaryEmployee();
+    it("should insert a salaried employee", async () => {
+        const employee = generateSalariedEmployee();
 
         await addEmployee(
             `${employee.id}`,
@@ -47,8 +47,8 @@ describe("addEmployee", () => {
 
         expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
     });
-    it("should insert an monthly salary with commission employee", async () => {
-        const employee = generateCommissionedSalaryEmployee();
+    it("should insert an salaried with commission employee", async () => {
+        const employee = generateCommissionedEmployee();
 
         await addEmployee(
             `${employee.id}`,
@@ -62,7 +62,7 @@ describe("addEmployee", () => {
         expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
     });
     it("should throw when the transaction is malformed", async () => {
-        const employee = generateCommissionedSalaryEmployee();
+        const employee = generateCommissionedEmployee();
 
         // noinspection ES6MissingAwait
         const promise = addEmployee(

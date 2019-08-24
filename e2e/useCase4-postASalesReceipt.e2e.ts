@@ -1,5 +1,5 @@
 import { SalesReceipt, mongoSalesReceiptRepository } from "../src";
-import { seedCommissionedEmployee, seedMonthlySalaryEmployee } from "../test/seeders";
+import { seedCommissionedEmployee, seedSalariedEmployee } from "../test/seeders";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateSalesReceipt } from "../test/generators";
 
@@ -13,7 +13,7 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         await expectEmployeeToHaveSalesReceipt(employee.id, salesReceipt);
     });
     it("should do nothing when the employee is not commissioned", async () => {
-        const employee = await seedMonthlySalaryEmployee();
+        const employee = await seedSalariedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePostSalesReceipt(salesReceipt);

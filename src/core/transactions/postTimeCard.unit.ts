@@ -6,7 +6,7 @@ import {
 } from "../../../test/fakeBuilders";
 import {
     generateHourlyEmployee,
-    generateMonthlySalaryEmployee,
+    generateSalariedEmployee,
     generateTimeCard
 } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
@@ -46,7 +46,7 @@ describe("postTimeCard", () => {
         const timeCard = generateTimeCard();
         fakeEmployeeRepository.fetchById
             .withArgs(timeCard.employeeId)
-            .resolves(generateMonthlySalaryEmployee());
+            .resolves(generateSalariedEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);

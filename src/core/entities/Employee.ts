@@ -11,6 +11,6 @@ export interface Employee {
 
 export enum EmployeeType {
     HOURLY = "hourly",
-    MONTHLY_SALARY = "monthly-salary",
+    SALARIED = "salaried",
     COMMISSIONED = "commissioned"
 }

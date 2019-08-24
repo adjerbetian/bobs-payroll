@@ -1,5 +1,5 @@
 import { TimeCard, mongoTimeCardRepository } from "../src";
-import { seedHourlyEmployee, seedMonthlySalaryEmployee } from "../test/seeders";
+import { seedHourlyEmployee, seedSalariedEmployee } from "../test/seeders";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateTimeCard } from "../test/generators";
 
@@ -13,7 +13,7 @@ describe("Use Case 3: Post a Time Card", () => {
         await expectEmployeeToHaveTimeCard(employee.id, timeCard);
     });
     it("should do nothing when the employee is an hourly employee", async () => {
-        const employee = await seedMonthlySalaryEmployee();
+        const employee = await seedSalariedEmployee();
         const timeCard = generateTimeCard({ employeeId: employee.id });
 
         await executePostTimeCard(timeCard);
