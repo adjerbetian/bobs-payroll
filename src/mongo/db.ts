@@ -7,10 +7,10 @@ export let dbTimeCards: Collection<DBTimeCard>;
 export let dbSalesReceipt: Collection<DBSalesReceipt>;
 export let dbServiceCharge: Collection<DBServiceCharge>;
 
-const client = new MongoClient(config.db.url);
+let client: MongoClient;
 
 export async function initConnection(): Promise<void> {
-    await client.connect();
+    client = await MongoClient.connect(config.db.url, { useUnifiedTopology: true, useNewUrlParser: true });
     const db = getDB();
     dbEmployees = db.collection<DBEmployee>("employees");
     dbTimeCards = db.collection<DBTimeCard>("time-cards");
