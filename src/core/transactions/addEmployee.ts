@@ -48,49 +48,59 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
     }
 
     function buildEmployee(args: AddEmployeeArgs): Employee {
-        if (args.type === "H") return buildHourlyEmployee();
-        if (args.type === "S") return buildSalariedEmployee();
-        if (args.type === "C") return buildCommissionedEmployee();
+        if (isAddHourlyEmployee(args)) return buildHourlyEmployee(args);
+        if (isAddSalariedEmployee(args)) return buildSalariedEmployee(args);
+        if (isAddCommissionedEmployee(args)) return buildCommissionedEmployee(args);
         throw new TransactionFormatError("AddEmp");
+    }
 
-        function buildHourlyEmployee(): Employee {
-            return {
-                id: args.id,
-                name: args.name,
-                address: args.address,
-                type: EmployeeType.HOURLY,
-                hourlyRate: args.rate,
-                commissionRate: null,
-                monthlySalary: null,
-                memberId: null
-            };
-        }
+    function buildHourlyEmployee(args: AddHourlyEmployeeArgs): Employee {
+        return {
+            ...buildPartialEmployee(args),
+            type: EmployeeType.HOURLY,
+            hourlyRate: args.rate
+        };
+    }
 
-        function buildSalariedEmployee(): Employee {
-            return {
-                id: args.id,
-                name: args.name,
-                address: args.address,
-                type: EmployeeType.SALARIED,
-                monthlySalary: args.rate,
-                commissionRate: null,
-                hourlyRate: null,
-                memberId: null
-            };
-        }
+    function buildSalariedEmployee(args: AddSalariedEmployeeArgs): Employee {
+        return {
+            ...buildPartialEmployee(args),
+            type: EmployeeType.SALARIED,
+            monthlySalary: args.rate
+        };
+    }
 
-        function buildCommissionedEmployee(): Employee {
-            return {
-                id: args.id,
-                name: args.name,
-                address: args.address,
-                type: EmployeeType.COMMISSIONED,
-                monthlySalary: args.rate,
-                commissionRate: args.commissionRate,
-                hourlyRate: null,
-                memberId: null
-            };
-        }
+    function buildCommissionedEmployee(args: AddCommissionedEmployeeArgs): Employee {
+        return {
+            ...buildPartialEmployee(args),
+            type: EmployeeType.COMMISSIONED,
+            monthlySalary: args.rate,
+            commissionRate: args.commissionRate
+        };
+    }
+
+    function buildPartialEmployee(args: AddEmployeeArgs): Omit<Employee, "type"> {
+        return {
+            id: args.id,
+            name: args.name,
+            address: args.address,
+            hourlyRate: null,
+            monthlySalary: null,
+            commissionRate: null,
+            memberId: null
+        };
+    }
+
+    function isAddHourlyEmployee(args: AddEmployeeArgs): args is AddHourlyEmployeeArgs {
+        return args.type === "H";
+    }
+
+    function isAddSalariedEmployee(args: AddEmployeeArgs): args is AddSalariedEmployeeArgs {
+        return args.type === "S";
+    }
+
+    function isAddCommissionedEmployee(args: AddEmployeeArgs): args is AddCommissionedEmployeeArgs {
+        return args.type === "C";
     }
 }
 
@@ -101,4 +111,16 @@ interface AddEmployeeArgs {
     type: string;
     rate: number;
     commissionRate: number | null;
+}
+
+interface AddHourlyEmployeeArgs extends AddEmployeeArgs {
+    commissionRate: null;
+}
+
+interface AddSalariedEmployeeArgs extends AddEmployeeArgs {
+    commissionRate: null;
+}
+
+interface AddCommissionedEmployeeArgs extends AddEmployeeArgs {
+    commissionRate: number;
 }
