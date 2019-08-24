@@ -1,44 +1,55 @@
-import { Employee, EmployeeType, SalesReceipt, ServiceCharge, TimeCard } from "../src";
 import * as _ from "lodash";
-import { generateIndex } from "./utils";
 import * as moment from "moment";
+import {
+    CommissionedEmployee,
+    Employee,
+    EmployeeType,
+    HourlyEmployee,
+    SalariedEmployee,
+    SalesReceipt,
+    ServiceCharge,
+    TimeCard
+} from "../src";
+import { generateIndex } from "./utils";
 
-type PEmployee = Partial<Employee>;
-
-export function generateUnionEmployee(args: PEmployee = {}): Employee {
+export function generateUnionEmployee(args: Partial<Employee> = {}): Employee {
     const index = generateIndex();
-    return generateHourlyEmployee({
+    return {
+        ...generateHourlyEmployee(),
         memberId: `member-${index}`,
         ...args
-    });
+    };
 }
 
-export function generateHourlyEmployee(args: PEmployee = {}): Employee {
-    return generateEmployee({
+export function generateHourlyEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
+    return {
+        ...generateEmployee(),
         type: EmployeeType.HOURLY,
         hourlyRate: generateFloatBetween(0, 10),
         ...args
-    });
+    };
 }
 
-export function generateSalariedEmployee(args: PEmployee = {}): Employee {
-    return generateEmployee({
+export function generateSalariedEmployee(args: Partial<SalariedEmployee> = {}): SalariedEmployee {
+    return {
+        ...generateEmployee(),
         type: EmployeeType.SALARIED,
         monthlySalary: generateFloatBetween(10, 20),
         ...args
-    });
+    };
 }
 
-export function generateCommissionedEmployee(args: PEmployee = {}): Employee {
-    return generateEmployee({
+export function generateCommissionedEmployee(args: Partial<CommissionedEmployee> = {}): CommissionedEmployee {
+    return {
+        ...generateEmployee(),
         type: EmployeeType.COMMISSIONED,
         monthlySalary: generateFloatBetween(10, 20),
         commissionRate: generateFloatBetween(20, 30),
         ...args
-    });
+    };
 }
 
-function generateEmployee(args: PEmployee & { type: EmployeeType }): Employee {
+function generateEmployee(): Omit<Employee, "type"> {
     const index = generateIndex();
     return {
         id: index,
@@ -47,8 +58,7 @@ function generateEmployee(args: PEmployee & { type: EmployeeType }): Employee {
         hourlyRate: null,
         monthlySalary: null,
         commissionRate: null,
-        memberId: null,
-        ...args
+        memberId: null
     };
 }
 

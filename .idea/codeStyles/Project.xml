@@ -23,11 +23,11 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JavaScript">
-      <option name="SOFT_MARGINS" value="100" />
+      <option name="SOFT_MARGINS" value="120" />
     </codeStyleSettings>
     <codeStyleSettings language="TypeScript">
       <option name="BLANK_LINES_AROUND_METHOD_IN_INTERFACE" value="0" />
-      <option name="SOFT_MARGINS" value="100" />
+      <option name="SOFT_MARGINS" value="120" />
     </codeStyleSettings>
   </code_scheme>
 </component>
