@@ -37,22 +37,44 @@ describe("addEmployee", () => {
             address: "my new address"
         });
     });
-    it("should change the employee's type to hourly and set the rate", async () => {
-        const employee = generateSalariedEmployee();
+    describe("to hourly", () => {
+        it("should change the employee's type to hourly and set the rate", async () => {
+            const employee = generateSalariedEmployee();
 
-        await changeEmployee(`${employee.id}`, "Hourly", "10.5");
+            await changeEmployee(`${employee.id}`, "Hourly", "10.5");
 
-        expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
-            type: EmployeeType.HOURLY,
-            hourlyRate: 10.5
+            expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
+                type: EmployeeType.HOURLY,
+                hourlyRate: 10.5
+            });
+        });
+        it("should throw an error if the rate is not defined", async () => {
+            const employee = generateSalariedEmployee();
+
+            // noinspection ES6MissingAwait
+            const promise = changeEmployee(`${employee.id}`, "Hourly", "");
+
+            await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
         });
     });
-    it("should throw an error if the rate is not defined", async () => {
-        const employee = generateSalariedEmployee();
+    describe("to salaried", () => {
+        it("should change the employee's type to salaried and set the salary", async () => {
+            const employee = generateHourlyEmployee();
 
-        // noinspection ES6MissingAwait
-        const promise = changeEmployee(`${employee.id}`, "Hourly", "");
+            await changeEmployee(`${employee.id}`, "Salaried", "10.5");
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
+            expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
+                type: EmployeeType.SALARIED,
+                monthlySalary: 10.5
+            });
+        });
+        it("should throw an error if the salary is not defined", async () => {
+            const employee = generateSalariedEmployee();
+
+            // noinspection ES6MissingAwait
+            const promise = changeEmployee(`${employee.id}`, "Salaried", "");
+
+            await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
+        });
     });
 });

@@ -25,5 +25,13 @@ export function buildChangeEmployeeTransaction({ employeeRepository }: Dependenc
                 hourlyRate: parseFloat(hourlyRate)
             });
         }
+        if (updateType === "Salaried") {
+            const [monthlySalary] = rest;
+            transactionValidator.assertIsNotEmpty(monthlySalary);
+            return employeeRepository.updateById(parseInt(id), {
+                type: EmployeeType.SALARIED,
+                monthlySalary: parseFloat(monthlySalary)
+            });
+        }
     };
 }
