@@ -3,10 +3,10 @@ export interface Employee {
     name: string;
     address: string;
     type: EmployeeType;
-    hourlyRate?: number;
-    monthlySalary?: number;
-    commissionRate?: number | null;
-    memberId?: string;
+    hourlyRate: number | null;
+    monthlySalary: number | null;
+    commissionRate: number | null;
+    memberId: string | null;
 }
 
 export enum EmployeeType {

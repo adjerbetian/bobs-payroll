@@ -59,7 +59,10 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
                 name: args.name,
                 address: args.address,
                 type: EmployeeType.HOURLY_RATE,
-                hourlyRate: args.rate
+                hourlyRate: args.rate,
+                commissionRate: null,
+                monthlySalary: null,
+                memberId: null
             };
         }
 
@@ -69,7 +72,10 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
                 name: args.name,
                 address: args.address,
                 type: EmployeeType.MONTHLY_SALARY,
-                monthlySalary: args.rate
+                monthlySalary: args.rate,
+                commissionRate: null,
+                hourlyRate: null,
+                memberId: null
             };
         }
 
@@ -80,7 +86,9 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
                 address: args.address,
                 type: EmployeeType.COMMISSIONED,
                 monthlySalary: args.rate,
-                commissionRate: args.commissionRate
+                commissionRate: args.commissionRate,
+                hourlyRate: null,
+                memberId: null
             };
         }
     }

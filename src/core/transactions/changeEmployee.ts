@@ -23,7 +23,9 @@ export function buildChangeEmployeeTransaction({ employeeRepository }: Dependenc
             transactionValidator.assertIsNotEmpty(hourlyRate);
             return employeeRepository.updateById(parseInt(id), {
                 type: EmployeeType.HOURLY_RATE,
-                hourlyRate: parseFloat(hourlyRate)
+                hourlyRate: parseFloat(hourlyRate),
+                monthlySalary: undefined,
+                commissionRate: undefined
             });
         }
     };

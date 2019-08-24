@@ -44,6 +44,10 @@ function generateEmployee(args: PEmployee & { type: EmployeeType }): Employee {
         id: index,
         name: `name of employee ${index}`,
         address: `address of employee ${index}`,
+        hourlyRate: null,
+        monthlySalary: null,
+        commissionRate: null,
+        memberId: null,
         ...args
     };
 }

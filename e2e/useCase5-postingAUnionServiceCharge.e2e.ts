@@ -6,7 +6,7 @@ import { generateServiceCharge } from "../test/generators";
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
         const employee = await seedUnionEmployee();
-        const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
+        const serviceCharge = generateServiceCharge({ memberId: employee.memberId as string });
 
         await executePostServiceCharge(serviceCharge);
 
@@ -14,7 +14,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
     });
     it("should do nothing when the employee is not a union member", async () => {
         const employee = await seedHourlyRateEmployee();
-        const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
+        const serviceCharge = generateServiceCharge({ memberId: employee.memberId as string });
 
         await executePostServiceCharge(serviceCharge);
 
@@ -29,7 +29,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
     });
     it("should do nothing when the transaction is not of the right format", async () => {
         const employee = await seedUnionEmployee();
-        const serviceCharge = generateServiceCharge({ memberId: employee.memberId });
+        const serviceCharge = generateServiceCharge({ memberId: employee.memberId as string });
 
         await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId}`);
 

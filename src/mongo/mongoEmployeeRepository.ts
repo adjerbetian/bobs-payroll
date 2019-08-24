@@ -7,7 +7,7 @@ export const mongoEmployeeRepository: EmployeeRepository = {
     async fetchById(id: number): Promise<Employee> {
         return fetchByQuery({ id });
     },
-    async fetchByMemberId(memberId: string | undefined): Promise<Employee> {
+    async fetchByMemberId(memberId: string | null): Promise<Employee> {
         if (!memberId) throw new NotFoundError(`the memberId is not defined`);
         return fetchByQuery({ memberId });
     },
