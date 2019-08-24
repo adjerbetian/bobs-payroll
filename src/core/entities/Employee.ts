@@ -1,33 +1,31 @@
-export enum EmployeeType {
-    HOURLY = "hourly",
-    SALARIED = "salaried",
-    COMMISSIONED = "commissioned"
+export type Employee = HourlyEmployee | SalariedEmployee | CommissionedEmployee;
+
+export interface HourlyEmployee extends CommonEmployee {
+    type: EmployeeType.HOURLY;
+    hourlyRate: number;
 }
 
-export interface Employee {
+export interface SalariedEmployee extends CommonEmployee {
+    type: EmployeeType.SALARIED;
+    monthlySalary: number;
+}
+
+export interface CommissionedEmployee extends CommonEmployee {
+    type: EmployeeType.COMMISSIONED;
+    monthlySalary: number;
+    commissionRate: number;
+}
+
+interface CommonEmployee {
     id: number;
     name: string;
     address: string;
     type: EmployeeType;
     memberId: string | null;
-
-    hourlyRate: number | null;
-    monthlySalary: number | null;
-    commissionRate: number | null;
 }
 
-export interface HourlyEmployee extends Employee {
-    type: EmployeeType.HOURLY;
-    hourlyRate: number;
-}
-
-export interface SalariedEmployee extends Employee {
-    type: EmployeeType.SALARIED;
-    monthlySalary: number;
-}
-
-export interface CommissionedEmployee extends Employee {
-    type: EmployeeType.COMMISSIONED;
-    monthlySalary: number;
-    commissionRate: number;
+export enum EmployeeType {
+    HOURLY = "hourly",
+    SALARIED = "salaried",
+    COMMISSIONED = "commissioned"
 }

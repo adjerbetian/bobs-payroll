@@ -1,5 +1,5 @@
 import { stripQuotationMarks } from "../common";
-import { Employee, EmployeeType } from "../entities";
+import { CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../entities";
 import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
 import { Transaction } from "./Transactions";
@@ -54,7 +54,7 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
         throw new TransactionFormatError("AddEmp");
     }
 
-    function buildHourlyEmployee(args: AddHourlyEmployeeArgs): Employee {
+    function buildHourlyEmployee(args: AddHourlyEmployeeArgs): HourlyEmployee {
         return {
             ...buildPartialEmployee(args),
             type: EmployeeType.HOURLY,
@@ -62,7 +62,7 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
         };
     }
 
-    function buildSalariedEmployee(args: AddSalariedEmployeeArgs): Employee {
+    function buildSalariedEmployee(args: AddSalariedEmployeeArgs): SalariedEmployee {
         return {
             ...buildPartialEmployee(args),
             type: EmployeeType.SALARIED,
@@ -70,7 +70,7 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
         };
     }
 
-    function buildCommissionedEmployee(args: AddCommissionedEmployeeArgs): Employee {
+    function buildCommissionedEmployee(args: AddCommissionedEmployeeArgs): CommissionedEmployee {
         return {
             ...buildPartialEmployee(args),
             type: EmployeeType.COMMISSIONED,
@@ -84,9 +84,6 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
             id: args.id,
             name: args.name,
             address: args.address,
-            hourlyRate: null,
-            monthlySalary: null,
-            commissionRate: null,
             memberId: null
         };
     }

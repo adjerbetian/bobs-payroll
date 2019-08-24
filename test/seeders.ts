@@ -1,4 +1,4 @@
-import { CommissionedEmployee, Employee, HourlyEmployee, mongoEmployeeRepository, SalariedEmployee } from "../src";
+import { CommissionedEmployee, HourlyEmployee, mongoEmployeeRepository, SalariedEmployee } from "../src";
 import {
     generateCommissionedEmployee,
     generateHourlyEmployee,
@@ -26,7 +26,7 @@ export async function seedCommissionedEmployee(
     return employee;
 }
 
-export async function seedUnionEmployee(args: Partial<Employee> = {}): Promise<Employee> {
+export async function seedUnionEmployee(args: Partial<HourlyEmployee> = {}): Promise<HourlyEmployee> {
     const employee = generateUnionEmployee(args);
     await mongoEmployeeRepository.insertOne(employee);
     return employee;

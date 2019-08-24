@@ -12,7 +12,7 @@ import {
 } from "../src";
 import { generateIndex } from "./utils";
 
-export function generateUnionEmployee(args: Partial<Employee> = {}): Employee {
+export function generateUnionEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
     const index = generateIndex();
     return {
         ...generateHourlyEmployee(),
@@ -55,9 +55,6 @@ function generateEmployee(): Omit<Employee, "type"> {
         id: index,
         name: `name of employee ${index}`,
         address: `address of employee ${index}`,
-        hourlyRate: null,
-        monthlySalary: null,
-        commissionRate: null,
         memberId: null
     };
 }

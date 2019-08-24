@@ -45,9 +45,7 @@ describe("addEmployee", () => {
 
         expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
             type: EmployeeType.HOURLY,
-            hourlyRate: 10.5,
-            monthlySalary: null,
-            commissionRate: null
+            hourlyRate: 10.5
         });
     });
     it("should throw an error if the rate is not defined", async () => {

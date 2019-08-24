@@ -25,9 +25,9 @@ describe("Use Case 6: Changing Employee Details", () => {
         await executePayrollCommand(`ChgEmp ${employee.id} Hourly 10`);
 
         const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
-        expect(dbEmployee.type).to.equal(EmployeeType.HOURLY);
-        expect(dbEmployee.hourlyRate).to.equal(10);
-        expect(dbEmployee.monthlySalary).to.be.null;
+        expect(dbEmployee).to.have.property("type", EmployeeType.HOURLY);
+        expect(dbEmployee).to.have.property("hourlyRate", 10);
+        expect(dbEmployee).not.to.have.property("monthlySalary");
     });
     it.skip("should change the employee to monthly salary", async () => {});
     it.skip("should change the employee to commissioned", async () => {});

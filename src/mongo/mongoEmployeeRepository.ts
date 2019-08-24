@@ -1,5 +1,5 @@
-import { FilterQuery } from "mongodb";
-import { Employee, EmployeeRepository, NotFoundError } from "../core";
+import { FilterQuery, UpdateQuery } from "mongodb";
+import { Employee, EmployeeRepository, EmployeeType, NotFoundError } from "../core";
 import { dbEmployees } from "./db";
 import { cleanMongoEntity } from "./utils";
 
@@ -23,8 +23,37 @@ export const mongoEmployeeRepository: EmployeeRepository = {
         if (a.deletedCount === 0) throw new NotFoundError(`the employee ${id} does not exist`);
     },
     async updateById(id: number, update: Partial<Employee>): Promise<void> {
-        const { matchedCount } = await dbEmployees.updateOne({ id }, { $set: update });
+        const { matchedCount } = await dbEmployees.updateOne({ id }, buildUpdate());
         if (matchedCount === 0) throw new NotFoundError(`the employee ${id} does not exist`);
+
+        function buildUpdate(): UpdateQuery<Employee> {
+            if (update.type) {
+                return { $set: update, $unset: buildUnset() };
+            } else {
+                return { $set: update };
+            }
+        }
+
+        function buildUnset(): Record<string, string> | undefined {
+            if (update.type === EmployeeType.HOURLY) {
+                return {
+                    monthlySalary: "",
+                    commissionRate: ""
+                };
+            }
+            if (update.type === EmployeeType.SALARIED) {
+                return {
+                    hourlyRate: "",
+                    commissionRate: ""
+                };
+            }
+            if (update.type === EmployeeType.COMMISSIONED) {
+                return {
+                    hourlyRate: ""
+                };
+            }
+            throw new Error("invalid type");
+        }
     }
 };
 
