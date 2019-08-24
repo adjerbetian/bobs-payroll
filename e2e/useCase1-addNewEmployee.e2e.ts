@@ -2,13 +2,13 @@ import { Employee, mongoEmployeeRepository } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import {
     generateCommissionedSalaryEmployee,
-    generateHourlyRateEmployee,
+    generateHourlyEmployee,
     generateMonthlySalaryEmployee
 } from "../test/generators";
 
 describe("Use Case 1: Add New Employee", () => {
-    it("should add an employee with a hourly rate", async () => {
-        const employee = generateHourlyRateEmployee();
+    it("should add an hourly employee", async () => {
+        const employee = generateHourlyEmployee();
 
         await executePayrollCommand(
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" H ${employee.hourlyRate}`

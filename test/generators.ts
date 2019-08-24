@@ -7,15 +7,15 @@ type PEmployee = Partial<Employee>;
 
 export function generateUnionEmployee(args: PEmployee = {}): Employee {
     const index = generateIndex();
-    return generateHourlyRateEmployee({
+    return generateHourlyEmployee({
         memberId: `member-${index}`,
         ...args
     });
 }
 
-export function generateHourlyRateEmployee(args: PEmployee = {}): Employee {
+export function generateHourlyEmployee(args: PEmployee = {}): Employee {
     return generateEmployee({
-        type: EmployeeType.HOURLY_RATE,
+        type: EmployeeType.HOURLY,
         hourlyRate: generateFloatBetween(0, 10),
         ...args
     });

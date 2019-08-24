@@ -16,7 +16,7 @@ export function buildPostTimeCardTransaction({
 }: Dependencies): Transaction {
     return async function(employeeId: string, date: string, hours: string): Promise<void> {
         assertTransactionValid(employeeId, date, hours);
-        await assertEmployeeIsInHourlyRate(employeeId);
+        await assertEmployeeIsHourly(employeeId);
 
         const timeCard = buildTimeCard(employeeId, date, hours);
         await timeCardRepository.insertOne(timeCard);
@@ -29,10 +29,10 @@ export function buildPostTimeCardTransaction({
         transactionValidator.assertIsISODate(date);
     }
 
-    async function assertEmployeeIsInHourlyRate(employeeId: string): Promise<void> {
+    async function assertEmployeeIsHourly(employeeId: string): Promise<void> {
         const employee = await employeeRepository.fetchById(parseInt(employeeId));
-        if (employee.type !== EmployeeType.HOURLY_RATE) {
-            throw new EmployeeTypeError(employee, EmployeeType.HOURLY_RATE);
+        if (employee.type !== EmployeeType.HOURLY) {
+            throw new EmployeeTypeError(employee, EmployeeType.HOURLY);
         }
     }
 

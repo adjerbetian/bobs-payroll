@@ -22,7 +22,7 @@ export function buildChangeEmployeeTransaction({ employeeRepository }: Dependenc
             const [hourlyRate] = rest;
             transactionValidator.assertIsNotEmpty(hourlyRate);
             return employeeRepository.updateById(parseInt(id), {
-                type: EmployeeType.HOURLY_RATE,
+                type: EmployeeType.HOURLY,
                 hourlyRate: parseFloat(hourlyRate),
                 monthlySalary: undefined,
                 commissionRate: undefined

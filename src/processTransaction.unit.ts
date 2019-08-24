@@ -1,6 +1,6 @@
 import { buildFakeTransactions, Fake } from "../test/fakeBuilders";
 import {
-    generateHourlyRateEmployee,
+    generateHourlyEmployee,
     generateSalesReceipt,
     generateServiceCharge,
     generateTimeCard
@@ -22,7 +22,7 @@ describe("processTransaction", () => {
     describe("AddEmp", () => {
         it("should call the addEmployee transaction", async () => {
             fakeTransactions.addEmployee.resolves();
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
 
             await processTransaction([
                 "AddEmp",
@@ -110,7 +110,7 @@ describe("processTransaction", () => {
     describe("ChgEmp", () => {
         it("should call the changeEmployee's name transaction", async () => {
             fakeTransactions.changeEmployee.resolves();
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
 
             await processTransaction(["ChgEmp", `${employee.id}`, "Name", "James Bond"]);
 

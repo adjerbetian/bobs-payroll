@@ -1,8 +1,5 @@
 import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
-import {
-    generateHourlyRateEmployee,
-    generateMonthlySalaryEmployee
-} from "../../../test/generators";
+import { generateHourlyEmployee, generateMonthlySalaryEmployee } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { EmployeeType } from "../entities";
 import { TransactionFormatError } from "../errors";
@@ -24,7 +21,7 @@ describe("addEmployee", () => {
     });
 
     it("should update the employee's name", async () => {
-        const employee = generateHourlyRateEmployee();
+        const employee = generateHourlyEmployee();
 
         await changeEmployee(`${employee.id}`, "Name", "James Bond");
 
@@ -33,7 +30,7 @@ describe("addEmployee", () => {
         });
     });
     it("should update the employee's address", async () => {
-        const employee = generateHourlyRateEmployee();
+        const employee = generateHourlyEmployee();
 
         await changeEmployee(`${employee.id}`, "Address", "my new address");
 
@@ -47,7 +44,7 @@ describe("addEmployee", () => {
         await changeEmployee(`${employee.id}`, "Hourly", "10.5");
 
         expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
-            type: EmployeeType.HOURLY_RATE,
+            type: EmployeeType.HOURLY,
             hourlyRate: 10.5,
             monthlySalary: undefined,
             commissionRate: undefined

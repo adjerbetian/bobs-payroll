@@ -1,7 +1,7 @@
 import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
 import {
     generateCommissionedSalaryEmployee,
-    generateHourlyRateEmployee,
+    generateHourlyEmployee,
     generateMonthlySalaryEmployee
 } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
@@ -21,8 +21,8 @@ describe("addEmployee", () => {
         fakeEmployeeRepository.insertOne.resolves();
     });
 
-    it("should insert an hourly rate employee", async () => {
-        const employee = generateHourlyRateEmployee();
+    it("should insert an hourly employee", async () => {
+        const employee = generateHourlyEmployee();
 
         await addEmployee(
             `${employee.id}`,

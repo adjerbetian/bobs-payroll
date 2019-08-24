@@ -1,5 +1,5 @@
 import { buildFakeEmployeeRepository, Fake } from "../../../test/fakeBuilders";
-import { generateHourlyRateEmployee } from "../../../test/generators";
+import { generateHourlyEmployee } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { TransactionFormatError } from "../errors";
 import { EmployeeRepository } from "../repositories";
@@ -20,7 +20,7 @@ describe("deleteEmployee", () => {
     });
 
     it("should delete the employee", async () => {
-        const employee = generateHourlyRateEmployee();
+        const employee = generateHourlyEmployee();
 
         await deleteEmployee(`${employee.id}`);
 

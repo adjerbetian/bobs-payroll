@@ -1,10 +1,10 @@
 import { mongoEmployeeRepository } from "../src";
-import { seedHourlyRateEmployee } from "../test/seeders";
+import { seedHourlyEmployee } from "../test/seeders";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 
 describe("Use Case 2: Deleting an Employee", () => {
     it("should delete an existing employee from the database", async () => {
-        const employee = await seedHourlyRateEmployee();
+        const employee = await seedHourlyEmployee();
 
         await executePayrollCommand(`DelEmp ${employee.id}`);
 
@@ -12,7 +12,7 @@ describe("Use Case 2: Deleting an Employee", () => {
         expect(employeeExistsInDB).to.be.false;
     });
     it("should do nothing when the userId does not exist", async () => {
-        const employee = await seedHourlyRateEmployee();
+        const employee = await seedHourlyEmployee();
 
         await executePayrollCommand(`DelEmp ${employee.id + 1}`);
 

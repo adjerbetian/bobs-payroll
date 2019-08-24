@@ -1,6 +1,6 @@
-import { generateHourlyRateEmployee, generateUnionEmployee } from "../../test/generators";
+import { generateHourlyEmployee, generateUnionEmployee } from "../../test/generators";
 import "../../test/integrationTest";
-import { seedHourlyRateEmployee } from "../../test/seeders";
+import { seedHourlyEmployee } from "../../test/seeders";
 import { expect } from "../../test/unitTest";
 import { generateIndex } from "../../test/utils";
 import { NotFoundError } from "../core";
@@ -9,7 +9,7 @@ import { mongoEmployeeRepository } from "./mongoEmployeeRepository";
 describe("mongoEmployeeRepository", () => {
     describe("fetchById", () => {
         it("should return the employee", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
@@ -17,7 +17,7 @@ describe("mongoEmployeeRepository", () => {
             expect(dbEmployee).to.deep.equal(employee);
         });
         it("should not return the _id field", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
@@ -41,7 +41,7 @@ describe("mongoEmployeeRepository", () => {
             expect(dbEmployee).to.deep.equal(employee);
         });
         it("should throw a not found error when the employee was not found", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
             // noinspection ES6MissingAwait
@@ -52,7 +52,7 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("insertOne", () => {
         it("insert the given employee", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
 
             await mongoEmployeeRepository.insertOne(employee);
 
@@ -60,7 +60,7 @@ describe("mongoEmployeeRepository", () => {
             expect(dbEmployee).to.deep.equal(employee);
         });
         it("should not add the _id field to the entity", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
 
             await mongoEmployeeRepository.insertOne(employee);
 
@@ -69,7 +69,7 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("exists", () => {
         it("return true when the employee exists", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
             const result = await mongoEmployeeRepository.exists({ id: employee.id });
@@ -77,7 +77,7 @@ describe("mongoEmployeeRepository", () => {
             expect(result).to.be.true;
         });
         it("return false when the employee exists", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
 
             const result = await mongoEmployeeRepository.exists({ id: employee.id });
 
@@ -86,7 +86,7 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("deleteById", () => {
         it("delete the employee when it exists", async () => {
-            const employee = generateHourlyRateEmployee();
+            const employee = generateHourlyEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
             await mongoEmployeeRepository.deleteById(employee.id);
@@ -103,7 +103,7 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("updateById", () => {
         it("update the employee when it exists", async () => {
-            const employee = await seedHourlyRateEmployee();
+            const employee = await seedHourlyEmployee();
 
             await mongoEmployeeRepository.updateById(employee.id, { name: "James Bond" });
 

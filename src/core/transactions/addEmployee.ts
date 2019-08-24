@@ -48,17 +48,17 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
     }
 
     function buildEmployee(args: AddEmployeeArgs): Employee {
-        if (args.type === "H") return buildHourlyRateEmployee();
+        if (args.type === "H") return buildHourlyEmployee();
         if (args.type === "S") return buildMonthlySalaryEmployee();
         if (args.type === "C") return buildCommissionedEmployee();
         throw new TransactionFormatError("AddEmp");
 
-        function buildHourlyRateEmployee(): Employee {
+        function buildHourlyEmployee(): Employee {
             return {
                 id: args.id,
                 name: args.name,
                 address: args.address,
-                type: EmployeeType.HOURLY_RATE,
+                type: EmployeeType.HOURLY,
                 hourlyRate: args.rate,
                 commissionRate: null,
                 monthlySalary: null,

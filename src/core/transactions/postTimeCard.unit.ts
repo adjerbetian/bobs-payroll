@@ -5,7 +5,7 @@ import {
     Fake
 } from "../../../test/fakeBuilders";
 import {
-    generateHourlyRateEmployee,
+    generateHourlyEmployee,
     generateMonthlySalaryEmployee,
     generateTimeCard
 } from "../../../test/generators";
@@ -36,13 +36,13 @@ describe("postTimeCard", () => {
         const timeCard = generateTimeCard();
         fakeEmployeeRepository.fetchById
             .withArgs(timeCard.employeeId)
-            .resolves(generateHourlyRateEmployee());
+            .resolves(generateHourlyEmployee());
 
         await postTimeCardEntity(timeCard);
 
         expect(fakeTimeCardRepository.insertOne).to.have.been.calledOnceWith(timeCard);
     });
-    it("should throw a EmployeeTypeError if the employee is not in hourly rate", async () => {
+    it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
         const timeCard = generateTimeCard();
         fakeEmployeeRepository.fetchById
             .withArgs(timeCard.employeeId)
@@ -57,7 +57,7 @@ describe("postTimeCard", () => {
         const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
         fakeEmployeeRepository.fetchById
             .withArgs(timeCard.employeeId)
-            .resolves(generateHourlyRateEmployee());
+            .resolves(generateHourlyEmployee());
 
         // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);

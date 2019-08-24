@@ -1,5 +1,5 @@
 import { ServiceCharge, mongoServiceChargeRepository } from "../src";
-import { seedHourlyRateEmployee, seedUnionEmployee } from "../test/seeders";
+import { seedHourlyEmployee, seedUnionEmployee } from "../test/seeders";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateServiceCharge } from "../test/generators";
 
@@ -13,7 +13,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
         await expectServiceChargeToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the employee is not a union member", async () => {
-        const employee = await seedHourlyRateEmployee();
+        const employee = await seedHourlyEmployee();
         const serviceCharge = generateServiceCharge({ memberId: employee.memberId as string });
 
         await executePostServiceCharge(serviceCharge);

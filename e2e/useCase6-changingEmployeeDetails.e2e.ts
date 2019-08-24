@@ -1,10 +1,10 @@
 import { EmployeeType, mongoEmployeeRepository } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
-import { seedHourlyRateEmployee, seedMonthlySalaryEmployee } from "../test/seeders";
+import { seedHourlyEmployee, seedMonthlySalaryEmployee } from "../test/seeders";
 
 describe("Use Case 6: Changing Employee Details", () => {
     it("should change the employee's name", async () => {
-        const employee = await seedHourlyRateEmployee();
+        const employee = await seedHourlyEmployee();
 
         await executePayrollCommand(`ChgEmp ${employee.id} Name "James Bond"`);
 
@@ -12,20 +12,20 @@ describe("Use Case 6: Changing Employee Details", () => {
         expect(dbEmployee.name).to.equal("James Bond");
     });
     it("should change the employee's address", async () => {
-        const employee = await seedHourlyRateEmployee();
+        const employee = await seedHourlyEmployee();
 
         await executePayrollCommand(`ChgEmp ${employee.id} Address "my new address"`);
 
         const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
         expect(dbEmployee.address).to.equal("my new address");
     });
-    it("should change the employee to hourly rate", async () => {
+    it("should change the employee to hourly", async () => {
         const employee = await seedMonthlySalaryEmployee();
 
         await executePayrollCommand(`ChgEmp ${employee.id} Hourly 10`);
 
         const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
-        expect(dbEmployee.type).to.equal(EmployeeType.HOURLY_RATE);
+        expect(dbEmployee.type).to.equal(EmployeeType.HOURLY);
         expect(dbEmployee.hourlyRate).to.equal(10);
         expect(dbEmployee.monthlySalary).to.be.null;
     });

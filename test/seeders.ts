@@ -1,15 +1,15 @@
 import { Employee, mongoEmployeeRepository } from "../src";
 import {
     generateCommissionedSalaryEmployee,
-    generateHourlyRateEmployee,
+    generateHourlyEmployee,
     generateMonthlySalaryEmployee,
     generateUnionEmployee
 } from "./generators";
 
 type PEmployee = Partial<Employee>;
 
-export async function seedHourlyRateEmployee(args: PEmployee = {}): Promise<Employee> {
-    const employee = generateHourlyRateEmployee(args);
+export async function seedHourlyEmployee(args: PEmployee = {}): Promise<Employee> {
+    const employee = generateHourlyEmployee(args);
     await mongoEmployeeRepository.insertOne(employee);
     return employee;
 }
