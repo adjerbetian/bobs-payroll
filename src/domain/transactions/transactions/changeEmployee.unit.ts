@@ -19,25 +19,45 @@ describe("addEmployee", () => {
         fakeEmployeeRepository.updateById.resolves();
     });
 
-    it("should update the employee's name", async () => {
-        const employee = generateHourlyEmployee();
+    describe("Name", () => {
+        it("should update the employee's name", async () => {
+            const employee = generateHourlyEmployee();
 
-        await changeEmployee(`${employee.id}`, "Name", "James Bond");
+            await changeEmployee(`${employee.id}`, "Name", "James Bond");
 
-        expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
-            name: "James Bond"
+            expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
+                name: "James Bond"
+            });
+        });
+        it("should throw an error if the name is not defined", async () => {
+            const employee = generateSalariedEmployee();
+
+            // noinspection ES6MissingAwait
+            const promise = changeEmployee(`${employee.id}`, "Name", "");
+
+            await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
         });
     });
-    it("should update the employee's address", async () => {
-        const employee = generateHourlyEmployee();
+    describe("Address", () => {
+        it("should update the employee's address", async () => {
+            const employee = generateHourlyEmployee();
 
-        await changeEmployee(`${employee.id}`, "Address", "my new address");
+            await changeEmployee(`${employee.id}`, "Address", "my new address");
 
-        expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
-            address: "my new address"
+            expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
+                address: "my new address"
+            });
+        });
+        it("should throw an error if the address is not defined", async () => {
+            const employee = generateSalariedEmployee();
+
+            // noinspection ES6MissingAwait
+            const promise = changeEmployee(`${employee.id}`, "Address", "");
+
+            await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
         });
     });
-    describe("to hourly", () => {
+    describe("Hourly", () => {
         it("should change the employee's type to hourly and set the rate", async () => {
             const employee = generateSalariedEmployee();
 
@@ -57,7 +77,7 @@ describe("addEmployee", () => {
             await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
         });
     });
-    describe("to salaried", () => {
+    describe("Salaried", () => {
         it("should change the employee's type to salaried and set the salary", async () => {
             const employee = generateHourlyEmployee();
 
@@ -69,10 +89,39 @@ describe("addEmployee", () => {
             });
         });
         it("should throw an error if the salary is not defined", async () => {
-            const employee = generateSalariedEmployee();
+            const employee = generateHourlyEmployee();
 
             // noinspection ES6MissingAwait
             const promise = changeEmployee(`${employee.id}`, "Salaried", "");
+
+            await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
+        });
+    });
+    describe("Commissioned", () => {
+        it("should change the employee's type to salaried and set the salary", async () => {
+            const employee = generateHourlyEmployee();
+
+            await changeEmployee(`${employee.id}`, "Commissioned", "10", "30");
+
+            expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employee.id, {
+                type: EmployeeType.COMMISSIONED,
+                monthlySalary: 10,
+                commissionRate: 30
+            });
+        });
+        it("should throw an error if the salary is not defined", async () => {
+            const employee = generateHourlyEmployee();
+
+            // noinspection ES6MissingAwait
+            const promise = changeEmployee(`${employee.id}`, "Commissioned", "");
+
+            await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
+        });
+        it("should throw an error if the commission is not defined", async () => {
+            const employee = generateHourlyEmployee();
+
+            // noinspection ES6MissingAwait
+            const promise = changeEmployee(`${employee.id}`, "Commissioned", "10", "");
 
             await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
         });
