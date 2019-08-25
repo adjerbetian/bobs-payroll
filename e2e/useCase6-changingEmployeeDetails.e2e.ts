@@ -153,8 +153,14 @@ describe.only("Use Case 6: Changing Employee Details", () => {
                 expect(dbUnionMember).to.have.property("memberId", "member-123");
                 expect(dbUnionMember).to.have.property("rate", 10.5);
             });
+            it("should do nothing if the employee does not exist", async () => {
+                const nonExistingId = generateIndex();
+                await executePayrollCommand(`ChgEmp ${nonExistingId} Member member-123 Dues 10.5`);
+
+                const promise = mongoUnionMemberRepository.fetchByEmployeeId(nonExistingId);
+                await expect(promise).to.be.rejectedWith(NotFoundError);
+            });
             it.skip("should update the due rate if the employee is already in union", async () => {});
-            it.skip("should do nothing if the employee does not exist", async () => {});
             it.skip("should do nothing if the dues rate is not defined", async () => {});
             it.skip("should do nothing when the member id is already used", async () => {});
         });
