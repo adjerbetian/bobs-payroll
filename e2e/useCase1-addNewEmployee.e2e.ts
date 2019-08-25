@@ -10,7 +10,7 @@ describe("Use Case 1: Add New Employee", () => {
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" H ${employee.hourlyRate}`
         );
 
-        await expectUserToExistInDB(employee);
+        await expectUserToExistInDb(employee);
     });
     it("should add a salaried employee", async () => {
         const employee = generateSalariedEmployee();
@@ -19,7 +19,7 @@ describe("Use Case 1: Add New Employee", () => {
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" S ${employee.monthlySalary}`
         );
 
-        await expectUserToExistInDB(employee);
+        await expectUserToExistInDb(employee);
     });
     it("should add a salaried employee with a monthly commission rate", async () => {
         const employee = generateCommissionedEmployee();
@@ -28,7 +28,7 @@ describe("Use Case 1: Add New Employee", () => {
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary} ${employee.commissionRate}`
         );
 
-        await expectUserToExistInDB(employee);
+        await expectUserToExistInDb(employee);
     });
     it("should do nothing when the transaction is wrongly put", async () => {
         const employee = generateCommissionedEmployee();
@@ -37,12 +37,12 @@ describe("Use Case 1: Add New Employee", () => {
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary}`
         );
 
-        const employeeExistsInDB = await mongoEmployeeRepository.exists({ id: employee.id });
-        expect(employeeExistsInDB).to.be.false;
+        const employeeExistsInDb = await mongoEmployeeRepository.exists({ id: employee.id });
+        expect(employeeExistsInDb).to.be.false;
     });
 });
 
-async function expectUserToExistInDB(employee: Employee): Promise<void> {
+async function expectUserToExistInDb(employee: Employee): Promise<void> {
     const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
     expect(dbEmployee).to.deep.equal(employee);
 }

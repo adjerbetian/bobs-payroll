@@ -3,7 +3,7 @@ import * as config from "../config.json";
 import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../domain";
 import { buildMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 
-export type DBModel<T> = T & { _id?: ObjectID };
+export type DbModel<T> = T & { _id?: ObjectID };
 export let dbEmployees: MongoDbAdapter<Employee>;
 export let dbTimeCards: MongoDbAdapter<TimeCard>;
 export let dbSalesReceipts: MongoDbAdapter<SalesReceipt>;
@@ -15,7 +15,7 @@ let client: MongoClient;
 
 export async function initConnection(): Promise<void> {
     client = await MongoClient.connect(config.db.url, { useUnifiedTopology: true, useNewUrlParser: true });
-    const db = getDB();
+    const db = getDb();
     dbEmployees = buildMongoDbAdapter(db.collection("employees"));
     dbTimeCards = buildMongoDbAdapter(db.collection("time-cards"));
     dbSalesReceipts = buildMongoDbAdapter(db.collection("sales-receipts"));
@@ -29,10 +29,10 @@ export async function closeConnection(): Promise<void> {
 }
 
 export async function cleanCollections(): Promise<void> {
-    const collections = await getDB().collections();
-    await Promise.all(collections.map(async c => getDB().dropCollection(c.collectionName)));
+    const collections = await getDb().collections();
+    await Promise.all(collections.map(async c => getDb().dropCollection(c.collectionName)));
 }
 
-function getDB(): Db {
+export function getDb(): Db {
     return client.db(config.db.dbName);
 }

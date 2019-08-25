@@ -8,15 +8,15 @@ describe("Use Case 2: Deleting an Employee", () => {
 
         await executePayrollCommand(`DelEmp ${employee.id}`);
 
-        const employeeExistsInDB = await mongoEmployeeRepository.exists({ id: employee.id });
-        expect(employeeExistsInDB).to.be.false;
+        const employeeExistsInDb = await mongoEmployeeRepository.exists({ id: employee.id });
+        expect(employeeExistsInDb).to.be.false;
     });
     it("should do nothing when the userId does not exist", async () => {
         const employee = await seedHourlyEmployee();
 
         await executePayrollCommand(`DelEmp ${employee.id + 1}`);
 
-        const employeeExistsInDB = await mongoEmployeeRepository.exists({ id: employee.id });
-        expect(employeeExistsInDB).to.be.true;
+        const employeeExistsInDb = await mongoEmployeeRepository.exists({ id: employee.id });
+        expect(employeeExistsInDb).to.be.true;
     });
 });

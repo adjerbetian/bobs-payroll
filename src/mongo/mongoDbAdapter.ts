@@ -1,6 +1,6 @@
 import { Collection, FilterQuery, UpdateQuery } from "mongodb";
 import { NotFoundError } from "../domain";
-import { DBModel } from "./db";
+import { DbModel } from "./db";
 
 export interface MongoDbAdapter<T> {
     fetch(query: FilterQuery<T>): Promise<T>;
@@ -13,13 +13,13 @@ export interface MongoDbAdapter<T> {
     removeAll(query: FilterQuery<T>): Promise<void>;
 }
 
-export function buildMongoDbAdapter<T>(db: Collection<DBModel<T>>): MongoDbAdapter<T> {
+export function buildMongoDbAdapter<T>(db: Collection<DbModel<T>>): MongoDbAdapter<T> {
     return {
         async fetch(query: FilterQuery<T>): Promise<T> {
             const entity = await db.findOne(query);
-            if (!entity) throwNotFound(query);
+            if (!entity) throw buildNotFoundError(query);
 
-            return cleanMongoEntity(entity as T);
+            return cleanMongoEntity(entity);
         },
 
         async insert(entity: T): Promise<void> {
@@ -32,13 +32,13 @@ export function buildMongoDbAdapter<T>(db: Collection<DBModel<T>>): MongoDbAdapt
         },
 
         async remove(query: FilterQuery<T>): Promise<void> {
-            const a = await db.deleteOne(query);
-            if (a.deletedCount === 0) throwNotFound(query);
+            const { deletedCount } = await db.deleteOne(query);
+            if (deletedCount === 0) throw buildNotFoundError(query);
         },
 
         async update(query: FilterQuery<T>, update: UpdateQuery<T>): Promise<void> {
             const { matchedCount } = await db.updateOne(query, update);
-            if (matchedCount === 0) throwNotFound(query);
+            if (matchedCount === 0) throw buildNotFoundError(query);
         },
 
         async fetchAll(query: FilterQuery<T>): Promise<T[]> {
@@ -47,15 +47,15 @@ export function buildMongoDbAdapter<T>(db: Collection<DBModel<T>>): MongoDbAdapt
         },
 
         async removeAll(query: FilterQuery<T>): Promise<void> {
-            await db.deleteOne(query);
+            await db.deleteMany(query);
         }
     };
 
-    function throwNotFound(query: FilterQuery<T>): never {
-        throw new NotFoundError(`nothing in ${db.collectionName} matched ${JSON.stringify(query)}`);
+    function buildNotFoundError(query: FilterQuery<T>): NotFoundError {
+        return new NotFoundError(`nothing in ${db.collectionName} matched ${JSON.stringify(query)}`);
     }
 
-    function cleanMongoEntity<T>(entity: DBModel<T>): T {
+    function cleanMongoEntity<T>(entity: DbModel<T>): T {
         delete entity._id;
         return entity;
     }
