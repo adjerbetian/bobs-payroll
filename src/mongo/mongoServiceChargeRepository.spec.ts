@@ -1,15 +1,13 @@
-import { cloneDeep } from "lodash";
 import { generateServiceCharge } from "../../test/generators";
 import "../../test/integrationTest";
+import { seedServiceCharge } from "../../test/seeders";
 import { expect } from "../../test/unitTest";
-import { ServiceCharge } from "../domain";
-import { dbServiceCharges } from "./db";
 import { mongoServiceChargeRepository } from "./mongoServiceChargeRepository";
 
 describe("mongoServiceChargeRepository", () => {
     describe("fetchAll", () => {
         it("should return all the service charges", async () => {
-            const serviceCharges = [await dbGenerateServiceCharge(), await dbGenerateServiceCharge()];
+            const serviceCharges = [await seedServiceCharge(), await seedServiceCharge()];
 
             const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
 
@@ -18,14 +16,14 @@ describe("mongoServiceChargeRepository", () => {
     });
     describe("fetchAllOfMember", () => {
         it("should return all the employee's service charges", async () => {
-            const serviceCharge = await dbGenerateServiceCharge();
+            const serviceCharge = await seedServiceCharge();
 
             const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(serviceCharge.memberId);
 
             expect(salesReceipts).to.deep.equal([serviceCharge]);
         });
         it("should not return other employees' time cards", async () => {
-            const serviceCharge = await dbGenerateServiceCharge();
+            const serviceCharge = await seedServiceCharge();
 
             const salesReceipts = await mongoServiceChargeRepository.fetchAllOfMember(serviceCharge.memberId + "x");
 
@@ -50,9 +48,3 @@ describe("mongoServiceChargeRepository", () => {
         });
     });
 });
-
-async function dbGenerateServiceCharge(): Promise<ServiceCharge> {
-    const serviceCharge = generateServiceCharge();
-    await dbServiceCharges.insertOne(cloneDeep(serviceCharge));
-    return serviceCharge;
-}

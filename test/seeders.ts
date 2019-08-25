@@ -4,13 +4,19 @@ import {
     HourlyEmployee,
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
-    SalariedEmployee
+    mongoServiceChargeRepository,
+    mongoTimeCardRepository,
+    SalariedEmployee,
+    ServiceCharge,
+    TimeCard
 } from "../src";
 import {
     generateCommissionedEmployee,
     generateDirectPaymentMethod,
     generateHourlyEmployee,
     generateSalariedEmployee,
+    generateServiceCharge,
+    generateTimeCard,
     generateUnionEmployee
 } from "./generators";
 
@@ -44,4 +50,16 @@ export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod>
     const paymentMethod = generateDirectPaymentMethod(args);
     await mongoPaymentMethodRepository.insertOne(paymentMethod);
     return paymentMethod;
+}
+
+export async function seedServiceCharge(args: Partial<ServiceCharge> = {}): Promise<ServiceCharge> {
+    const serviceCharge = generateServiceCharge(args);
+    await mongoServiceChargeRepository.insertOne(serviceCharge);
+    return serviceCharge;
+}
+
+export async function seedTimeCard(args: Partial<TimeCard> = {}): Promise<TimeCard> {
+    const timeCard = generateTimeCard(args);
+    await mongoTimeCardRepository.insertOne(timeCard);
+    return timeCard;
 }
