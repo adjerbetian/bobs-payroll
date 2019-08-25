@@ -9,7 +9,7 @@ import { executePayrollCommand, expect } from "../test/e2eTest";
 import { seedDirectPaymentMethod, seedHourlyEmployee, seedSalariedEmployee } from "../test/seeders";
 import { generateIndex } from "../test/utils";
 
-describe("Use Case 6: Changing Employee Details", () => {
+describe.only("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;
 
     beforeEach(async () => {
@@ -87,7 +87,14 @@ describe("Use Case 6: Changing Employee Details", () => {
             expect(dbPaymentMethod).to.have.property("type", PaymentMethodType.HOLD);
             expect(dbPaymentMethod).not.to.have.property("bank");
         });
-        it.skip("should set the employee's payment method to direct deposit", async () => {});
+        it("should set the employee's payment method to direct deposit", async () => {
+            await executePayrollCommand(`ChgEmp ${employee.id} Direct "bank-id" "account-id"`);
+
+            const dbPaymentMethod = await mongoPaymentMethodRepository.fetchByEmployeeId(employee.id);
+            expect(dbPaymentMethod).to.have.property("type", PaymentMethodType.DIRECT);
+            expect(dbPaymentMethod).to.have.property("bank", "bank-id");
+            expect(dbPaymentMethod).to.have.property("account", "account-id");
+        });
         it.skip("should change the employee's payment method to direct deposit when was hold", async () => {});
         it.skip("should set the employee's payment method to paycheck mail ", async () => {});
         it.skip("should change the employee's payment method to paycheck mail when was hold", async () => {});
