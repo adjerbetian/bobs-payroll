@@ -3,6 +3,7 @@ import {
     EmployeeType,
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
+    NotFoundError,
     PaymentMethodType
 } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
@@ -94,6 +95,12 @@ describe.only("Use Case 6: Changing Employee Details", () => {
             expect(dbPaymentMethod).to.have.property("type", PaymentMethodType.DIRECT);
             expect(dbPaymentMethod).to.have.property("bank", "bank-id");
             expect(dbPaymentMethod).to.have.property("account", "account-id");
+        });
+        it("should do nothing when the account is missing", async () => {
+            await executePayrollCommand(`ChgEmp ${employee.id} Direct "bank-id"`);
+
+            const promise = mongoPaymentMethodRepository.fetchByEmployeeId(employee.id);
+            await expect(promise).to.be.rejectedWith(NotFoundError);
         });
         it.skip("should change the employee's payment method to direct deposit when was hold", async () => {});
         it.skip("should set the employee's payment method to paycheck mail ", async () => {});
