@@ -1,10 +1,5 @@
 import { ServiceCharge, ServiceChargeRepository } from "../../domain";
-import { dbServiceCharges } from "../db";
 import { MongoDbAdapter } from "../mongoDbAdapter";
-
-export const mongoServiceChargeRepository: ServiceChargeRepository = buildMongoServiceChargeRepository(
-    dbServiceCharges
-);
 
 export function buildMongoServiceChargeRepository(db: MongoDbAdapter<ServiceCharge>): ServiceChargeRepository {
     return {
