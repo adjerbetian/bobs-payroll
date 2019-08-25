@@ -1,39 +1,50 @@
 import { generateTimeCard } from "../../test/generators";
 import "../../test/integrationTest";
-import { seedTimeCard } from "../../test/seeders";
 import { expect } from "../../test/unitTest";
-import { mongoTimeCardRepository } from "./mongoTimeCardRepository";
+import { generateIndex } from "../../test/utils";
+import { mongoTimeCardRepository as repository } from "./mongoTimeCardRepository";
+import { dbTimeCards as db } from "./db";
 
 describe("mongoTimeCardRepository", () => {
     describe("fetchAllOfEmployee", () => {
+        let employeeId: number;
+
+        beforeEach(() => {
+            employeeId = generateIndex();
+        });
+
         it("should return all the employee's time cards", async () => {
-            const salesReceipt = await seedTimeCard();
+            const timeCard1 = generateTimeCard({ employeeId });
+            const timeCard2 = generateTimeCard({ employeeId });
+            await db.insert(timeCard1);
+            await db.insert(timeCard2);
 
-            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(salesReceipt.employeeId);
+            const dbTimeCards = await repository.fetchAllOfEmployee(employeeId);
 
-            expect(salesReceipts).to.deep.equal([salesReceipt]);
+            expect(dbTimeCards).to.deep.equal([timeCard1, timeCard2]);
         });
         it("should not return other employees' time cards", async () => {
-            const salesReceipt = await seedTimeCard();
+            const timeCard = generateTimeCard({ employeeId });
+            await db.insert(timeCard);
 
-            const salesReceipts = await mongoTimeCardRepository.fetchAllOfEmployee(salesReceipt.employeeId + 1);
+            const dbTimeCards = await repository.fetchAllOfEmployee(timeCard.employeeId + 1);
 
-            expect(salesReceipts).to.be.empty;
+            expect(dbTimeCards).to.be.empty;
         });
     });
     describe("insert", () => {
         it("insert the given time card", async () => {
             const timeCard = generateTimeCard();
 
-            await mongoTimeCardRepository.insert(timeCard);
+            await repository.insert(timeCard);
 
-            const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(timeCard.employeeId);
-            expect(dbTimeCards).to.deep.equal([timeCard]);
+            const dbTimeCard = await db.fetch({ employeeId: timeCard.employeeId });
+            expect(dbTimeCard).to.deep.equal(timeCard);
         });
         it("should not add the _id field to the entity", async () => {
             const timeCard = generateTimeCard();
 
-            await mongoTimeCardRepository.insert(timeCard);
+            await repository.insert(timeCard);
 
             expect(timeCard).not.to.have.property("_id");
         });
