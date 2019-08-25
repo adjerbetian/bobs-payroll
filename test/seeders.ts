@@ -1,6 +1,7 @@
 import {
     CommissionedEmployee,
     DirectPaymentMethod,
+    HoldPaymentMethod,
     HourlyEmployee,
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
@@ -13,6 +14,7 @@ import {
 import {
     generateCommissionedEmployee,
     generateDirectPaymentMethod,
+    generateHoldPaymentMethod,
     generateHourlyEmployee,
     generateSalariedEmployee,
     generateServiceCharge,
@@ -46,12 +48,6 @@ export async function seedUnionEmployee(args: Partial<HourlyEmployee> = {}): Pro
     return employee;
 }
 
-export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod> = {}): Promise<DirectPaymentMethod> {
-    const paymentMethod = generateDirectPaymentMethod(args);
-    await mongoPaymentMethodRepository.insertOne(paymentMethod);
-    return paymentMethod;
-}
-
 export async function seedServiceCharge(args: Partial<ServiceCharge> = {}): Promise<ServiceCharge> {
     const serviceCharge = generateServiceCharge(args);
     await mongoServiceChargeRepository.insertOne(serviceCharge);
@@ -62,4 +58,16 @@ export async function seedTimeCard(args: Partial<TimeCard> = {}): Promise<TimeCa
     const timeCard = generateTimeCard(args);
     await mongoTimeCardRepository.insertOne(timeCard);
     return timeCard;
+}
+
+export async function seedHoldPaymentMethod(args: Partial<HoldPaymentMethod> = {}): Promise<HoldPaymentMethod> {
+    const paymentMethod = generateHoldPaymentMethod(args);
+    await mongoPaymentMethodRepository.insertOne(paymentMethod);
+    return paymentMethod;
+}
+
+export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod> = {}): Promise<DirectPaymentMethod> {
+    const paymentMethod = generateDirectPaymentMethod(args);
+    await mongoPaymentMethodRepository.insertOne(paymentMethod);
+    return paymentMethod;
 }
