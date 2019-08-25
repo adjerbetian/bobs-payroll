@@ -7,6 +7,7 @@ import {
     EmployeeType,
     HoldPaymentMethod,
     HourlyEmployee,
+    MailPaymentMethod,
     PaymentMethodType,
     SalariedEmployee,
     SalesReceipt,
@@ -111,6 +112,16 @@ export function generateDirectPaymentMethod(args: Partial<DirectPaymentMethod> =
         employeeId: index,
         account: `account-${index}`,
         bank: `bank-${index}`,
+        ...args
+    };
+}
+
+export function generateMailPaymentMethod(args: Partial<MailPaymentMethod> = {}): MailPaymentMethod {
+    const index = generateIndex();
+    return {
+        type: PaymentMethodType.MAIL,
+        employeeId: index,
+        address: `address-${index}`,
         ...args
     };
 }

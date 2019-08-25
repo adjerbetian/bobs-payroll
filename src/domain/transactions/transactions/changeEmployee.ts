@@ -22,6 +22,7 @@ export function buildChangeEmployeeTransaction({
         if (updateType === "Commissioned") return changeEmployeeTypeToCommissioned();
         if (updateType === "Hold") return changeEmployeePaymentMethodToHold();
         if (updateType === "Direct") return changeEmployeePaymentMethodToDirect();
+        if (updateType === "Mail") return changeEmployeePaymentMethodToMail();
 
         async function changeEmployeeName(): Promise<void> {
             const [name] = params;
@@ -82,6 +83,17 @@ export function buildChangeEmployeeTransaction({
                 employeeId: employeeId,
                 account,
                 bank
+            });
+        }
+
+        async function changeEmployeePaymentMethodToMail(): Promise<void> {
+            const [address] = params;
+            transactionValidator.assertIsNotEmpty(address);
+            await paymentMethodRepository.deleteByEmployeeId(employeeId);
+            return paymentMethodRepository.insertOne({
+                type: PaymentMethodType.MAIL,
+                employeeId: employeeId,
+                address
             });
         }
     };

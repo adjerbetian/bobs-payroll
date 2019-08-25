@@ -1,5 +1,9 @@
 import { buildFakeEmployeeRepository, buildFakePaymentMethodRepository, Fake } from "../../../../test/fakeBuilders";
-import { generateDirectPaymentMethod, generateHoldPaymentMethod } from "../../../../test/generators";
+import {
+    generateDirectPaymentMethod,
+    generateHoldPaymentMethod,
+    generateMailPaymentMethod
+} from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { generateIndex } from "../../../../test/utils";
 import { EmployeeRepository, EmployeeType, PaymentMethodRepository } from "../../core";
@@ -157,6 +161,30 @@ describe("changeEmployee", () => {
             });
             it("should throw a transaction format error when the account-id is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Direct", "bank-id");
+
+                await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
+            });
+        });
+        describe("Mail", () => {
+            it("should add the direct deposit payment method to the employee", async () => {
+                await changeEmployee(`${employeeId}`, "Mail", "my paycheck address");
+
+                const expectedPaymentMethod = generateMailPaymentMethod({
+                    employeeId,
+                    address: "my paycheck address"
+                });
+                expect(fakePaymentMethodRepository.insertOne).to.have.been.calledOnceWith(expectedPaymentMethod);
+            });
+            it("should delete the previous payment method of the employee", async () => {
+                await changeEmployee(`${employeeId}`, "Mail", "my paycheck address");
+
+                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
+                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
+                    fakePaymentMethodRepository.insertOne
+                );
+            });
+            it("should throw a transaction format error when the address is missing", async () => {
+                const promise = changeEmployee(`${employeeId}`, "Mail");
 
                 await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
             });
