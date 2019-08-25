@@ -1,5 +1,5 @@
 import { SinonStub } from "sinon";
-import { EmployeeRepository, ServiceChargeRepository, TimeCardRepository } from "../src";
+import { EmployeeRepository, PaymentMethodRepository, ServiceChargeRepository, TimeCardRepository } from "../src";
 import { sandbox } from "./unitTest";
 
 export type Fake<T> = {
@@ -14,6 +14,14 @@ export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
         exists: buildStubFor("exists"),
         deleteById: buildStubFor("deleteById"),
         updateById: buildStubFor("updateById")
+    };
+}
+
+export function buildFakePaymentMethodRepository(): Fake<PaymentMethodRepository> {
+    return {
+        fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
+        insertOne: buildStubFor("insertOne"),
+        deleteByEmployeeId: buildStubFor("deleteByEmployeeId")
     };
 }
 

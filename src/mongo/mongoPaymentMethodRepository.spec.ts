@@ -1,5 +1,6 @@
 import { generateDirectPaymentMethod } from "../../test/generators";
 import "../../test/integrationTest";
+import { seedDirectPaymentMethod } from "../../test/seeders";
 import { expect } from "../../test/unitTest";
 import { NotFoundError } from "../domain";
 import { mongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
@@ -39,6 +40,16 @@ describe("mongoPaymentMethodRepository", () => {
             await mongoPaymentMethodRepository.insertOne(paymentMethod);
 
             expect(paymentMethod).not.to.have.property("_id");
+        });
+    });
+    describe("deleteByEmployeeId", () => {
+        it("delete the payment method of the employee", async () => {
+            const paymentMethod = await seedDirectPaymentMethod();
+
+            await mongoPaymentMethodRepository.deleteByEmployeeId(paymentMethod.employeeId);
+
+            const promise = mongoPaymentMethodRepository.fetchByEmployeeId(paymentMethod.employeeId);
+            await expect(promise).to.be.rejectedWith(NotFoundError);
         });
     });
 });

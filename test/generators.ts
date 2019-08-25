@@ -5,6 +5,7 @@ import {
     DirectPaymentMethod,
     Employee,
     EmployeeType,
+    HoldPaymentMethod,
     HourlyEmployee,
     PaymentMethodType,
     SalariedEmployee,
@@ -92,6 +93,15 @@ export function generateServiceCharge(args: Partial<ServiceCharge> = {}): Servic
 
 function generateFloatBetween(min: number, max: number): number {
     return _.round(_.random(min, max, true), 2);
+}
+
+export function generateHoldPaymentMethod(args: Partial<HoldPaymentMethod> = {}): HoldPaymentMethod {
+    const index = generateIndex();
+    return {
+        type: PaymentMethodType.HOLD,
+        employeeId: index,
+        ...args
+    };
 }
 
 export function generateDirectPaymentMethod(args: Partial<DirectPaymentMethod> = {}): DirectPaymentMethod {

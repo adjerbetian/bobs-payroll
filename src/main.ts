@@ -3,6 +3,7 @@ import {
     closeConnection,
     initConnection,
     mongoEmployeeRepository,
+    mongoPaymentMethodRepository,
     mongoSalesReceiptRepository,
     mongoServiceChargeRepository,
     mongoTimeCardRepository
@@ -12,7 +13,8 @@ const app = buildApp({
     salesReceiptRepository: mongoSalesReceiptRepository,
     employeeRepository: mongoEmployeeRepository,
     serviceChargeRepository: mongoServiceChargeRepository,
-    timeCardRepository: mongoTimeCardRepository
+    timeCardRepository: mongoTimeCardRepository,
+    paymentMethodRepository: mongoPaymentMethodRepository
 });
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

@@ -50,25 +50,28 @@ describe("Use Case 6: Changing Employee Details", () => {
         expect(dbEmployee).to.have.property("commissionRate", 30);
         expect(dbEmployee).not.to.have.property("hourlyRate");
     });
-    it("should change the employee to hold", async () => {
+    it("should set the employee's payment method to hold", async () => {
+        const employee = await seedHourlyEmployee();
+
+        await executePayrollCommand(`ChgEmp ${employee.id} Hold`);
+
+        const dbPaymentMethod = await mongoPaymentMethodRepository.fetchByEmployeeId(employee.id);
+        expect(dbPaymentMethod).to.have.property("type", PaymentMethodType.HOLD);
+    });
+    it("should change the employee's payment method to hold when was direct", async () => {
         const employee = await seedHourlyEmployee();
         await seedDirectPaymentMethod({ employeeId: employee.id });
 
         await executePayrollCommand(`ChgEmp ${employee.id} Hold`);
 
         const dbPaymentMethod = await mongoPaymentMethodRepository.fetchByEmployeeId(employee.id);
-        expect(dbPaymentMethod).to.deep.equal({
-            employeeId: employee.id,
-            type: PaymentMethodType.HOLD
-        });
+        expect(dbPaymentMethod).to.have.property("type", PaymentMethodType.HOLD);
+        expect(dbPaymentMethod).not.to.have.property("bank");
     });
     it.skip("should change the employee's direct deposit.skip infos ", async () => {});
     it.skip("should change the employee's paycheck mail ", async () => {});
     it.skip("should put the employee in Union", async () => {});
     it.skip("should remove the employee from Union", async () => {});
-    describe("on error", () => {
-        it.skip("should do nothing when transaction is wrong", async () => {});
-        it.skip("should do nothing when the employee does not exist", async () => {});
-        it.skip("should do nothing when the union member id is already used", async () => {});
-    });
+    it.skip("should do nothing when the union member id is already used", async () => {});
+    it.skip("should do nothing when the employee does not exist", async () => {});
 });

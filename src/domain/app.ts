@@ -1,4 +1,10 @@
-import { EmployeeRepository, SalesReceiptRepository, ServiceChargeRepository, TimeCardRepository } from "./core";
+import {
+    EmployeeRepository,
+    PaymentMethodRepository,
+    SalesReceiptRepository,
+    ServiceChargeRepository,
+    TimeCardRepository
+} from "./core";
 import { buildTransactionDomain } from "./transactions";
 
 export interface App {
@@ -10,19 +16,22 @@ interface Dependencies {
     timeCardRepository: TimeCardRepository;
     salesReceiptRepository: SalesReceiptRepository;
     serviceChargeRepository: ServiceChargeRepository;
+    paymentMethodRepository: PaymentMethodRepository;
 }
 
 export function buildApp({
     salesReceiptRepository,
     employeeRepository,
     serviceChargeRepository,
-    timeCardRepository
+    timeCardRepository,
+    paymentMethodRepository
 }: Dependencies): App {
     const transactionDomain = buildTransactionDomain({
         salesReceiptRepository,
         employeeRepository,
         serviceChargeRepository,
-        timeCardRepository
+        timeCardRepository,
+        paymentMethodRepository
     });
 
     return {

@@ -1,19 +1,27 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../../test/fakeBuilders";
-import { generateHourlyEmployee, generateSalariedEmployee } from "../../../../test/generators";
+import { buildFakeEmployeeRepository, buildFakePaymentMethodRepository, Fake } from "../../../../test/fakeBuilders";
+import {
+    generateHoldPaymentMethod,
+    generateHourlyEmployee,
+    generateSalariedEmployee
+} from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
-import { EmployeeRepository, EmployeeType } from "../../core";
+import { generateIndex } from "../../../../test/utils";
+import { EmployeeRepository, EmployeeType, PaymentMethodRepository } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 import { Transaction } from "../Transaction";
 
 describe("addEmployee", () => {
     let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
     let changeEmployee: Transaction;
 
     beforeEach(() => {
         fakeEmployeeRepository = buildFakeEmployeeRepository();
+        fakePaymentMethodRepository = buildFakePaymentMethodRepository();
         changeEmployee = buildChangeEmployeeTransaction({
-            employeeRepository: fakeEmployeeRepository
+            employeeRepository: fakeEmployeeRepository,
+            paymentMethodRepository: fakePaymentMethodRepository
         });
 
         fakeEmployeeRepository.updateById.resolves();
@@ -124,6 +132,31 @@ describe("addEmployee", () => {
             const promise = changeEmployee(`${employee.id}`, "Commissioned", "10", "");
 
             await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
+        });
+    });
+    describe("Hold", () => {
+        beforeEach(() => {
+            fakePaymentMethodRepository.insertOne.resolves();
+            fakePaymentMethodRepository.deleteByEmployeeId.resolves();
+        });
+
+        it("should add the hold paycheck payment method to the employee", async () => {
+            const employeeId = generateIndex();
+
+            await changeEmployee(`${employeeId}`, "Hold");
+
+            const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId });
+            expect(fakePaymentMethodRepository.insertOne).to.have.been.calledOnceWith(expectedPaymentMethod);
+        });
+        it("should delete the previous payment method of the employee", async () => {
+            const employeeId = generateIndex();
+
+            await changeEmployee(`${employeeId}`, "Hold");
+
+            expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
+            expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
+                fakePaymentMethodRepository.insertOne
+            );
         });
     });
 });

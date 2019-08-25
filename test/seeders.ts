@@ -40,7 +40,7 @@ export async function seedUnionEmployee(args: Partial<HourlyEmployee> = {}): Pro
     return employee;
 }
 
-export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod>): Promise<DirectPaymentMethod> {
+export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod> = {}): Promise<DirectPaymentMethod> {
     const paymentMethod = generateDirectPaymentMethod(args);
     await mongoPaymentMethodRepository.insertOne(paymentMethod);
     return paymentMethod;
