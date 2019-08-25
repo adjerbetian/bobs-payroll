@@ -1,16 +1,24 @@
-import { EmployeeRepository, EmployeeType, PaymentMethodRepository, PaymentMethodType } from "../../core";
+import {
+    EmployeeRepository,
+    EmployeeType,
+    PaymentMethodRepository,
+    PaymentMethodType,
+    UnionMemberRepository
+} from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
     paymentMethodRepository: PaymentMethodRepository;
+    unionMemberRepository: UnionMemberRepository;
 }
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
 export function buildChangeEmployeeTransaction({
     employeeRepository,
-    paymentMethodRepository
+    paymentMethodRepository,
+    unionMemberRepository
 }: Dependencies): Transaction {
     return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
         const employeeId = parseInt(id);
@@ -23,6 +31,7 @@ export function buildChangeEmployeeTransaction({
         if (updateType === "Hold") return changeEmployeePaymentMethodToHold();
         if (updateType === "Direct") return changeEmployeePaymentMethodToDirect();
         if (updateType === "Mail") return changeEmployeePaymentMethodToMail();
+        if (updateType === "Member") return changeEmployeeToJoinUnion();
 
         async function changeEmployeeName(): Promise<void> {
             const [name] = params;
@@ -94,6 +103,15 @@ export function buildChangeEmployeeTransaction({
                 type: PaymentMethodType.MAIL,
                 employeeId: employeeId,
                 address
+            });
+        }
+
+        async function changeEmployeeToJoinUnion(): Promise<void> {
+            const [memberId, , rate] = params;
+            return unionMemberRepository.insert({
+                employeeId,
+                memberId,
+                rate: parseFloat(rate)
             });
         }
     };

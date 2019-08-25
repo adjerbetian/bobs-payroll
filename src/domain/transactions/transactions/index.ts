@@ -43,7 +43,11 @@ export function buildTransactions({
             serviceChargeRepository,
             unionMemberRepository
         }),
-        changeEmployee: buildChangeEmployeeTransaction({ employeeRepository, paymentMethodRepository })
+        changeEmployee: buildChangeEmployeeTransaction({
+            employeeRepository,
+            paymentMethodRepository,
+            unionMemberRepository
+        })
     };
 }
 

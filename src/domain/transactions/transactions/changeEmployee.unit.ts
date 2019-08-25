@@ -1,12 +1,18 @@
-import { buildFakeEmployeeRepository, buildFakePaymentMethodRepository, Fake } from "../../../../test/fakeBuilders";
+import {
+    buildFakeEmployeeRepository,
+    buildFakePaymentMethodRepository,
+    buildFakeUnionMemberRepository,
+    Fake
+} from "../../../../test/fakeBuilders";
 import {
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
-    generateMailPaymentMethod
+    generateMailPaymentMethod,
+    generateUnionMember
 } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { generateIndex } from "../../../../test/utils";
-import { EmployeeRepository, EmployeeType, PaymentMethodRepository } from "../../core";
+import { EmployeeRepository, EmployeeType, PaymentMethodRepository, UnionMemberRepository } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
@@ -14,15 +20,18 @@ import { buildChangeEmployeeTransaction } from "./changeEmployee";
 describe("changeEmployee", () => {
     let fakeEmployeeRepository: Fake<EmployeeRepository>;
     let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
+    let fakeUnionMemberRepository: Fake<UnionMemberRepository>;
     let changeEmployee: Transaction;
     let employeeId: number;
 
     beforeEach(() => {
         fakeEmployeeRepository = buildFakeEmployeeRepository();
         fakePaymentMethodRepository = buildFakePaymentMethodRepository();
+        fakeUnionMemberRepository = buildFakeUnionMemberRepository();
         changeEmployee = buildChangeEmployeeTransaction({
             employeeRepository: fakeEmployeeRepository,
-            paymentMethodRepository: fakePaymentMethodRepository
+            paymentMethodRepository: fakePaymentMethodRepository,
+            unionMemberRepository: fakeUnionMemberRepository
         });
 
         fakeEmployeeRepository.updateById.resolves();
@@ -189,5 +198,19 @@ describe("changeEmployee", () => {
                 await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
             });
         });
+    });
+    describe("union", () => {
+        describe("Member", () => {
+            it("should add union member", async () => {
+                const memberId = `member-${generateIndex()}`;
+                fakeUnionMemberRepository.insert.resolves();
+
+                await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
+
+                const expectedUnionMember = generateUnionMember({ memberId, employeeId, rate: 10.5 });
+                expect(fakeUnionMemberRepository.insert).to.have.been.calledOnceWith(expectedUnionMember);
+            });
+        });
+        describe("NoMember", () => {});
     });
 });
