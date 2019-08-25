@@ -1,8 +1,5 @@
 import { TimeCard, TimeCardRepository } from "../../domain";
-import { dbTimeCards } from "../db";
 import { MongoDbAdapter } from "../mongoDbAdapter";
-
-export const mongoTimeCardRepository: TimeCardRepository = buildMongoTimeCardRepository(dbTimeCards);
 
 export function buildMongoTimeCardRepository(db: MongoDbAdapter<TimeCard>): TimeCardRepository {
     return {
