@@ -19,7 +19,6 @@ describe("mongoPaymentMethodRepository", () => {
             const paymentMethod = generateDirectPaymentMethod();
             await mongoPaymentMethodRepository.insertOne(paymentMethod);
 
-            // noinspection ES6MissingAwait
             const promise = mongoPaymentMethodRepository.fetchByEmployeeId(paymentMethod.employeeId + 1);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);

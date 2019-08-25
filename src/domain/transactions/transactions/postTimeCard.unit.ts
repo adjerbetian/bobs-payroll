@@ -35,7 +35,6 @@ describe("postTimeCard", () => {
         const timeCard = generateTimeCard();
         fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateSalariedEmployee());
 
-        // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);
 
         await expect(promise).to.be.rejectedWith(EmployeeTypeError);
@@ -44,7 +43,6 @@ describe("postTimeCard", () => {
         const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
         fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
 
-        // noinspection ES6MissingAwait
         const promise = postTimeCardEntity(timeCard);
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "TimeCard");

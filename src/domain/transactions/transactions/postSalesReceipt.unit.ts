@@ -39,7 +39,6 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt();
         fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateSalariedEmployee());
 
-        // noinspection ES6MissingAwait
         const promise = postSalesReceiptEntity(salesReceipt);
 
         await expect(promise).to.be.rejectedWith(EmployeeTypeError);
@@ -48,7 +47,6 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt();
         fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
 
-        // noinspection ES6MissingAwait
         const promise = postSalesReceipt(`${salesReceipt.employeeId}`, `${salesReceipt.date}`, ``);
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "SalesReceipt");
@@ -57,7 +55,6 @@ describe("postTimeCard", () => {
         const salesReceipt = generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
         fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
 
-        // noinspection ES6MissingAwait
         const promise = postSalesReceipt(
             `${salesReceipt.employeeId}`,
             `${salesReceipt.date}`,

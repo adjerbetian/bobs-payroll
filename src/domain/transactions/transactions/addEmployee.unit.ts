@@ -64,7 +64,6 @@ describe("addEmployee", () => {
     it("should throw when the transaction is malformed", async () => {
         const employee = generateCommissionedEmployee();
 
-        // noinspection ES6MissingAwait
         const promise = addEmployee(
             `${employee.id}`,
             `"${employee.name}"`,

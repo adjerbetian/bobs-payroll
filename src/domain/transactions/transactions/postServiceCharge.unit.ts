@@ -36,7 +36,6 @@ describe("postServiceCharge", () => {
             .withArgs(serviceCharge.memberId)
             .rejects(new NotFoundError("no union member found"));
 
-        // noinspection ES6MissingAwait
         const promise = postServiceChargeEntity(serviceCharge);
 
         await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -45,7 +44,6 @@ describe("postServiceCharge", () => {
         const serviceCharge = generateServiceCharge();
         fakeEmployeeRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionEmployee());
 
-        // noinspection ES6MissingAwait
         const promise = postServiceCharge(`${serviceCharge.memberId}`, ``);
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "ServiceCharge");

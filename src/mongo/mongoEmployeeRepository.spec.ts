@@ -25,7 +25,6 @@ describe("mongoEmployeeRepository", () => {
             expect(dbEmployee).not.to.have.property("_id");
         });
         it("should throw a not found error when the employee was not found", async () => {
-            // noinspection ES6MissingAwait
             const promise = mongoEmployeeRepository.fetchById(1234);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -44,7 +43,6 @@ describe("mongoEmployeeRepository", () => {
             const employee = generateHourlyEmployee();
             await mongoEmployeeRepository.insertOne(employee);
 
-            // noinspection ES6MissingAwait
             const promise = mongoEmployeeRepository.fetchByMemberId(employee.memberId);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -95,7 +93,6 @@ describe("mongoEmployeeRepository", () => {
             expect(result).to.be.false;
         });
         it("throw a NotFoundError when the employee does not exists", async () => {
-            // noinspection ES6MissingAwait
             const promise = mongoEmployeeRepository.deleteById(generateIndex());
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -111,7 +108,6 @@ describe("mongoEmployeeRepository", () => {
             expect(dbEmployee.name).to.equal("James Bond");
         });
         it("throw a NotFoundError when the employee does not exists", async () => {
-            // noinspection ES6MissingAwait
             const promise = mongoEmployeeRepository.updateById(generateIndex(), {
                 name: "James Bond"
             });
