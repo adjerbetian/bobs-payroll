@@ -1,6 +1,7 @@
 import { SinonStub } from "sinon";
 import {
     EmployeeRepository,
+    MongoDbAdapter,
     PaymentMethodRepository,
     ServiceChargeRepository,
     TimeCardRepository,
@@ -50,6 +51,18 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
         fetchByMemberId: buildStubFor("fetchByMemberId"),
         fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
         insert: buildStubFor("insert")
+    };
+}
+
+export function buildFakeMongoDbAdapter<T>(): Fake<MongoDbAdapter<T>> {
+    return {
+        fetch: buildStubFor("fetch"),
+        insert: buildStubFor("insert"),
+        exists: buildStubFor("exists"),
+        remove: buildStubFor("remove"),
+        update: buildStubFor("update"),
+        fetchAll: buildStubFor("fetchAll"),
+        removeAll: buildStubFor("removeAll")
     };
 }
 

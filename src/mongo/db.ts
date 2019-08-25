@@ -1,27 +1,26 @@
-import { Db, MongoClient, ObjectID } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 import * as config from "../config.json";
 import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../domain";
 import { buildMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 
-export type DbModel<T> = T & { _id?: ObjectID };
-export let dbEmployees: MongoDbAdapter<Employee>;
-export let dbTimeCards: MongoDbAdapter<TimeCard>;
-export let dbSalesReceipts: MongoDbAdapter<SalesReceipt>;
-export let dbServiceCharges: MongoDbAdapter<ServiceCharge>;
-export let dbPaymentMethods: MongoDbAdapter<PaymentMethod>;
-export let dbUnionMembers: MongoDbAdapter<UnionMember>;
+export const dbEmployees: MongoDbAdapter<Employee> = buildEmptyObject();
+export const dbTimeCards: MongoDbAdapter<TimeCard> = buildEmptyObject();
+export const dbSalesReceipts: MongoDbAdapter<SalesReceipt> = buildEmptyObject();
+export const dbServiceCharges: MongoDbAdapter<ServiceCharge> = buildEmptyObject();
+export const dbPaymentMethods: MongoDbAdapter<PaymentMethod> = buildEmptyObject();
+export const dbUnionMembers: MongoDbAdapter<UnionMember> = buildEmptyObject();
 
 let client: MongoClient;
 
 export async function initConnection(): Promise<void> {
     client = await MongoClient.connect(config.db.url, { useUnifiedTopology: true, useNewUrlParser: true });
     const db = getDb();
-    dbEmployees = buildMongoDbAdapter(db.collection("employees"));
-    dbTimeCards = buildMongoDbAdapter(db.collection("time-cards"));
-    dbSalesReceipts = buildMongoDbAdapter(db.collection("sales-receipts"));
-    dbServiceCharges = buildMongoDbAdapter(db.collection("service-charges"));
-    dbPaymentMethods = buildMongoDbAdapter(db.collection("payment-methods"));
-    dbUnionMembers = buildMongoDbAdapter(db.collection("union-members"));
+    Object.assign(dbEmployees, buildMongoDbAdapter(db.collection("employees")));
+    Object.assign(dbTimeCards, buildMongoDbAdapter(db.collection("time-cards")));
+    Object.assign(dbSalesReceipts, buildMongoDbAdapter(db.collection("sales-receipts")));
+    Object.assign(dbServiceCharges, buildMongoDbAdapter(db.collection("service-charges")));
+    Object.assign(dbPaymentMethods, buildMongoDbAdapter(db.collection("payment-methods")));
+    Object.assign(dbUnionMembers, buildMongoDbAdapter(db.collection("union-members")));
 }
 
 export async function closeConnection(): Promise<void> {
@@ -35,4 +34,8 @@ export async function cleanCollections(): Promise<void> {
 
 export function getDb(): Db {
     return client.db(config.db.dbName);
+}
+
+function buildEmptyObject<T>(): T {
+    return {} as T;
 }

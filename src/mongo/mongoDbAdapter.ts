@@ -1,6 +1,7 @@
-import { Collection, FilterQuery, UpdateQuery } from "mongodb";
+import { Collection, FilterQuery, ObjectID, UpdateQuery } from "mongodb";
 import { NotFoundError } from "../domain";
-import { DbModel } from "./db";
+
+type DbModel<T> = T & { _id?: ObjectID };
 
 export interface MongoDbAdapter<T> {
     fetch(query: FilterQuery<T>): Promise<T>;

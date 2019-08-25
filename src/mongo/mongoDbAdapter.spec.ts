@@ -15,7 +15,7 @@ interface Entity {
 let mongo: Collection<Entity>;
 let adapter: MongoDbAdapter<Entity>;
 
-describe.only("mongoDbAdapter", () => {
+describe("mongoDbAdapter", () => {
     beforeEach(() => {
         mongo = getDb().collection<Entity>("test-collection");
         adapter = buildMongoDbAdapter(mongo);
