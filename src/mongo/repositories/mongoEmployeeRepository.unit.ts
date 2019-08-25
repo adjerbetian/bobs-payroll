@@ -11,7 +11,7 @@ describe("mongoEmployeeRepository", () => {
     let fakeDb: Fake<MongoDbAdapter<Employee>>;
 
     beforeEach(() => {
-        fakeDb = buildFakeMongoDbAdapter<Employee>();
+        fakeDb = buildFakeMongoDbAdapter();
         repository = buildMongoEmployeeRepository(fakeDb);
     });
 

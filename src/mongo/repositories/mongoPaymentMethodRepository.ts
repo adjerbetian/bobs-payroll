@@ -1,14 +1,16 @@
 import { PaymentMethod, PaymentMethodRepository } from "../../domain";
-import { dbPaymentMethods } from "../db";
+import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export const mongoPaymentMethodRepository: PaymentMethodRepository = {
-    async fetchByEmployeeId(employeeId: number): Promise<PaymentMethod> {
-        return dbPaymentMethods.fetch({ employeeId });
-    },
-    async deleteByEmployeeId(employeeId: number): Promise<void> {
-        await dbPaymentMethods.removeAll({ employeeId });
-    },
-    async insert(paymentMethod: PaymentMethod): Promise<void> {
-        await dbPaymentMethods.insert(paymentMethod);
-    }
-};
+export function buildMongoPaymentMethodRepository(db: MongoDbAdapter<PaymentMethod>): PaymentMethodRepository {
+    return {
+        async fetchByEmployeeId(employeeId: number): Promise<PaymentMethod> {
+            return db.fetch({ employeeId });
+        },
+        async deleteByEmployeeId(employeeId: number): Promise<void> {
+            await db.removeAll({ employeeId });
+        },
+        async insert(paymentMethod: PaymentMethod): Promise<void> {
+            await db.insert(paymentMethod);
+        }
+    };
+}
