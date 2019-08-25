@@ -1,5 +1,5 @@
-import { PaymentMethod, PaymentMethodRepository } from "../domain";
-import { dbPaymentMethods } from "./db";
+import { PaymentMethod, PaymentMethodRepository } from "../../domain";
+import { dbPaymentMethods } from "../db";
 
 export const mongoPaymentMethodRepository: PaymentMethodRepository = {
     async fetchByEmployeeId(employeeId: number): Promise<PaymentMethod> {

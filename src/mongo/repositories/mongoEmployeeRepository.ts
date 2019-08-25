@@ -1,6 +1,6 @@
 import { UpdateQuery } from "mongodb";
-import { Employee, EmployeeRepository, EmployeeType } from "../domain";
-import { MongoDbAdapter } from "./mongoDbAdapter";
+import { Employee, EmployeeRepository, EmployeeType } from "../../domain";
+import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): EmployeeRepository {
     return {

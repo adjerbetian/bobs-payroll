@@ -1,5 +1,5 @@
-import { SalesReceipt, SalesReceiptRepository } from "../domain";
-import { dbSalesReceipts } from "./db";
+import { SalesReceipt, SalesReceiptRepository } from "../../domain";
+import { dbSalesReceipts } from "../db";
 
 export const mongoSalesReceiptRepository: SalesReceiptRepository = {
     async fetchAllOfEmployee(employeeId: number): Promise<SalesReceipt[]> {

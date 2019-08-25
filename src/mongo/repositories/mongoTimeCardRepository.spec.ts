@@ -1,9 +1,9 @@
-import { generateTimeCard } from "../../test/generators";
-import "../../test/integrationTest";
-import { expect } from "../../test/unitTest";
-import { generateIndex } from "../../test/utils";
+import { generateTimeCard } from "../../../test/generators";
+import "../../../test/integrationTest";
+import { expect } from "../../../test/unitTest";
+import { generateIndex } from "../../../test/utils";
 import { mongoTimeCardRepository as repository } from "./mongoTimeCardRepository";
-import { dbTimeCards as db } from "./db";
+import { dbTimeCards as db } from "../db";
 
 describe("mongoTimeCardRepository", () => {
     describe("fetchAllOfEmployee", () => {

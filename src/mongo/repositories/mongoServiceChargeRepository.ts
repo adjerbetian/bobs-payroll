@@ -1,5 +1,5 @@
-import { ServiceCharge, ServiceChargeRepository } from "../domain";
-import { dbServiceCharges } from "./db";
+import { ServiceCharge, ServiceChargeRepository } from "../../domain";
+import { dbServiceCharges } from "../db";
 
 export const mongoServiceChargeRepository: ServiceChargeRepository = {
     async fetchAll(): Promise<ServiceCharge[]> {

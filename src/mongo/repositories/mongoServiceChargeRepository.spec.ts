@@ -1,8 +1,8 @@
-import { generateServiceCharge } from "../../test/generators";
-import "../../test/integrationTest";
-import { expect } from "../../test/unitTest";
+import { generateServiceCharge } from "../../../test/generators";
+import "../../../test/integrationTest";
+import { expect } from "../../../test/unitTest";
 import { mongoServiceChargeRepository as repository } from "./mongoServiceChargeRepository";
-import { dbServiceCharges as db } from "./db";
+import { dbServiceCharges as db } from "../db";
 
 describe("mongoServiceChargeRepository", () => {
     describe("fetchAll", () => {

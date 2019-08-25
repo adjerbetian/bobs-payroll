@@ -1,5 +1,5 @@
-import { TimeCard, TimeCardRepository } from "../domain";
-import { dbTimeCards } from "./db";
+import { TimeCard, TimeCardRepository } from "../../domain";
+import { dbTimeCards } from "../db";
 
 export const mongoTimeCardRepository: TimeCardRepository = {
     async fetchAllOfEmployee(employeeId: number): Promise<TimeCard[]> {

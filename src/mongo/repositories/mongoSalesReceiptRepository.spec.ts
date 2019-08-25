@@ -1,8 +1,7 @@
-import { cloneDeep } from "lodash";
-import { generateSalesReceipt } from "../../test/generators";
-import "../../test/integrationTest";
-import { expect } from "../../test/unitTest";
-import { dbSalesReceipts as db } from "./db";
+import { generateSalesReceipt } from "../../../test/generators";
+import "../../../test/integrationTest";
+import { expect } from "../../../test/unitTest";
+import { dbSalesReceipts as db } from "../db";
 import { mongoSalesReceiptRepository as repository } from "./mongoSalesReceiptRepository";
 
 describe("mongoSalesReceiptRepository", () => {

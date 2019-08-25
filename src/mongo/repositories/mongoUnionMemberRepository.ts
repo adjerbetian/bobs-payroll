@@ -1,5 +1,5 @@
-import { UnionMember, UnionMemberRepository } from "../domain";
-import { dbUnionMembers } from "./db";
+import { UnionMember, UnionMemberRepository } from "../../domain";
+import { dbUnionMembers } from "../db";
 
 export const mongoUnionMemberRepository: UnionMemberRepository = {
     async fetchByEmployeeId(employeeId: number): Promise<UnionMember> {

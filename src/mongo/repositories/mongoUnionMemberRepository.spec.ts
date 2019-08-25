@@ -1,7 +1,7 @@
-import { generateUnionMember } from "../../test/generators";
-import "../../test/integrationTest";
-import { expect } from "../../test/unitTest";
-import { dbUnionMembers as db } from "./db";
+import { generateUnionMember } from "../../../test/generators";
+import "../../../test/integrationTest";
+import { expect } from "../../../test/unitTest";
+import { dbUnionMembers as db } from "../db";
 import { mongoUnionMemberRepository as repository } from "./mongoUnionMemberRepository";
 
 describe("mongoUnionMemberRepository", () => {

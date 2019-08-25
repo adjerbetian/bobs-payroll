@@ -1,8 +1,8 @@
-import { generateDirectPaymentMethod } from "../../test/generators";
-import "../../test/integrationTest";
-import { expect } from "../../test/unitTest";
-import { NotFoundError } from "../domain";
-import { dbPaymentMethods as db } from "./db";
+import { generateDirectPaymentMethod } from "../../../test/generators";
+import "../../../test/integrationTest";
+import { expect } from "../../../test/unitTest";
+import { NotFoundError } from "../../domain";
+import { dbPaymentMethods as db } from "../db";
 import { mongoPaymentMethodRepository as repository } from "./mongoPaymentMethodRepository";
 
 describe("mongoPaymentMethodRepository", () => {
