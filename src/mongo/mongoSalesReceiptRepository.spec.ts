@@ -3,7 +3,7 @@ import { generateSalesReceipt } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
 import { SalesReceipt } from "../domain";
-import { dbSalesReceipt } from "./db";
+import { dbSalesReceipts } from "./db";
 import { mongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 
 describe("mongoSalesReceiptRepository", () => {
@@ -25,7 +25,7 @@ describe("mongoSalesReceiptRepository", () => {
 
         async function dbGenerateSalesReceipt(): Promise<SalesReceipt> {
             const salesReceipt = generateSalesReceipt();
-            await dbSalesReceipt.insertOne(cloneDeep(salesReceipt));
+            await dbSalesReceipts.insertOne(cloneDeep(salesReceipt));
             return salesReceipt;
         }
     });

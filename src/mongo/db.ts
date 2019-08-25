@@ -1,11 +1,12 @@
 import { Collection, Db, MongoClient, ObjectID } from "mongodb";
 import * as config from "../config.json";
-import { Employee, SalesReceipt, ServiceCharge, TimeCard } from "../domain";
+import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard } from "../domain";
 
 export let dbEmployees: Collection<DBEmployee>;
 export let dbTimeCards: Collection<DBTimeCard>;
-export let dbSalesReceipt: Collection<DBSalesReceipt>;
-export let dbServiceCharge: Collection<DBServiceCharge>;
+export let dbSalesReceipts: Collection<DBSalesReceipt>;
+export let dbServiceCharges: Collection<DBServiceCharge>;
+export let dbPaymentMethods: Collection<DBPaymentMethod>;
 
 let client: MongoClient;
 
@@ -14,8 +15,9 @@ export async function initConnection(): Promise<void> {
     const db = getDB();
     dbEmployees = db.collection<DBEmployee>("employees");
     dbTimeCards = db.collection<DBTimeCard>("time-cards");
-    dbSalesReceipt = db.collection<DBSalesReceipt>("sales-receipts");
-    dbServiceCharge = db.collection<DBServiceCharge>("service-charges");
+    dbSalesReceipts = db.collection<DBSalesReceipt>("sales-receipts");
+    dbServiceCharges = db.collection<DBServiceCharge>("service-charges");
+    dbPaymentMethods = db.collection<DBPaymentMethod>("payment-methods");
 }
 
 export async function closeConnection(): Promise<void> {
@@ -36,3 +38,4 @@ type DBEmployee = DBModel<Employee>;
 type DBTimeCard = DBModel<TimeCard>;
 type DBSalesReceipt = DBModel<SalesReceipt>;
 type DBServiceCharge = DBModel<ServiceCharge>;
+type DBPaymentMethod = DBModel<PaymentMethod>;

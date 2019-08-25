@@ -3,7 +3,7 @@ import { generateServiceCharge } from "../../test/generators";
 import "../../test/integrationTest";
 import { expect } from "../../test/unitTest";
 import { ServiceCharge } from "../domain";
-import { dbServiceCharge } from "./db";
+import { dbServiceCharges } from "./db";
 import { mongoServiceChargeRepository } from "./mongoServiceChargeRepository";
 
 describe("mongoServiceChargeRepository", () => {
@@ -53,6 +53,6 @@ describe("mongoServiceChargeRepository", () => {
 
 async function dbGenerateServiceCharge(): Promise<ServiceCharge> {
     const serviceCharge = generateServiceCharge();
-    await dbServiceCharge.insertOne(cloneDeep(serviceCharge));
+    await dbServiceCharges.insertOne(cloneDeep(serviceCharge));
     return serviceCharge;
 }
