@@ -3,6 +3,7 @@ import {
     EmployeeType,
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
+    mongoUnionMemberRepository,
     NotFoundError,
     PaymentMethodType
 } from "../src";
@@ -144,8 +145,20 @@ describe.only("Use Case 6: Changing Employee Details", () => {
         });
     });
     describe("Union", () => {
-        it.skip("should put the employee in Union", async () => {});
-        it.skip("should remove the employee from Union", async () => {});
-        it.skip("should do nothing when the union member id is already used", async () => {});
+        describe("Member", () => {
+            it("should put the employee in Union", async () => {
+                await executePayrollCommand(`ChgEmp ${employee.id} Member 123 Dues 10.5`);
+
+                const dbUnionMember = await mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
+                expect(dbUnionMember).to.have.property("memberId", 123);
+                expect(dbUnionMember).to.have.property("rate", 10.5);
+            });
+            it.skip("should do nothing if the employee does not exist", async () => {});
+            it.skip("should do nothing if the dues rate is not defined", async () => {});
+            it.skip("should do nothing when the union member id is already used", async () => {});
+        });
+        describe("NoMember", () => {
+            it.skip("should remove the employee from Union", async () => {});
+        });
     });
 });
