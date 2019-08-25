@@ -10,7 +10,7 @@ describe("mongoEmployeeRepository", () => {
     describe("fetchById", () => {
         it("should return the employee", async () => {
             const employee = generateHourlyEmployee();
-            await mongoEmployeeRepository.insertOne(employee);
+            await mongoEmployeeRepository.insert(employee);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
 
@@ -18,7 +18,7 @@ describe("mongoEmployeeRepository", () => {
         });
         it("should not return the _id field", async () => {
             const employee = generateHourlyEmployee();
-            await mongoEmployeeRepository.insertOne(employee);
+            await mongoEmployeeRepository.insert(employee);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
 
@@ -30,11 +30,11 @@ describe("mongoEmployeeRepository", () => {
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });
     });
-    describe("insertOne", () => {
+    describe("insert", () => {
         it("insert the given employee", async () => {
             const employee = generateHourlyEmployee();
 
-            await mongoEmployeeRepository.insertOne(employee);
+            await mongoEmployeeRepository.insert(employee);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
             expect(dbEmployee).to.deep.equal(employee);
@@ -42,7 +42,7 @@ describe("mongoEmployeeRepository", () => {
         it("should not add the _id field to the entity", async () => {
             const employee = generateHourlyEmployee();
 
-            await mongoEmployeeRepository.insertOne(employee);
+            await mongoEmployeeRepository.insert(employee);
 
             expect(employee).not.to.have.property("_id");
         });
@@ -50,7 +50,7 @@ describe("mongoEmployeeRepository", () => {
     describe("exists", () => {
         it("return true when the employee exists", async () => {
             const employee = generateHourlyEmployee();
-            await mongoEmployeeRepository.insertOne(employee);
+            await mongoEmployeeRepository.insert(employee);
 
             const result = await mongoEmployeeRepository.exists({ id: employee.id });
 
@@ -67,7 +67,7 @@ describe("mongoEmployeeRepository", () => {
     describe("deleteById", () => {
         it("delete the employee when it exists", async () => {
             const employee = generateHourlyEmployee();
-            await mongoEmployeeRepository.insertOne(employee);
+            await mongoEmployeeRepository.insert(employee);
 
             await mongoEmployeeRepository.deleteById(employee.id);
 

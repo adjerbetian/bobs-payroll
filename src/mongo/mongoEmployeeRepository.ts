@@ -6,7 +6,7 @@ export const mongoEmployeeRepository: EmployeeRepository = {
     async fetchById(id: number): Promise<Employee> {
         return dbEmployees.fetch({ id });
     },
-    async insertOne(employee: Employee): Promise<void> {
+    async insert(employee: Employee): Promise<void> {
         return dbEmployees.insert(employee);
     },
     async exists(query: Partial<Employee>): Promise<boolean> {

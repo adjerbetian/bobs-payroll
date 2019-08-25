@@ -8,7 +8,7 @@ export const mongoPaymentMethodRepository: PaymentMethodRepository = {
     async deleteByEmployeeId(employeeId: number): Promise<void> {
         await dbPaymentMethods.removeAll({ employeeId });
     },
-    async insertOne(paymentMethod: PaymentMethod): Promise<void> {
+    async insert(paymentMethod: PaymentMethod): Promise<void> {
         await dbPaymentMethods.insert(paymentMethod);
     }
 };

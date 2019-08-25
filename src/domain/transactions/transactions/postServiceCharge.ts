@@ -17,7 +17,7 @@ export function buildPostServiceChargeTransaction({
         await assertUnionMemberExists(memberId);
 
         const serviceCharge = buildServiceCharge(memberId, amount);
-        await serviceChargeRepository.insertOne(serviceCharge);
+        await serviceChargeRepository.insert(serviceCharge);
     };
 
     function assertTransactionValid(memberId: string, amount: string): void {

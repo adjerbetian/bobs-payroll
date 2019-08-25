@@ -67,7 +67,7 @@ export function buildChangeEmployeeTransaction({
 
         async function changeEmployeePaymentMethodToHold(): Promise<void> {
             await paymentMethodRepository.deleteByEmployeeId(employeeId);
-            return paymentMethodRepository.insertOne({
+            return paymentMethodRepository.insert({
                 type: PaymentMethodType.HOLD,
                 employeeId: employeeId
             });
@@ -78,7 +78,7 @@ export function buildChangeEmployeeTransaction({
             transactionValidator.assertIsNotEmpty(bank);
             transactionValidator.assertIsNotEmpty(account);
             await paymentMethodRepository.deleteByEmployeeId(employeeId);
-            return paymentMethodRepository.insertOne({
+            return paymentMethodRepository.insert({
                 type: PaymentMethodType.DIRECT,
                 employeeId: employeeId,
                 account,
@@ -90,7 +90,7 @@ export function buildChangeEmployeeTransaction({
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
             await paymentMethodRepository.deleteByEmployeeId(employeeId);
-            return paymentMethodRepository.insertOne({
+            return paymentMethodRepository.insert({
                 type: PaymentMethodType.MAIL,
                 employeeId: employeeId,
                 address

@@ -30,11 +30,11 @@ describe("mongoServiceChargeRepository", () => {
             expect(salesReceipts).to.be.empty;
         });
     });
-    describe("insertOne", () => {
+    describe("insert", () => {
         it("insert the given service charge", async () => {
             const serviceCharge = generateServiceCharge();
 
-            await mongoServiceChargeRepository.insertOne(serviceCharge);
+            await mongoServiceChargeRepository.insert(serviceCharge);
 
             const dbServiceCharges = await mongoServiceChargeRepository.fetchAllOfMember(serviceCharge.memberId);
             expect(dbServiceCharges).to.deep.equal([serviceCharge]);
@@ -42,7 +42,7 @@ describe("mongoServiceChargeRepository", () => {
         it("should not add the _id field to the entity", async () => {
             const serviceCharge = generateServiceCharge();
 
-            await mongoServiceChargeRepository.insertOne(serviceCharge);
+            await mongoServiceChargeRepository.insert(serviceCharge);
 
             expect(serviceCharge).not.to.have.property("_id");
         });

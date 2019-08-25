@@ -15,7 +15,7 @@ export function buildPostTimeCardTransaction({ timeCardRepository, employeeRepos
         await assertEmployeeIsHourly(employeeId);
 
         const timeCard = buildTimeCard(employeeId, date, hours);
-        await timeCardRepository.insertOne(timeCard);
+        await timeCardRepository.insert(timeCard);
     };
 
     function assertTransactionValid(employeeId: string, date: string, hours: string): void {

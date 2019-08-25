@@ -5,7 +5,7 @@ export const mongoTimeCardRepository: TimeCardRepository = {
     async fetchAllOfEmployee(employeeId: number): Promise<TimeCard[]> {
         return dbTimeCards.fetchAll({ employeeId });
     },
-    async insertOne(timeCard: TimeCard) {
+    async insert(timeCard: TimeCard) {
         await dbTimeCards.insert(timeCard);
     }
 };

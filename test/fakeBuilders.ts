@@ -15,7 +15,7 @@ export type Fake<T> = {
 export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
     return {
         fetchById: buildStubFor("fetchById"),
-        insertOne: buildStubFor("insertOne"),
+        insert: buildStubFor("insert"),
         exists: buildStubFor("exists"),
         deleteById: buildStubFor("deleteById"),
         updateById: buildStubFor("updateById")
@@ -25,21 +25,21 @@ export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
 export function buildFakePaymentMethodRepository(): Fake<PaymentMethodRepository> {
     return {
         fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
-        insertOne: buildStubFor("insertOne"),
+        insert: buildStubFor("insert"),
         deleteByEmployeeId: buildStubFor("deleteByEmployeeId")
     };
 }
 
 export function buildFakeTimeCardRepository(): Fake<TimeCardRepository> {
     return {
-        insertOne: buildStubFor("insertOne"),
+        insert: buildStubFor("insert"),
         fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee")
     };
 }
 
 export function buildFakeServiceChargeRepository(): Fake<ServiceChargeRepository> {
     return {
-        insertOne: buildStubFor("insertOne"),
+        insert: buildStubFor("insert"),
         fetchAllOfMember: buildStubFor("fetchAllOfMember"),
         fetchAll: buildStubFor("fetchAll")
     };
@@ -49,7 +49,7 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
     return {
         fetchByMemberId: buildStubFor("fetchByMemberId"),
         fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
-        insertOne: buildStubFor("insertOne")
+        insert: buildStubFor("insert")
     };
 }
 

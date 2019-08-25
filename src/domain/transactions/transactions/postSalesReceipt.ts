@@ -18,7 +18,7 @@ export function buildPostSalesReceiptTransaction({
         await assertEmployeeIsCommissioned(employeeId);
 
         const salesReceipt = buildSalesReceipt(employeeId, date, amount);
-        return salesReceiptRepository.insertOne(salesReceipt);
+        return salesReceiptRepository.insert(salesReceipt);
 
         function assertTransactionIsValid(): void {
             transactionValidator.assertIsNotEmpty(employeeId);

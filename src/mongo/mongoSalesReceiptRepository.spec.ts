@@ -29,11 +29,11 @@ describe("mongoSalesReceiptRepository", () => {
             return salesReceipt;
         }
     });
-    describe("insertOne", () => {
+    describe("insert", () => {
         it("insert the given sales receipt", async () => {
             const salesReceipt = generateSalesReceipt();
 
-            await mongoSalesReceiptRepository.insertOne(salesReceipt);
+            await mongoSalesReceiptRepository.insert(salesReceipt);
 
             const salesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(salesReceipt.employeeId);
             expect(salesReceipts).to.deep.equal([salesReceipt]);
@@ -41,7 +41,7 @@ describe("mongoSalesReceiptRepository", () => {
         it("should not add the _id field to the entity", async () => {
             const salesReceipt = generateSalesReceipt();
 
-            await mongoSalesReceiptRepository.insertOne(salesReceipt);
+            await mongoSalesReceiptRepository.insert(salesReceipt);
 
             expect(salesReceipt).not.to.have.property("_id");
         });

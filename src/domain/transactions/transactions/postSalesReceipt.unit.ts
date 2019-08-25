@@ -24,7 +24,7 @@ describe("postTimeCard", () => {
             employeeRepository: fakeEmployeeRepository
         });
 
-        fakeSalesReceiptRepository.insertOne.resolves();
+        fakeSalesReceiptRepository.insert.resolves();
     });
 
     it("should create a sales receipt for the employee", async () => {
@@ -33,7 +33,7 @@ describe("postTimeCard", () => {
 
         await postSalesReceiptEntity(salesReceipt);
 
-        expect(fakeSalesReceiptRepository.insertOne).to.have.been.calledOnceWith(salesReceipt);
+        expect(fakeSalesReceiptRepository.insert).to.have.been.calledOnceWith(salesReceipt);
     });
     it("should throw a EmployeeTypeError if the employee is not a commissioned employee", async () => {
         const salesReceipt = generateSalesReceipt();

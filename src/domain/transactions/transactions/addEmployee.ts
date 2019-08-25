@@ -49,7 +49,7 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
 
     async function addEmployee(args: AddEmployeeArgs): Promise<void> {
         const employee = buildEmployee(args);
-        await employeeRepository.insertOne(employee);
+        await employeeRepository.insert(employee);
     }
 
     function buildEmployee(args: AddEmployeeArgs): Employee {

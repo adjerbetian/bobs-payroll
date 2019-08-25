@@ -8,7 +8,7 @@ export const mongoUnionMemberRepository: UnionMemberRepository = {
     async fetchByMemberId(memberId: string): Promise<UnionMember> {
         return dbUnionMembers.fetch({ memberId });
     },
-    async insertOne(unionMember: UnionMember): Promise<void> {
+    async insert(unionMember: UnionMember): Promise<void> {
         await dbUnionMembers.insert(unionMember);
     }
 };

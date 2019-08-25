@@ -18,7 +18,7 @@ describe("addEmployee", () => {
         fakeEmployeeRepository = buildFakeEmployeeRepository();
         addEmployee = buildAddEmployeeTransaction({ employeeRepository: fakeEmployeeRepository });
 
-        fakeEmployeeRepository.insertOne.resolves();
+        fakeEmployeeRepository.insert.resolves();
     });
 
     it("should insert an hourly employee", async () => {
@@ -32,7 +32,7 @@ describe("addEmployee", () => {
             `${employee.hourlyRate}`
         );
 
-        expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+        expect(fakeEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
     });
     it("should insert a salaried employee", async () => {
         const employee = generateSalariedEmployee();
@@ -45,7 +45,7 @@ describe("addEmployee", () => {
             `${employee.monthlySalary}`
         );
 
-        expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+        expect(fakeEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
     });
     it("should insert an salaried with commission employee", async () => {
         const employee = generateCommissionedEmployee();
@@ -59,7 +59,7 @@ describe("addEmployee", () => {
             `${employee.commissionRate}`
         );
 
-        expect(fakeEmployeeRepository.insertOne).to.have.been.calledOnceWith(employee);
+        expect(fakeEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
     });
     it("should throw when the transaction is malformed", async () => {
         const employee = generateCommissionedEmployee();

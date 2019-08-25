@@ -21,11 +21,11 @@ describe("mongoTimeCardRepository", () => {
             expect(salesReceipts).to.be.empty;
         });
     });
-    describe("insertOne", () => {
+    describe("insert", () => {
         it("insert the given time card", async () => {
             const timeCard = generateTimeCard();
 
-            await mongoTimeCardRepository.insertOne(timeCard);
+            await mongoTimeCardRepository.insert(timeCard);
 
             const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(timeCard.employeeId);
             expect(dbTimeCards).to.deep.equal([timeCard]);
@@ -33,7 +33,7 @@ describe("mongoTimeCardRepository", () => {
         it("should not add the _id field to the entity", async () => {
             const timeCard = generateTimeCard();
 
-            await mongoTimeCardRepository.insertOne(timeCard);
+            await mongoTimeCardRepository.insert(timeCard);
 
             expect(timeCard).not.to.have.property("_id");
         });

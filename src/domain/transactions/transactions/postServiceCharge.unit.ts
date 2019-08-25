@@ -19,7 +19,7 @@ describe("postServiceCharge", () => {
             unionMemberRepository: fakeUnionMemberRepository
         });
 
-        fakeServiceChargeRepository.insertOne.resolves();
+        fakeServiceChargeRepository.insert.resolves();
     });
 
     it("should create a service charge for the employee", async () => {
@@ -28,7 +28,7 @@ describe("postServiceCharge", () => {
 
         await postServiceChargeEntity(serviceCharge);
 
-        expect(fakeServiceChargeRepository.insertOne).to.have.been.calledOnceWith(serviceCharge);
+        expect(fakeServiceChargeRepository.insert).to.have.been.calledOnceWith(serviceCharge);
     });
     it("should throw a EmployeeTypeError if no union member with this if was found", async () => {
         const serviceCharge = generateServiceCharge();

@@ -8,7 +8,7 @@ export const mongoServiceChargeRepository: ServiceChargeRepository = {
     async fetchAllOfMember(memberId: string): Promise<ServiceCharge[]> {
         return dbServiceCharges.fetchAll({ memberId });
     },
-    async insertOne(serviceCharge: ServiceCharge) {
+    async insert(serviceCharge: ServiceCharge) {
         await dbServiceCharges.insert(serviceCharge);
     }
 };

@@ -26,13 +26,13 @@ import {
 
 export async function seedHourlyEmployee(args: Partial<HourlyEmployee> = {}): Promise<HourlyEmployee> {
     const employee = generateHourlyEmployee(args);
-    await mongoEmployeeRepository.insertOne(employee);
+    await mongoEmployeeRepository.insert(employee);
     return employee;
 }
 
 export async function seedSalariedEmployee(args: Partial<SalariedEmployee> = {}): Promise<SalariedEmployee> {
     const employee = generateSalariedEmployee(args);
-    await mongoEmployeeRepository.insertOne(employee);
+    await mongoEmployeeRepository.insert(employee);
     return employee;
 }
 
@@ -40,36 +40,36 @@ export async function seedCommissionedEmployee(
     args: Partial<CommissionedEmployee> = {}
 ): Promise<CommissionedEmployee> {
     const employee = generateCommissionedEmployee(args);
-    await mongoEmployeeRepository.insertOne(employee);
+    await mongoEmployeeRepository.insert(employee);
     return employee;
 }
 
 export async function seedServiceCharge(args: Partial<ServiceCharge> = {}): Promise<ServiceCharge> {
     const serviceCharge = generateServiceCharge(args);
-    await mongoServiceChargeRepository.insertOne(serviceCharge);
+    await mongoServiceChargeRepository.insert(serviceCharge);
     return serviceCharge;
 }
 
 export async function seedTimeCard(args: Partial<TimeCard> = {}): Promise<TimeCard> {
     const timeCard = generateTimeCard(args);
-    await mongoTimeCardRepository.insertOne(timeCard);
+    await mongoTimeCardRepository.insert(timeCard);
     return timeCard;
 }
 
 export async function seedHoldPaymentMethod(args: Partial<HoldPaymentMethod> = {}): Promise<HoldPaymentMethod> {
     const paymentMethod = generateHoldPaymentMethod(args);
-    await mongoPaymentMethodRepository.insertOne(paymentMethod);
+    await mongoPaymentMethodRepository.insert(paymentMethod);
     return paymentMethod;
 }
 
 export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod> = {}): Promise<DirectPaymentMethod> {
     const paymentMethod = generateDirectPaymentMethod(args);
-    await mongoPaymentMethodRepository.insertOne(paymentMethod);
+    await mongoPaymentMethodRepository.insert(paymentMethod);
     return paymentMethod;
 }
 
 export async function seedUnionMember(args: Partial<UnionMember> = {}): Promise<UnionMember> {
     const unionMember = generateUnionMember(args);
-    await mongoUnionMemberRepository.insertOne(unionMember);
+    await mongoUnionMemberRepository.insert(unionMember);
     return unionMember;
 }

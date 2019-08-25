@@ -9,7 +9,7 @@ describe("mongoPaymentMethodRepository", () => {
     describe("fetchByEmployeeId", () => {
         it("should return the paymentMethod matching the employee id", async () => {
             const paymentMethod = generateDirectPaymentMethod();
-            await mongoPaymentMethodRepository.insertOne(paymentMethod);
+            await mongoPaymentMethodRepository.insert(paymentMethod);
 
             const dbPaymentMethod = await mongoPaymentMethodRepository.fetchByEmployeeId(paymentMethod.employeeId);
 
@@ -17,18 +17,18 @@ describe("mongoPaymentMethodRepository", () => {
         });
         it("should throw a not found error when the paymentMethod was not found", async () => {
             const paymentMethod = generateDirectPaymentMethod();
-            await mongoPaymentMethodRepository.insertOne(paymentMethod);
+            await mongoPaymentMethodRepository.insert(paymentMethod);
 
             const promise = mongoPaymentMethodRepository.fetchByEmployeeId(paymentMethod.employeeId + 1);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });
     });
-    describe("insertOne", () => {
+    describe("insert", () => {
         it("insert the given paymentMethod", async () => {
             const paymentMethod = generateDirectPaymentMethod();
 
-            await mongoPaymentMethodRepository.insertOne(paymentMethod);
+            await mongoPaymentMethodRepository.insert(paymentMethod);
 
             const dbPaymentMethod = await mongoPaymentMethodRepository.fetchByEmployeeId(paymentMethod.employeeId);
             expect(dbPaymentMethod).to.deep.equal(paymentMethod);
@@ -36,7 +36,7 @@ describe("mongoPaymentMethodRepository", () => {
         it("should not add the _id field to the entity", async () => {
             const paymentMethod = generateDirectPaymentMethod();
 
-            await mongoPaymentMethodRepository.insertOne(paymentMethod);
+            await mongoPaymentMethodRepository.insert(paymentMethod);
 
             expect(paymentMethod).not.to.have.property("_id");
         });

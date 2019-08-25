@@ -20,7 +20,7 @@ describe("postTimeCard", () => {
             timeCardRepository: fakeTimeCardRepository
         });
 
-        fakeTimeCardRepository.insertOne.resolves();
+        fakeTimeCardRepository.insert.resolves();
     });
 
     it("should create a time card for the employee", async () => {
@@ -29,7 +29,7 @@ describe("postTimeCard", () => {
 
         await postTimeCardEntity(timeCard);
 
-        expect(fakeTimeCardRepository.insertOne).to.have.been.calledOnceWith(timeCard);
+        expect(fakeTimeCardRepository.insert).to.have.been.calledOnceWith(timeCard);
     });
     it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
         const timeCard = generateTimeCard();
