@@ -1,16 +1,16 @@
-import { EmployeeRepository, ServiceCharge, ServiceChargeRepository } from "../../core";
+import { ServiceCharge, ServiceChargeRepository, UnionMemberRepository } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
     serviceChargeRepository: ServiceChargeRepository;
-    employeeRepository: EmployeeRepository;
+    unionMemberRepository: UnionMemberRepository;
 }
 const transactionValidator = buildTransactionValidator("ServiceCharge");
 
 export function buildPostServiceChargeTransaction({
     serviceChargeRepository,
-    employeeRepository
+    unionMemberRepository
 }: Dependencies): Transaction {
     return async function(memberId: string, amount: string): Promise<void> {
         assertTransactionValid(memberId, amount);
@@ -26,7 +26,7 @@ export function buildPostServiceChargeTransaction({
     }
 
     async function assertUnionMemberExists(memberId: string): Promise<void> {
-        await employeeRepository.fetchByMemberId(memberId);
+        await unionMemberRepository.fetchByMemberId(memberId);
     }
 
     function buildServiceCharge(memberId: string, amount: string): ServiceCharge {

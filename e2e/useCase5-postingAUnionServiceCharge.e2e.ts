@@ -1,35 +1,27 @@
-import { ServiceCharge, mongoServiceChargeRepository } from "../src";
-import { seedHourlyEmployee, seedUnionEmployee } from "../test/seeders";
+import { mongoServiceChargeRepository, ServiceCharge } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { generateServiceCharge } from "../test/generators";
+import { seedUnionMember } from "../test/seeders";
 
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
-        const employee = await seedUnionEmployee();
-        const serviceCharge = generateServiceCharge({ memberId: employee.memberId as string });
+        const unionMember = await seedUnionMember();
+        const serviceCharge = generateServiceCharge({ memberId: unionMember.memberId });
 
         await executePostServiceCharge(serviceCharge);
 
         await expectServiceChargeToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the employee is not a union member", async () => {
-        const employee = await seedHourlyEmployee();
-        const serviceCharge = generateServiceCharge({ memberId: employee.memberId as string });
-
-        await executePostServiceCharge(serviceCharge);
-
-        await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
-    });
-    it("should do nothing when the employee does not exist", async () => {
-        const serviceCharge = generateServiceCharge();
+        const serviceCharge = generateServiceCharge({ memberId: "non-existing" });
 
         await executePostServiceCharge(serviceCharge);
 
         await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = await seedUnionEmployee();
-        const serviceCharge = generateServiceCharge({ memberId: employee.memberId as string });
+        const unionMember = await seedUnionMember();
+        const serviceCharge = generateServiceCharge({ memberId: unionMember.memberId });
 
         await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId}`);
 

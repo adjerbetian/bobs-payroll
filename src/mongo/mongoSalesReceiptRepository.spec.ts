@@ -25,7 +25,7 @@ describe("mongoSalesReceiptRepository", () => {
 
         async function dbGenerateSalesReceipt(): Promise<SalesReceipt> {
             const salesReceipt = generateSalesReceipt();
-            await dbSalesReceipts.insertOne(cloneDeep(salesReceipt));
+            await dbSalesReceipts.insert(cloneDeep(salesReceipt));
             return salesReceipt;
         }
     });

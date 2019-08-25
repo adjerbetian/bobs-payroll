@@ -1,4 +1,4 @@
-import { generateHourlyEmployee, generateUnionEmployee } from "../../test/generators";
+import { generateHourlyEmployee } from "../../test/generators";
 import "../../test/integrationTest";
 import { seedHourlyEmployee } from "../../test/seeders";
 import { expect } from "../../test/unitTest";
@@ -26,24 +26,6 @@ describe("mongoEmployeeRepository", () => {
         });
         it("should throw a not found error when the employee was not found", async () => {
             const promise = mongoEmployeeRepository.fetchById(1234);
-
-            await expect(promise).to.be.rejectedWith(NotFoundError);
-        });
-    });
-    describe("fetchByMemberId", () => {
-        it("should return the employee matching the memberId", async () => {
-            const employee = generateUnionEmployee();
-            await mongoEmployeeRepository.insertOne(employee);
-
-            const dbEmployee = await mongoEmployeeRepository.fetchByMemberId(employee.memberId);
-
-            expect(dbEmployee).to.deep.equal(employee);
-        });
-        it("should throw a not found error when the employee was not found", async () => {
-            const employee = generateHourlyEmployee();
-            await mongoEmployeeRepository.insertOne(employee);
-
-            const promise = mongoEmployeeRepository.fetchByMemberId(employee.memberId);
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });

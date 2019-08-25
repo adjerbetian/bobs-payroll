@@ -1,5 +1,11 @@
 import { SinonStub } from "sinon";
-import { EmployeeRepository, PaymentMethodRepository, ServiceChargeRepository, TimeCardRepository } from "../src";
+import {
+    EmployeeRepository,
+    PaymentMethodRepository,
+    ServiceChargeRepository,
+    TimeCardRepository,
+    UnionMemberRepository
+} from "../src";
 import { sandbox } from "./unitTest";
 
 export type Fake<T> = {
@@ -9,7 +15,6 @@ export type Fake<T> = {
 export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
     return {
         fetchById: buildStubFor("fetchById"),
-        fetchByMemberId: buildStubFor("fetchByMemberId"),
         insertOne: buildStubFor("insertOne"),
         exists: buildStubFor("exists"),
         deleteById: buildStubFor("deleteById"),
@@ -37,6 +42,14 @@ export function buildFakeServiceChargeRepository(): Fake<ServiceChargeRepository
         insertOne: buildStubFor("insertOne"),
         fetchAllOfMember: buildStubFor("fetchAllOfMember"),
         fetchAll: buildStubFor("fetchAll")
+    };
+}
+
+export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
+    return {
+        fetchByMemberId: buildStubFor("fetchByMemberId"),
+        fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
+        insertOne: buildStubFor("insertOne")
     };
 }
 

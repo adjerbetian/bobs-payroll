@@ -1,5 +1,12 @@
 export type Employee = HourlyEmployee | SalariedEmployee | CommissionedEmployee;
 
+interface CommonEmployee {
+    id: number;
+    name: string;
+    address: string;
+    type: EmployeeType;
+}
+
 export interface HourlyEmployee extends CommonEmployee {
     type: EmployeeType.HOURLY;
     hourlyRate: number;
@@ -14,14 +21,6 @@ export interface CommissionedEmployee extends CommonEmployee {
     type: EmployeeType.COMMISSIONED;
     monthlySalary: number;
     commissionRate: number;
-}
-
-interface CommonEmployee {
-    id: number;
-    name: string;
-    address: string;
-    type: EmployeeType;
-    memberId: string | null;
 }
 
 export enum EmployeeType {

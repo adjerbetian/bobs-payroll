@@ -7,9 +7,11 @@ import {
     mongoPaymentMethodRepository,
     mongoServiceChargeRepository,
     mongoTimeCardRepository,
+    mongoUnionMemberRepository,
     SalariedEmployee,
     ServiceCharge,
-    TimeCard
+    TimeCard,
+    UnionMember
 } from "../src";
 import {
     generateCommissionedEmployee,
@@ -19,7 +21,7 @@ import {
     generateSalariedEmployee,
     generateServiceCharge,
     generateTimeCard,
-    generateUnionEmployee
+    generateUnionMember
 } from "./generators";
 
 export async function seedHourlyEmployee(args: Partial<HourlyEmployee> = {}): Promise<HourlyEmployee> {
@@ -38,12 +40,6 @@ export async function seedCommissionedEmployee(
     args: Partial<CommissionedEmployee> = {}
 ): Promise<CommissionedEmployee> {
     const employee = generateCommissionedEmployee(args);
-    await mongoEmployeeRepository.insertOne(employee);
-    return employee;
-}
-
-export async function seedUnionEmployee(args: Partial<HourlyEmployee> = {}): Promise<HourlyEmployee> {
-    const employee = generateUnionEmployee(args);
     await mongoEmployeeRepository.insertOne(employee);
     return employee;
 }
@@ -70,4 +66,10 @@ export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod>
     const paymentMethod = generateDirectPaymentMethod(args);
     await mongoPaymentMethodRepository.insertOne(paymentMethod);
     return paymentMethod;
+}
+
+export async function seedUnionMember(args: Partial<UnionMember> = {}): Promise<UnionMember> {
+    const unionMember = generateUnionMember(args);
+    await mongoUnionMemberRepository.insertOne(unionMember);
+    return unionMember;
 }

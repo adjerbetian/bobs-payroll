@@ -1,22 +1,14 @@
-import { FilterQuery } from "mongodb";
 import { ServiceCharge, ServiceChargeRepository } from "../domain";
 import { dbServiceCharges } from "./db";
-import { cleanMongoEntity } from "./utils";
 
 export const mongoServiceChargeRepository: ServiceChargeRepository = {
     async fetchAll(): Promise<ServiceCharge[]> {
-        return findAllByQuery({});
+        return dbServiceCharges.fetchAll({});
     },
     async fetchAllOfMember(memberId: string): Promise<ServiceCharge[]> {
-        return findAllByQuery({ memberId });
+        return dbServiceCharges.fetchAll({ memberId });
     },
     async insertOne(serviceCharge: ServiceCharge) {
-        await dbServiceCharges.insertOne(serviceCharge);
-        cleanMongoEntity(serviceCharge);
+        await dbServiceCharges.insert(serviceCharge);
     }
 };
-
-async function findAllByQuery(query: FilterQuery<ServiceCharge>): Promise<ServiceCharge[]> {
-    const serviceCharges = await dbServiceCharges.find(query).toArray();
-    return serviceCharges.map(e => cleanMongoEntity(e));
-}

@@ -12,18 +12,10 @@ import {
     SalariedEmployee,
     SalesReceipt,
     ServiceCharge,
-    TimeCard
+    TimeCard,
+    UnionMember
 } from "../src";
 import { generateIndex } from "./utils";
-
-export function generateUnionEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
-    const index = generateIndex();
-    return {
-        ...generateHourlyEmployee(),
-        memberId: `member-${index}`,
-        ...args
-    };
-}
 
 export function generateHourlyEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
     return {
@@ -58,8 +50,7 @@ function generateEmployee(): Omit<Employee, "type"> {
     return {
         id: index,
         name: `name of employee ${index}`,
-        address: `address of employee ${index}`,
-        memberId: null
+        address: `address of employee ${index}`
     };
 }
 
@@ -122,6 +113,15 @@ export function generateMailPaymentMethod(args: Partial<MailPaymentMethod> = {})
         type: PaymentMethodType.MAIL,
         employeeId: index,
         address: `address-${index}`,
+        ...args
+    };
+}
+
+export function generateUnionMember(args: Partial<UnionMember> = {}): UnionMember {
+    return {
+        employeeId: generateIndex(),
+        memberId: `member-${generateIndex()}`,
+        rate: generateFloatBetween(0, 100),
         ...args
     };
 }

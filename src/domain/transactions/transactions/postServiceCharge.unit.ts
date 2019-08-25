@@ -1,22 +1,22 @@
-import { buildFakeEmployeeRepository, buildFakeServiceChargeRepository, Fake } from "../../../../test/fakeBuilders";
-import { generateServiceCharge, generateUnionEmployee } from "../../../../test/generators";
+import { buildFakeServiceChargeRepository, buildFakeUnionMemberRepository, Fake } from "../../../../test/fakeBuilders";
+import { generateHourlyEmployee, generateServiceCharge, generateUnionMember } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
-import { EmployeeRepository, NotFoundError, ServiceCharge, ServiceChargeRepository } from "../../core";
+import { NotFoundError, ServiceCharge, ServiceChargeRepository, UnionMemberRepository } from "../../core";
 import { TransactionFormatError } from "../errors";
-import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 import { Transaction } from "../Transaction";
+import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 
 describe("postServiceCharge", () => {
     let fakeServiceChargeRepository: Fake<ServiceChargeRepository>;
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let fakeUnionMemberRepository: Fake<UnionMemberRepository>;
     let postServiceCharge: Transaction;
 
     beforeEach(() => {
         fakeServiceChargeRepository = buildFakeServiceChargeRepository();
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
+        fakeUnionMemberRepository = buildFakeUnionMemberRepository();
         postServiceCharge = buildPostServiceChargeTransaction({
             serviceChargeRepository: fakeServiceChargeRepository,
-            employeeRepository: fakeEmployeeRepository
+            unionMemberRepository: fakeUnionMemberRepository
         });
 
         fakeServiceChargeRepository.insertOne.resolves();
@@ -24,7 +24,7 @@ describe("postServiceCharge", () => {
 
     it("should create a service charge for the employee", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionEmployee());
+        fakeUnionMemberRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionMember());
 
         await postServiceChargeEntity(serviceCharge);
 
@@ -32,7 +32,7 @@ describe("postServiceCharge", () => {
     });
     it("should throw a EmployeeTypeError if no union member with this if was found", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchByMemberId
+        fakeUnionMemberRepository.fetchByMemberId
             .withArgs(serviceCharge.memberId)
             .rejects(new NotFoundError("no union member found"));
 
@@ -42,7 +42,7 @@ describe("postServiceCharge", () => {
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeEmployeeRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionEmployee());
+        fakeUnionMemberRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateHourlyEmployee());
 
         const promise = postServiceCharge(`${serviceCharge.memberId}`, ``);
 

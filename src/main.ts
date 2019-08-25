@@ -6,7 +6,8 @@ import {
     mongoPaymentMethodRepository,
     mongoSalesReceiptRepository,
     mongoServiceChargeRepository,
-    mongoTimeCardRepository
+    mongoTimeCardRepository,
+    mongoUnionMemberRepository
 } from "./mongo";
 
 const app = buildApp({
@@ -14,7 +15,8 @@ const app = buildApp({
     employeeRepository: mongoEmployeeRepository,
     serviceChargeRepository: mongoServiceChargeRepository,
     timeCardRepository: mongoTimeCardRepository,
-    paymentMethodRepository: mongoPaymentMethodRepository
+    paymentMethodRepository: mongoPaymentMethodRepository,
+    unionMemberRepository: mongoUnionMemberRepository
 });
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

@@ -88,8 +88,7 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
         return {
             id: args.id,
             name: args.name,
-            address: args.address,
-            memberId: null
+            address: args.address
         };
     }
 

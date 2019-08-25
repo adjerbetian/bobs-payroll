@@ -1,30 +1,22 @@
-import { FilterQuery, UpdateQuery } from "mongodb";
-import { Employee, EmployeeRepository, EmployeeType, NotFoundError } from "../domain";
+import { UpdateQuery } from "mongodb";
+import { Employee, EmployeeRepository, EmployeeType } from "../domain";
 import { dbEmployees } from "./db";
-import { cleanMongoEntity } from "./utils";
 
 export const mongoEmployeeRepository: EmployeeRepository = {
     async fetchById(id: number): Promise<Employee> {
-        return fetchByQuery({ id });
-    },
-    async fetchByMemberId(memberId: string | null): Promise<Employee> {
-        if (!memberId) throw new NotFoundError(`the memberId is not defined`);
-        return fetchByQuery({ memberId });
+        return dbEmployees.fetch({ id });
     },
     async insertOne(employee: Employee): Promise<void> {
-        await dbEmployees.insertOne(employee);
-        cleanMongoEntity(employee);
+        return dbEmployees.insert(employee);
     },
     async exists(query: Partial<Employee>): Promise<boolean> {
-        return !!(await dbEmployees.findOne(query, { projection: { _id: 1 } }));
+        return dbEmployees.exists(query);
     },
     async deleteById(id: number): Promise<void> {
-        const a = await dbEmployees.deleteOne({ id });
-        if (a.deletedCount === 0) throw new NotFoundError(`the employee ${id} does not exist`);
+        await dbEmployees.remove({ id });
     },
     async updateById(id: number, update: Partial<Employee>): Promise<void> {
-        const { matchedCount } = await dbEmployees.updateOne({ id }, buildUpdate());
-        if (matchedCount === 0) throw new NotFoundError(`the employee ${id} does not exist`);
+        await dbEmployees.update({ id }, buildUpdate());
 
         function buildUpdate(): UpdateQuery<Employee> {
             if (update.type) {
@@ -56,11 +48,3 @@ export const mongoEmployeeRepository: EmployeeRepository = {
         }
     }
 };
-
-async function fetchByQuery(query: FilterQuery<Employee>): Promise<Employee> {
-    const employee = await dbEmployees.findOne(query);
-    if (!employee) {
-        throw new NotFoundError(`no employee matching ${JSON.stringify(query)} was found`);
-    }
-    return cleanMongoEntity(employee);
-}

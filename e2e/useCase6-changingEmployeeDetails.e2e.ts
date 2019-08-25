@@ -16,7 +16,7 @@ import {
 } from "../test/seeders";
 import { generateIndex } from "../test/utils";
 
-describe.only("Use Case 6: Changing Employee Details", () => {
+describe("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;
 
     beforeEach(async () => {
@@ -146,7 +146,7 @@ describe.only("Use Case 6: Changing Employee Details", () => {
     });
     describe("Union", () => {
         describe("Member", () => {
-            it("should put the employee in Union", async () => {
+            it.skip("should put the employee in Union", async () => {
                 await executePayrollCommand(`ChgEmp ${employee.id} Member 123 Dues 10.5`);
 
                 const dbUnionMember = await mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
