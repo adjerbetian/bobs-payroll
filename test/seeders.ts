@@ -1,6 +1,14 @@
-import { CommissionedEmployee, HourlyEmployee, mongoEmployeeRepository, SalariedEmployee } from "../src";
+import {
+    CommissionedEmployee,
+    DirectPaymentMethod,
+    HourlyEmployee,
+    mongoEmployeeRepository,
+    mongoPaymentMethodRepository,
+    SalariedEmployee
+} from "../src";
 import {
     generateCommissionedEmployee,
+    generateDirectPaymentMethod,
     generateHourlyEmployee,
     generateSalariedEmployee,
     generateUnionEmployee
@@ -30,4 +38,10 @@ export async function seedUnionEmployee(args: Partial<HourlyEmployee> = {}): Pro
     const employee = generateUnionEmployee(args);
     await mongoEmployeeRepository.insertOne(employee);
     return employee;
+}
+
+export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod>): Promise<DirectPaymentMethod> {
+    const paymentMethod = generateDirectPaymentMethod(args);
+    await mongoPaymentMethodRepository.insertOne(paymentMethod);
+    return paymentMethod;
 }

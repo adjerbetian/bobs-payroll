@@ -2,9 +2,11 @@ import * as _ from "lodash";
 import * as moment from "moment";
 import {
     CommissionedEmployee,
+    DirectPaymentMethod,
     Employee,
     EmployeeType,
     HourlyEmployee,
+    PaymentMethodType,
     SalariedEmployee,
     SalesReceipt,
     ServiceCharge,
@@ -90,4 +92,15 @@ export function generateServiceCharge(args: Partial<ServiceCharge> = {}): Servic
 
 function generateFloatBetween(min: number, max: number): number {
     return _.round(_.random(min, max, true), 2);
+}
+
+export function generateDirectPaymentMethod(args: Partial<DirectPaymentMethod>): DirectPaymentMethod {
+    const index = generateIndex();
+    return {
+        type: PaymentMethodType.DIRECT,
+        employeeId: index,
+        account: `account-${index}`,
+        bank: `bank-${index}`,
+        ...args
+    };
 }
