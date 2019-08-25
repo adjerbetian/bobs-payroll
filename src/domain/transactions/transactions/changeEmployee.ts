@@ -12,37 +12,48 @@ export function buildChangeEmployeeTransaction({
     employeeRepository,
     paymentMethodRepository
 }: Dependencies): Transaction {
-    return async function(id: string, updateType: string, ...rest: string[]): Promise<void> {
+    return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
         const employeeId = parseInt(id);
 
-        if (updateType === "Name") {
-            const [name] = rest;
+        if (updateType === "Name") return changeEmployeeName();
+        if (updateType === "Address") return changeEmployeeAddress();
+        if (updateType === "Hourly") return changeEmployeeTypeToHourly();
+        if (updateType === "Salaried") return changeEmployeeTypeToSalaried();
+        if (updateType === "Commissioned") return changeEmployeeTypeToCommissioned();
+        if (updateType === "Hold") return changeEmployeePaymentMethodToHold();
+
+        async function changeEmployeeName(): Promise<void> {
+            const [name] = params;
             transactionValidator.assertIsNotEmpty(name);
-            return employeeRepository.updateById(employeeId, { name });
+            await employeeRepository.updateById(employeeId, { name });
         }
-        if (updateType === "Address") {
-            const [address] = rest;
+
+        async function changeEmployeeAddress(): Promise<void> {
+            const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
             return employeeRepository.updateById(employeeId, { address });
         }
-        if (updateType === "Hourly") {
-            const [hourlyRate] = rest;
+
+        async function changeEmployeeTypeToHourly(): Promise<void> {
+            const [hourlyRate] = params;
             transactionValidator.assertIsNotEmpty(hourlyRate);
             return employeeRepository.updateById(employeeId, {
                 type: EmployeeType.HOURLY,
                 hourlyRate: parseFloat(hourlyRate)
             });
         }
-        if (updateType === "Salaried") {
-            const [monthlySalary] = rest;
+
+        async function changeEmployeeTypeToSalaried(): Promise<void> {
+            const [monthlySalary] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
             return employeeRepository.updateById(employeeId, {
                 type: EmployeeType.SALARIED,
                 monthlySalary: parseFloat(monthlySalary)
             });
         }
-        if (updateType === "Commissioned") {
-            const [monthlySalary, commissionRate] = rest;
+
+        async function changeEmployeeTypeToCommissioned(): Promise<void> {
+            const [monthlySalary, commissionRate] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
             transactionValidator.assertIsNotEmpty(commissionRate);
             return employeeRepository.updateById(employeeId, {
@@ -51,7 +62,8 @@ export function buildChangeEmployeeTransaction({
                 commissionRate: parseFloat(commissionRate)
             });
         }
-        if (updateType === "Hold") {
+
+        async function changeEmployeePaymentMethodToHold(): Promise<void> {
             await paymentMethodRepository.deleteByEmployeeId(employeeId);
             return paymentMethodRepository.insertOne({
                 type: PaymentMethodType.HOLD,

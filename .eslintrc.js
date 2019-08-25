@@ -29,6 +29,7 @@ module.exports = {
         // eslint
         "no-unused-expressions": "error",
         "no-unused-vars": ["error", { args: "after-used" }],
+        "no-shadow": "error",
 
         // import
         "import/no-internal-modules": ["error", { allow: ["test/*"] }],
