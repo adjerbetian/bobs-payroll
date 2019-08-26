@@ -5,12 +5,8 @@ import {
     HourlyEmployee,
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
-    mongoServiceChargeRepository,
-    mongoTimeCardRepository,
     mongoUnionMemberRepository,
     SalariedEmployee,
-    ServiceCharge,
-    TimeCard,
     UnionMember
 } from "../src";
 import {
@@ -19,8 +15,6 @@ import {
     generateHoldPaymentMethod,
     generateHourlyEmployee,
     generateSalariedEmployee,
-    generateServiceCharge,
-    generateTimeCard,
     generateUnionMember
 } from "./generators";
 
@@ -42,18 +36,6 @@ export async function seedCommissionedEmployee(
     const employee = generateCommissionedEmployee(args);
     await mongoEmployeeRepository.insert(employee);
     return employee;
-}
-
-export async function seedServiceCharge(args: Partial<ServiceCharge> = {}): Promise<ServiceCharge> {
-    const serviceCharge = generateServiceCharge(args);
-    await mongoServiceChargeRepository.insert(serviceCharge);
-    return serviceCharge;
-}
-
-export async function seedTimeCard(args: Partial<TimeCard> = {}): Promise<TimeCard> {
-    const timeCard = generateTimeCard(args);
-    await mongoTimeCardRepository.insert(timeCard);
-    return timeCard;
 }
 
 export async function seedHoldPaymentMethod(args: Partial<HoldPaymentMethod> = {}): Promise<HoldPaymentMethod> {

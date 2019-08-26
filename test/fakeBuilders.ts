@@ -5,11 +5,14 @@ import {
     PaymentMethodRepository,
     ServiceChargeRepository,
     TimeCardRepository,
-    UnionMemberRepository
+    UnionMemberRepository,
+    Actions
 } from "../src";
 import { sandbox } from "./unitTest";
 
-export type Fake<T> = {
+export type Fake<T> = T extends Function ? FakeFunction : FakeObject<T>;
+type FakeFunction = SinonStub;
+type FakeObject<T> = {
     [K in keyof T]: SinonStub;
 };
 
@@ -63,6 +66,12 @@ export function buildFakeMongoDbAdapter<T>(): Fake<MongoDbAdapter<T>> {
         update: buildStubFor("update"),
         fetchAll: buildStubFor("fetchAll"),
         removeAll: buildStubFor("removeAll")
+    };
+}
+
+export function buildFakeActions(): Fake<Actions> {
+    return {
+        deleteEmployee: buildStubFor("deleteEmployee")
     };
 }
 

@@ -1,30 +1,28 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../../test/fakeBuilders";
-import { generateHourlyEmployee } from "../../../../test/generators";
+import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
 import { expect } from "../../../../test/unitTest";
+import { generateIndex } from "../../../../test/utils";
+import { Actions } from "../../core";
 import { TransactionFormatError } from "../errors";
-import { EmployeeRepository } from "../../core";
-import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { Transaction } from "../Transaction";
+import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 
 describe("deleteEmployee", () => {
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let fakeActions: Fake<Actions>;
     let deleteEmployee: Transaction;
 
     beforeEach(() => {
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
-        deleteEmployee = buildDeleteEmployeeTransaction({
-            employeeRepository: fakeEmployeeRepository
-        });
+        fakeActions = buildFakeActions();
+        deleteEmployee = buildDeleteEmployeeTransaction(fakeActions);
 
-        fakeEmployeeRepository.deleteById.resolves();
+        fakeActions.deleteEmployee.resolves();
     });
 
     it("should delete the employee", async () => {
-        const employee = generateHourlyEmployee();
+        const employeeId = generateIndex();
 
-        await deleteEmployee(`${employee.id}`);
+        await deleteEmployee(`${employeeId}`);
 
-        expect(fakeEmployeeRepository.deleteById).to.have.been.calledOnceWith(employee.id);
+        expect(fakeActions.deleteEmployee).to.have.been.calledOnceWith(employeeId);
     });
     it("should throw a TransactionFormatError if the employee id is not given", async () => {
         const promise = deleteEmployee(``);
