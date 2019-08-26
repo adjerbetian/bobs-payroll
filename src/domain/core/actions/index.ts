@@ -10,10 +10,7 @@ import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./creat
 import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";
 import { buildDeleteEmployeeAction, DeleteEmployeeAction } from "./deleteEmployee";
 import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";
-
-export { DeleteEmployeeAction } from "./deleteEmployee";
-export { CreateTimeCardAction } from "./createTimeCard";
-export { CreateServiceChargeAction } from "./createServiceCharge";
+import { buildUpdateEmployeeAction, UpdateEmployeeAction } from "./updateEmployee";
 
 export interface Actions {
     deleteEmployee: DeleteEmployeeAction;
@@ -21,6 +18,7 @@ export interface Actions {
     createServiceCharge: CreateServiceChargeAction;
     createSalesReceipt: CreateSalesReceiptAction;
     createEmployee: CreateEmployeeAction;
+    updateEmployee: UpdateEmployeeAction;
 }
 
 export interface ActionsDependencies {
@@ -43,6 +41,7 @@ export function buildActions({
         createTimeCard: buildCreateTimeCardAction({ employeeRepository, timeCardRepository }),
         createServiceCharge: buildCreateServiceChargeAction({ serviceChargeRepository, unionMemberRepository }),
         createSalesReceipt: buildCreateSalesReceiptAction({ employeeRepository, salesReceiptRepository }),
-        createEmployee: buildCreateEmployeeAction({ employeeRepository })
+        createEmployee: buildCreateEmployeeAction({ employeeRepository }),
+        updateEmployee: buildUpdateEmployeeAction({ employeeRepository })
     };
 }

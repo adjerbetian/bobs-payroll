@@ -75,7 +75,8 @@ export function buildFakeActions(): Fake<Actions> {
         createTimeCard: buildStubFor("createTimeCard"),
         createServiceCharge: buildStubFor("createServiceCharge"),
         createSalesReceipt: buildStubFor("createSalesReceipt"),
-        createEmployee: buildStubFor("createEmployee")
+        createEmployee: buildStubFor("createEmployee"),
+        updateEmployee: buildStubFor("updateEmployee")
     };
 }
 

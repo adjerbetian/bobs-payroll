@@ -1,25 +1,17 @@
-import {
-    EmployeeRepository,
-    EmployeeType,
-    PaymentMethodRepository,
-    PaymentMethodType,
-    UnionMemberRepository
-} from "../../core";
+import { Actions, EmployeeType, PaymentMethodRepository, PaymentMethodType, UnionMemberRepository } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
-    employeeRepository: EmployeeRepository;
     paymentMethodRepository: PaymentMethodRepository;
     unionMemberRepository: UnionMemberRepository;
 }
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
-export function buildChangeEmployeeTransaction({
-    employeeRepository,
-    paymentMethodRepository,
-    unionMemberRepository
-}: Dependencies): Transaction {
+export function buildChangeEmployeeTransaction(
+    actions: Actions,
+    { paymentMethodRepository, unionMemberRepository }: Dependencies
+): Transaction {
     return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
         const employeeId = parseInt(id);
 
@@ -36,19 +28,19 @@ export function buildChangeEmployeeTransaction({
         async function changeEmployeeName(): Promise<void> {
             const [name] = params;
             transactionValidator.assertIsNotEmpty(name);
-            await employeeRepository.updateById(employeeId, { name });
+            await actions.updateEmployee(employeeId, { name });
         }
 
         async function changeEmployeeAddress(): Promise<void> {
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
-            return employeeRepository.updateById(employeeId, { address });
+            return actions.updateEmployee(employeeId, { address });
         }
 
         async function changeEmployeeTypeToHourly(): Promise<void> {
             const [hourlyRate] = params;
             transactionValidator.assertIsNotEmpty(hourlyRate);
-            return employeeRepository.updateById(employeeId, {
+            return actions.updateEmployee(employeeId, {
                 work: {
                     type: EmployeeType.HOURLY,
                     hourlyRate: parseFloat(hourlyRate)
@@ -59,7 +51,7 @@ export function buildChangeEmployeeTransaction({
         async function changeEmployeeTypeToSalaried(): Promise<void> {
             const [monthlySalary] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
-            return employeeRepository.updateById(employeeId, {
+            return actions.updateEmployee(employeeId, {
                 work: {
                     type: EmployeeType.SALARIED,
                     monthlySalary: parseFloat(monthlySalary)
@@ -71,7 +63,7 @@ export function buildChangeEmployeeTransaction({
             const [monthlySalary, commissionRate] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
             transactionValidator.assertIsNotEmpty(commissionRate);
-            return employeeRepository.updateById(employeeId, {
+            return actions.updateEmployee(employeeId, {
                 work: {
                     type: EmployeeType.COMMISSIONED,
                     monthlySalary: parseFloat(monthlySalary),

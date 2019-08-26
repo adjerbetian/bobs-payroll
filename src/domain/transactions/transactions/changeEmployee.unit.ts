@@ -1,5 +1,5 @@
 import {
-    buildFakeEmployeeRepository,
+    buildFakeActions,
     buildFakePaymentMethodRepository,
     buildFakeUnionMemberRepository,
     Fake
@@ -12,29 +12,28 @@ import {
 } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { generateIndex } from "../../../../test/utils";
-import { EmployeeRepository, EmployeeType, PaymentMethodRepository, UnionMemberRepository } from "../../core";
+import { Actions, EmployeeType, PaymentMethodRepository, UnionMemberRepository } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let fakeActions: Fake<Actions>;
     let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
     let fakeUnionMemberRepository: Fake<UnionMemberRepository>;
     let changeEmployee: Transaction;
     let employeeId: number;
 
     beforeEach(() => {
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
+        fakeActions = buildFakeActions();
         fakePaymentMethodRepository = buildFakePaymentMethodRepository();
         fakeUnionMemberRepository = buildFakeUnionMemberRepository();
-        changeEmployee = buildChangeEmployeeTransaction({
-            employeeRepository: fakeEmployeeRepository,
+        changeEmployee = buildChangeEmployeeTransaction(fakeActions, {
             paymentMethodRepository: fakePaymentMethodRepository,
             unionMemberRepository: fakeUnionMemberRepository
         });
 
-        fakeEmployeeRepository.updateById.resolves();
+        fakeActions.updateEmployee.resolves();
 
         employeeId = generateIndex();
     });
@@ -44,7 +43,7 @@ describe("changeEmployee", () => {
             it("should update the employee's name", async () => {
                 await changeEmployee(`${employeeId}`, "Name", "James Bond");
 
-                expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
+                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     name: "James Bond"
                 });
             });
@@ -58,7 +57,7 @@ describe("changeEmployee", () => {
             it("should update the employee's address", async () => {
                 await changeEmployee(`${employeeId}`, "Address", "my new address");
 
-                expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
+                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     address: "my new address"
                 });
             });
@@ -74,7 +73,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to hourly and set the rate", async () => {
                 await changeEmployee(`${employeeId}`, "Hourly", "10.5");
 
-                expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
+                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     work: {
                         type: EmployeeType.HOURLY,
                         hourlyRate: 10.5
@@ -91,7 +90,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to salaried and set the salary", async () => {
                 await changeEmployee(`${employeeId}`, "Salaried", "10.5");
 
-                expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
+                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     work: {
                         type: EmployeeType.SALARIED,
                         monthlySalary: 10.5
@@ -108,7 +107,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to salaried and set the salary", async () => {
                 await changeEmployee(`${employeeId}`, "Commissioned", "10", "30");
 
-                expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
+                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     work: {
                         type: EmployeeType.COMMISSIONED,
                         monthlySalary: 10,
