@@ -21,10 +21,7 @@ export function buildApp(dependencies: {
     paymentMethodRepository: PaymentMethodRepository;
     unionMemberRepository: UnionMemberRepository;
 }): App {
-    const actions = buildActions({
-        employeeRepository: dependencies.employeeRepository,
-        timeCardRepository: dependencies.timeCardRepository
-    });
+    const actions = buildActions(dependencies);
     const transactionDomain = buildTransactionDomain({ ...dependencies, actions });
 
     return {
