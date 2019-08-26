@@ -7,7 +7,7 @@ describe("Use Case 1: Add New Employee", () => {
         const employee = generateHourlyEmployee();
 
         await executePayrollCommand(
-            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" H ${employee.hourlyRate}`
+            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" H ${employee.work.hourlyRate}`
         );
 
         await expectUserToExistInDb(employee);
@@ -16,7 +16,7 @@ describe("Use Case 1: Add New Employee", () => {
         const employee = generateSalariedEmployee();
 
         await executePayrollCommand(
-            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" S ${employee.monthlySalary}`
+            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" S ${employee.work.monthlySalary}`
         );
 
         await expectUserToExistInDb(employee);
@@ -25,7 +25,7 @@ describe("Use Case 1: Add New Employee", () => {
         const employee = generateCommissionedEmployee();
 
         await executePayrollCommand(
-            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary} ${employee.commissionRate}`
+            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.work.monthlySalary} ${employee.work.commissionRate}`
         );
 
         await expectUserToExistInDb(employee);
@@ -34,7 +34,7 @@ describe("Use Case 1: Add New Employee", () => {
         const employee = generateCommissionedEmployee();
 
         await executePayrollCommand(
-            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.monthlySalary}`
+            `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.work.monthlySalary}`
         );
 
         const employeeExistsInDb = await mongoEmployeeRepository.exists({ id: employee.id });

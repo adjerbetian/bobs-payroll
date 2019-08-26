@@ -2,7 +2,7 @@ import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
 import { generateHourlyEmployee } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { generateIndex } from "../../../test/utils";
-import { Employee, EmployeeRepository, EmployeeType } from "../../domain";
+import { Employee, EmployeeRepository, EmployeeType, HourlyEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";
 
@@ -66,45 +66,19 @@ describe("mongoEmployeeRepository", () => {
     describe("updateById", () => {
         beforeEach(() => fakeDb.update.resolves());
 
-        it("should update the basic employee information", async () => {
+        it("should update the employee information", async () => {
             const employeeId = generateIndex();
+            const update: Partial<HourlyEmployee> = {
+                name: "James Bond",
+                work: {
+                    type: EmployeeType.HOURLY,
+                    hourlyRate: 10
+                }
+            };
 
-            await repository.updateById(employeeId, { name: "James Bond", address: "new address" });
+            await repository.updateById(employeeId, update);
 
-            expect(fakeDb.update).to.have.been.calledWith(
-                { id: employeeId },
-                { $set: { name: "James Bond", address: "new address" } }
-            );
-        });
-        it("should unset the employee type when changing to type hourly", async () => {
-            const employeeId = generateIndex();
-
-            await repository.updateById(employeeId, { type: EmployeeType.HOURLY });
-
-            expect(fakeDb.update).to.have.been.calledWith(
-                { id: employeeId },
-                { $set: { type: EmployeeType.HOURLY }, $unset: { commissionRate: "", monthlySalary: "" } }
-            );
-        });
-        it("should unset the employee type when changing to type salaried", async () => {
-            const employeeId = generateIndex();
-
-            await repository.updateById(employeeId, { type: EmployeeType.SALARIED });
-
-            expect(fakeDb.update).to.have.been.calledWith(
-                { id: employeeId },
-                { $set: { type: EmployeeType.SALARIED }, $unset: { commissionRate: "", hourlyRate: "" } }
-            );
-        });
-        it("should unset the employee type when changing to type commissioned", async () => {
-            const employeeId = generateIndex();
-
-            await repository.updateById(employeeId, { type: EmployeeType.COMMISSIONED });
-
-            expect(fakeDb.update).to.have.been.calledWith(
-                { id: employeeId },
-                { $set: { type: EmployeeType.COMMISSIONED }, $unset: { hourlyRate: "" } }
-            );
+            expect(fakeDb.update).to.have.been.calledWith({ id: employeeId }, { $set: update });
         });
     });
 });

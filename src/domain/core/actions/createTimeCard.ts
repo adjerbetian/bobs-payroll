@@ -20,7 +20,7 @@ export function buildCreateTimeCardAction({
 
     async function assertEmployeeIsHourly(employeeId: number): Promise<void> {
         const employee = await employeeRepository.fetchById(employeeId);
-        if (employee.type !== EmployeeType.HOURLY) {
+        if (employee.work.type !== EmployeeType.HOURLY) {
             throw new EmployeeTypeError(employee, EmployeeType.HOURLY);
         }
     }

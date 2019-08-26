@@ -75,8 +75,10 @@ describe("changeEmployee", () => {
                 await changeEmployee(`${employeeId}`, "Hourly", "10.5");
 
                 expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
-                    type: EmployeeType.HOURLY,
-                    hourlyRate: 10.5
+                    work: {
+                        type: EmployeeType.HOURLY,
+                        hourlyRate: 10.5
+                    }
                 });
             });
             it("should throw an error if the rate is not defined", async () => {
@@ -90,8 +92,10 @@ describe("changeEmployee", () => {
                 await changeEmployee(`${employeeId}`, "Salaried", "10.5");
 
                 expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
-                    type: EmployeeType.SALARIED,
-                    monthlySalary: 10.5
+                    work: {
+                        type: EmployeeType.SALARIED,
+                        monthlySalary: 10.5
+                    }
                 });
             });
             it("should throw an error if the salary is not defined", async () => {
@@ -105,9 +109,11 @@ describe("changeEmployee", () => {
                 await changeEmployee(`${employeeId}`, "Commissioned", "10", "30");
 
                 expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
-                    type: EmployeeType.COMMISSIONED,
-                    monthlySalary: 10,
-                    commissionRate: 30
+                    work: {
+                        type: EmployeeType.COMMISSIONED,
+                        monthlySalary: 10,
+                        commissionRate: 30
+                    }
                 });
             });
             it("should throw an error if the salary is not defined", async () => {

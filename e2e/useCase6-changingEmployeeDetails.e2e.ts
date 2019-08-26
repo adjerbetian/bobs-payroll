@@ -52,9 +52,10 @@ describe("Use Case 6: Changing Employee Details", () => {
             await executePayrollCommand(`ChgEmp ${employee.id} Hourly 10`);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
-            expect(dbEmployee).to.have.property("type", EmployeeType.HOURLY);
-            expect(dbEmployee).to.have.property("hourlyRate", 10);
-            expect(dbEmployee).not.to.have.property("monthlySalary");
+            expect(dbEmployee.work).to.deep.equal({
+                type: EmployeeType.HOURLY,
+                hourlyRate: 10
+            });
         });
         it("should change the employee to monthly salary", async () => {
             employee = await seedHourlyEmployee();
@@ -62,9 +63,10 @@ describe("Use Case 6: Changing Employee Details", () => {
             await executePayrollCommand(`ChgEmp ${employee.id} Salaried 10`);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
-            expect(dbEmployee).to.have.property("type", EmployeeType.SALARIED);
-            expect(dbEmployee).to.have.property("monthlySalary", 10);
-            expect(dbEmployee).not.to.have.property("hourlyRate");
+            expect(dbEmployee.work).to.deep.equal({
+                type: EmployeeType.SALARIED,
+                monthlySalary: 10
+            });
         });
         it("should change the employee to commissioned", async () => {
             employee = await seedHourlyEmployee();
@@ -72,10 +74,11 @@ describe("Use Case 6: Changing Employee Details", () => {
             await executePayrollCommand(`ChgEmp ${employee.id} Commissioned 10 30`);
 
             const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
-            expect(dbEmployee).to.have.property("type", EmployeeType.COMMISSIONED);
-            expect(dbEmployee).to.have.property("monthlySalary", 10);
-            expect(dbEmployee).to.have.property("commissionRate", 30);
-            expect(dbEmployee).not.to.have.property("hourlyRate");
+            expect(dbEmployee.work).to.deep.equal({
+                type: EmployeeType.COMMISSIONED,
+                monthlySalary: 10,
+                commissionRate: 30
+            });
         });
     });
     describe("payment method", () => {

@@ -51,29 +51,35 @@ export function buildAddEmployeeTransaction(actions: Actions): Transaction {
     function buildHourlyEmployee(args: AddHourlyEmployeeArgs): HourlyEmployee {
         return {
             ...buildPartialEmployee(args),
-            type: EmployeeType.HOURLY,
-            hourlyRate: args.rate
+            work: {
+                type: EmployeeType.HOURLY,
+                hourlyRate: args.rate
+            }
         };
     }
 
     function buildSalariedEmployee(args: AddSalariedEmployeeArgs): SalariedEmployee {
         return {
             ...buildPartialEmployee(args),
-            type: EmployeeType.SALARIED,
-            monthlySalary: args.rate
+            work: {
+                type: EmployeeType.SALARIED,
+                monthlySalary: args.rate
+            }
         };
     }
 
     function buildCommissionedEmployee(args: AddCommissionedEmployeeArgs): CommissionedEmployee {
         return {
             ...buildPartialEmployee(args),
-            type: EmployeeType.COMMISSIONED,
-            monthlySalary: args.rate,
-            commissionRate: args.commissionRate
+            work: {
+                type: EmployeeType.COMMISSIONED,
+                monthlySalary: args.rate,
+                commissionRate: args.commissionRate
+            }
         };
     }
 
-    function buildPartialEmployee(args: AddEmployeeArgs): Omit<Employee, "type"> {
+    function buildPartialEmployee(args: AddEmployeeArgs): Omit<Employee, "work"> {
         return {
             id: args.id,
             name: args.name,

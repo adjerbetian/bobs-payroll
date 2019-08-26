@@ -1,5 +1,4 @@
-import { UpdateQuery } from "mongodb";
-import { Employee, EmployeeRepository, EmployeeType } from "../../domain";
+import { Employee, EmployeeRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): EmployeeRepository {
@@ -17,36 +16,7 @@ export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): Empl
             await db.remove({ id });
         },
         async updateById(id: number, update: Partial<Employee>): Promise<void> {
-            await db.update({ id }, buildUpdate());
-
-            function buildUpdate(): UpdateQuery<Employee> {
-                if (update.type) {
-                    return { $set: update, $unset: buildUnset() };
-                } else {
-                    return { $set: update };
-                }
-            }
-
-            function buildUnset(): Record<string, string> | undefined {
-                if (update.type === EmployeeType.HOURLY) {
-                    return {
-                        monthlySalary: "",
-                        commissionRate: ""
-                    };
-                }
-                if (update.type === EmployeeType.SALARIED) {
-                    return {
-                        hourlyRate: "",
-                        commissionRate: ""
-                    };
-                }
-                if (update.type === EmployeeType.COMMISSIONED) {
-                    return {
-                        hourlyRate: ""
-                    };
-                }
-                throw new Error("invalid type");
-            }
+            await db.update({ id }, { $set: update });
         }
     };
 }

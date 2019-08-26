@@ -49,8 +49,10 @@ export function buildChangeEmployeeTransaction({
             const [hourlyRate] = params;
             transactionValidator.assertIsNotEmpty(hourlyRate);
             return employeeRepository.updateById(employeeId, {
-                type: EmployeeType.HOURLY,
-                hourlyRate: parseFloat(hourlyRate)
+                work: {
+                    type: EmployeeType.HOURLY,
+                    hourlyRate: parseFloat(hourlyRate)
+                }
             });
         }
 
@@ -58,8 +60,10 @@ export function buildChangeEmployeeTransaction({
             const [monthlySalary] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
             return employeeRepository.updateById(employeeId, {
-                type: EmployeeType.SALARIED,
-                monthlySalary: parseFloat(monthlySalary)
+                work: {
+                    type: EmployeeType.SALARIED,
+                    monthlySalary: parseFloat(monthlySalary)
+                }
             });
         }
 
@@ -68,9 +72,11 @@ export function buildChangeEmployeeTransaction({
             transactionValidator.assertIsNotEmpty(monthlySalary);
             transactionValidator.assertIsNotEmpty(commissionRate);
             return employeeRepository.updateById(employeeId, {
-                type: EmployeeType.COMMISSIONED,
-                monthlySalary: parseFloat(monthlySalary),
-                commissionRate: parseFloat(commissionRate)
+                work: {
+                    type: EmployeeType.COMMISSIONED,
+                    monthlySalary: parseFloat(monthlySalary),
+                    commissionRate: parseFloat(commissionRate)
+                }
             });
         }
 

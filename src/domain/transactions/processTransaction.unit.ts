@@ -30,7 +30,7 @@ describe("processTransaction", () => {
                 `"${employee.name}"`,
                 `"${employee.address}"`,
                 "H",
-                `${employee.hourlyRate}`
+                `${employee.work.hourlyRate}`
             ]);
 
             expect(fakeTransactions.addEmployee).to.have.been.calledOnceWith(
@@ -38,7 +38,7 @@ describe("processTransaction", () => {
                 `"${employee.name}"`,
                 `"${employee.address}"`,
                 "H",
-                `${employee.hourlyRate}`
+                `${employee.work.hourlyRate}`
             );
         });
     });

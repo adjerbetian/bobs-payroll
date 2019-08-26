@@ -20,7 +20,7 @@ export function buildCreateSalesReceiptAction({
 
     async function assertEmployeeIsCommissioned(employeeId: number): Promise<void> {
         const employee = await employeeRepository.fetchById(employeeId);
-        if (employee.type !== EmployeeType.COMMISSIONED) {
+        if (employee.work.type !== EmployeeType.COMMISSIONED) {
             throw new EmployeeTypeError(employee, EmployeeType.COMMISSIONED);
         }
     }

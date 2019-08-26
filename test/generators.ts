@@ -18,19 +18,25 @@ import {
 import { generateIndex } from "./utils";
 
 export function generateHourlyEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
+    const hourlyRate = generateFloatBetween(0, 10);
     return {
         ...generateEmployee(),
-        type: EmployeeType.HOURLY,
-        hourlyRate: generateFloatBetween(0, 10),
+        work: {
+            type: EmployeeType.HOURLY,
+            hourlyRate
+        },
         ...args
     };
 }
 
 export function generateSalariedEmployee(args: Partial<SalariedEmployee> = {}): SalariedEmployee {
+    const monthlySalary = generateFloatBetween(10, 20);
     return {
         ...generateEmployee(),
-        type: EmployeeType.SALARIED,
-        monthlySalary: generateFloatBetween(10, 20),
+        work: {
+            type: EmployeeType.SALARIED,
+            monthlySalary
+        },
         ...args
     };
 }
@@ -38,14 +44,16 @@ export function generateSalariedEmployee(args: Partial<SalariedEmployee> = {}): 
 export function generateCommissionedEmployee(args: Partial<CommissionedEmployee> = {}): CommissionedEmployee {
     return {
         ...generateEmployee(),
-        type: EmployeeType.COMMISSIONED,
-        monthlySalary: generateFloatBetween(10, 20),
-        commissionRate: generateFloatBetween(20, 30),
+        work: {
+            type: EmployeeType.COMMISSIONED,
+            monthlySalary: generateFloatBetween(10, 20),
+            commissionRate: generateFloatBetween(20, 30)
+        },
         ...args
     };
 }
 
-function generateEmployee(): Omit<Employee, "type"> {
+function generateEmployee(): Omit<Employee, "work"> {
     const index = generateIndex();
     return {
         id: index,

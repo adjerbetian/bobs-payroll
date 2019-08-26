@@ -32,7 +32,7 @@ describe("addEmployee", () => {
             `"${employee.name}"`,
             `"${employee.address}"`,
             "H",
-            `${employee.hourlyRate}`
+            `${employee.work.hourlyRate}`
         );
 
         expect(fakeActions.createEmployee).to.have.been.calledOnceWith(employee);
@@ -45,7 +45,7 @@ describe("addEmployee", () => {
             `"${employee.name}"`,
             `"${employee.address}"`,
             "S",
-            `${employee.monthlySalary}`
+            `${employee.work.monthlySalary}`
         );
 
         expect(fakeActions.createEmployee).to.have.been.calledOnceWith(employee);
@@ -58,8 +58,8 @@ describe("addEmployee", () => {
             `"${employee.name}"`,
             `"${employee.address}"`,
             "C",
-            `${employee.monthlySalary}`,
-            `${employee.commissionRate}`
+            `${employee.work.monthlySalary}`,
+            `${employee.work.commissionRate}`
         );
 
         expect(fakeActions.createEmployee).to.have.been.calledOnceWith(employee);
@@ -72,7 +72,7 @@ describe("addEmployee", () => {
             `"${employee.name}"`,
             `"${employee.address}"`,
             "C",
-            `${employee.monthlySalary}`
+            `${employee.work.monthlySalary}`
         );
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "AddEmp");
