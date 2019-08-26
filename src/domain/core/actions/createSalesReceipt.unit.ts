@@ -9,7 +9,7 @@ import { EmployeeTypeError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";
 
-describe("postTimeCard", () => {
+describe("action createTimeCard", () => {
     let fakeSalesReceiptRepository: Fake<TimeCardRepository>;
     let fakeEmployeeRepository: Fake<EmployeeRepository>;
     let createSalesReceipt: CreateSalesReceiptAction;

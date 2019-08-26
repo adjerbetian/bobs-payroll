@@ -21,7 +21,7 @@ export function buildTransactions({
     actions
 }: TransactionsDependencies): Transactions {
     return {
-        addEmployee: buildAddEmployeeTransaction({ employeeRepository }),
+        addEmployee: buildAddEmployeeTransaction(actions),
         deleteEmployee: buildDeleteEmployeeTransaction(actions),
         postTimeCard: buildPostTimeCardTransaction(actions),
         postSalesReceipt: buildPostSalesReceiptTransaction(actions),

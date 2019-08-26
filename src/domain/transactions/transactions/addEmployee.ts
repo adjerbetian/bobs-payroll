@@ -1,22 +1,11 @@
-import {
-    CommissionedEmployee,
-    Employee,
-    EmployeeRepository,
-    EmployeeType,
-    HourlyEmployee,
-    SalariedEmployee
-} from "../../core";
+import { Actions, CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 
-interface Dependencies {
-    employeeRepository: EmployeeRepository;
-}
-
 const transactionValidator = buildTransactionValidator("AddEmp");
 
-export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies): Transaction {
+export function buildAddEmployeeTransaction(actions: Actions): Transaction {
     return async function(
         id: string,
         name: string,
@@ -49,7 +38,7 @@ export function buildAddEmployeeTransaction({ employeeRepository }: Dependencies
 
     async function addEmployee(args: AddEmployeeArgs): Promise<void> {
         const employee = buildEmployee(args);
-        await employeeRepository.insert(employee);
+        await actions.createEmployee(employee);
     }
 
     function buildEmployee(args: AddEmployeeArgs): Employee {

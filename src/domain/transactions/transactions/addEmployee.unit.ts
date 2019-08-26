@@ -1,4 +1,4 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../../test/fakeBuilders";
+import { buildFakeActions, buildFakeEmployeeRepository, Fake } from "../../../../test/fakeBuilders";
 import {
     generateCommissionedEmployee,
     generateHourlyEmployee,
@@ -6,18 +6,21 @@ import {
 } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { TransactionFormatError } from "../errors";
-import { EmployeeRepository } from "../../core";
+import { Actions, EmployeeRepository } from "../../core";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 import { Transaction } from "../Transaction";
 
 describe("addEmployee", () => {
+    let fakeActions: Fake<Actions>;
     let fakeEmployeeRepository: Fake<EmployeeRepository>;
     let addEmployee: Transaction;
 
     beforeEach(() => {
+        fakeActions = buildFakeActions();
         fakeEmployeeRepository = buildFakeEmployeeRepository();
-        addEmployee = buildAddEmployeeTransaction({ employeeRepository: fakeEmployeeRepository });
+        addEmployee = buildAddEmployeeTransaction(fakeActions);
 
+        fakeActions.createEmployee.resolves();
         fakeEmployeeRepository.insert.resolves();
     });
 
@@ -32,7 +35,7 @@ describe("addEmployee", () => {
             `${employee.hourlyRate}`
         );
 
-        expect(fakeEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
+        expect(fakeActions.createEmployee).to.have.been.calledOnceWith(employee);
     });
     it("should insert a salaried employee", async () => {
         const employee = generateSalariedEmployee();
@@ -45,7 +48,7 @@ describe("addEmployee", () => {
             `${employee.monthlySalary}`
         );
 
-        expect(fakeEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
+        expect(fakeActions.createEmployee).to.have.been.calledOnceWith(employee);
     });
     it("should insert an salaried with commission employee", async () => {
         const employee = generateCommissionedEmployee();
@@ -59,7 +62,7 @@ describe("addEmployee", () => {
             `${employee.commissionRate}`
         );
 
-        expect(fakeEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
+        expect(fakeActions.createEmployee).to.have.been.calledOnceWith(employee);
     });
     it("should throw when the transaction is malformed", async () => {
         const employee = generateCommissionedEmployee();
