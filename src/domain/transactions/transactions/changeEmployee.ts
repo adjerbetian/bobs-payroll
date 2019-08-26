@@ -24,18 +24,21 @@ export function buildChangeEmployeeTransaction(actions: Actions, { unionMemberRe
         async function changeEmployeeName(): Promise<void> {
             const [name] = params;
             transactionValidator.assertIsNotEmpty(name);
+
             await actions.updateEmployee(employeeId, { name });
         }
 
         async function changeEmployeeAddress(): Promise<void> {
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
+
             return actions.updateEmployee(employeeId, { address });
         }
 
         async function changeEmployeeTypeToHourly(): Promise<void> {
             const [hourlyRate] = params;
             transactionValidator.assertIsNotEmpty(hourlyRate);
+
             return actions.updateEmployee(employeeId, {
                 work: {
                     type: EmployeeType.HOURLY,
@@ -47,6 +50,7 @@ export function buildChangeEmployeeTransaction(actions: Actions, { unionMemberRe
         async function changeEmployeeTypeToSalaried(): Promise<void> {
             const [monthlySalary] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
+
             return actions.updateEmployee(employeeId, {
                 work: {
                     type: EmployeeType.SALARIED,
@@ -59,6 +63,7 @@ export function buildChangeEmployeeTransaction(actions: Actions, { unionMemberRe
             const [monthlySalary, commissionRate] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
             transactionValidator.assertIsNotEmpty(commissionRate);
+
             return actions.updateEmployee(employeeId, {
                 work: {
                     type: EmployeeType.COMMISSIONED,
@@ -101,6 +106,7 @@ export function buildChangeEmployeeTransaction(actions: Actions, { unionMemberRe
 
         async function changeEmployeeToJoinUnion(): Promise<void> {
             const [memberId, , rate] = params;
+
             return unionMemberRepository.insert({
                 employeeId,
                 memberId,
