@@ -1,24 +1,15 @@
-import { EmployeeRepository, EmployeeType, SalesReceipt, SalesReceiptRepository } from "../../core";
-import { EmployeeTypeError } from "../errors";
+import { Actions, SalesReceipt } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
-interface Dependencies {
-    salesReceiptRepository: SalesReceiptRepository;
-    employeeRepository: EmployeeRepository;
-}
 const transactionValidator = buildTransactionValidator("SalesReceipt");
 
-export function buildPostSalesReceiptTransaction({
-    salesReceiptRepository,
-    employeeRepository
-}: Dependencies): Transaction {
+export function buildPostSalesReceiptTransaction(actions: Actions): Transaction {
     return async function(employeeId: string, date: string, amount: string): Promise<void> {
         assertTransactionIsValid();
-        await assertEmployeeIsCommissioned(employeeId);
 
         const salesReceipt = buildSalesReceipt(employeeId, date, amount);
-        return salesReceiptRepository.insert(salesReceipt);
+        return actions.createSalesReceipt(salesReceipt);
 
         function assertTransactionIsValid(): void {
             transactionValidator.assertIsNotEmpty(employeeId);
@@ -27,13 +18,6 @@ export function buildPostSalesReceiptTransaction({
             transactionValidator.assertIsISODate(date);
         }
     };
-
-    async function assertEmployeeIsCommissioned(employeeId: string): Promise<void> {
-        const employee = await employeeRepository.fetchById(parseInt(employeeId));
-        if (employee.type !== EmployeeType.COMMISSIONED) {
-            throw new EmployeeTypeError(employee, EmployeeType.COMMISSIONED);
-        }
-    }
 
     function buildSalesReceipt(employeeId: string, date: string, amount: string): SalesReceipt {
         return {

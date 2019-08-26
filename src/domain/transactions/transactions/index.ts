@@ -1,10 +1,4 @@
-import {
-    Actions,
-    EmployeeRepository,
-    PaymentMethodRepository,
-    SalesReceiptRepository,
-    UnionMemberRepository
-} from "../../core";
+import { Actions, EmployeeRepository, PaymentMethodRepository, UnionMemberRepository } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
@@ -15,7 +9,6 @@ import { buildPostTimeCardTransaction } from "./postTimeCard";
 
 export interface TransactionsDependencies {
     employeeRepository: EmployeeRepository;
-    salesReceiptRepository: SalesReceiptRepository;
     paymentMethodRepository: PaymentMethodRepository;
     unionMemberRepository: UnionMemberRepository;
     actions: Actions;
@@ -23,7 +16,6 @@ export interface TransactionsDependencies {
 
 export function buildTransactions({
     employeeRepository,
-    salesReceiptRepository,
     paymentMethodRepository,
     unionMemberRepository,
     actions
@@ -32,10 +24,7 @@ export function buildTransactions({
         addEmployee: buildAddEmployeeTransaction({ employeeRepository }),
         deleteEmployee: buildDeleteEmployeeTransaction(actions),
         postTimeCard: buildPostTimeCardTransaction(actions),
-        postSalesReceipt: buildPostSalesReceiptTransaction({
-            salesReceiptRepository,
-            employeeRepository
-        }),
+        postSalesReceipt: buildPostSalesReceiptTransaction(actions),
         postServiceCharge: buildPostServiceChargeTransaction(actions),
         changeEmployee: buildChangeEmployeeTransaction({
             employeeRepository,

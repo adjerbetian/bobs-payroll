@@ -1,51 +1,32 @@
 import * as moment from "moment";
-import { buildFakeEmployeeRepository, buildFakeTimeCardRepository, Fake } from "../../../../test/fakeBuilders";
-import {
-    generateCommissionedEmployee,
-    generateSalariedEmployee,
-    generateSalesReceipt
-} from "../../../../test/generators";
+import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
+import { generateSalesReceipt } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
-import { EmployeeRepository, SalesReceipt, TimeCardRepository } from "../../core";
-import { EmployeeTypeError, TransactionFormatError } from "../errors";
-import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
+import { Actions, SalesReceipt } from "../../core";
+import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
+import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
 
 describe("postTimeCard", () => {
-    let fakeSalesReceiptRepository: Fake<TimeCardRepository>;
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let fakeActions: Fake<Actions>;
     let postSalesReceipt: Transaction;
 
     beforeEach(() => {
-        fakeSalesReceiptRepository = buildFakeTimeCardRepository();
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
-        postSalesReceipt = buildPostSalesReceiptTransaction({
-            salesReceiptRepository: fakeSalesReceiptRepository,
-            employeeRepository: fakeEmployeeRepository
-        });
+        fakeActions = buildFakeActions();
+        postSalesReceipt = buildPostSalesReceiptTransaction(fakeActions);
 
-        fakeSalesReceiptRepository.insert.resolves();
+        fakeActions.createSalesReceipt.resolves();
     });
 
     it("should create a sales receipt for the employee", async () => {
         const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
 
         await postSalesReceiptEntity(salesReceipt);
 
-        expect(fakeSalesReceiptRepository.insert).to.have.been.calledOnceWith(salesReceipt);
-    });
-    it("should throw a EmployeeTypeError if the employee is not a commissioned employee", async () => {
-        const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateSalariedEmployee());
-
-        const promise = postSalesReceiptEntity(salesReceipt);
-
-        await expect(promise).to.be.rejectedWith(EmployeeTypeError);
+        expect(fakeActions.createSalesReceipt).to.have.been.calledOnceWith(salesReceipt);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
 
         const promise = postSalesReceipt(`${salesReceipt.employeeId}`, `${salesReceipt.date}`, ``);
 
@@ -53,7 +34,6 @@ describe("postTimeCard", () => {
     });
     it("should throw a TransactionFormatError if the date is not in the right format", async () => {
         const salesReceipt = generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
-        fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
 
         const promise = postSalesReceipt(
             `${salesReceipt.employeeId}`,
