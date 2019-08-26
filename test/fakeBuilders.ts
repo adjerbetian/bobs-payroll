@@ -71,7 +71,8 @@ export function buildFakeMongoDbAdapter<T>(): Fake<MongoDbAdapter<T>> {
 
 export function buildFakeActions(): Fake<Actions> {
     return {
-        deleteEmployee: buildStubFor("deleteEmployee")
+        deleteEmployee: buildStubFor("deleteEmployee"),
+        createTimeCard: buildStubFor("createTimeCard")
     };
 }
 

@@ -1,47 +1,32 @@
 import * as moment from "moment";
-import { buildFakeEmployeeRepository, buildFakeTimeCardRepository, Fake } from "../../../../test/fakeBuilders";
-import { generateHourlyEmployee, generateSalariedEmployee, generateTimeCard } from "../../../../test/generators";
+import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
+import { generateTimeCard } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
-import { EmployeeRepository, TimeCard, TimeCardRepository } from "../../core";
-import { EmployeeTypeError, TransactionFormatError } from "../errors";
-import { buildPostTimeCardTransaction } from "./postTimeCard";
+import { Actions, TimeCard } from "../../core";
+import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
+import { buildPostTimeCardTransaction } from "./postTimeCard";
 
 describe("postTimeCard", () => {
-    let fakeTimeCardRepository: Fake<TimeCardRepository>;
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let fakeActions: Fake<Actions>;
     let postTimeCard: Transaction;
 
     beforeEach(() => {
-        fakeTimeCardRepository = buildFakeTimeCardRepository();
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
-        postTimeCard = buildPostTimeCardTransaction({
-            employeeRepository: fakeEmployeeRepository,
-            timeCardRepository: fakeTimeCardRepository
-        });
-
-        fakeTimeCardRepository.insert.resolves();
+        fakeActions = buildFakeActions();
+        postTimeCard = buildPostTimeCardTransaction(fakeActions);
     });
 
     it("should create a time card for the employee", async () => {
         const timeCard = generateTimeCard();
-        fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
+        fakeActions.createTimeCard.resolves();
 
         await postTimeCardEntity(timeCard);
 
-        expect(fakeTimeCardRepository.insert).to.have.been.calledOnceWith(timeCard);
-    });
-    it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
-        const timeCard = generateTimeCard();
-        fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateSalariedEmployee());
-
-        const promise = postTimeCardEntity(timeCard);
-
-        await expect(promise).to.be.rejectedWith(EmployeeTypeError);
+        expect(fakeActions.createTimeCard).to.have.been.calledOnceWith(timeCard);
     });
     it("should throw a TransactionFormatError if the date is not in good format", async () => {
         const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
-        fakeEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
+        fakeActions.createTimeCard.resolves();
 
         const promise = postTimeCardEntity(timeCard);
 

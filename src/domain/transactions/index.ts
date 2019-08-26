@@ -4,7 +4,6 @@ import {
     PaymentMethodRepository,
     SalesReceiptRepository,
     ServiceChargeRepository,
-    TimeCardRepository,
     UnionMemberRepository
 } from "../core";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
@@ -15,7 +14,6 @@ export { Transactions } from "./transactions";
 
 export function buildTransactionDomain(dependencies: {
     employeeRepository: EmployeeRepository;
-    timeCardRepository: TimeCardRepository;
     salesReceiptRepository: SalesReceiptRepository;
     serviceChargeRepository: ServiceChargeRepository;
     paymentMethodRepository: PaymentMethodRepository;
