@@ -1,5 +1,6 @@
 import {
     EmployeeRepository,
+    PaymentMethodRepository,
     SalesReceiptRepository,
     ServiceChargeRepository,
     TimeCardRepository,
@@ -10,6 +11,7 @@ import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./creat
 import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";
 import { buildDeleteEmployeeAction, DeleteEmployeeAction } from "./deleteEmployee";
 import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";
+import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
 import { buildUpdateEmployeeAction, UpdateEmployeeAction } from "./updateEmployee";
 
 export interface Actions {
@@ -19,6 +21,7 @@ export interface Actions {
     createSalesReceipt: CreateSalesReceiptAction;
     createEmployee: CreateEmployeeAction;
     updateEmployee: UpdateEmployeeAction;
+    setEmployeePaymentMethod: SetEmployeePaymentMethodAction;
 }
 
 export interface ActionsDependencies {
@@ -27,6 +30,7 @@ export interface ActionsDependencies {
     serviceChargeRepository: ServiceChargeRepository;
     unionMemberRepository: UnionMemberRepository;
     salesReceiptRepository: SalesReceiptRepository;
+    paymentMethodRepository: PaymentMethodRepository;
 }
 
 export function buildActions({
@@ -34,7 +38,8 @@ export function buildActions({
     timeCardRepository,
     serviceChargeRepository,
     unionMemberRepository,
-    salesReceiptRepository
+    salesReceiptRepository,
+    paymentMethodRepository
 }: ActionsDependencies): Actions {
     return {
         deleteEmployee: buildDeleteEmployeeAction({ employeeRepository }),
@@ -42,6 +47,7 @@ export function buildActions({
         createServiceCharge: buildCreateServiceChargeAction({ serviceChargeRepository, unionMemberRepository }),
         createSalesReceipt: buildCreateSalesReceiptAction({ employeeRepository, salesReceiptRepository }),
         createEmployee: buildCreateEmployeeAction({ employeeRepository }),
-        updateEmployee: buildUpdateEmployeeAction({ employeeRepository })
+        updateEmployee: buildUpdateEmployeeAction({ employeeRepository }),
+        setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository })
     };
 }

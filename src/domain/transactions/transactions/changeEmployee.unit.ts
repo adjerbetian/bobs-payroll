@@ -1,9 +1,4 @@
-import {
-    buildFakeActions,
-    buildFakePaymentMethodRepository,
-    buildFakeUnionMemberRepository,
-    Fake
-} from "../../../../test/fakeBuilders";
+import { buildFakeActions, buildFakeUnionMemberRepository, Fake } from "../../../../test/fakeBuilders";
 import {
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
@@ -12,24 +7,21 @@ import {
 } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { generateIndex } from "../../../../test/utils";
-import { Actions, EmployeeType, PaymentMethodRepository, UnionMemberRepository } from "../../core";
+import { Actions, EmployeeType, UnionMemberRepository } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
     let fakeActions: Fake<Actions>;
-    let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
     let fakeUnionMemberRepository: Fake<UnionMemberRepository>;
     let changeEmployee: Transaction;
     let employeeId: number;
 
     beforeEach(() => {
         fakeActions = buildFakeActions();
-        fakePaymentMethodRepository = buildFakePaymentMethodRepository();
         fakeUnionMemberRepository = buildFakeUnionMemberRepository();
         changeEmployee = buildChangeEmployeeTransaction(fakeActions, {
-            paymentMethodRepository: fakePaymentMethodRepository,
             unionMemberRepository: fakeUnionMemberRepository
         });
 
@@ -128,25 +120,14 @@ describe("changeEmployee", () => {
         });
     });
     describe("payment method", () => {
-        beforeEach(() => {
-            fakePaymentMethodRepository.insert.resolves();
-            fakePaymentMethodRepository.deleteByEmployeeId.resolves();
-        });
+        beforeEach(() => fakeActions.setEmployeePaymentMethod.resolves());
 
         describe("Hold", () => {
             it("should add the hold paycheck payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Hold");
 
                 const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId });
-                expect(fakePaymentMethodRepository.insert).to.have.been.calledOnceWith(expectedPaymentMethod);
-            });
-            it("should delete the previous payment method of the employee", async () => {
-                await changeEmployee(`${employeeId}`, "Hold");
-
-                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
-                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
-                    fakePaymentMethodRepository.insert
-                );
+                expect(fakeActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
         });
         describe("Direct", () => {
@@ -158,15 +139,7 @@ describe("changeEmployee", () => {
                     bank: "bank-id",
                     account: "account-id"
                 });
-                expect(fakePaymentMethodRepository.insert).to.have.been.calledOnceWith(expectedPaymentMethod);
-            });
-            it("should delete the previous payment method of the employee", async () => {
-                await changeEmployee(`${employeeId}`, "Direct", "bank-id", "account-id");
-
-                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
-                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
-                    fakePaymentMethodRepository.insert
-                );
+                expect(fakeActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the bank-id is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Direct");
@@ -187,15 +160,7 @@ describe("changeEmployee", () => {
                     employeeId,
                     address: "my paycheck address"
                 });
-                expect(fakePaymentMethodRepository.insert).to.have.been.calledOnceWith(expectedPaymentMethod);
-            });
-            it("should delete the previous payment method of the employee", async () => {
-                await changeEmployee(`${employeeId}`, "Mail", "my paycheck address");
-
-                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
-                expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
-                    fakePaymentMethodRepository.insert
-                );
+                expect(fakeActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the address is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Mail");

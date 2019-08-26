@@ -1,17 +1,13 @@
-import { Actions, EmployeeType, PaymentMethodRepository, PaymentMethodType, UnionMemberRepository } from "../../core";
+import { Actions, EmployeeType, PaymentMethodType, UnionMemberRepository } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
 interface Dependencies {
-    paymentMethodRepository: PaymentMethodRepository;
     unionMemberRepository: UnionMemberRepository;
 }
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
-export function buildChangeEmployeeTransaction(
-    actions: Actions,
-    { paymentMethodRepository, unionMemberRepository }: Dependencies
-): Transaction {
+export function buildChangeEmployeeTransaction(actions: Actions, { unionMemberRepository }: Dependencies): Transaction {
     return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
         const employeeId = parseInt(id);
 
@@ -73,8 +69,7 @@ export function buildChangeEmployeeTransaction(
         }
 
         async function changeEmployeePaymentMethodToHold(): Promise<void> {
-            await paymentMethodRepository.deleteByEmployeeId(employeeId);
-            return paymentMethodRepository.insert({
+            await actions.setEmployeePaymentMethod({
                 type: PaymentMethodType.HOLD,
                 employeeId: employeeId
             });
@@ -84,8 +79,8 @@ export function buildChangeEmployeeTransaction(
             const [bank, account] = params;
             transactionValidator.assertIsNotEmpty(bank);
             transactionValidator.assertIsNotEmpty(account);
-            await paymentMethodRepository.deleteByEmployeeId(employeeId);
-            return paymentMethodRepository.insert({
+
+            await actions.setEmployeePaymentMethod({
                 type: PaymentMethodType.DIRECT,
                 employeeId: employeeId,
                 account,
@@ -96,8 +91,8 @@ export function buildChangeEmployeeTransaction(
         async function changeEmployeePaymentMethodToMail(): Promise<void> {
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
-            await paymentMethodRepository.deleteByEmployeeId(employeeId);
-            return paymentMethodRepository.insert({
+
+            await actions.setEmployeePaymentMethod({
                 type: PaymentMethodType.MAIL,
                 employeeId: employeeId,
                 address
