@@ -15,7 +15,11 @@ export function buildCreateUnionMemberAction({
     return async function(unionMember: UnionMember): Promise<void> {
         await assertEmployeeExists(unionMember.employeeId);
 
-        await unionMemberRepository.insert(unionMember);
+        if (await unionMemberRepository.exists(unionMember)) {
+            await unionMemberRepository.update(unionMember);
+        } else {
+            await unionMemberRepository.insert(unionMember);
+        }
     };
 
     async function assertEmployeeExists(employeeId: number): Promise<void> {
