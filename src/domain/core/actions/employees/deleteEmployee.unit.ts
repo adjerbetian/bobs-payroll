@@ -1,7 +1,7 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../../test/fakeBuilders";
-import { expect } from "../../../../test/unitTest";
-import { generateIndex } from "../../../../test/utils";
-import { EmployeeRepository } from "../repositories";
+import { buildFakeEmployeeRepository, Fake } from "../../../../../test/fakeBuilders";
+import { expect } from "../../../../../test/unitTest";
+import { generateIndex } from "../../../../../test/utils";
+import { EmployeeRepository } from "../../repositories";
 import { buildDeleteEmployeeAction, DeleteEmployeeAction } from "./deleteEmployee";
 
 describe("action deleteEmployee", () => {

@@ -6,13 +6,18 @@ import {
     TimeCardRepository,
     UnionMemberRepository
 } from "../repositories";
-import { buildCreateEmployeeAction, CreateEmployeeAction } from "./createEmployee";
 import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";
 import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";
-import { buildDeleteEmployeeAction, DeleteEmployeeAction } from "./deleteEmployee";
 import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";
+import {
+    buildCreateEmployeeAction,
+    buildDeleteEmployeeAction,
+    buildUpdateEmployeeAction,
+    CreateEmployeeAction,
+    DeleteEmployeeAction,
+    UpdateEmployeeAction
+} from "./employees";
 import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
-import { buildUpdateEmployeeAction, UpdateEmployeeAction } from "./updateEmployee";
 
 export interface Actions {
     deleteEmployee: DeleteEmployeeAction;

@@ -1,5 +1,5 @@
-import { Employee } from "../entities";
-import { EmployeeRepository } from "../repositories";
+import { Employee } from "../../entities";
+import { EmployeeRepository } from "../../repositories";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;

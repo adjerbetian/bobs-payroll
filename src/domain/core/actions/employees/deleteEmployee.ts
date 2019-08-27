@@ -1,4 +1,4 @@
-import { EmployeeRepository } from "../repositories";
+import { EmployeeRepository } from "../../repositories";
 
 export type DeleteEmployeeAction = (employeeId: number) => Promise<void>;
 
