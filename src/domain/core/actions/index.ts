@@ -18,6 +18,7 @@ import {
     DeleteEmployeeAction,
     UpdateEmployeeAction
 } from "./employees";
+import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
 import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
 
 export interface Actions {
@@ -29,6 +30,7 @@ export interface Actions {
     updateEmployee: UpdateEmployeeAction;
     setEmployeePaymentMethod: SetEmployeePaymentMethodAction;
     createUnionMember: CreateUnionMemberAction;
+    removeEmployeeFromUnion: RemoveEmployeeFromUnionAction;
 }
 
 export interface ActionsDependencies {
@@ -56,6 +58,7 @@ export function buildActions({
         createEmployee: buildCreateEmployeeAction({ employeeRepository }),
         updateEmployee: buildUpdateEmployeeAction({ employeeRepository }),
         setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository }),
-        createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository, employeeRepository })
+        createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository, employeeRepository }),
+        removeEmployeeFromUnion: buildRemoveEmployeeFromUnionAction({ unionMemberRepository })
     };
 }

@@ -186,6 +186,14 @@ describe("changeEmployee", () => {
                 await expect(promise).to.have.been.rejectedWith(TransactionFormatError, "ChgEmp");
             });
         });
-        describe("NoMember", () => {});
+        describe("NoMember", () => {
+            it("should delete the union member", async () => {
+                fakeActions.removeEmployeeFromUnion.resolves();
+
+                await changeEmployee(`${employeeId}`, "NoMember");
+
+                expect(fakeActions.removeEmployeeFromUnion).to.have.been.calledOnceWith(employeeId);
+            });
+        });
     });
 });

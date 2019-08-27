@@ -17,6 +17,7 @@ export function buildChangeEmployeeTransaction(actions: Actions): Transaction {
         if (updateType === "Direct") return changeEmployeePaymentMethodToDirect();
         if (updateType === "Mail") return changeEmployeePaymentMethodToMail();
         if (updateType === "Member") return changeEmployeeToJoinUnion();
+        if (updateType === "NoMember") return removeEmployeeFromUnion();
 
         async function changeEmployeeName(): Promise<void> {
             const [name] = params;
@@ -110,6 +111,10 @@ export function buildChangeEmployeeTransaction(actions: Actions): Transaction {
                 memberId,
                 rate: parseFloat(rate)
             });
+        }
+
+        async function removeEmployeeFromUnion(): Promise<void> {
+            return actions.removeEmployeeFromUnion(employeeId);
         }
     };
 }

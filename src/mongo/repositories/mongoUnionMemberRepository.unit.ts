@@ -65,4 +65,14 @@ describe("mongoUnionMemberRepository", () => {
             expect(result).to.be.false;
         });
     });
+    describe("deleteByEmployeeId", () => {
+        it("should delete the employee's union members", async () => {
+            const employeeId = generateIndex();
+            fakeDb.remove.resolves();
+
+            await repository.deleteByEmployeeId(employeeId);
+
+            expect(fakeDb.remove).to.have.been.calledOnceWith({ employeeId });
+        });
+    });
 });

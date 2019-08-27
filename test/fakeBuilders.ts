@@ -54,7 +54,8 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
         fetchByMemberId: buildStubFor("fetchByMemberId"),
         fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
         exists: buildStubFor("exists"),
-        insert: buildStubFor("insert")
+        insert: buildStubFor("insert"),
+        deleteByEmployeeId: buildStubFor("deleteByEmployeeId")
     };
 }
 
@@ -79,7 +80,8 @@ export function buildFakeActions(): Fake<Actions> {
         createEmployee: buildStubFor("createEmployee"),
         updateEmployee: buildStubFor("updateEmployee"),
         setEmployeePaymentMethod: buildStubFor("setEmployeePaymentMethod"),
-        createUnionMember: buildStubFor("createUnionMember")
+        createUnionMember: buildStubFor("createUnionMember"),
+        removeEmployeeFromUnion: buildStubFor("removeEmployeeFromUnion")
     };
 }
 

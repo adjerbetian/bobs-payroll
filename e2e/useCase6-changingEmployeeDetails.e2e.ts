@@ -17,7 +17,7 @@ import {
 } from "../test/seeders";
 import { generateIndex } from "../test/utils";
 
-describe.only("Use Case 6: Changing Employee Details", () => {
+describe("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;
 
     beforeEach(async () => {
