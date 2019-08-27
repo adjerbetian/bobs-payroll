@@ -17,7 +17,7 @@ import {
 } from "../test/seeders";
 import { generateIndex } from "../test/utils";
 
-describe.only("Use Case 6: Changing Employee Details", () => {
+describe("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;
 
     beforeEach(async () => {
@@ -148,7 +148,7 @@ describe.only("Use Case 6: Changing Employee Details", () => {
             });
         });
     });
-    describe("Union", () => {
+    describe.only("Union", () => {
         describe("Member", () => {
             it("should put the employee in Union", async () => {
                 await executePayrollCommand(`ChgEmp ${employee.id} Member member-123 Dues 10.5`);
@@ -172,7 +172,12 @@ describe.only("Use Case 6: Changing Employee Details", () => {
                 const dbUnionMember = await mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
                 expect(dbUnionMember).to.have.property("rate", 20);
             });
-            it.skip("should do nothing if the dues rate is not defined", async () => {});
+            it("should do nothing if the dues rate is not defined", async () => {
+                await executePayrollCommand(`ChgEmp ${employee.id} Member member-123 Dues`);
+
+                const promise = mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
+                await expect(promise).to.be.rejectedWith(NotFoundError);
+            });
             it.skip("should do nothing when the member id is already used", async () => {});
         });
         describe("NoMember", () => {
