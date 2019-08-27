@@ -56,6 +56,6 @@ export function buildActions({
         createEmployee: buildCreateEmployeeAction({ employeeRepository }),
         updateEmployee: buildUpdateEmployeeAction({ employeeRepository }),
         setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository }),
-        createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository })
+        createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository, employeeRepository })
     };
 }
