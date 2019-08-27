@@ -18,8 +18,8 @@ export function buildMongoUnionMemberRepository(db: MongoDbAdapter<UnionMember>)
                 { $set: { rate: unionMember.rate } }
             );
         },
-        async exists(unionMember: UnionMember): Promise<boolean> {
-            return db.exists({ memberId: unionMember.memberId, employeeId: unionMember.employeeId });
+        async exists(query: Partial<UnionMember>): Promise<boolean> {
+            return db.exists(query);
         }
     };
 }

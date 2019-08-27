@@ -148,7 +148,7 @@ describe("Use Case 6: Changing Employee Details", () => {
             });
         });
     });
-    describe.only("Union", () => {
+    describe("Union", () => {
         describe("Member", () => {
             it("should put the employee in Union", async () => {
                 await executePayrollCommand(`ChgEmp ${employee.id} Member member-123 Dues 10.5`);

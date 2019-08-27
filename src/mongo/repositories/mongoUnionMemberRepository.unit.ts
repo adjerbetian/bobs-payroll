@@ -64,23 +64,19 @@ describe("mongoUnionMemberRepository", () => {
         });
     });
     describe("exists", () => {
-        it("should return true when the union member was found", async () => {
-            const unionMember = generateUnionMember();
-            fakeDb.exists
-                .withArgs({ memberId: unionMember.memberId, employeeId: unionMember.employeeId })
-                .resolves(true);
+        it("should return true when the union member exists", async () => {
+            const query = { memberId: "memberId", employeeId: generateIndex() };
+            fakeDb.exists.withArgs(query).resolves(true);
 
-            const result = await repository.exists(unionMember);
+            const result = await repository.exists(query);
 
             expect(result).to.be.true;
         });
-        it("should return false when the union member was not found", async () => {
-            const unionMember = generateUnionMember();
-            fakeDb.exists
-                .withArgs({ memberId: unionMember.memberId, employeeId: unionMember.employeeId })
-                .resolves(false);
+        it("should return false when the union member does not exists", async () => {
+            const query = { memberId: "memberId", employeeId: generateIndex() };
+            fakeDb.exists.withArgs(query).resolves(false);
 
-            const result = await repository.exists(unionMember);
+            const result = await repository.exists(query);
 
             expect(result).to.be.false;
         });

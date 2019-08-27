@@ -2,7 +2,7 @@ import { buildFakeEmployeeRepository, buildFakeUnionMemberRepository, Fake } fro
 import { generateHourlyEmployee, generateUnionMember } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { UnionMember } from "../entities";
-import { NotFoundError } from "../errors";
+import { NotFoundError, UnionMemberIdAlreadyUsedError } from "../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../repositories";
 import { buildCreateUnionMemberAction, CreateUnionMemberAction } from "./createUnionMember";
 
@@ -27,7 +27,7 @@ describe("action createUnionMember", () => {
 
         unionMember = generateUnionMember();
         fakeEmployeeRepository.fetchById.withArgs(unionMember.employeeId).resolves(generateHourlyEmployee());
-        fakeUnionMemberRepository.exists.withArgs(unionMember).resolves(false);
+        fakeUnionMemberRepository.exists.resolves(false);
     });
 
     it("should create a union member", async () => {
@@ -43,12 +43,24 @@ describe("action createUnionMember", () => {
         await expect(promise).to.be.rejectedWith(NotFoundError);
     });
     it("should update the union member rate if the union member already exists", async () => {
-        fakeUnionMemberRepository.exists.withArgs(unionMember).resolves(true);
-        fakeUnionMemberRepository.insert.rejects("should not have been called");
+        fakeUnionMemberRepository.exists
+            .withArgs({ memberId: unionMember.memberId, employeeId: unionMember.employeeId })
+            .resolves(true);
         fakeUnionMemberRepository.update.resolves();
 
         await createUnionMember(unionMember);
 
+        await expect(fakeUnionMemberRepository.insert).not.to.have.been.called;
         await expect(fakeUnionMemberRepository.update).to.have.been.calledOnceWith(unionMember);
+    });
+    it("should throw a UnionMemberIdAlreadyUsedError if the member id already exists", async () => {
+        fakeUnionMemberRepository.exists
+            .withArgs({ memberId: unionMember.memberId, employeeId: unionMember.employeeId })
+            .resolves(false);
+        fakeUnionMemberRepository.exists.withArgs({ memberId: unionMember.memberId }).resolves(true);
+
+        const promise = createUnionMember(unionMember);
+
+        await expect(promise).to.be.rejectedWith(UnionMemberIdAlreadyUsedError);
     });
 });
