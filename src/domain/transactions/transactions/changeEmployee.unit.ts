@@ -167,14 +167,23 @@ describe("changeEmployee", () => {
     });
     describe("union", () => {
         describe("Member", () => {
-            it("should add the union member", async () => {
-                const memberId = `member-${generateIndex()}`;
-                fakeActions.createUnionMember.resolves();
+            let memberId: string;
 
+            beforeEach(() => {
+                memberId = `member-${generateIndex()}`;
+                fakeActions.createUnionMember.resolves();
+            });
+
+            it("should add the union member", async () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
                 const expectedUnionMember = generateUnionMember({ memberId, employeeId, rate: 10.5 });
                 expect(fakeActions.createUnionMember).to.have.been.calledOnceWith(expectedUnionMember);
+            });
+            it("should throw a TransactionFormatError when the dues rate is not specified", async () => {
+                const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues");
+
+                await expect(promise).to.have.been.rejectedWith(TransactionFormatError, "ChgEmp");
             });
         });
         describe("NoMember", () => {});

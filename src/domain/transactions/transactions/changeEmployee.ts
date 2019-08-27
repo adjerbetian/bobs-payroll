@@ -103,6 +103,7 @@ export function buildChangeEmployeeTransaction(actions: Actions): Transaction {
 
         async function changeEmployeeToJoinUnion(): Promise<void> {
             const [memberId, , rate] = params;
+            transactionValidator.assertIsNotEmpty(rate);
 
             return actions.createUnionMember({
                 employeeId,
