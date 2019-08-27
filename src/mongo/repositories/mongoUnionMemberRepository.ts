@@ -12,12 +12,6 @@ export function buildMongoUnionMemberRepository(db: MongoDbAdapter<UnionMember>)
         async insert(unionMember: UnionMember): Promise<void> {
             await db.insert(unionMember);
         },
-        async update(unionMember: UnionMember): Promise<void> {
-            await db.update(
-                { memberId: unionMember.memberId, employeeId: unionMember.employeeId },
-                { $set: { rate: unionMember.rate } }
-            );
-        },
         async exists(query: Partial<UnionMember>): Promise<boolean> {
             return db.exists(query);
         }

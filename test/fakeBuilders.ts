@@ -54,8 +54,7 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
         fetchByMemberId: buildStubFor("fetchByMemberId"),
         fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
         exists: buildStubFor("exists"),
-        insert: buildStubFor("insert"),
-        update: buildStubFor("update")
+        insert: buildStubFor("insert")
     };
 }
 

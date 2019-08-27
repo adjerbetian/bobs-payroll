@@ -47,22 +47,6 @@ describe("mongoUnionMemberRepository", () => {
             expect(fakeDb.insert).to.have.been.calledOnceWith(unionMember);
         });
     });
-    describe("update", () => {
-        it("should update the unionMemberRate", async () => {
-            const unionMember = generateUnionMember();
-            fakeDb.update.resolves();
-
-            await repository.update(unionMember);
-
-            expect(fakeDb.update).to.have.been.calledOnceWith(
-                {
-                    employeeId: unionMember.employeeId,
-                    memberId: unionMember.memberId
-                },
-                { $set: { rate: unionMember.rate } }
-            );
-        });
-    });
     describe("exists", () => {
         it("should return true when the union member exists", async () => {
             const query = { memberId: "memberId", employeeId: generateIndex() };

@@ -42,17 +42,6 @@ describe("action createUnionMember", () => {
 
         await expect(promise).to.be.rejectedWith(NotFoundError);
     });
-    it("should update the union member rate if the union member already exists", async () => {
-        fakeUnionMemberRepository.exists
-            .withArgs({ memberId: unionMember.memberId, employeeId: unionMember.employeeId })
-            .resolves(true);
-        fakeUnionMemberRepository.update.resolves();
-
-        await createUnionMember(unionMember);
-
-        await expect(fakeUnionMemberRepository.insert).not.to.have.been.called;
-        await expect(fakeUnionMemberRepository.update).to.have.been.calledOnceWith(unionMember);
-    });
     it("should throw a UnionMemberIdAlreadyUsedError if the member id already exists", async () => {
         fakeUnionMemberRepository.exists
             .withArgs({ memberId: unionMember.memberId, employeeId: unionMember.employeeId })

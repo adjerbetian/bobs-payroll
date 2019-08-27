@@ -164,14 +164,6 @@ describe("Use Case 6: Changing Employee Details", () => {
                 const promise = mongoUnionMemberRepository.fetchByEmployeeId(nonExistingId);
                 await expect(promise).to.be.rejectedWith(NotFoundError);
             });
-            it("should update the due rate if the employee is already in union", async () => {
-                const unionMember = await seedUnionMember({ employeeId: employee.id, rate: 10 });
-
-                await executePayrollCommand(`ChgEmp ${employee.id} Member ${unionMember.memberId} Dues 20`);
-
-                const dbUnionMember = await mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
-                expect(dbUnionMember).to.have.property("rate", 20);
-            });
             it("should do nothing if the dues rate is not defined", async () => {
                 await executePayrollCommand(`ChgEmp ${employee.id} Member member-123 Dues`);
 
