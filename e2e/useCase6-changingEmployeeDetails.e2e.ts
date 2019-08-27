@@ -17,7 +17,7 @@ import {
 } from "../test/seeders";
 import { generateIndex } from "../test/utils";
 
-describe("Use Case 6: Changing Employee Details", () => {
+describe.only("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;
 
     beforeEach(async () => {
@@ -180,7 +180,14 @@ describe("Use Case 6: Changing Employee Details", () => {
             });
         });
         describe("NoMember", () => {
-            it.skip("should remove the employee from Union", async () => {});
+            it("should remove the employee from Union", async () => {
+                await seedUnionMember({ employeeId: employee.id });
+
+                await executePayrollCommand(`ChgEmp ${employee.id} NoMember`);
+
+                const promise = mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
+                await expect(promise).to.be.rejectedWith(NotFoundError);
+            });
         });
     });
 });
