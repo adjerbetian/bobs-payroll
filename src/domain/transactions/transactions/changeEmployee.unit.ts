@@ -1,4 +1,4 @@
-import { buildFakeActions, buildFakeUnionMemberRepository, Fake } from "../../../../test/fakeBuilders";
+import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
 import {
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
@@ -7,23 +7,19 @@ import {
 } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { generateIndex } from "../../../../test/utils";
-import { Actions, EmployeeType, UnionMemberRepository } from "../../core";
+import { Actions, EmployeeType } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
     let fakeActions: Fake<Actions>;
-    let fakeUnionMemberRepository: Fake<UnionMemberRepository>;
     let changeEmployee: Transaction;
     let employeeId: number;
 
     beforeEach(() => {
         fakeActions = buildFakeActions();
-        fakeUnionMemberRepository = buildFakeUnionMemberRepository();
-        changeEmployee = buildChangeEmployeeTransaction(fakeActions, {
-            unionMemberRepository: fakeUnionMemberRepository
-        });
+        changeEmployee = buildChangeEmployeeTransaction(fakeActions);
 
         fakeActions.updateEmployee.resolves();
 
@@ -171,14 +167,14 @@ describe("changeEmployee", () => {
     });
     describe("union", () => {
         describe("Member", () => {
-            it("should add union member", async () => {
+            it("should add the union member", async () => {
                 const memberId = `member-${generateIndex()}`;
-                fakeUnionMemberRepository.insert.resolves();
+                fakeActions.createUnionMember.resolves();
 
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
                 const expectedUnionMember = generateUnionMember({ memberId, employeeId, rate: 10.5 });
-                expect(fakeUnionMemberRepository.insert).to.have.been.calledOnceWith(expectedUnionMember);
+                expect(fakeActions.createUnionMember).to.have.been.calledOnceWith(expectedUnionMember);
             });
         });
         describe("NoMember", () => {});

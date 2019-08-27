@@ -1,13 +1,10 @@
-import { Actions, EmployeeType, PaymentMethodType, UnionMemberRepository } from "../../core";
+import { Actions, EmployeeType, PaymentMethodType } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
-interface Dependencies {
-    unionMemberRepository: UnionMemberRepository;
-}
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
-export function buildChangeEmployeeTransaction(actions: Actions, { unionMemberRepository }: Dependencies): Transaction {
+export function buildChangeEmployeeTransaction(actions: Actions): Transaction {
     return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
         const employeeId = parseInt(id);
 
@@ -107,7 +104,7 @@ export function buildChangeEmployeeTransaction(actions: Actions, { unionMemberRe
         async function changeEmployeeToJoinUnion(): Promise<void> {
             const [memberId, , rate] = params;
 
-            return unionMemberRepository.insert({
+            return actions.createUnionMember({
                 employeeId,
                 memberId,
                 rate: parseFloat(rate)

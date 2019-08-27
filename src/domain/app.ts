@@ -22,7 +22,7 @@ export function buildApp(dependencies: {
     unionMemberRepository: UnionMemberRepository;
 }): App {
     const actions = buildActions(dependencies);
-    const transactionDomain = buildTransactionDomain({ ...dependencies, actions });
+    const transactionDomain = buildTransactionDomain(actions);
 
     return {
         processTransaction: transactionDomain.processTransaction

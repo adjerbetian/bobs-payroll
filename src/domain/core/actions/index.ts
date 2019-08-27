@@ -9,6 +9,7 @@ import {
 import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";
 import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";
 import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";
+import { buildCreateUnionMemberAction, CreateUnionMemberAction } from "./createUnionMember";
 import {
     buildCreateEmployeeAction,
     buildDeleteEmployeeAction,
@@ -27,6 +28,7 @@ export interface Actions {
     createEmployee: CreateEmployeeAction;
     updateEmployee: UpdateEmployeeAction;
     setEmployeePaymentMethod: SetEmployeePaymentMethodAction;
+    createUnionMember: CreateUnionMemberAction;
 }
 
 export interface ActionsDependencies {
@@ -53,6 +55,7 @@ export function buildActions({
         createSalesReceipt: buildCreateSalesReceiptAction({ employeeRepository, salesReceiptRepository }),
         createEmployee: buildCreateEmployeeAction({ employeeRepository }),
         updateEmployee: buildUpdateEmployeeAction({ employeeRepository }),
-        setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository })
+        setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository }),
+        createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository })
     };
 }
