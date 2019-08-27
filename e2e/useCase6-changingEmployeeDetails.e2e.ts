@@ -178,7 +178,14 @@ describe("Use Case 6: Changing Employee Details", () => {
                 const promise = mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
                 await expect(promise).to.be.rejectedWith(NotFoundError);
             });
-            it.skip("should do nothing when the member id is already used", async () => {});
+            it("should do nothing when the member id is already used", async () => {
+                const alreadyUsedUnionMember = await seedUnionMember();
+
+                await executePayrollCommand(`ChgEmp ${employee.id} Member ${alreadyUsedUnionMember.memberId} Dues 20`);
+
+                const promise = mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
+                await expect(promise).to.be.rejectedWith(NotFoundError);
+            });
         });
         describe("NoMember", () => {
             it.skip("should remove the employee from Union", async () => {});
