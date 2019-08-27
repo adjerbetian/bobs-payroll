@@ -12,7 +12,8 @@ import {
     seedDirectPaymentMethod,
     seedHoldPaymentMethod,
     seedHourlyEmployee,
-    seedSalariedEmployee
+    seedSalariedEmployee,
+    seedUnionMember
 } from "../test/seeders";
 import { generateIndex } from "../test/utils";
 
@@ -163,7 +164,14 @@ describe.only("Use Case 6: Changing Employee Details", () => {
                 const promise = mongoUnionMemberRepository.fetchByEmployeeId(nonExistingId);
                 await expect(promise).to.be.rejectedWith(NotFoundError);
             });
-            it.skip("should update the due rate if the employee is already in union", async () => {});
+            it("should update the due rate if the employee is already in union", async () => {
+                const unionMember = await seedUnionMember({ employeeId: employee.id, rate: 10 });
+
+                await executePayrollCommand(`ChgEmp ${employee.id} Member ${unionMember.memberId} Dues 20`);
+
+                const dbUnionMember = await mongoUnionMemberRepository.fetchByEmployeeId(employee.id);
+                expect(dbUnionMember).to.have.property("rate", 20);
+            });
             it.skip("should do nothing if the dues rate is not defined", async () => {});
             it.skip("should do nothing when the member id is already used", async () => {});
         });
