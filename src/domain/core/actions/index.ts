@@ -19,6 +19,7 @@ import {
     UpdateEmployeeAction
 } from "./employees";
 import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
+import { RunPayrollAction } from "./runPayroll";
 import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
 
 export interface Actions {
@@ -31,6 +32,7 @@ export interface Actions {
     setEmployeePaymentMethod: SetEmployeePaymentMethodAction;
     createUnionMember: CreateUnionMemberAction;
     removeEmployeeFromUnion: RemoveEmployeeFromUnionAction;
+    runPayroll: RunPayrollAction;
 }
 
 export interface ActionsDependencies {
@@ -59,6 +61,9 @@ export function buildActions({
         updateEmployee: buildUpdateEmployeeAction({ employeeRepository }),
         setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository }),
         createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository, employeeRepository }),
-        removeEmployeeFromUnion: buildRemoveEmployeeFromUnionAction({ unionMemberRepository })
+        removeEmployeeFromUnion: buildRemoveEmployeeFromUnionAction({ unionMemberRepository }),
+        runPayroll: async date => {
+            throw new Error("todo");
+        }
     };
 }

@@ -3,6 +3,6 @@ import { PaymentMethod } from "./PaymentMethod";
 export interface Payment {
     employeeId: number;
     amount: number;
-    date: Date;
+    date: string;
     method: PaymentMethod;
 }

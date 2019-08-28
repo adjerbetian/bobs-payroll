@@ -6,7 +6,8 @@ import {
     ServiceChargeRepository,
     TimeCardRepository,
     UnionMemberRepository,
-    Actions
+    Actions,
+    PaymentRepository
 } from "../src";
 import { sandbox } from "./unitTest";
 
@@ -22,7 +23,8 @@ export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
         insert: buildStubFor("insert"),
         exists: buildStubFor("exists"),
         deleteById: buildStubFor("deleteById"),
-        updateById: buildStubFor("updateById")
+        updateById: buildStubFor("updateById"),
+        fetchAllHourly: buildStubFor("fetchAllHourly")
     };
 }
 
@@ -59,6 +61,13 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
     };
 }
 
+export function buildFakePaymentRepository(): Fake<PaymentRepository> {
+    return {
+        fetchLastOfEmployee: buildStubFor("fetchLastOfEmployee"),
+        insert: buildStubFor("insert")
+    };
+}
+
 export function buildFakeMongoDbAdapter<T>(): Fake<MongoDbAdapter<T>> {
     return {
         fetch: buildStubFor("fetch"),
@@ -82,7 +91,8 @@ export function buildFakeActions(): Fake<Actions> {
         updateEmployee: buildStubFor("updateEmployee"),
         setEmployeePaymentMethod: buildStubFor("setEmployeePaymentMethod"),
         createUnionMember: buildStubFor("createUnionMember"),
-        removeEmployeeFromUnion: buildStubFor("removeEmployeeFromUnion")
+        removeEmployeeFromUnion: buildStubFor("removeEmployeeFromUnion"),
+        runPayroll: buildStubFor("runPayroll")
     };
 }
 

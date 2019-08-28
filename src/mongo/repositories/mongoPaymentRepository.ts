@@ -5,6 +5,9 @@ export function buildMongoPaymentRepository(db: MongoDbAdapter<Payment>): Paymen
     return {
         async fetchLastOfEmployee(employeeId: number): Promise<Payment> {
             return db.fetchLast({ employeeId });
+        },
+        async insert(payment: Payment): Promise<void> {
+            throw new Error("todo");
         }
     };
 }

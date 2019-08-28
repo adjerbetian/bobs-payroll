@@ -7,6 +7,7 @@ import {
     generateTimeCard
 } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
+import { isoDate } from "../../../test/utils";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
 import { Transactions } from "./transactions";
 
@@ -99,13 +100,23 @@ describe("processTransaction", () => {
         });
     });
     describe("ChgEmp", () => {
-        it("should call the changeEmployee's name transaction", async () => {
+        it("should call the changeEmployee transaction", async () => {
             fakeTransactions.changeEmployee.resolves();
             const employee = generateHourlyEmployee();
 
             await processTransaction(["ChgEmp", `${employee.id}`, "Name", "James Bond"]);
 
             expect(fakeTransactions.changeEmployee).to.have.been.calledOnceWith(`${employee.id}`, "Name", "James Bond");
+        });
+    });
+    describe("Payroll", () => {
+        it("should call the runPayroll transaction", async () => {
+            fakeTransactions.runPayroll.resolves();
+            const date = isoDate();
+
+            await processTransaction(["Payroll", `${date}`]);
+
+            expect(fakeTransactions.runPayroll).to.have.been.calledOnceWith(`${date}`);
         });
     });
 });
@@ -117,6 +128,7 @@ export function buildFakeTransactions(): Fake<Transactions> {
         postTimeCard: buildStubFor("postTimeCard"),
         postSalesReceipt: buildStubFor("postSalesReceipt"),
         postServiceCharge: buildStubFor("postServiceCharge"),
-        changeEmployee: buildStubFor("changeEmployee")
+        changeEmployee: buildStubFor("changeEmployee"),
+        runPayroll: buildStubFor("runPayroll")
     };
 }

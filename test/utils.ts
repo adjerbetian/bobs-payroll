@@ -17,6 +17,6 @@ export async function execute(command: string, options: ExecuteOptions = { print
     }
 }
 
-export function isoDate(date: moment.Moment | Date): string {
+export function isoDate(date: moment.Moment | Date = new Date()): string {
     return moment(date).format("YYYY-MM-DD");
 }

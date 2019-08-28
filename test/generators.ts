@@ -16,6 +16,7 @@ import {
     TimeCard,
     UnionMember
 } from "../src";
+import { isoDate } from "./utils";
 
 export const generateIndex = (() => {
     let index = _.random(1, 100);
@@ -143,7 +144,7 @@ export function generatePayment(args: Partial<Payment> = {}): Payment {
     return {
         amount: generateFloatBetween(1000, 2000),
         employeeId: generateIndex(),
-        date: new Date(),
+        date: isoDate(),
         method: generateHoldPaymentMethod(),
         ...args
     };

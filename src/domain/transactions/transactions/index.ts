@@ -14,7 +14,10 @@ export function buildTransactions(actions: Actions): Transactions {
         postTimeCard: buildPostTimeCardTransaction(actions),
         postSalesReceipt: buildPostSalesReceiptTransaction(actions),
         postServiceCharge: buildPostServiceChargeTransaction(actions),
-        changeEmployee: buildChangeEmployeeTransaction(actions)
+        changeEmployee: buildChangeEmployeeTransaction(actions),
+        runPayroll: async () => {
+            throw new Error("todo");
+        }
     };
 }
 
@@ -25,4 +28,5 @@ export interface Transactions {
     postSalesReceipt: Transaction;
     postServiceCharge: Transaction;
     changeEmployee: Transaction;
+    runPayroll: Transaction;
 }

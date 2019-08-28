@@ -1,4 +1,4 @@
-import { Employee, EmployeeRepository } from "../../domain";
+import { Employee, EmployeeRepository, HourlyEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): EmployeeRepository {
@@ -17,6 +17,10 @@ export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): Empl
         },
         async updateById(id: number, update: Partial<Employee>): Promise<void> {
             await db.update({ id }, { $set: update });
+        },
+
+        async fetchAllHourly(): Promise<HourlyEmployee[]> {
+            throw new Error("todo");
         }
     };
 }

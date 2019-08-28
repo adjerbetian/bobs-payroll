@@ -1,4 +1,4 @@
-import { Employee } from "../entities";
+import { Employee, HourlyEmployee } from "../entities";
 
 export interface EmployeeRepository {
     fetchById(id: number): Promise<Employee>;
@@ -6,4 +6,6 @@ export interface EmployeeRepository {
     exists(query: Partial<Employee>): Promise<boolean>;
     updateById(id: number, update: Partial<Employee>): Promise<void>;
     deleteById(id: number): Promise<void>;
+
+    fetchAllHourly(): Promise<HourlyEmployee[]>;
 }

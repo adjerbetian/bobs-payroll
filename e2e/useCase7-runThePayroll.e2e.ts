@@ -1,14 +1,7 @@
-import * as moment from "moment";
 import { mongoPaymentRepository } from "../src";
+import { friday, monday, tuesday } from "../test/dates";
 import { executePayrollCommand, expect } from "../test/e2eTest";
 import { seedHourlyEmployee, seedTimeCard } from "../test/seeders";
-import { isoDate } from "../test/utils";
-
-const monday = isoDate(moment().startOf("week"));
-const tuesday = isoDate(moment(monday).add(1, "day"));
-const wednesday = isoDate(moment(monday).add(2, "day"));
-const thursday = isoDate(moment(monday).add(3, "day"));
-const friday = isoDate(moment(monday).add(4, "day"));
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
