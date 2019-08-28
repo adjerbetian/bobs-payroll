@@ -1,6 +1,6 @@
 import { Db, MongoClient } from "mongodb";
 import * as config from "../config.json";
-import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../domain";
+import { Employee, Payment, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../domain";
 import { buildMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 
 export const dbEmployees: MongoDbAdapter<Employee> = buildEmptyObject();
@@ -9,6 +9,7 @@ export const dbSalesReceipts: MongoDbAdapter<SalesReceipt> = buildEmptyObject();
 export const dbServiceCharges: MongoDbAdapter<ServiceCharge> = buildEmptyObject();
 export const dbPaymentMethods: MongoDbAdapter<PaymentMethod> = buildEmptyObject();
 export const dbUnionMembers: MongoDbAdapter<UnionMember> = buildEmptyObject();
+export const dbPayments: MongoDbAdapter<Payment> = buildEmptyObject();
 
 let client: MongoClient;
 
@@ -21,6 +22,7 @@ export async function initConnection(): Promise<void> {
     Object.assign(dbServiceCharges, buildMongoDbAdapter(db.collection("service-charges")));
     Object.assign(dbPaymentMethods, buildMongoDbAdapter(db.collection("payment-methods")));
     Object.assign(dbUnionMembers, buildMongoDbAdapter(db.collection("union-members")));
+    Object.assign(dbPayments, buildMongoDbAdapter(db.collection("payments")));
 }
 
 export async function closeConnection(): Promise<void> {

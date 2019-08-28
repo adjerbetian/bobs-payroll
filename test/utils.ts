@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import * as _ from "lodash";
+import * as moment from "moment";
 
 export interface ExecuteOptions {
     printOutput: boolean;
@@ -15,4 +15,8 @@ export async function execute(command: string, options: ExecuteOptions = { print
     if (options.printOutput) {
         console.log(output);
     }
+}
+
+export function isoDate(date: moment.Moment | Date): string {
+    return moment(date).format("YYYY-MM-DD");
 }

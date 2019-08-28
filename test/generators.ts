@@ -8,6 +8,7 @@ import {
     HoldPaymentMethod,
     HourlyEmployee,
     MailPaymentMethod,
+    Payment,
     PaymentMethodType,
     SalariedEmployee,
     SalesReceipt,
@@ -134,6 +135,16 @@ export function generateUnionMember(args: Partial<UnionMember> = {}): UnionMembe
         employeeId: generateIndex(),
         memberId: `member-${generateIndex()}`,
         rate: generateFloatBetween(0, 100),
+        ...args
+    };
+}
+
+export function generatePayment(args: Partial<Payment> = {}): Payment {
+    return {
+        amount: generateFloatBetween(1000, 2000),
+        employeeId: generateIndex(),
+        date: new Date(),
+        method: generateHoldPaymentMethod(),
         ...args
     };
 }

@@ -22,8 +22,10 @@ describe("mongoDbAdapter", () => {
     });
 
     describe("fetch", () => {
-        it("should return the stored object", async () => {
+        it("should return the requested stored object", async () => {
+            await seedEntity();
             const entity = await seedEntity();
+            await seedEntity();
 
             const dbEntity = await adapter.fetch({ id: entity.id });
 
@@ -38,6 +40,28 @@ describe("mongoDbAdapter", () => {
         });
         it("should throw a NotFoundError when the entity was not found", async () => {
             const promise = adapter.fetch({ id: generateIndex() });
+
+            await expect(promise).to.be.rejectedWith(NotFoundError);
+        });
+    });
+    describe("fetchLast", () => {
+        it("should return the last stored object", async () => {
+            await seedEntity();
+            const lastEntity = await seedEntity();
+
+            const dbEntity = await adapter.fetchLast({});
+
+            expect(dbEntity).to.deep.include(lastEntity);
+        });
+        it("should not return the mongo _id", async () => {
+            const entity = await seedEntity();
+
+            const dbEntity = await adapter.fetchLast({ id: entity.id });
+
+            expect(dbEntity).not.to.have.property("_id");
+        });
+        it("should throw a NotFoundError when the entity was not found", async () => {
+            const promise = adapter.fetchLast({ id: generateIndex() });
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });

@@ -62,6 +62,7 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
 export function buildFakeMongoDbAdapter<T>(): Fake<MongoDbAdapter<T>> {
     return {
         fetch: buildStubFor("fetch"),
+        fetchLast: buildStubFor("fetchLast"),
         insert: buildStubFor("insert"),
         exists: buildStubFor("exists"),
         remove: buildStubFor("remove"),

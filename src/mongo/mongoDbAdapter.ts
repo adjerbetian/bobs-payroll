@@ -5,6 +5,7 @@ type DbModel<T> = T & { _id?: ObjectID };
 
 export interface MongoDbAdapter<T> {
     fetch(query: FilterQuery<T>): Promise<T>;
+    fetchLast(query: FilterQuery<T>): Promise<T>;
     insert(entity: T): Promise<void>;
     exists(query: FilterQuery<T>): Promise<boolean>;
     remove(query: FilterQuery<T>): Promise<void>;
@@ -18,6 +19,17 @@ export function buildMongoDbAdapter<T>(db: Collection<DbModel<T>>): MongoDbAdapt
     return {
         async fetch(query: FilterQuery<T>): Promise<T> {
             const entity = await db.findOne(query);
+            if (!entity) throw buildNotFoundError(query);
+
+            return cleanMongoEntity(entity);
+        },
+
+        async fetchLast(query: FilterQuery<T>): Promise<T> {
+            const [entity] = await db
+                .find(query)
+                .limit(1)
+                .sort({ _id: -1 })
+                .toArray();
             if (!entity) throw buildNotFoundError(query);
 
             return cleanMongoEntity(entity);

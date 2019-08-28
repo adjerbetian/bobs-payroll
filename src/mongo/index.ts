@@ -1,7 +1,16 @@
-import { dbEmployees, dbPaymentMethods, dbSalesReceipts, dbServiceCharges, dbTimeCards, dbUnionMembers } from "./db";
+import {
+    dbEmployees,
+    dbPaymentMethods,
+    dbPayments,
+    dbSalesReceipts,
+    dbServiceCharges,
+    dbTimeCards,
+    dbUnionMembers
+} from "./db";
 import {
     buildMongoEmployeeRepository,
     buildMongoPaymentMethodRepository,
+    buildMongoPaymentRepository,
     buildMongoSalesReceiptRepository,
     buildMongoServiceChargeRepository,
     buildMongoTimeCardRepository,
@@ -17,3 +26,4 @@ export const mongoSalesReceiptRepository = buildMongoSalesReceiptRepository(dbSa
 export const mongoServiceChargeRepository = buildMongoServiceChargeRepository(dbServiceCharges);
 export const mongoTimeCardRepository = buildMongoTimeCardRepository(dbTimeCards);
 export const mongoUnionMemberRepository = buildMongoUnionMemberRepository(dbUnionMembers);
+export const mongoPaymentRepository = buildMongoPaymentRepository(dbPayments);

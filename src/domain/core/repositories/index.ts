@@ -4,3 +4,4 @@ export { SalesReceiptRepository } from "./SalesReceiptRepository";
 export { ServiceChargeRepository } from "./ServiceChargeRepository";
 export { PaymentMethodRepository } from "./PaymentMethodRepository";
 export { UnionMemberRepository } from "./UnionMemberRepository";
+export { PaymentRepository } from "./PaymentRepository";
