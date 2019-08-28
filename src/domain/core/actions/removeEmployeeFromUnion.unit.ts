@@ -1,6 +1,6 @@
 import { buildFakeUnionMemberRepository, Fake } from "../../../../test/fakeBuilders";
+import { generateIndex } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
-import { generateIndex } from "../../../../test/utils";
 import { UnionMemberRepository } from "../repositories";
 import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
 

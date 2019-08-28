@@ -1,12 +1,12 @@
 import { buildStubFor, Fake } from "../../../test/fakeBuilders";
 import {
     generateHourlyEmployee,
+    generateIndex,
     generateSalesReceipt,
     generateServiceCharge,
     generateTimeCard
 } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { generateIndex } from "../../../test/utils";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
 import { Transactions } from "./transactions";
 

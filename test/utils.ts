@@ -16,8 +16,3 @@ export async function execute(command: string, options: ExecuteOptions = { print
         console.log(output);
     }
 }
-
-export const generateIndex = (() => {
-    let index = _.random(1, 100);
-    return () => index++;
-})();

@@ -1,7 +1,6 @@
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
-import { generateServiceCharge } from "../../../test/generators";
+import { generateIndex, generateServiceCharge } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { generateIndex } from "../../../test/utils";
 import { ServiceCharge, ServiceChargeRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoServiceChargeRepository } from "./mongoServiceChargeRepository";

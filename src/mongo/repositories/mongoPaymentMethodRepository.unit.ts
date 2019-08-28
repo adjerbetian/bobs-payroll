@@ -1,7 +1,6 @@
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
-import { generateDirectPaymentMethod } from "../../../test/generators";
+import { generateDirectPaymentMethod, generateIndex } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { generateIndex } from "../../../test/utils";
 import { PaymentMethod, PaymentMethodRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";

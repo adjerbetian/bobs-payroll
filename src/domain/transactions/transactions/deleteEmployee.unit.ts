@@ -1,6 +1,6 @@
 import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
+import { generateIndex } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
-import { generateIndex } from "../../../../test/utils";
 import { Actions } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";

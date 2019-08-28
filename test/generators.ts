@@ -15,7 +15,11 @@ import {
     TimeCard,
     UnionMember
 } from "../src";
-import { generateIndex } from "./utils";
+
+export const generateIndex = (() => {
+    let index = _.random(1, 100);
+    return () => index++;
+})();
 
 export function generateHourlyEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
     const hourlyRate = generateFloatBetween(0, 10);

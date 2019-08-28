@@ -1,7 +1,6 @@
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
-import { generateUnionMember } from "../../../test/generators";
+import { generateIndex, generateUnionMember } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { generateIndex } from "../../../test/utils";
 import { UnionMember, UnionMemberRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoUnionMemberRepository } from "./mongoUnionMemberRepository";

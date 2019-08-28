@@ -8,6 +8,7 @@ import {
     PaymentMethodType
 } from "../src";
 import { executePayrollCommand, expect } from "../test/e2eTest";
+import { generateIndex } from "../test/generators";
 import {
     seedDirectPaymentMethod,
     seedHoldPaymentMethod,
@@ -15,7 +16,6 @@ import {
     seedSalariedEmployee,
     seedUnionMember
 } from "../test/seeders";
-import { generateIndex } from "../test/utils";
 
 describe("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;

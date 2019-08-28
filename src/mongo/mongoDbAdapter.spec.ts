@@ -1,8 +1,8 @@
 import { cloneDeep } from "lodash";
 import { Collection } from "mongodb";
 import "../../test/integrationTest";
+import { generateIndex } from "../../test/generators";
 import { expect } from "../../test/unitTest";
-import { generateIndex } from "../../test/utils";
 import { NotFoundError } from "../domain";
 import { getDb } from "./db";
 import { buildMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";

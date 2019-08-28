@@ -1,7 +1,6 @@
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
-import { generateSalesReceipt } from "../../../test/generators";
+import { generateIndex, generateSalesReceipt } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { generateIndex } from "../../../test/utils";
 import { SalesReceipt, SalesReceiptRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";

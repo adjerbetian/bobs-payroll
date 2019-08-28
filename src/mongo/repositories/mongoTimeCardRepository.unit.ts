@@ -1,7 +1,6 @@
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
-import { generateTimeCard } from "../../../test/generators";
+import { generateIndex, generateTimeCard } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { generateIndex } from "../../../test/utils";
 import { TimeCard, TimeCardRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoTimeCardRepository } from "./mongoTimeCardRepository";

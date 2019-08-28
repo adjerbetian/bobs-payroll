@@ -1,7 +1,6 @@
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
-import { generateHourlyEmployee } from "../../../test/generators";
+import { generateHourlyEmployee, generateIndex } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { generateIndex } from "../../../test/utils";
 import { Employee, EmployeeRepository, EmployeeType, HourlyEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";
