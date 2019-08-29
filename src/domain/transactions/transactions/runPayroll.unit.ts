@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
 import { expect } from "../../../../test/unitTest";
-import { isoDate } from "../../../../test/utils";
+import { isoDate } from "../../../utils";
 import { Actions } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";

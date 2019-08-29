@@ -7,7 +7,7 @@ import {
     generateTimeCard
 } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
-import { isoDate } from "../../../test/utils";
+import { isoDate } from "../../utils";
 import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
 import { Transactions } from "./transactions";
 

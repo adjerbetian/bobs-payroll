@@ -39,7 +39,8 @@ export function buildFakePaymentMethodRepository(): Fake<PaymentMethodRepository
 export function buildFakeTimeCardRepository(): Fake<TimeCardRepository> {
     return {
         insert: buildStubFor("insert"),
-        fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee")
+        fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee"),
+        fetchAllOfEmployeeSince: buildStubFor("fetchAllOfEmployeeSince")
     };
 }
 
@@ -64,6 +65,7 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
 export function buildFakePaymentRepository(): Fake<PaymentRepository> {
     return {
         fetchLastOfEmployee: buildStubFor("fetchLastOfEmployee"),
+        fetchEmployeeLastPaymentDate: buildStubFor("fetchEmployeeLastPaymentDate"),
         insert: buildStubFor("insert")
     };
 }

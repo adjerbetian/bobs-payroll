@@ -14,13 +14,15 @@ describe("action runPayroll", () => {
     });
 
     it("should should call the runHourlyPayroll only on fridays", async () => {
-        await runPayroll(`Payroll ${monday}`);
-        await runPayroll(`Payroll ${tuesday}`);
-        await runPayroll(`Payroll ${wednesday}`);
-        await runPayroll(`Payroll ${thursday}`);
-        await runPayroll(`Payroll ${friday}`);
-        await runPayroll(`Payroll ${saturday}`);
-        await runPayroll(`Payroll ${sunday}`);
+        fakePayrollActions.runHourlyPayroll.resolves();
+
+        await runPayroll(monday);
+        await runPayroll(tuesday);
+        await runPayroll(wednesday);
+        await runPayroll(thursday);
+        await runPayroll(friday);
+        await runPayroll(saturday);
+        await runPayroll(sunday);
 
         expect(fakePayrollActions.runHourlyPayroll).to.have.been.calledOnceWith(friday);
     });

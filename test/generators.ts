@@ -7,6 +7,7 @@ import {
     EmployeeType,
     HoldPaymentMethod,
     HourlyEmployee,
+    isoDate,
     MailPaymentMethod,
     Payment,
     PaymentMethodType,
@@ -16,7 +17,6 @@ import {
     TimeCard,
     UnionMember
 } from "../src";
-import { isoDate } from "./utils";
 
 export const generateIndex = (() => {
     let index = _.random(1, 100);
@@ -73,7 +73,7 @@ export function generateTimeCard(args: Partial<TimeCard> = {}): TimeCard {
     return {
         employeeId: index,
         date: moment().format("YYYY-MM-DD"),
-        hours: generateFloatBetween(2, 10),
+        hours: generateFloatBetween(2, 8),
         ...args
     };
 }

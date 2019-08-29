@@ -1,4 +1,4 @@
-import { friday, monday, tuesday } from "../../../../../test/dates";
+import { friday, lastFriday, never } from "../../../../../test/dates";
 import {
     buildFakeEmployeeRepository,
     buildFakePaymentMethodRepository,
@@ -6,9 +6,14 @@ import {
     buildFakeTimeCardRepository,
     Fake
 } from "../../../../../test/fakeBuilders";
-import { generateHoldPaymentMethod, generateHourlyEmployee, generateTimeCard } from "../../../../../test/generators";
+import {
+    generateHoldPaymentMethod,
+    generateHourlyEmployee,
+    generatePayment,
+    generateTimeCard
+} from "../../../../../test/generators";
 import { expect } from "../../../../../test/unitTest";
-import { HourlyEmployee, Payment, PaymentMethod, TimeCard } from "../../entities";
+import { HourlyEmployee, Payment, PaymentMethod } from "../../entities";
 import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
 import { RunPayrollAction } from "../runPayroll";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
@@ -20,10 +25,6 @@ describe("action runHourlyPayroll", () => {
     let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
 
     let runHourlyPayroll: RunPayrollAction;
-
-    let employee: HourlyEmployee;
-    let timeCards: TimeCard[];
-    let method: PaymentMethod;
 
     beforeEach(() => {
         fakePaymentRepository = buildFakePaymentRepository();
@@ -39,34 +40,59 @@ describe("action runHourlyPayroll", () => {
         });
 
         fakePaymentRepository.insert.resolves();
+        fakeTimeCardRepository.fetchAllOfEmployeeSince.resolves([]);
     });
+
+    let employee: HourlyEmployee;
+    let method: PaymentMethod;
 
     beforeEach(async () => {
         employee = await generateHourlyEmployee();
         method = await generateHoldPaymentMethod();
-        timeCards = [
-            await generateTimeCard({ date: monday, hours: 5 }),
-            await generateTimeCard({ date: tuesday, hours: 6 })
-        ];
 
         fakeEmployeeRepository.fetchAllHourly.resolves([employee]);
-        fakeTimeCardRepository.fetchAllOfEmployee.withArgs(employee.id).resolves(timeCards);
+        fakePaymentMethodRepository.fetchByEmployeeId.withArgs(employee.id).resolves(method);
+        fakePaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(never);
     });
 
-    it("should pay the hours made in his time cards", async () => {
-        await runHourlyPayroll(`Payroll ${friday}`);
+    it("should pay the hours made on the employee's time cards", async () => {
+        const timeCard1 = generateTimeCard();
+        const timeCard2 = generateTimeCard();
+        fakeTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard1, timeCard2]);
 
-        const workedHours = timeCards.reduce((total, tc) => total + tc.hours, 0);
-        const expectedPayment: Payment = {
-            employeeId: employee.id,
-            date: friday,
-            amount: workedHours * employee.work.hourlyRate,
-            method: method
-        };
-        expect(fakePaymentRepository.insert).to.have.been.calledOnceWith(expectedPayment);
+        await runHourlyPayroll(friday);
+
+        expect(fakePaymentRepository.insert).to.have.been.calledOnceWith(
+            generatePayment({
+                employeeId: employee.id,
+                method: method,
+                date: friday,
+                amount: (timeCard1.hours + timeCard2.hours) * employee.work.hourlyRate
+            })
+        );
     });
-    it.skip("should not include the time cards already paid", async () => {});
-    it.skip("should not pay if it's not Friday", async () => {});
-    it.skip("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {});
+    it("should not include the time cards already paid", async () => {
+        const timeCard = generateTimeCard();
+        fakePaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(lastFriday);
+        fakeTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id, lastFriday).resolves([timeCard]);
+
+        await runHourlyPayroll(friday);
+
+        const insertedPayment = getInsertedPayment();
+        expect(insertedPayment.amount).to.equal(timeCard.hours * employee.work.hourlyRate);
+    });
+    it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
+        const timeCard = generateTimeCard({ hours: 8 + 2 });
+        fakeTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard]);
+
+        await runHourlyPayroll(friday);
+
+        const insertedPayment = getInsertedPayment();
+        expect(insertedPayment.amount).to.equal((8 + 2 * 1.5) * employee.work.hourlyRate);
+    });
     it.skip("work on a complex example", async () => {});
+
+    function getInsertedPayment(): Payment {
+        return fakePaymentRepository.insert.getCall(0).args[0];
+    }
 });
