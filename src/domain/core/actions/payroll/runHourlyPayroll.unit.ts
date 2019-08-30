@@ -90,7 +90,6 @@ describe("action runHourlyPayroll", () => {
         const insertedPayment = getInsertedPayment();
         expect(insertedPayment.amount).to.equal((8 + 2 * 1.5) * employee.work.hourlyRate);
     });
-    it.skip("work on a complex example", async () => {});
 
     function getInsertedPayment(): Payment {
         return fakePaymentRepository.insert.getCall(0).args[0];

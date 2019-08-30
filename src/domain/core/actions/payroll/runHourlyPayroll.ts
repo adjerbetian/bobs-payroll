@@ -37,13 +37,22 @@ export function buildRunHourlyPayrollAction({
 
         async function computeEmployeePaymentDueAmount(): Promise<number> {
             const dueTimeCards = await fetchEmployeeDueTimeCards();
-            const workedTime = dueTimeCards.reduce((total, timeCard) => total + timeCard.hours, 0);
-            return employee.work.hourlyRate * workedTime;
+            const regularHours = computeTimeCardsRegularHours(dueTimeCards);
+            const extraHours = computeTimeCardsExtraHours(dueTimeCards);
+            return employee.work.hourlyRate * (regularHours + 1.5 * extraHours);
         }
 
         async function fetchEmployeeDueTimeCards(): Promise<TimeCard[]> {
             const lastPaymentDate = await paymentRepository.fetchEmployeeLastPaymentDate(employee.id);
             return timeCardRepository.fetchAllOfEmployeeSince(employee.id, lastPaymentDate);
+        }
+
+        function computeTimeCardsRegularHours(timeCards: TimeCard[]): number {
+            return timeCards.reduce((total, timeCard) => total + Math.min(timeCard.hours, 8), 0);
+        }
+
+        function computeTimeCardsExtraHours(timeCards: TimeCard[]): number {
+            return timeCards.reduce((total, timeCard) => total + Math.max(timeCard.hours - 8, 0), 0);
         }
     }
 }

@@ -25,4 +25,17 @@ describe("mongoPaymentRepository", () => {
             expect(dbPayment).to.deep.equal(payment);
         });
     });
+    describe("fetchEmployeeLastPaymentDate", () => {
+        it("should return the date of the employee's last payment", async () => {
+            throw new Error("todo");
+        });
+        it("should return the 0 date when the employee was never paid", async () => {
+            throw new Error("todo");
+        });
+    });
+    describe("insert", () => {
+        it("should insert the payment", async () => {
+            throw new Error("todo");
+        });
+    });
 });
