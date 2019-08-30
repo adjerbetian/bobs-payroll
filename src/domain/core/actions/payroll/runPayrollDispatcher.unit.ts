@@ -30,7 +30,7 @@ describe("action runPayroll", () => {
 });
 
 function buildStubPayrollActions(): Stub<PayrollActions> {
-    return {
-        runHourlyPayroll: buildStubFor("runHourlyPayroll")
-    };
+    return buildStubFor({
+        runHourlyPayroll: true
+    });
 }

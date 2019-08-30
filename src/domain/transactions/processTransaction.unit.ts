@@ -122,13 +122,13 @@ describe("processTransaction", () => {
 });
 
 export function buildStubTransactions(): Stub<Transactions> {
-    return {
-        addEmployee: buildStubFor("addEmployee"),
-        deleteEmployee: buildStubFor("deleteEmployee"),
-        postTimeCard: buildStubFor("postTimeCard"),
-        postSalesReceipt: buildStubFor("postSalesReceipt"),
-        postServiceCharge: buildStubFor("postServiceCharge"),
-        changeEmployee: buildStubFor("changeEmployee"),
-        runPayroll: buildStubFor("runPayroll")
-    };
+    return buildStubFor({
+        addEmployee: true,
+        deleteEmployee: true,
+        postTimeCard: true,
+        postSalesReceipt: true,
+        postServiceCharge: true,
+        changeEmployee: true,
+        runPayroll: true
+    });
 }

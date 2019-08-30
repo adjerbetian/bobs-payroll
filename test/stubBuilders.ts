@@ -18,86 +18,107 @@ type StubObject<T> = {
 };
 
 export function buildStubEmployeeRepository(): Stub<EmployeeRepository> {
-    return {
-        fetchById: buildStubFor("fetchById"),
-        insert: buildStubFor("insert"),
-        exists: buildStubFor("exists"),
-        deleteById: buildStubFor("deleteById"),
-        updateById: buildStubFor("updateById"),
-        fetchAllHourly: buildStubFor("fetchAllHourly")
-    };
+    return buildStubFor({
+        fetchById: true,
+        insert: true,
+        exists: true,
+        deleteById: true,
+        updateById: true,
+        fetchAllHourly: true
+    });
 }
 
 export function buildStubPaymentMethodRepository(): Stub<PaymentMethodRepository> {
-    return {
-        fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
-        insert: buildStubFor("insert"),
-        deleteByEmployeeId: buildStubFor("deleteByEmployeeId")
-    };
+    return buildStubFor({
+        fetchByEmployeeId: true,
+        insert: true,
+        deleteByEmployeeId: true
+    });
 }
 
 export function buildStubTimeCardRepository(): Stub<TimeCardRepository> {
-    return {
-        insert: buildStubFor("insert"),
-        fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee"),
-        fetchAllOfEmployeeSince: buildStubFor("fetchAllOfEmployeeSince")
-    };
+    return buildStubFor({
+        insert: true,
+        fetchAllOfEmployee: true,
+        fetchAllOfEmployeeSince: true
+    });
 }
 
 export function buildStubServiceChargeRepository(): Stub<ServiceChargeRepository> {
-    return {
-        insert: buildStubFor("insert"),
-        fetchAllOfMember: buildStubFor("fetchAllOfMember"),
-        fetchAll: buildStubFor("fetchAll")
-    };
+    return buildStubFor({
+        insert: true,
+        fetchAllOfMember: true,
+        fetchAll: true
+    });
 }
 
 export function buildStubUnionMemberRepository(): Stub<UnionMemberRepository> {
-    return {
-        fetchByMemberId: buildStubFor("fetchByMemberId"),
-        fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
-        exists: buildStubFor("exists"),
-        insert: buildStubFor("insert"),
-        deleteByEmployeeId: buildStubFor("deleteByEmployeeId")
-    };
+    return buildStubFor({
+        fetchByMemberId: true,
+        fetchByEmployeeId: true,
+        exists: true,
+        insert: true,
+        deleteByEmployeeId: true
+    });
 }
 
 export function buildStubPaymentRepository(): Stub<PaymentRepository> {
-    return {
-        fetchLastOfEmployee: buildStubFor("fetchLastOfEmployee"),
-        fetchEmployeeLastPaymentDate: buildStubFor("fetchEmployeeLastPaymentDate"),
-        insert: buildStubFor("insert")
-    };
+    return buildStubFor({
+        fetchLastOfEmployee: true,
+        fetchEmployeeLastPaymentDate: true,
+        insert: true
+    });
 }
 
 export function buildStubMongoDbAdapter<T>(): Stub<MongoDbAdapter<T>> {
-    return {
-        fetch: buildStubFor("fetch"),
-        fetchLast: buildStubFor("fetchLast"),
-        insert: buildStubFor("insert"),
-        exists: buildStubFor("exists"),
-        remove: buildStubFor("remove"),
-        update: buildStubFor("update"),
-        fetchAll: buildStubFor("fetchAll"),
-        removeAll: buildStubFor("removeAll")
-    };
+    return buildStubFor({
+        fetch: true,
+        fetchLast: true,
+        insert: true,
+        exists: true,
+        remove: true,
+        update: true,
+        fetchAll: true,
+        removeAll: true
+    });
 }
 
 export function buildStubActions(): Stub<Actions> {
-    return {
-        deleteEmployee: buildStubFor("deleteEmployee"),
-        createTimeCard: buildStubFor("createTimeCard"),
-        createServiceCharge: buildStubFor("createServiceCharge"),
-        createSalesReceipt: buildStubFor("createSalesReceipt"),
-        createEmployee: buildStubFor("createEmployee"),
-        updateEmployee: buildStubFor("updateEmployee"),
-        setEmployeePaymentMethod: buildStubFor("setEmployeePaymentMethod"),
-        createUnionMember: buildStubFor("createUnionMember"),
-        removeEmployeeFromUnion: buildStubFor("removeEmployeeFromUnion"),
-        runPayroll: buildStubFor("runPayroll")
-    };
+    return buildStubFor({
+        deleteEmployee: true,
+        createTimeCard: true,
+        createServiceCharge: true,
+        createSalesReceipt: true,
+        createEmployee: true,
+        updateEmployee: true,
+        setEmployeePaymentMethod: true,
+        createUnionMember: true,
+        removeEmployeeFromUnion: true,
+        runPayroll: true
+    });
 }
 
-export function buildStubFor(name: string): SinonStub {
+export function buildStubFor<T extends Record<string, boolean>>(object: T): { [K in keyof T]: SinonStub };
+export function buildStubFor(name: string): SinonStub;
+export function buildStubFor<T extends Record<string, boolean>>(
+    object: T | string
+): { [K in keyof T]: SinonStub } | SinonStub {
+    if (typeof object === "string") {
+        return buildStubForFunction(object);
+    } else {
+        return buildStubForObject(object);
+    }
+}
+
+function buildStubForObject<T extends Record<string, boolean>>(object: T): { [K in keyof T]: SinonStub } {
+    const result: Record<string, SinonStub> = {};
+    for (const key in object) {
+        // noinspection JSUnfilteredForInLoop
+        result[key] = buildStubForFunction(key);
+    }
+    return result as { [K in keyof T]: SinonStub };
+}
+
+function buildStubForFunction(name: string): SinonStub {
     return sandbox.stub().rejects(`${name} should not have been called`);
 }
