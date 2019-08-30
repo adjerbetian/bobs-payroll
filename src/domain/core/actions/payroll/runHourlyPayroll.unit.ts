@@ -14,8 +14,11 @@ import {
 import { expect } from "../../../../../test/unitTest";
 import { HourlyEmployee, PaymentMethod } from "../../entities";
 import { EmployeeRepository, PaymentRepository } from "../../repositories";
-import { ComputeHourlyEmployeePaymentDueAmountAction, FetchEmployeePaymentMethodAction } from "./actions";
-import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
+import {
+    buildRunHourlyPayrollAction,
+    ComputeHourlyEmployeePaymentDueAmountAction,
+    FetchEmployeePaymentMethodAction
+} from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
 
 describe("action runHourlyPayroll", () => {
@@ -32,16 +35,12 @@ describe("action runHourlyPayroll", () => {
         stubComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
         stubFetchEmployeePaymentMethod = buildStubFor("fetchEmployeePaymentMethod");
 
-        runHourlyPayroll = buildRunHourlyPayrollAction(
-            {
-                employeeRepository: stubEmployeeRepository,
-                paymentRepository: stubPaymentRepository
-            },
-            {
-                computeHourlyEmployeePaymentDueAmount: stubComputeHourlyEmployeePaymentDueAmount,
-                fetchEmployeePaymentMethod: stubFetchEmployeePaymentMethod
-            }
-        );
+        runHourlyPayroll = buildRunHourlyPayrollAction({
+            employeeRepository: stubEmployeeRepository,
+            paymentRepository: stubPaymentRepository,
+            computeHourlyEmployeePaymentDueAmount: stubComputeHourlyEmployeePaymentDueAmount,
+            fetchEmployeePaymentMethod: stubFetchEmployeePaymentMethod
+        });
 
         stubPaymentRepository.insert.resolves();
     });

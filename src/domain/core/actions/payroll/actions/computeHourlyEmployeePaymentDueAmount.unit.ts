@@ -4,16 +4,13 @@ import { generateHourlyEmployee, generateTimeCard } from "../../../../../../test
 import { expect } from "../../../../../../test/unitTest";
 import { HourlyEmployee } from "../../../entities";
 import { PaymentRepository, TimeCardRepository } from "../../../repositories";
-import {
-    buildComputeHourlyEmployeePaymentDueAmountAction,
-    ComputeHourlyEmployeePaymentDueAmountAction
-} from "./computeHourlyEmployeePaymentDueAmount";
+import { buildComputeHourlyEmployeePaymentDueAmountAction } from "./computeHourlyEmployeePaymentDueAmount";
 
 describe("action computeHourlyEmployeePaymentDueAmount", () => {
     let stubPaymentRepository: Stub<PaymentRepository>;
     let stubTimeCardRepository: Stub<TimeCardRepository>;
 
-    let computeHourlyEmployeePaymentDueAmount: ComputeHourlyEmployeePaymentDueAmountAction;
+    let computeHourlyEmployeePaymentDueAmount: ReturnType<typeof buildComputeHourlyEmployeePaymentDueAmountAction>;
     let employee: HourlyEmployee;
 
     beforeEach(() => {

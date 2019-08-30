@@ -1,5 +1,2 @@
-export { buildFetchEmployeePaymentMethod, FetchEmployeePaymentMethodAction } from "./fetchEmployeePaymentMethod";
-export {
-    buildComputeHourlyEmployeePaymentDueAmountAction,
-    ComputeHourlyEmployeePaymentDueAmountAction
-} from "./computeHourlyEmployeePaymentDueAmount";
+export { buildFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
+export { buildComputeHourlyEmployeePaymentDueAmountAction } from "./computeHourlyEmployeePaymentDueAmount";

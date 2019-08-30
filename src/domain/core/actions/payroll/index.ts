@@ -26,12 +26,11 @@ export function buildRunPayrollAction({
     });
 
     return buildRunPayrollDispatcher({
-        runHourlyPayroll: buildRunHourlyPayrollAction(
-            { employeeRepository, paymentRepository },
-            {
-                fetchEmployeePaymentMethod,
-                computeHourlyEmployeePaymentDueAmount
-            }
-        )
+        runHourlyPayroll: buildRunHourlyPayrollAction({
+            employeeRepository,
+            paymentRepository,
+            fetchEmployeePaymentMethod,
+            computeHourlyEmployeePaymentDueAmount
+        })
     });
 }

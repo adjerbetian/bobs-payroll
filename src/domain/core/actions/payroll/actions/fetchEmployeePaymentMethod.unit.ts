@@ -1,13 +1,12 @@
-import { buildStubPaymentMethodRepository, Stub } from "../../../../../../test/stubBuilders";
 import { generateHoldPaymentMethod, generateIndex } from "../../../../../../test/generators";
+import { buildStubPaymentMethodRepository, Stub } from "../../../../../../test/stubBuilders";
 import { expect } from "../../../../../../test/unitTest";
-import { PaymentMethod } from "../../../entities";
 import { NotFoundError } from "../../../errors";
 import { PaymentMethodRepository } from "../../../repositories";
 import { buildFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
 
 describe("fetchEmployeePaymentMethod", () => {
-    let fetchEmployeePaymentMethod: (employeeId: number) => Promise<PaymentMethod>;
+    let fetchEmployeePaymentMethod: ReturnType<typeof buildFetchEmployeePaymentMethod>;
     let stubPaymentMethodRepository: Stub<PaymentMethodRepository>;
 
     beforeEach(() => {

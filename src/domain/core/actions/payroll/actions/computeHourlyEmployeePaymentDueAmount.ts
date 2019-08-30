@@ -1,7 +1,6 @@
 import { HourlyEmployee, TimeCard } from "../../../entities";
 import { PaymentRepository, TimeCardRepository } from "../../../repositories";
-
-export type ComputeHourlyEmployeePaymentDueAmountAction = (employee: HourlyEmployee) => Promise<number>;
+import { ComputeHourlyEmployeePaymentDueAmountAction } from "../runHourlyPayroll";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
