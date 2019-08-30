@@ -1,7 +1,5 @@
+import { executePayrollCommand, expect, generateServiceCharge, seedUnionMember } from "@test/e2e";
 import { mongoServiceChargeRepository, ServiceCharge } from "../src";
-import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateServiceCharge } from "../test/generators";
-import { seedUnionMember } from "../test/seeders";
 
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {

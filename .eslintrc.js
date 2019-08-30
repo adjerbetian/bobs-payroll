@@ -32,7 +32,9 @@ module.exports = {
         "no-shadow": "error",
 
         // import
-        "import/no-internal-modules": ["error", { allow: ["test/*"] }],
+        "import/no-internal-modules": ["error", { allow: ["test/*", "module-alias/*"] }],
+        "import/no-unresolved": ["error", { ignore: ["@"] }],
+        // "import/no-cycle": "error", // todo activate
 
         // typescript-eslint
         "@typescript-eslint/explicit-function-return-type": [

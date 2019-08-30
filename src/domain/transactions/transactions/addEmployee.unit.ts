@@ -1,14 +1,16 @@
-import { buildStubActions, buildStubEmployeeRepository, Stub } from "../../../../test/stubBuilders";
 import {
+    buildStubActions,
+    buildStubEmployeeRepository,
+    expect,
     generateCommissionedEmployee,
     generateHourlyEmployee,
-    generateSalariedEmployee
-} from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
-import { TransactionFormatError } from "../errors";
+    generateSalariedEmployee,
+    Stub
+} from "@test/unit";
 import { Actions, EmployeeRepository } from "../../core";
-import { buildAddEmployeeTransaction } from "./addEmployee";
+import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
+import { buildAddEmployeeTransaction } from "./addEmployee";
 
 describe("addEmployee", () => {
     let stubActions: Stub<Actions>;

@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { isoDate } from "../src";
+import { isoDate } from "../../src";
 
 export const monday = isoDate(moment().startOf("isoWeek"));
 export const tuesday = isoDate(moment(monday).add(1, "day"));

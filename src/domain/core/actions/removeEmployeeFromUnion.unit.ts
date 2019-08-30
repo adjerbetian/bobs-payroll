@@ -1,6 +1,4 @@
-import { buildStubUnionMemberRepository, Stub } from "../../../../test/stubBuilders";
-import { generateIndex } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+import { buildStubUnionMemberRepository, expect, generateIndex, Stub } from "@test/unit";
 import { UnionMemberRepository } from "../repositories";
 import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
 

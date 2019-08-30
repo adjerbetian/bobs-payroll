@@ -11,7 +11,12 @@
         "resolveJsonModule": true,
         "baseUrl": "./src/",
         "outDir": "dist/",
-        "noEmit": true
+        "noEmit": true,
+        "paths": {
+            "@test/unit": ["../test/unitTest.ts"],
+            "@test/integration": ["../test/integrationTest.ts"],
+            "@test/e2e": ["../test/e2eTest.ts"]
+        }
     },
     "exclude": ["node_modules"]
 }

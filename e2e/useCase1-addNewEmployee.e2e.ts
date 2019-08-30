@@ -1,6 +1,11 @@
+import {
+    executePayrollCommand,
+    expect,
+    generateCommissionedEmployee,
+    generateHourlyEmployee,
+    generateSalariedEmployee
+} from "@test/e2e";
 import { Employee, mongoEmployeeRepository } from "../src";
-import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateCommissionedEmployee, generateHourlyEmployee, generateSalariedEmployee } from "../test/generators";
 
 describe("Use Case 1: Add New Employee", () => {
     it("should add an hourly employee", async () => {

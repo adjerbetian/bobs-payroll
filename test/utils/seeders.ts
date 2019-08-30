@@ -10,7 +10,7 @@ import {
     SalariedEmployee,
     TimeCard,
     UnionMember
-} from "../src";
+} from "../../src";
 import {
     generateCommissionedEmployee,
     generateDirectPaymentMethod,

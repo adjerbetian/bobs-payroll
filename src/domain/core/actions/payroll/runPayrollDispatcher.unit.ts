@@ -1,6 +1,4 @@
-import { friday, monday, saturday, sunday, thursday, tuesday, wednesday } from "../../../../../test/dates";
-import { buildStubFor, Stub } from "../../../../../test/stubBuilders";
-import { expect } from "../../../../../test/unitTest";
+import { buildStubFor, expect, friday, monday, saturday, Stub, sunday, thursday, tuesday, wednesday } from "@test/unit";
 import { RunPayrollAction } from "./RunPayrollAction";
 import { buildRunPayrollDispatcher, PayrollActions } from "./runPayrollDispatcher";
 

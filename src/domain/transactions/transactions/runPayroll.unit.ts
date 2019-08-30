@@ -1,6 +1,5 @@
+import { buildStubActions, expect, Stub } from "@test/unit";
 import * as moment from "moment";
-import { buildStubActions, Stub } from "../../../../test/stubBuilders";
-import { expect } from "../../../../test/unitTest";
 import { isoDate } from "../../../utils";
 import { Actions } from "../../core";
 import { TransactionFormatError } from "../errors";

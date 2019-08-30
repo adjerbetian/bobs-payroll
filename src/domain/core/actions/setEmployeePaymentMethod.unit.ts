@@ -1,6 +1,4 @@
-import { buildStubPaymentMethodRepository, Stub } from "../../../../test/stubBuilders";
-import { generateHoldPaymentMethod } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+import { buildStubPaymentMethodRepository, expect, generateHoldPaymentMethod, Stub } from "@test/unit";
 import { PaymentMethodRepository } from "../repositories";
 import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
 

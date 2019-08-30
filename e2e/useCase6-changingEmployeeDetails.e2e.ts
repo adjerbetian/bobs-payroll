@@ -1,4 +1,14 @@
 import {
+    executePayrollCommand,
+    expect,
+    generateIndex,
+    seedDirectPaymentMethod,
+    seedHoldPaymentMethod,
+    seedHourlyEmployee,
+    seedSalariedEmployee,
+    seedUnionMember
+} from "@test/e2e";
+import {
     Employee,
     EmployeeType,
     mongoEmployeeRepository,
@@ -7,15 +17,6 @@ import {
     NotFoundError,
     PaymentMethodType
 } from "../src";
-import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateIndex } from "../test/generators";
-import {
-    seedDirectPaymentMethod,
-    seedHoldPaymentMethod,
-    seedHourlyEmployee,
-    seedSalariedEmployee,
-    seedUnionMember
-} from "../test/seeders";
 
 describe("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;

@@ -1,6 +1,11 @@
-import { buildStubEmployeeRepository, buildStubUnionMemberRepository, Stub } from "../../../../test/stubBuilders";
-import { generateHourlyEmployee, generateUnionMember } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+import {
+    buildStubEmployeeRepository,
+    buildStubUnionMemberRepository,
+    expect,
+    generateHourlyEmployee,
+    generateUnionMember,
+    Stub
+} from "@test/unit";
 import { UnionMember } from "../entities";
 import { NotFoundError, UnionMemberIdAlreadyUsedError } from "../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../repositories";

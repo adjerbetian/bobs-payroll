@@ -1,6 +1,11 @@
-import { buildStubServiceChargeRepository, buildStubUnionMemberRepository, Stub } from "../../../../test/stubBuilders";
-import { generateServiceCharge, generateUnionMember } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+import {
+    buildStubServiceChargeRepository,
+    buildStubUnionMemberRepository,
+    expect,
+    generateServiceCharge,
+    generateUnionMember,
+    Stub
+} from "@test/unit";
 import { NotFoundError } from "../errors";
 import { ServiceChargeRepository, UnionMemberRepository } from "../repositories";
 import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";

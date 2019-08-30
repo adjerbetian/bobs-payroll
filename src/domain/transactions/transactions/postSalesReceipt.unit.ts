@@ -1,7 +1,5 @@
+import { buildStubActions, expect, generateSalesReceipt, Stub } from "@test/unit";
 import * as moment from "moment";
-import { buildStubActions, Stub } from "../../../../test/stubBuilders";
-import { generateSalesReceipt } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
 import { Actions, SalesReceipt } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";

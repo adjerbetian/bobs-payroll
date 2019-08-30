@@ -1,7 +1,13 @@
-import { lastFriday, never } from "../../../../../../test/dates";
-import { buildStubPaymentRepository, buildStubTimeCardRepository, Stub } from "../../../../../../test/stubBuilders";
-import { generateHourlyEmployee, generateTimeCard } from "../../../../../../test/generators";
-import { expect } from "../../../../../../test/unitTest";
+import {
+    buildStubPaymentRepository,
+    buildStubTimeCardRepository,
+    expect,
+    generateHourlyEmployee,
+    generateTimeCard,
+    lastFriday,
+    never,
+    Stub
+} from "@test/unit";
 import { HourlyEmployee } from "../../../entities";
 import { PaymentRepository, TimeCardRepository } from "../../../repositories";
 import { buildComputeHourlyEmployeePaymentDueAmountAction } from "./computeHourlyEmployeePaymentDueAmount";

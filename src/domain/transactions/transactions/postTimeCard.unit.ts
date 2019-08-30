@@ -1,7 +1,5 @@
+import { buildStubActions, expect, generateTimeCard, Stub } from "@test/unit";
 import * as moment from "moment";
-import { buildStubActions, Stub } from "../../../../test/stubBuilders";
-import { generateTimeCard } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
 import { Actions, TimeCard } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";

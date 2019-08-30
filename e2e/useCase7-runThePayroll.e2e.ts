@@ -1,7 +1,5 @@
+import { executePayrollCommand, expect, friday, monday, seedHourlyEmployee, seedTimeCard, tuesday } from "@test/e2e";
 import { mongoPaymentRepository } from "../src";
-import { friday, monday, tuesday } from "../test/dates";
-import { executePayrollCommand, expect } from "../test/e2eTest";
-import { seedHourlyEmployee, seedTimeCard } from "../test/seeders";
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {

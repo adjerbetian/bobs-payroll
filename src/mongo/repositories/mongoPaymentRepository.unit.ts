@@ -1,7 +1,4 @@
-import { never } from "../../../test/dates";
-import { buildStubMongoDbAdapter, Stub } from "../../../test/stubBuilders";
-import { generateIndex, generatePayment } from "../../../test/generators";
-import { expect } from "../../../test/unitTest";
+import { buildStubMongoDbAdapter, expect, generateIndex, generatePayment, never, Stub } from "@test/unit";
 import { Payment, PaymentRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoPaymentRepository } from "./mongoPaymentRepository";

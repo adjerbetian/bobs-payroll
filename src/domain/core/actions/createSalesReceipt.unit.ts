@@ -1,10 +1,12 @@
-import { buildStubEmployeeRepository, buildStubTimeCardRepository, Stub } from "../../../../test/stubBuilders";
 import {
+    buildStubEmployeeRepository,
+    buildStubTimeCardRepository,
+    expect,
     generateCommissionedEmployee,
     generateSalariedEmployee,
-    generateSalesReceipt
-} from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+    generateSalesReceipt,
+    Stub
+} from "@test/unit";
 import { EmployeeTypeError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";

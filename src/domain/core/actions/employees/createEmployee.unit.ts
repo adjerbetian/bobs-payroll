@@ -1,6 +1,4 @@
-import { buildStubEmployeeRepository, Stub } from "../../../../../test/stubBuilders";
-import { generateHourlyEmployee } from "../../../../../test/generators";
-import { expect } from "../../../../../test/unitTest";
+import { buildStubEmployeeRepository, expect, generateHourlyEmployee, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildCreateEmployeeAction, CreateEmployeeAction } from "./createEmployee";
 

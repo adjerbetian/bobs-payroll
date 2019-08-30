@@ -1,7 +1,5 @@
-import { TimeCard, mongoTimeCardRepository } from "../src";
-import { seedHourlyEmployee, seedSalariedEmployee } from "../test/seeders";
-import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateTimeCard } from "../test/generators";
+import { executePayrollCommand, expect, generateTimeCard, seedHourlyEmployee, seedSalariedEmployee } from "@test/e2e";
+import { mongoTimeCardRepository, TimeCard } from "../src";
 
 describe("Use Case 3: Post a Time Card", () => {
     it("should insert the time card in the db", async () => {

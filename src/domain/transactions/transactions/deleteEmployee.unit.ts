@@ -1,6 +1,4 @@
-import { buildStubActions, Stub } from "../../../../test/stubBuilders";
-import { generateIndex } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+import { buildStubActions, expect, generateIndex, Stub } from "@test/unit";
 import { Actions } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";

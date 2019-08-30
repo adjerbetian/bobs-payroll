@@ -1,6 +1,12 @@
-import { buildStubEmployeeRepository, buildStubTimeCardRepository, Stub } from "../../../../test/stubBuilders";
-import { generateHourlyEmployee, generateSalariedEmployee, generateTimeCard } from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+import {
+    buildStubEmployeeRepository,
+    buildStubTimeCardRepository,
+    expect,
+    generateHourlyEmployee,
+    generateSalariedEmployee,
+    generateTimeCard,
+    Stub
+} from "@test/unit";
 import { EmployeeRepository, TimeCardRepository } from "../../core";
 import { EmployeeTypeError } from "../errors";
 import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";

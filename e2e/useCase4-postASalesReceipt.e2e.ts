@@ -1,7 +1,11 @@
-import { SalesReceipt, mongoSalesReceiptRepository } from "../src";
-import { seedCommissionedEmployee, seedSalariedEmployee } from "../test/seeders";
-import { executePayrollCommand, expect } from "../test/e2eTest";
-import { generateSalesReceipt } from "../test/generators";
+import {
+    executePayrollCommand,
+    expect,
+    generateSalesReceipt,
+    seedCommissionedEmployee,
+    seedSalariedEmployee
+} from "@test/e2e";
+import { mongoSalesReceiptRepository, SalesReceipt } from "../src";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {

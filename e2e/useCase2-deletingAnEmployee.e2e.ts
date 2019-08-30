@@ -1,6 +1,5 @@
+import { executePayrollCommand, expect, seedHourlyEmployee } from "@test/e2e";
 import { mongoEmployeeRepository } from "../src";
-import { seedHourlyEmployee } from "../test/seeders";
-import { executePayrollCommand, expect } from "../test/e2eTest";
 
 describe("Use Case 2: Deleting an Employee", () => {
     it("should delete an existing employee from the database", async () => {

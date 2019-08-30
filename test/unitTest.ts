@@ -10,3 +10,5 @@ export const expect = chai.expect;
 export const sandbox = sinon.createSandbox();
 
 afterEach((): void => sandbox.restore());
+
+export * from "./utils";

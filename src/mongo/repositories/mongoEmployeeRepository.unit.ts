@@ -1,6 +1,4 @@
-import { buildStubMongoDbAdapter, Stub } from "../../../test/stubBuilders";
-import { generateHourlyEmployee, generateIndex } from "../../../test/generators";
-import { expect } from "../../../test/unitTest";
+import { buildStubMongoDbAdapter, expect, generateHourlyEmployee, generateIndex, Stub } from "@test/unit";
 import { Employee, EmployeeRepository, EmployeeType, HourlyEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";

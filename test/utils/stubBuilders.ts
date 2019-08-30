@@ -8,8 +8,8 @@ import {
     UnionMemberRepository,
     Actions,
     PaymentRepository
-} from "../src";
-import { sandbox } from "./unitTest";
+} from "../../src";
+import { sandbox } from "@test/unit";
 
 export type Stub<T> = T extends Function ? StubFunction : StubObject<T>;
 type StubFunction = SinonStub;

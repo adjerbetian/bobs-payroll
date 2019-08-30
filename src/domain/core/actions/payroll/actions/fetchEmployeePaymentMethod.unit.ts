@@ -1,6 +1,4 @@
-import { generateHoldPaymentMethod, generateIndex } from "../../../../../../test/generators";
-import { buildStubPaymentMethodRepository, Stub } from "../../../../../../test/stubBuilders";
-import { expect } from "../../../../../../test/unitTest";
+import { buildStubPaymentMethodRepository, expect, generateHoldPaymentMethod, generateIndex, Stub } from "@test/unit";
 import { NotFoundError } from "../../../errors";
 import { PaymentMethodRepository } from "../../../repositories";
 import { buildFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";

@@ -1,12 +1,13 @@
-import { buildStubActions, Stub } from "../../../../test/stubBuilders";
 import {
+    buildStubActions,
+    expect,
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
     generateIndex,
     generateMailPaymentMethod,
-    generateUnionMember
-} from "../../../../test/generators";
-import { expect } from "../../../../test/unitTest";
+    generateUnionMember,
+    Stub
+} from "@test/unit";
 import { Actions, EmployeeType } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";

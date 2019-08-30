@@ -16,7 +16,7 @@ import {
     ServiceCharge,
     TimeCard,
     UnionMember
-} from "../src";
+} from "../../src";
 
 export const generateIndex = (() => {
     let index = _.random(1, 100);

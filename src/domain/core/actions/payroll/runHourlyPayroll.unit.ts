@@ -1,17 +1,15 @@
-import { friday } from "../../../../../test/dates";
 import {
     buildStubEmployeeRepository,
-    buildStubPaymentRepository,
     buildStubFor,
-    Stub
-} from "../../../../../test/stubBuilders";
-import {
+    buildStubPaymentRepository,
+    expect,
+    friday,
     generateFloatBetween,
     generateHoldPaymentMethod,
     generateHourlyEmployee,
-    generatePayment
-} from "../../../../../test/generators";
-import { expect } from "../../../../../test/unitTest";
+    generatePayment,
+    Stub
+} from "@test/unit";
 import { HourlyEmployee, PaymentMethod } from "../../entities";
 import { EmployeeRepository, PaymentRepository } from "../../repositories";
 import {

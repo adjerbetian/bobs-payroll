@@ -1,7 +1,4 @@
-import { monday } from "../../../test/dates";
-import { buildStubMongoDbAdapter, Stub } from "../../../test/stubBuilders";
-import { generateIndex, generateTimeCard } from "../../../test/generators";
-import { expect } from "../../../test/unitTest";
+import { buildStubMongoDbAdapter, expect, generateIndex, generateTimeCard, monday, Stub } from "@test/unit";
 import { TimeCard, TimeCardRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoTimeCardRepository } from "./mongoTimeCardRepository";

@@ -1,4 +1,4 @@
-import { expect } from "../../../../test/unitTest";
+import { expect } from "@test/unit";
 import { stripQuotationMarks } from "./utils";
 
 describe("utils", () => {
