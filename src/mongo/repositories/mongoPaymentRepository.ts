@@ -1,5 +1,9 @@
+import * as moment from "moment";
 import { Payment, PaymentRepository } from "../../domain";
+import { isoDate } from "../../utils";
 import { MongoDbAdapter } from "../mongoDbAdapter";
+
+const NEVER = isoDate(moment(0));
 
 export function buildMongoPaymentRepository(db: MongoDbAdapter<Payment>): PaymentRepository {
     return {
@@ -7,10 +11,15 @@ export function buildMongoPaymentRepository(db: MongoDbAdapter<Payment>): Paymen
             return db.fetchLast({ employeeId });
         },
         async fetchEmployeeLastPaymentDate(employeeId: number): Promise<string> {
-            throw new Error("todo");
+            if (await db.exists({ employeeId })) {
+                const payment = await db.fetchLast({ employeeId });
+                return payment.date;
+            } else {
+                return NEVER;
+            }
         },
         async insert(payment: Payment): Promise<void> {
-            throw new Error("todo");
+            await db.insert(payment);
         }
     };
 }

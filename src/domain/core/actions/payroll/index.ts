@@ -1,6 +1,9 @@
 import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
-import { PayrollActions } from "../runPayroll";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
+import { RunPayrollAction } from "./RunPayrollAction";
+import { buildRunPayrollDispatcher } from "./runPayrollDispatcher";
+
+export { RunPayrollAction } from "./RunPayrollAction";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
@@ -9,18 +12,18 @@ interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;
 }
 
-export function buildPayrollActions({
+export function buildRunPayrollAction({
     employeeRepository,
     paymentRepository,
     timeCardRepository,
     paymentMethodRepository
-}: Dependencies): PayrollActions {
-    return {
+}: Dependencies): RunPayrollAction {
+    return buildRunPayrollDispatcher({
         runHourlyPayroll: buildRunHourlyPayrollAction({
             paymentRepository,
             employeeRepository,
             timeCardRepository,
             paymentMethodRepository
         })
-    };
+    });
 }

@@ -80,4 +80,15 @@ describe("mongoEmployeeRepository", () => {
             expect(fakeDb.update).to.have.been.calledWith({ id: employeeId }, { $set: update });
         });
     });
+
+    describe("fetchAllHourly", () => {
+        it("should only fetch hourly employees", async () => {
+            const employees = [generateHourlyEmployee(), generateHourlyEmployee()];
+            fakeDb.fetchAll.withArgs({ "work.type": EmployeeType.HOURLY }).resolves(employees);
+
+            const result = await repository.fetchAllHourly();
+
+            expect(result).to.deep.equal(employees);
+        });
+    });
 });

@@ -1,7 +1,8 @@
-import { friday, monday, saturday, sunday, thursday, tuesday, wednesday } from "../../../../test/dates";
-import { buildStubFor, Fake } from "../../../../test/fakeBuilders";
-import { expect } from "../../../../test/unitTest";
-import { buildRunPayrollAction, PayrollActions, RunPayrollAction } from "./runPayroll";
+import { friday, monday, saturday, sunday, thursday, tuesday, wednesday } from "../../../../../test/dates";
+import { buildStubFor, Fake } from "../../../../../test/fakeBuilders";
+import { expect } from "../../../../../test/unitTest";
+import { RunPayrollAction } from "./RunPayrollAction";
+import { buildRunPayrollDispatcher, PayrollActions } from "./runPayrollDispatcher";
 
 describe("action runPayroll", () => {
     let fakePayrollActions: Fake<PayrollActions>;
@@ -10,7 +11,7 @@ describe("action runPayroll", () => {
 
     beforeEach(() => {
         fakePayrollActions = buildFakePayrollActions();
-        runPayroll = buildRunPayrollAction(fakePayrollActions);
+        runPayroll = buildRunPayrollDispatcher(fakePayrollActions);
     });
 
     it("should should call the runHourlyPayroll only on fridays", async () => {

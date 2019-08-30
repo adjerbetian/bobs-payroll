@@ -2,6 +2,7 @@ import {
     buildActions,
     EmployeeRepository,
     PaymentMethodRepository,
+    PaymentRepository,
     SalesReceiptRepository,
     ServiceChargeRepository,
     TimeCardRepository,
@@ -20,6 +21,7 @@ export function buildApp(dependencies: {
     serviceChargeRepository: ServiceChargeRepository;
     paymentMethodRepository: PaymentMethodRepository;
     unionMemberRepository: UnionMemberRepository;
+    paymentRepository: PaymentRepository;
 }): App {
     const actions = buildActions(dependencies);
     const transactionDomain = buildTransactionDomain(actions);

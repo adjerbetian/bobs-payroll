@@ -1,3 +1,4 @@
+import { monday } from "../../../test/dates";
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
 import { generateIndex, generateTimeCard } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
@@ -21,6 +22,22 @@ describe("mongoTimeCardRepository", () => {
             fakeDb.fetchAll.withArgs({ employeeId }).resolves(timeCards);
 
             const result = await repository.fetchAllOfEmployee(employeeId);
+
+            expect(result).to.deep.equal(timeCards);
+        });
+    });
+    describe("fetchAllOfEmployeeSince", () => {
+        it("should return all the employee's made after the given date", async () => {
+            const employeeId = generateIndex();
+            const timeCards = [generateTimeCard(), generateTimeCard()];
+            fakeDb.fetchAll
+                .withArgs({
+                    employeeId,
+                    date: { $gt: monday }
+                })
+                .resolves(timeCards);
+
+            const result = await repository.fetchAllOfEmployeeSince(employeeId, monday);
 
             expect(result).to.deep.equal(timeCards);
         });

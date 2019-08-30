@@ -1,6 +1,7 @@
 import {
     EmployeeRepository,
     PaymentMethodRepository,
+    PaymentRepository,
     SalesReceiptRepository,
     ServiceChargeRepository,
     TimeCardRepository,
@@ -19,7 +20,7 @@ import {
     UpdateEmployeeAction
 } from "./employees";
 import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
-import { RunPayrollAction } from "./runPayroll";
+import { buildRunPayrollAction, RunPayrollAction } from "./payroll";
 import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
 
 export interface Actions {
@@ -42,6 +43,7 @@ export interface ActionsDependencies {
     unionMemberRepository: UnionMemberRepository;
     salesReceiptRepository: SalesReceiptRepository;
     paymentMethodRepository: PaymentMethodRepository;
+    paymentRepository: PaymentRepository;
 }
 
 export function buildActions({
@@ -50,7 +52,8 @@ export function buildActions({
     serviceChargeRepository,
     unionMemberRepository,
     salesReceiptRepository,
-    paymentMethodRepository
+    paymentMethodRepository,
+    paymentRepository
 }: ActionsDependencies): Actions {
     return {
         deleteEmployee: buildDeleteEmployeeAction({ employeeRepository }),
@@ -62,8 +65,11 @@ export function buildActions({
         setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository }),
         createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository, employeeRepository }),
         removeEmployeeFromUnion: buildRemoveEmployeeFromUnionAction({ unionMemberRepository }),
-        runPayroll: async date => {
-            throw new Error("todo");
-        }
+        runPayroll: buildRunPayrollAction({
+            paymentRepository,
+            timeCardRepository,
+            paymentMethodRepository,
+            employeeRepository
+        })
     };
 }

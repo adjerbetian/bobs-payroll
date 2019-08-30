@@ -9,9 +9,6 @@ export const friday = isoDate(moment(monday).add(4, "day"));
 export const saturday = isoDate(moment(monday).add(5, "day"));
 export const sunday = isoDate(moment(monday).add(6, "day"));
 
-export const nextFriday = isoDate(moment(friday).add(1, "week"));
-
-export const lastMonday = isoDate(moment(monday).subtract(1, "week"));
 export const lastFriday = isoDate(moment(friday).subtract(1, "week"));
 
 export const never = isoDate(moment(0));

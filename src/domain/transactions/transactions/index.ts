@@ -6,6 +6,7 @@ import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 import { buildPostTimeCardTransaction } from "./postTimeCard";
+import { buildRunPayrollTransaction } from "./runPayroll";
 
 export function buildTransactions(actions: Actions): Transactions {
     return {
@@ -15,9 +16,7 @@ export function buildTransactions(actions: Actions): Transactions {
         postSalesReceipt: buildPostSalesReceiptTransaction(actions),
         postServiceCharge: buildPostServiceChargeTransaction(actions),
         changeEmployee: buildChangeEmployeeTransaction(actions),
-        runPayroll: async () => {
-            throw new Error("todo");
-        }
+        runPayroll: buildRunPayrollTransaction(actions)
     };
 }
 

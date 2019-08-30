@@ -6,17 +6,12 @@ import {
     buildFakeTimeCardRepository,
     Fake
 } from "../../../../../test/fakeBuilders";
-import {
-    generateHoldPaymentMethod,
-    generateHourlyEmployee,
-    generatePayment,
-    generateTimeCard
-} from "../../../../../test/generators";
+import { generateHoldPaymentMethod, generateHourlyEmployee, generateTimeCard } from "../../../../../test/generators";
 import { expect } from "../../../../../test/unitTest";
 import { HourlyEmployee, Payment, PaymentMethod } from "../../entities";
 import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
-import { RunPayrollAction } from "../runPayroll";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
+import { RunPayrollAction } from "./RunPayrollAction";
 
 describe("action runHourlyPayroll", () => {
     let fakePaymentRepository: Fake<PaymentRepository>;
@@ -62,14 +57,8 @@ describe("action runHourlyPayroll", () => {
 
         await runHourlyPayroll(friday);
 
-        expect(fakePaymentRepository.insert).to.have.been.calledOnceWith(
-            generatePayment({
-                employeeId: employee.id,
-                method: method,
-                date: friday,
-                amount: (timeCard1.hours + timeCard2.hours) * employee.work.hourlyRate
-            })
-        );
+        const insertedPayment = getInsertedPayment();
+        expect(insertedPayment.amount).equal((timeCard1.hours + timeCard2.hours) * employee.work.hourlyRate);
     });
     it("should not include the time cards already paid", async () => {
         const timeCard = generateTimeCard();

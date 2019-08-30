@@ -1,6 +1,7 @@
 import { HourlyEmployee, Payment, TimeCard } from "../../entities";
 import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
-import { RunPayrollAction } from "../runPayroll";
+import { RunPayrollAction } from "./RunPayrollAction";
+import { buildFetchEmployeePaymentMethod } from "./utils";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
@@ -15,6 +16,8 @@ export function buildRunHourlyPayrollAction({
     paymentRepository,
     timeCardRepository
 }: Dependencies): RunPayrollAction {
+    const fetchEmployeePaymentMethod = buildFetchEmployeePaymentMethod(paymentMethodRepository);
+
     return async function(date: string): Promise<void> {
         const employees = await employeeRepository.fetchAllHourly();
         for (const employee of employees) {
@@ -30,7 +33,7 @@ export function buildRunHourlyPayrollAction({
             return {
                 employeeId: employee.id,
                 date: date,
-                method: await paymentMethodRepository.fetchByEmployeeId(employee.id),
+                method: await fetchEmployeePaymentMethod(employee.id),
                 amount: await computeEmployeePaymentDueAmount()
             };
         }

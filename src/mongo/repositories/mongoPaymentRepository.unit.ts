@@ -1,3 +1,4 @@
+import { never } from "../../../test/dates";
 import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
 import { generateIndex, generatePayment } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
@@ -27,15 +28,32 @@ describe("mongoPaymentRepository", () => {
     });
     describe("fetchEmployeeLastPaymentDate", () => {
         it("should return the date of the employee's last payment", async () => {
-            throw new Error("todo");
+            const employeeId = generateIndex();
+            const payment = generatePayment();
+            fakeDb.exists.withArgs({ employeeId }).resolves(true);
+            fakeDb.fetchLast.withArgs({ employeeId }).resolves(payment);
+
+            const date = await repository.fetchEmployeeLastPaymentDate(employeeId);
+
+            expect(date).to.equal(payment.date);
         });
         it("should return the 0 date when the employee was never paid", async () => {
-            throw new Error("todo");
+            const employeeId = generateIndex();
+            fakeDb.exists.withArgs({ employeeId }).resolves(false);
+
+            const date = await repository.fetchEmployeeLastPaymentDate(employeeId);
+
+            expect(date).to.equal(never);
         });
     });
     describe("insert", () => {
         it("should insert the payment", async () => {
-            throw new Error("todo");
+            const payment = generatePayment();
+            fakeDb.insert.resolves();
+
+            await repository.insert(payment);
+
+            expect(fakeDb.insert).to.have.been.calledWith(payment);
         });
     });
 });

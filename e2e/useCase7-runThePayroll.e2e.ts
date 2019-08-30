@@ -8,8 +8,8 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         it("should pay the hours made in his time cards", async () => {
             const employee = await seedHourlyEmployee();
             const timeCards = [
-                await seedTimeCard({ date: monday, hours: 5 }),
-                await seedTimeCard({ date: tuesday, hours: 6 })
+                await seedTimeCard({ date: monday, hours: 5, employeeId: employee.id }),
+                await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id })
             ];
 
             await executePayrollCommand(`Payroll ${friday}`);
