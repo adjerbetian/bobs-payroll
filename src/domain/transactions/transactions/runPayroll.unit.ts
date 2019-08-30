@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
+import { buildStubActions, Stub } from "../../../../test/stubBuilders";
 import { expect } from "../../../../test/unitTest";
 import { isoDate } from "../../../utils";
 import { Actions } from "../../core";
@@ -8,14 +8,14 @@ import { Transaction } from "../Transaction";
 import { buildRunPayrollTransaction } from "./runPayroll";
 
 describe("runPayroll", () => {
-    let fakeActions: Fake<Actions>;
+    let stubActions: Stub<Actions>;
     let runPayroll: Transaction;
 
     beforeEach(() => {
-        fakeActions = buildFakeActions();
-        runPayroll = buildRunPayrollTransaction(fakeActions);
+        stubActions = buildStubActions();
+        runPayroll = buildRunPayrollTransaction(stubActions);
 
-        fakeActions.runPayroll.resolves();
+        stubActions.runPayroll.resolves();
     });
 
     it("should call the runPayroll on the date", async () => {
@@ -23,7 +23,7 @@ describe("runPayroll", () => {
 
         await runPayroll(date);
 
-        expect(fakeActions.runPayroll).to.have.been.calledOnceWith(date);
+        expect(stubActions.runPayroll).to.have.been.calledOnceWith(date);
     });
     it("should throw a TransactionFormatError if the date is not in good format", async () => {
         const date = moment().format("DD-MM-YYYY");

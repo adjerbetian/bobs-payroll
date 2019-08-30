@@ -1,24 +1,24 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../../../test/fakeBuilders";
+import { buildStubEmployeeRepository, Stub } from "../../../../../test/stubBuilders";
 import { generateHourlyEmployee } from "../../../../../test/generators";
 import { expect } from "../../../../../test/unitTest";
 import { EmployeeRepository } from "../../repositories";
 import { buildCreateEmployeeAction, CreateEmployeeAction } from "./createEmployee";
 
 describe("action createEmployee", () => {
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let stubEmployeeRepository: Stub<EmployeeRepository>;
     let createEmployee: CreateEmployeeAction;
 
     beforeEach(() => {
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
-        createEmployee = buildCreateEmployeeAction({ employeeRepository: fakeEmployeeRepository });
+        stubEmployeeRepository = buildStubEmployeeRepository();
+        createEmployee = buildCreateEmployeeAction({ employeeRepository: stubEmployeeRepository });
     });
 
     it("should insert the given employee", async () => {
         const employee = generateHourlyEmployee();
-        fakeEmployeeRepository.insert.resolves();
+        stubEmployeeRepository.insert.resolves();
 
         await createEmployee(employee);
 
-        expect(fakeEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
+        expect(stubEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
     });
 });

@@ -1,21 +1,21 @@
 import { friday, monday, saturday, sunday, thursday, tuesday, wednesday } from "../../../../../test/dates";
-import { buildStubFor, Fake } from "../../../../../test/fakeBuilders";
+import { buildStubFor, Stub } from "../../../../../test/stubBuilders";
 import { expect } from "../../../../../test/unitTest";
 import { RunPayrollAction } from "./RunPayrollAction";
 import { buildRunPayrollDispatcher, PayrollActions } from "./runPayrollDispatcher";
 
 describe("action runPayroll", () => {
-    let fakePayrollActions: Fake<PayrollActions>;
+    let stubPayrollActions: Stub<PayrollActions>;
 
     let runPayroll: RunPayrollAction;
 
     beforeEach(() => {
-        fakePayrollActions = buildFakePayrollActions();
-        runPayroll = buildRunPayrollDispatcher(fakePayrollActions);
+        stubPayrollActions = buildStubPayrollActions();
+        runPayroll = buildRunPayrollDispatcher(stubPayrollActions);
     });
 
     it("should should call the runHourlyPayroll only on fridays", async () => {
-        fakePayrollActions.runHourlyPayroll.resolves();
+        stubPayrollActions.runHourlyPayroll.resolves();
 
         await runPayroll(monday);
         await runPayroll(tuesday);
@@ -25,11 +25,11 @@ describe("action runPayroll", () => {
         await runPayroll(saturday);
         await runPayroll(sunday);
 
-        expect(fakePayrollActions.runHourlyPayroll).to.have.been.calledOnceWith(friday);
+        expect(stubPayrollActions.runHourlyPayroll).to.have.been.calledOnceWith(friday);
     });
 });
 
-function buildFakePayrollActions(): Fake<PayrollActions> {
+function buildStubPayrollActions(): Stub<PayrollActions> {
     return {
         runHourlyPayroll: buildStubFor("runHourlyPayroll")
     };

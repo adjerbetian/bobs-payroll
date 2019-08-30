@@ -1,24 +1,24 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../../../test/fakeBuilders";
+import { buildStubEmployeeRepository, Stub } from "../../../../../test/stubBuilders";
 import { generateIndex } from "../../../../../test/generators";
 import { expect } from "../../../../../test/unitTest";
 import { EmployeeRepository } from "../../repositories";
 import { buildUpdateEmployeeAction, UpdateEmployeeAction } from "./updateEmployee";
 
 describe("action updateEmployee", () => {
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let stubEmployeeRepository: Stub<EmployeeRepository>;
     let updateEmployee: UpdateEmployeeAction;
 
     beforeEach(() => {
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
-        updateEmployee = buildUpdateEmployeeAction({ employeeRepository: fakeEmployeeRepository });
+        stubEmployeeRepository = buildStubEmployeeRepository();
+        updateEmployee = buildUpdateEmployeeAction({ employeeRepository: stubEmployeeRepository });
     });
 
     it("should update the given employee", async () => {
         const employeeId = generateIndex();
-        fakeEmployeeRepository.updateById.resolves();
+        stubEmployeeRepository.updateById.resolves();
 
         await updateEmployee(employeeId, { name: "James Bond" });
 
-        expect(fakeEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, { name: "James Bond" });
+        expect(stubEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, { name: "James Bond" });
     });
 });

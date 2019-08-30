@@ -1,4 +1,4 @@
-import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
+import { buildStubActions, Stub } from "../../../../test/stubBuilders";
 import { generateIndex } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { Actions } from "../../core";
@@ -7,14 +7,14 @@ import { Transaction } from "../Transaction";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 
 describe("deleteEmployee", () => {
-    let fakeActions: Fake<Actions>;
+    let stubActions: Stub<Actions>;
     let deleteEmployee: Transaction;
 
     beforeEach(() => {
-        fakeActions = buildFakeActions();
-        deleteEmployee = buildDeleteEmployeeTransaction(fakeActions);
+        stubActions = buildStubActions();
+        deleteEmployee = buildDeleteEmployeeTransaction(stubActions);
 
-        fakeActions.deleteEmployee.resolves();
+        stubActions.deleteEmployee.resolves();
     });
 
     it("should delete the employee", async () => {
@@ -22,7 +22,7 @@ describe("deleteEmployee", () => {
 
         await deleteEmployee(`${employeeId}`);
 
-        expect(fakeActions.deleteEmployee).to.have.been.calledOnceWith(employeeId);
+        expect(stubActions.deleteEmployee).to.have.been.calledOnceWith(employeeId);
     });
     it("should throw a TransactionFormatError if the employee id is not given", async () => {
         const promise = deleteEmployee(``);

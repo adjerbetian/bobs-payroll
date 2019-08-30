@@ -11,13 +11,13 @@ import {
 } from "../src";
 import { sandbox } from "./unitTest";
 
-export type Fake<T> = T extends Function ? FakeFunction : FakeObject<T>;
-type FakeFunction = SinonStub;
-type FakeObject<T> = {
+export type Stub<T> = T extends Function ? StubFunction : StubObject<T>;
+type StubFunction = SinonStub;
+type StubObject<T> = {
     [K in keyof T]: SinonStub;
 };
 
-export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
+export function buildStubEmployeeRepository(): Stub<EmployeeRepository> {
     return {
         fetchById: buildStubFor("fetchById"),
         insert: buildStubFor("insert"),
@@ -28,7 +28,7 @@ export function buildFakeEmployeeRepository(): Fake<EmployeeRepository> {
     };
 }
 
-export function buildFakePaymentMethodRepository(): Fake<PaymentMethodRepository> {
+export function buildStubPaymentMethodRepository(): Stub<PaymentMethodRepository> {
     return {
         fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
         insert: buildStubFor("insert"),
@@ -36,7 +36,7 @@ export function buildFakePaymentMethodRepository(): Fake<PaymentMethodRepository
     };
 }
 
-export function buildFakeTimeCardRepository(): Fake<TimeCardRepository> {
+export function buildStubTimeCardRepository(): Stub<TimeCardRepository> {
     return {
         insert: buildStubFor("insert"),
         fetchAllOfEmployee: buildStubFor("fetchAllOfEmployee"),
@@ -44,7 +44,7 @@ export function buildFakeTimeCardRepository(): Fake<TimeCardRepository> {
     };
 }
 
-export function buildFakeServiceChargeRepository(): Fake<ServiceChargeRepository> {
+export function buildStubServiceChargeRepository(): Stub<ServiceChargeRepository> {
     return {
         insert: buildStubFor("insert"),
         fetchAllOfMember: buildStubFor("fetchAllOfMember"),
@@ -52,7 +52,7 @@ export function buildFakeServiceChargeRepository(): Fake<ServiceChargeRepository
     };
 }
 
-export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
+export function buildStubUnionMemberRepository(): Stub<UnionMemberRepository> {
     return {
         fetchByMemberId: buildStubFor("fetchByMemberId"),
         fetchByEmployeeId: buildStubFor("fetchByEmployeeId"),
@@ -62,7 +62,7 @@ export function buildFakeUnionMemberRepository(): Fake<UnionMemberRepository> {
     };
 }
 
-export function buildFakePaymentRepository(): Fake<PaymentRepository> {
+export function buildStubPaymentRepository(): Stub<PaymentRepository> {
     return {
         fetchLastOfEmployee: buildStubFor("fetchLastOfEmployee"),
         fetchEmployeeLastPaymentDate: buildStubFor("fetchEmployeeLastPaymentDate"),
@@ -70,7 +70,7 @@ export function buildFakePaymentRepository(): Fake<PaymentRepository> {
     };
 }
 
-export function buildFakeMongoDbAdapter<T>(): Fake<MongoDbAdapter<T>> {
+export function buildStubMongoDbAdapter<T>(): Stub<MongoDbAdapter<T>> {
     return {
         fetch: buildStubFor("fetch"),
         fetchLast: buildStubFor("fetchLast"),
@@ -83,7 +83,7 @@ export function buildFakeMongoDbAdapter<T>(): Fake<MongoDbAdapter<T>> {
     };
 }
 
-export function buildFakeActions(): Fake<Actions> {
+export function buildStubActions(): Stub<Actions> {
     return {
         deleteEmployee: buildStubFor("deleteEmployee"),
         createTimeCard: buildStubFor("createTimeCard"),

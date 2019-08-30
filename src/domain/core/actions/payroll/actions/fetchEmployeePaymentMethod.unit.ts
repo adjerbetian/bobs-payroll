@@ -1,4 +1,4 @@
-import { buildFakePaymentMethodRepository, Fake } from "../../../../../../test/fakeBuilders";
+import { buildStubPaymentMethodRepository, Stub } from "../../../../../../test/stubBuilders";
 import { generateHoldPaymentMethod, generateIndex } from "../../../../../../test/generators";
 import { expect } from "../../../../../../test/unitTest";
 import { PaymentMethod } from "../../../entities";
@@ -8,17 +8,17 @@ import { buildFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
 
 describe("fetchEmployeePaymentMethod", () => {
     let fetchEmployeePaymentMethod: (employeeId: number) => Promise<PaymentMethod>;
-    let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
+    let stubPaymentMethodRepository: Stub<PaymentMethodRepository>;
 
     beforeEach(() => {
-        fakePaymentMethodRepository = buildFakePaymentMethodRepository();
-        fetchEmployeePaymentMethod = buildFetchEmployeePaymentMethod(fakePaymentMethodRepository);
+        stubPaymentMethodRepository = buildStubPaymentMethodRepository();
+        fetchEmployeePaymentMethod = buildFetchEmployeePaymentMethod(stubPaymentMethodRepository);
     });
 
     it("should return the employee payment method when it exists", async () => {
         const employeeId = generateIndex();
         const paymentMethod = generateHoldPaymentMethod();
-        fakePaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(paymentMethod);
+        stubPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(paymentMethod);
 
         const result = await fetchEmployeePaymentMethod(employeeId);
 
@@ -26,7 +26,7 @@ describe("fetchEmployeePaymentMethod", () => {
     });
     it("should return the hold payment method when the employee has not specified any payment method", async () => {
         const employeeId = generateIndex();
-        fakePaymentMethodRepository.fetchByEmployeeId
+        stubPaymentMethodRepository.fetchByEmployeeId
             .withArgs(employeeId)
             .rejects(new NotFoundError("no payment method"));
 

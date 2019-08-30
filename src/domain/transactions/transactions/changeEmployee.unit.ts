@@ -1,4 +1,4 @@
-import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
+import { buildStubActions, Stub } from "../../../../test/stubBuilders";
 import {
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
@@ -13,15 +13,15 @@ import { Transaction } from "../Transaction";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
-    let fakeActions: Fake<Actions>;
+    let stubActions: Stub<Actions>;
     let changeEmployee: Transaction;
     let employeeId: number;
 
     beforeEach(() => {
-        fakeActions = buildFakeActions();
-        changeEmployee = buildChangeEmployeeTransaction(fakeActions);
+        stubActions = buildStubActions();
+        changeEmployee = buildChangeEmployeeTransaction(stubActions);
 
-        fakeActions.updateEmployee.resolves();
+        stubActions.updateEmployee.resolves();
 
         employeeId = generateIndex();
     });
@@ -31,7 +31,7 @@ describe("changeEmployee", () => {
             it("should update the employee's name", async () => {
                 await changeEmployee(`${employeeId}`, "Name", "James Bond");
 
-                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     name: "James Bond"
                 });
             });
@@ -45,7 +45,7 @@ describe("changeEmployee", () => {
             it("should update the employee's address", async () => {
                 await changeEmployee(`${employeeId}`, "Address", "my new address");
 
-                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     address: "my new address"
                 });
             });
@@ -61,7 +61,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to hourly and set the rate", async () => {
                 await changeEmployee(`${employeeId}`, "Hourly", "10.5");
 
-                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     work: {
                         type: EmployeeType.HOURLY,
                         hourlyRate: 10.5
@@ -78,7 +78,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to salaried and set the salary", async () => {
                 await changeEmployee(`${employeeId}`, "Salaried", "10.5");
 
-                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     work: {
                         type: EmployeeType.SALARIED,
                         monthlySalary: 10.5
@@ -95,7 +95,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to salaried and set the salary", async () => {
                 await changeEmployee(`${employeeId}`, "Commissioned", "10", "30");
 
-                expect(fakeActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     work: {
                         type: EmployeeType.COMMISSIONED,
                         monthlySalary: 10,
@@ -116,14 +116,14 @@ describe("changeEmployee", () => {
         });
     });
     describe("payment method", () => {
-        beforeEach(() => fakeActions.setEmployeePaymentMethod.resolves());
+        beforeEach(() => stubActions.setEmployeePaymentMethod.resolves());
 
         describe("Hold", () => {
             it("should add the hold paycheck payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Hold");
 
                 const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId });
-                expect(fakeActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
         });
         describe("Direct", () => {
@@ -135,7 +135,7 @@ describe("changeEmployee", () => {
                     bank: "bank-id",
                     account: "account-id"
                 });
-                expect(fakeActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the bank-id is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Direct");
@@ -156,7 +156,7 @@ describe("changeEmployee", () => {
                     employeeId,
                     address: "my paycheck address"
                 });
-                expect(fakeActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the address is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Mail");
@@ -171,14 +171,14 @@ describe("changeEmployee", () => {
 
             beforeEach(() => {
                 memberId = `member-${generateIndex()}`;
-                fakeActions.createUnionMember.resolves();
+                stubActions.createUnionMember.resolves();
             });
 
             it("should add the union member", async () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
                 const expectedUnionMember = generateUnionMember({ memberId, employeeId, rate: 10.5 });
-                expect(fakeActions.createUnionMember).to.have.been.calledOnceWith(expectedUnionMember);
+                expect(stubActions.createUnionMember).to.have.been.calledOnceWith(expectedUnionMember);
             });
             it("should throw a TransactionFormatError when the dues rate is not specified", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues");
@@ -188,11 +188,11 @@ describe("changeEmployee", () => {
         });
         describe("NoMember", () => {
             it("should delete the union member", async () => {
-                fakeActions.removeEmployeeFromUnion.resolves();
+                stubActions.removeEmployeeFromUnion.resolves();
 
                 await changeEmployee(`${employeeId}`, "NoMember");
 
-                expect(fakeActions.removeEmployeeFromUnion).to.have.been.calledOnceWith(employeeId);
+                expect(stubActions.removeEmployeeFromUnion).to.have.been.calledOnceWith(employeeId);
             });
         });
     });

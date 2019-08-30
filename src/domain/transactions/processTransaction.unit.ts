@@ -1,4 +1,4 @@
-import { buildStubFor, Fake } from "../../../test/fakeBuilders";
+import { buildStubFor, Stub } from "../../../test/stubBuilders";
 import {
     generateHourlyEmployee,
     generateIndex,
@@ -13,16 +13,16 @@ import { Transactions } from "./transactions";
 
 describe("processTransaction", () => {
     let processTransaction: ProcessTransaction;
-    let fakeTransactions: Fake<Transactions>;
+    let stubTransactions: Stub<Transactions>;
 
     beforeEach(() => {
-        fakeTransactions = buildFakeTransactions();
-        processTransaction = buildProcessTransaction(fakeTransactions);
+        stubTransactions = buildStubTransactions();
+        processTransaction = buildProcessTransaction(stubTransactions);
     });
 
     describe("AddEmp", () => {
         it("should call the addEmployee transaction", async () => {
-            fakeTransactions.addEmployee.resolves();
+            stubTransactions.addEmployee.resolves();
             const employee = generateHourlyEmployee();
 
             await processTransaction([
@@ -34,7 +34,7 @@ describe("processTransaction", () => {
                 `${employee.work.hourlyRate}`
             ]);
 
-            expect(fakeTransactions.addEmployee).to.have.been.calledOnceWith(
+            expect(stubTransactions.addEmployee).to.have.been.calledOnceWith(
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
@@ -45,22 +45,22 @@ describe("processTransaction", () => {
     });
     describe("DelEmp", () => {
         it("should call the deleteEmployee transaction", async () => {
-            fakeTransactions.deleteEmployee.resolves();
+            stubTransactions.deleteEmployee.resolves();
             const employeeId = generateIndex();
 
             await processTransaction(["DelEmp", `${employeeId}`]);
 
-            expect(fakeTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
+            expect(stubTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
         });
     });
     describe("TimeCard", () => {
         it("should call the postTimeCard transaction", async () => {
-            fakeTransactions.postTimeCard.resolves();
+            stubTransactions.postTimeCard.resolves();
             const timeCard = generateTimeCard();
 
             await processTransaction(["TimeCard", `${timeCard.employeeId}`, `${timeCard.date}`, `${timeCard.hours}`]);
 
-            expect(fakeTransactions.postTimeCard).to.have.been.calledOnceWith(
+            expect(stubTransactions.postTimeCard).to.have.been.calledOnceWith(
                 `${timeCard.employeeId}`,
                 `${timeCard.date}`,
                 `${timeCard.hours}`
@@ -69,7 +69,7 @@ describe("processTransaction", () => {
     });
     describe("SalesReceipt", () => {
         it("should call the postSalesReceipt transaction", async () => {
-            fakeTransactions.postSalesReceipt.resolves();
+            stubTransactions.postSalesReceipt.resolves();
             const salesReceipt = generateSalesReceipt();
 
             await processTransaction([
@@ -79,7 +79,7 @@ describe("processTransaction", () => {
                 `${salesReceipt.amount}`
             ]);
 
-            expect(fakeTransactions.postSalesReceipt).to.have.been.calledOnceWith(
+            expect(stubTransactions.postSalesReceipt).to.have.been.calledOnceWith(
                 `${salesReceipt.employeeId}`,
                 `${salesReceipt.date}`,
                 `${salesReceipt.amount}`
@@ -88,12 +88,12 @@ describe("processTransaction", () => {
     });
     describe("ServiceCharge", () => {
         it("should call the postServiceCharge transaction", async () => {
-            fakeTransactions.postServiceCharge.resolves();
+            stubTransactions.postServiceCharge.resolves();
             const serviceCharge = generateServiceCharge();
 
             await processTransaction(["ServiceCharge", `${serviceCharge.memberId}`, `${serviceCharge.amount}`]);
 
-            expect(fakeTransactions.postServiceCharge).to.have.been.calledOnceWith(
+            expect(stubTransactions.postServiceCharge).to.have.been.calledOnceWith(
                 `${serviceCharge.memberId}`,
                 `${serviceCharge.amount}`
             );
@@ -101,27 +101,27 @@ describe("processTransaction", () => {
     });
     describe("ChgEmp", () => {
         it("should call the changeEmployee transaction", async () => {
-            fakeTransactions.changeEmployee.resolves();
+            stubTransactions.changeEmployee.resolves();
             const employee = generateHourlyEmployee();
 
             await processTransaction(["ChgEmp", `${employee.id}`, "Name", "James Bond"]);
 
-            expect(fakeTransactions.changeEmployee).to.have.been.calledOnceWith(`${employee.id}`, "Name", "James Bond");
+            expect(stubTransactions.changeEmployee).to.have.been.calledOnceWith(`${employee.id}`, "Name", "James Bond");
         });
     });
     describe("Payroll", () => {
         it("should call the runPayroll transaction", async () => {
-            fakeTransactions.runPayroll.resolves();
+            stubTransactions.runPayroll.resolves();
             const date = isoDate();
 
             await processTransaction(["Payroll", `${date}`]);
 
-            expect(fakeTransactions.runPayroll).to.have.been.calledOnceWith(`${date}`);
+            expect(stubTransactions.runPayroll).to.have.been.calledOnceWith(`${date}`);
         });
     });
 });
 
-export function buildFakeTransactions(): Fake<Transactions> {
+export function buildStubTransactions(): Stub<Transactions> {
     return {
         addEmployee: buildStubFor("addEmployee"),
         deleteEmployee: buildStubFor("deleteEmployee"),

@@ -1,4 +1,4 @@
-import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
+import { buildStubMongoDbAdapter, Stub } from "../../../test/stubBuilders";
 import { generateIndex, generateSalesReceipt } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { SalesReceipt, SalesReceiptRepository } from "../../domain";
@@ -6,19 +6,19 @@ import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 
 describe("mongoSalesReceiptRepository", () => {
-    let fakeDb: Fake<MongoDbAdapter<SalesReceipt>>;
+    let stubDb: Stub<MongoDbAdapter<SalesReceipt>>;
     let repository: SalesReceiptRepository;
 
     beforeEach(() => {
-        fakeDb = buildFakeMongoDbAdapter();
-        repository = buildMongoSalesReceiptRepository(fakeDb);
+        stubDb = buildStubMongoDbAdapter();
+        repository = buildMongoSalesReceiptRepository(stubDb);
     });
 
     describe("fetchAllOfEmployee", () => {
         it("should return all the employee's sales receipt", async () => {
             const employeeId = generateIndex();
             const salesReceipts = [generateSalesReceipt()];
-            fakeDb.fetchAll.withArgs({ employeeId }).resolves(salesReceipts);
+            stubDb.fetchAll.withArgs({ employeeId }).resolves(salesReceipts);
 
             const result = await repository.fetchAllOfEmployee(employeeId);
 
@@ -28,11 +28,11 @@ describe("mongoSalesReceiptRepository", () => {
     describe("insert", () => {
         it("insert the given sales receipt", async () => {
             const salesReceipt = generateSalesReceipt();
-            fakeDb.insert.resolves();
+            stubDb.insert.resolves();
 
             await repository.insert(salesReceipt);
 
-            expect(fakeDb.insert).to.have.calledOnceWith(salesReceipt);
+            expect(stubDb.insert).to.have.calledOnceWith(salesReceipt);
         });
     });
 });

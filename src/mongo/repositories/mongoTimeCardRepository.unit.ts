@@ -1,5 +1,5 @@
 import { monday } from "../../../test/dates";
-import { buildFakeMongoDbAdapter, Fake } from "../../../test/fakeBuilders";
+import { buildStubMongoDbAdapter, Stub } from "../../../test/stubBuilders";
 import { generateIndex, generateTimeCard } from "../../../test/generators";
 import { expect } from "../../../test/unitTest";
 import { TimeCard, TimeCardRepository } from "../../domain";
@@ -7,19 +7,19 @@ import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoTimeCardRepository } from "./mongoTimeCardRepository";
 
 describe("mongoTimeCardRepository", () => {
-    let fakeDb: Fake<MongoDbAdapter<TimeCard>>;
+    let stubDb: Stub<MongoDbAdapter<TimeCard>>;
     let repository: TimeCardRepository;
 
     beforeEach(() => {
-        fakeDb = buildFakeMongoDbAdapter();
-        repository = buildMongoTimeCardRepository(fakeDb);
+        stubDb = buildStubMongoDbAdapter();
+        repository = buildMongoTimeCardRepository(stubDb);
     });
 
     describe("fetchAllOfEmployee", () => {
         it("should return all the employee's time cards", async () => {
             const employeeId = generateIndex();
             const timeCards = [generateTimeCard(), generateTimeCard()];
-            fakeDb.fetchAll.withArgs({ employeeId }).resolves(timeCards);
+            stubDb.fetchAll.withArgs({ employeeId }).resolves(timeCards);
 
             const result = await repository.fetchAllOfEmployee(employeeId);
 
@@ -30,7 +30,7 @@ describe("mongoTimeCardRepository", () => {
         it("should return all the employee's made after the given date", async () => {
             const employeeId = generateIndex();
             const timeCards = [generateTimeCard(), generateTimeCard()];
-            fakeDb.fetchAll
+            stubDb.fetchAll
                 .withArgs({
                     employeeId,
                     date: { $gt: monday }
@@ -45,11 +45,11 @@ describe("mongoTimeCardRepository", () => {
     describe("insert", () => {
         it("insert the given time card", async () => {
             const timeCard = generateTimeCard();
-            fakeDb.insert.resolves();
+            stubDb.insert.resolves();
 
             await repository.insert(timeCard);
 
-            expect(fakeDb.insert).to.have.been.calledOnceWith(timeCard);
+            expect(stubDb.insert).to.have.been.calledOnceWith(timeCard);
         });
     });
 });

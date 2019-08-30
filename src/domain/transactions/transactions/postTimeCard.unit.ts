@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { buildFakeActions, Fake } from "../../../../test/fakeBuilders";
+import { buildStubActions, Stub } from "../../../../test/stubBuilders";
 import { generateTimeCard } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { Actions, TimeCard } from "../../core";
@@ -8,25 +8,25 @@ import { Transaction } from "../Transaction";
 import { buildPostTimeCardTransaction } from "./postTimeCard";
 
 describe("postTimeCard", () => {
-    let fakeActions: Fake<Actions>;
+    let stubActions: Stub<Actions>;
     let postTimeCard: Transaction;
 
     beforeEach(() => {
-        fakeActions = buildFakeActions();
-        postTimeCard = buildPostTimeCardTransaction(fakeActions);
+        stubActions = buildStubActions();
+        postTimeCard = buildPostTimeCardTransaction(stubActions);
     });
 
     it("should create a time card for the employee", async () => {
         const timeCard = generateTimeCard();
-        fakeActions.createTimeCard.resolves();
+        stubActions.createTimeCard.resolves();
 
         await postTimeCardEntity(timeCard);
 
-        expect(fakeActions.createTimeCard).to.have.been.calledOnceWith(timeCard);
+        expect(stubActions.createTimeCard).to.have.been.calledOnceWith(timeCard);
     });
     it("should throw a TransactionFormatError if the date is not in good format", async () => {
         const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
-        fakeActions.createTimeCard.resolves();
+        stubActions.createTimeCard.resolves();
 
         const promise = postTimeCardEntity(timeCard);
 

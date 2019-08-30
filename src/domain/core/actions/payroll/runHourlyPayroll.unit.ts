@@ -1,10 +1,10 @@
 import { friday } from "../../../../../test/dates";
 import {
-    buildFakeEmployeeRepository,
-    buildFakePaymentRepository,
+    buildStubEmployeeRepository,
+    buildStubPaymentRepository,
     buildStubFor,
-    Fake
-} from "../../../../../test/fakeBuilders";
+    Stub
+} from "../../../../../test/stubBuilders";
 import {
     generateFloatBetween,
     generateHoldPaymentMethod,
@@ -19,41 +19,41 @@ import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
 
 describe("action runHourlyPayroll", () => {
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
-    let fakePaymentRepository: Fake<PaymentRepository>;
-    let fakeComputeHourlyEmployeePaymentDueAmount: Fake<ComputeHourlyEmployeePaymentDueAmountAction>;
-    let fakeFetchEmployeePaymentMethod: Fake<FetchEmployeePaymentMethodAction>;
+    let stubEmployeeRepository: Stub<EmployeeRepository>;
+    let stubPaymentRepository: Stub<PaymentRepository>;
+    let stubComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmountAction>;
+    let stubFetchEmployeePaymentMethod: Stub<FetchEmployeePaymentMethodAction>;
 
     let runHourlyPayroll: RunPayrollAction;
 
     beforeEach(() => {
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
-        fakePaymentRepository = buildFakePaymentRepository();
-        fakeComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
-        fakeFetchEmployeePaymentMethod = buildStubFor("fetchEmployeePaymentMethod");
+        stubEmployeeRepository = buildStubEmployeeRepository();
+        stubPaymentRepository = buildStubPaymentRepository();
+        stubComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
+        stubFetchEmployeePaymentMethod = buildStubFor("fetchEmployeePaymentMethod");
 
         runHourlyPayroll = buildRunHourlyPayrollAction(
             {
-                employeeRepository: fakeEmployeeRepository,
-                paymentRepository: fakePaymentRepository
+                employeeRepository: stubEmployeeRepository,
+                paymentRepository: stubPaymentRepository
             },
             {
-                computeHourlyEmployeePaymentDueAmount: fakeComputeHourlyEmployeePaymentDueAmount,
-                fetchEmployeePaymentMethod: fakeFetchEmployeePaymentMethod
+                computeHourlyEmployeePaymentDueAmount: stubComputeHourlyEmployeePaymentDueAmount,
+                fetchEmployeePaymentMethod: stubFetchEmployeePaymentMethod
             }
         );
 
-        fakePaymentRepository.insert.resolves();
+        stubPaymentRepository.insert.resolves();
     });
 
     it("should insert the right payment the employee", async () => {
         const employee = generateHourlyEmployee();
         const { amount, method } = generateEmployeeModels(employee);
-        fakeEmployeeRepository.fetchAllHourly.resolves([employee]);
+        stubEmployeeRepository.fetchAllHourly.resolves([employee]);
 
         await runHourlyPayroll(friday);
 
-        expect(fakePaymentRepository.insert).to.have.been.calledOnceWith(
+        expect(stubPaymentRepository.insert).to.have.been.calledOnceWith(
             generatePayment({
                 employeeId: employee.id,
                 date: friday,
@@ -68,18 +68,18 @@ describe("action runHourlyPayroll", () => {
         const employee2 = generateHourlyEmployee();
         generateEmployeeModels(employee1);
         generateEmployeeModels(employee2);
-        fakeEmployeeRepository.fetchAllHourly.resolves([employee1, employee2]);
+        stubEmployeeRepository.fetchAllHourly.resolves([employee1, employee2]);
 
         await runHourlyPayroll(friday);
 
-        expect(fakePaymentRepository.insert).to.have.been.calledTwice;
+        expect(stubPaymentRepository.insert).to.have.been.calledTwice;
     });
 
     function generateEmployeeModels(employee: HourlyEmployee): { amount: number; method: PaymentMethod } {
         const amount = generateFloatBetween(100, 500);
         const method = generateHoldPaymentMethod();
-        fakeComputeHourlyEmployeePaymentDueAmount.withArgs(employee).resolves(amount);
-        fakeFetchEmployeePaymentMethod.withArgs(employee.id).resolves(method);
+        stubComputeHourlyEmployeePaymentDueAmount.withArgs(employee).resolves(amount);
+        stubFetchEmployeePaymentMethod.withArgs(employee.id).resolves(method);
         return { amount, method };
     }
 });

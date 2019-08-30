@@ -1,4 +1,4 @@
-import { buildFakeEmployeeRepository, buildFakeTimeCardRepository, Fake } from "../../../../test/fakeBuilders";
+import { buildStubEmployeeRepository, buildStubTimeCardRepository, Stub } from "../../../../test/stubBuilders";
 import {
     generateCommissionedEmployee,
     generateSalariedEmployee,
@@ -10,32 +10,32 @@ import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";
 
 describe("action createTimeCard", () => {
-    let fakeSalesReceiptRepository: Fake<TimeCardRepository>;
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let stubSalesReceiptRepository: Stub<TimeCardRepository>;
+    let stubEmployeeRepository: Stub<EmployeeRepository>;
     let createSalesReceipt: CreateSalesReceiptAction;
 
     beforeEach(() => {
-        fakeSalesReceiptRepository = buildFakeTimeCardRepository();
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
+        stubSalesReceiptRepository = buildStubTimeCardRepository();
+        stubEmployeeRepository = buildStubEmployeeRepository();
         createSalesReceipt = buildCreateSalesReceiptAction({
-            salesReceiptRepository: fakeSalesReceiptRepository,
-            employeeRepository: fakeEmployeeRepository
+            salesReceiptRepository: stubSalesReceiptRepository,
+            employeeRepository: stubEmployeeRepository
         });
 
-        fakeSalesReceiptRepository.insert.resolves();
+        stubSalesReceiptRepository.insert.resolves();
     });
 
     it("should create a sales receipt for the employee", async () => {
         const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
+        stubEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
 
         await createSalesReceipt(salesReceipt);
 
-        expect(fakeSalesReceiptRepository.insert).to.have.been.calledOnceWith(salesReceipt);
+        expect(stubSalesReceiptRepository.insert).to.have.been.calledOnceWith(salesReceipt);
     });
     it("should throw a EmployeeTypeError if the employee is not a commissioned employee", async () => {
         const salesReceipt = generateSalesReceipt();
-        fakeEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateSalariedEmployee());
+        stubEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateSalariedEmployee());
 
         const promise = createSalesReceipt(salesReceipt);
 

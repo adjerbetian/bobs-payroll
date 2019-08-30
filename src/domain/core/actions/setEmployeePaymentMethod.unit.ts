@@ -1,21 +1,21 @@
-import { buildFakePaymentMethodRepository, Fake } from "../../../../test/fakeBuilders";
+import { buildStubPaymentMethodRepository, Stub } from "../../../../test/stubBuilders";
 import { generateHoldPaymentMethod } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { PaymentMethodRepository } from "../repositories";
 import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
 
 describe("action setEmployeePaymentMethod", () => {
-    let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
+    let stubPaymentMethodRepository: Stub<PaymentMethodRepository>;
     let setEmployeePaymentMethod: SetEmployeePaymentMethodAction;
 
     beforeEach(() => {
-        fakePaymentMethodRepository = buildFakePaymentMethodRepository();
+        stubPaymentMethodRepository = buildStubPaymentMethodRepository();
         setEmployeePaymentMethod = buildSetEmployeePaymentMethodAction({
-            paymentMethodRepository: fakePaymentMethodRepository
+            paymentMethodRepository: stubPaymentMethodRepository
         });
 
-        fakePaymentMethodRepository.insert.resolves();
-        fakePaymentMethodRepository.deleteByEmployeeId.resolves();
+        stubPaymentMethodRepository.insert.resolves();
+        stubPaymentMethodRepository.deleteByEmployeeId.resolves();
     });
 
     it("should add the hold paycheck payment method to the employee", async () => {
@@ -23,16 +23,16 @@ describe("action setEmployeePaymentMethod", () => {
 
         await setEmployeePaymentMethod(paymentMethod);
 
-        expect(fakePaymentMethodRepository.insert).to.have.been.calledOnceWith(paymentMethod);
+        expect(stubPaymentMethodRepository.insert).to.have.been.calledOnceWith(paymentMethod);
     });
     it("should delete the previous payment method of the employee", async () => {
         const paymentMethod = generateHoldPaymentMethod();
 
         await setEmployeePaymentMethod(paymentMethod);
 
-        expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(paymentMethod.employeeId);
-        expect(fakePaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
-            fakePaymentMethodRepository.insert
+        expect(stubPaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(paymentMethod.employeeId);
+        expect(stubPaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
+            stubPaymentMethodRepository.insert
         );
     });
 });

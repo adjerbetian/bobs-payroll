@@ -1,26 +1,26 @@
-import { buildFakeEmployeeRepository, Fake } from "../../../../../test/fakeBuilders";
+import { buildStubEmployeeRepository, Stub } from "../../../../../test/stubBuilders";
 import { generateIndex } from "../../../../../test/generators";
 import { expect } from "../../../../../test/unitTest";
 import { EmployeeRepository } from "../../repositories";
 import { buildDeleteEmployeeAction, DeleteEmployeeAction } from "./deleteEmployee";
 
 describe("action deleteEmployee", () => {
-    let fakeEmployeeRepository: Fake<EmployeeRepository>;
+    let stubEmployeeRepository: Stub<EmployeeRepository>;
     let deleteEmployee: DeleteEmployeeAction;
 
     beforeEach(() => {
-        fakeEmployeeRepository = buildFakeEmployeeRepository();
+        stubEmployeeRepository = buildStubEmployeeRepository();
         deleteEmployee = buildDeleteEmployeeAction({
-            employeeRepository: fakeEmployeeRepository
+            employeeRepository: stubEmployeeRepository
         });
     });
 
     it("should delete the employee", async () => {
-        fakeEmployeeRepository.deleteById.resolves();
+        stubEmployeeRepository.deleteById.resolves();
         const employeeId = generateIndex();
 
         await deleteEmployee(employeeId);
 
-        expect(fakeEmployeeRepository.deleteById).to.have.been.calledOnceWith(employeeId);
+        expect(stubEmployeeRepository.deleteById).to.have.been.calledOnceWith(employeeId);
     });
 });

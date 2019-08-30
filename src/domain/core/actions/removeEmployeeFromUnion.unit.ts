@@ -1,26 +1,26 @@
-import { buildFakeUnionMemberRepository, Fake } from "../../../../test/fakeBuilders";
+import { buildStubUnionMemberRepository, Stub } from "../../../../test/stubBuilders";
 import { generateIndex } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { UnionMemberRepository } from "../repositories";
 import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
 
 describe("action removeEmployeeFromUnion", () => {
-    let fakeUnionMemberRepository: Fake<UnionMemberRepository>;
+    let stubUnionMemberRepository: Stub<UnionMemberRepository>;
     let removeEmployeeFromUnion: RemoveEmployeeFromUnionAction;
 
     beforeEach(() => {
-        fakeUnionMemberRepository = buildFakeUnionMemberRepository();
+        stubUnionMemberRepository = buildStubUnionMemberRepository();
         removeEmployeeFromUnion = buildRemoveEmployeeFromUnionAction({
-            unionMemberRepository: fakeUnionMemberRepository
+            unionMemberRepository: stubUnionMemberRepository
         });
     });
 
     it("should delete the employee union member", async () => {
         const employeeId = generateIndex();
-        fakeUnionMemberRepository.deleteByEmployeeId.resolves();
+        stubUnionMemberRepository.deleteByEmployeeId.resolves();
 
         await removeEmployeeFromUnion(employeeId);
 
-        expect(fakeUnionMemberRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
+        expect(stubUnionMemberRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
     });
 });

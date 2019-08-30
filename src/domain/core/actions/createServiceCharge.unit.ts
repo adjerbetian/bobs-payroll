@@ -1,4 +1,4 @@
-import { buildFakeServiceChargeRepository, buildFakeUnionMemberRepository, Fake } from "../../../../test/fakeBuilders";
+import { buildStubServiceChargeRepository, buildStubUnionMemberRepository, Stub } from "../../../../test/stubBuilders";
 import { generateServiceCharge, generateUnionMember } from "../../../../test/generators";
 import { expect } from "../../../../test/unitTest";
 import { NotFoundError } from "../errors";
@@ -6,32 +6,32 @@ import { ServiceChargeRepository, UnionMemberRepository } from "../repositories"
 import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";
 
 describe("action createServiceCharge", () => {
-    let fakeServiceChargeRepository: Fake<ServiceChargeRepository>;
-    let fakeUnionMemberRepository: Fake<UnionMemberRepository>;
+    let stubServiceChargeRepository: Stub<ServiceChargeRepository>;
+    let stubUnionMemberRepository: Stub<UnionMemberRepository>;
     let createServiceCharge: CreateServiceChargeAction;
 
     beforeEach(() => {
-        fakeServiceChargeRepository = buildFakeServiceChargeRepository();
-        fakeUnionMemberRepository = buildFakeUnionMemberRepository();
+        stubServiceChargeRepository = buildStubServiceChargeRepository();
+        stubUnionMemberRepository = buildStubUnionMemberRepository();
         createServiceCharge = buildCreateServiceChargeAction({
-            serviceChargeRepository: fakeServiceChargeRepository,
-            unionMemberRepository: fakeUnionMemberRepository
+            serviceChargeRepository: stubServiceChargeRepository,
+            unionMemberRepository: stubUnionMemberRepository
         });
 
-        fakeServiceChargeRepository.insert.resolves();
+        stubServiceChargeRepository.insert.resolves();
     });
 
     it("should create a service charge for the employee", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeUnionMemberRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionMember());
+        stubUnionMemberRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionMember());
 
         await createServiceCharge(serviceCharge);
 
-        expect(fakeServiceChargeRepository.insert).to.have.been.calledOnceWith(serviceCharge);
+        expect(stubServiceChargeRepository.insert).to.have.been.calledOnceWith(serviceCharge);
     });
     it("should throw a EmployeeTypeError if no union member with this if was found", async () => {
         const serviceCharge = generateServiceCharge();
-        fakeUnionMemberRepository.fetchByMemberId
+        stubUnionMemberRepository.fetchByMemberId
             .withArgs(serviceCharge.memberId)
             .rejects(new NotFoundError("no union member found"));
 
