@@ -97,7 +97,7 @@ export function generateServiceCharge(args: Partial<ServiceCharge> = {}): Servic
     };
 }
 
-function generateFloatBetween(min: number, max: number): number {
+export function generateFloatBetween(min: number, max: number): number {
     return _.round(_.random(min, max, true), 2);
 }
 

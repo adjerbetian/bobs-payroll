@@ -1,86 +1,85 @@
-import { friday, lastFriday, never } from "../../../../../test/dates";
+import { friday } from "../../../../../test/dates";
 import {
     buildFakeEmployeeRepository,
-    buildFakePaymentMethodRepository,
     buildFakePaymentRepository,
-    buildFakeTimeCardRepository,
+    buildStubFor,
     Fake
 } from "../../../../../test/fakeBuilders";
-import { generateHoldPaymentMethod, generateHourlyEmployee, generateTimeCard } from "../../../../../test/generators";
+import {
+    generateFloatBetween,
+    generateHoldPaymentMethod,
+    generateHourlyEmployee,
+    generatePayment
+} from "../../../../../test/generators";
 import { expect } from "../../../../../test/unitTest";
-import { HourlyEmployee, Payment, PaymentMethod } from "../../entities";
-import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
+import { HourlyEmployee, PaymentMethod } from "../../entities";
+import { EmployeeRepository, PaymentRepository } from "../../repositories";
+import { ComputeHourlyEmployeePaymentDueAmountAction, FetchEmployeePaymentMethodAction } from "./actions";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
 
 describe("action runHourlyPayroll", () => {
-    let fakePaymentRepository: Fake<PaymentRepository>;
     let fakeEmployeeRepository: Fake<EmployeeRepository>;
-    let fakeTimeCardRepository: Fake<TimeCardRepository>;
-    let fakePaymentMethodRepository: Fake<PaymentMethodRepository>;
+    let fakePaymentRepository: Fake<PaymentRepository>;
+    let fakeComputeHourlyEmployeePaymentDueAmount: Fake<ComputeHourlyEmployeePaymentDueAmountAction>;
+    let fakeFetchEmployeePaymentMethod: Fake<FetchEmployeePaymentMethodAction>;
 
     let runHourlyPayroll: RunPayrollAction;
 
     beforeEach(() => {
-        fakePaymentRepository = buildFakePaymentRepository();
         fakeEmployeeRepository = buildFakeEmployeeRepository();
-        fakeTimeCardRepository = buildFakeTimeCardRepository();
-        fakePaymentMethodRepository = buildFakePaymentMethodRepository();
+        fakePaymentRepository = buildFakePaymentRepository();
+        fakeComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
+        fakeFetchEmployeePaymentMethod = buildStubFor("fetchEmployeePaymentMethod");
 
-        runHourlyPayroll = buildRunHourlyPayrollAction({
-            paymentRepository: fakePaymentRepository,
-            employeeRepository: fakeEmployeeRepository,
-            timeCardRepository: fakeTimeCardRepository,
-            paymentMethodRepository: fakePaymentMethodRepository
-        });
+        runHourlyPayroll = buildRunHourlyPayrollAction(
+            {
+                employeeRepository: fakeEmployeeRepository,
+                paymentRepository: fakePaymentRepository
+            },
+            {
+                computeHourlyEmployeePaymentDueAmount: fakeComputeHourlyEmployeePaymentDueAmount,
+                fetchEmployeePaymentMethod: fakeFetchEmployeePaymentMethod
+            }
+        );
 
         fakePaymentRepository.insert.resolves();
-        fakeTimeCardRepository.fetchAllOfEmployeeSince.resolves([]);
     });
 
-    let employee: HourlyEmployee;
-    let method: PaymentMethod;
-
-    beforeEach(async () => {
-        employee = await generateHourlyEmployee();
-        method = await generateHoldPaymentMethod();
-
+    it("should insert the right payment the employee", async () => {
+        const employee = generateHourlyEmployee();
+        const { amount, method } = generateEmployeeModels(employee);
         fakeEmployeeRepository.fetchAllHourly.resolves([employee]);
-        fakePaymentMethodRepository.fetchByEmployeeId.withArgs(employee.id).resolves(method);
-        fakePaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(never);
-    });
-
-    it("should pay the hours made on the employee's time cards", async () => {
-        const timeCard1 = generateTimeCard();
-        const timeCard2 = generateTimeCard();
-        fakeTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard1, timeCard2]);
 
         await runHourlyPayroll(friday);
 
-        const insertedPayment = getInsertedPayment();
-        expect(insertedPayment.amount).equal((timeCard1.hours + timeCard2.hours) * employee.work.hourlyRate);
+        expect(fakePaymentRepository.insert).to.have.been.calledOnceWith(
+            generatePayment({
+                employeeId: employee.id,
+                date: friday,
+                amount,
+                method
+            })
+        );
     });
-    it("should not include the time cards already paid", async () => {
-        const timeCard = generateTimeCard();
-        fakePaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(lastFriday);
-        fakeTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id, lastFriday).resolves([timeCard]);
+
+    it("should insert payments for each hourly employee", async () => {
+        const employee1 = generateHourlyEmployee();
+        const employee2 = generateHourlyEmployee();
+        generateEmployeeModels(employee1);
+        generateEmployeeModels(employee2);
+        fakeEmployeeRepository.fetchAllHourly.resolves([employee1, employee2]);
 
         await runHourlyPayroll(friday);
 
-        const insertedPayment = getInsertedPayment();
-        expect(insertedPayment.amount).to.equal(timeCard.hours * employee.work.hourlyRate);
-    });
-    it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
-        const timeCard = generateTimeCard({ hours: 8 + 2 });
-        fakeTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard]);
-
-        await runHourlyPayroll(friday);
-
-        const insertedPayment = getInsertedPayment();
-        expect(insertedPayment.amount).to.equal((8 + 2 * 1.5) * employee.work.hourlyRate);
+        expect(fakePaymentRepository.insert).to.have.been.calledTwice;
     });
 
-    function getInsertedPayment(): Payment {
-        return fakePaymentRepository.insert.getCall(0).args[0];
+    function generateEmployeeModels(employee: HourlyEmployee): { amount: number; method: PaymentMethod } {
+        const amount = generateFloatBetween(100, 500);
+        const method = generateHoldPaymentMethod();
+        fakeComputeHourlyEmployeePaymentDueAmount.withArgs(employee).resolves(amount);
+        fakeFetchEmployeePaymentMethod.withArgs(employee.id).resolves(method);
+        return { amount, method };
     }
 });

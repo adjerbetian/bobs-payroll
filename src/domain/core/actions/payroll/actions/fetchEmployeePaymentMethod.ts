@@ -2,11 +2,11 @@ import { PaymentMethod, PaymentMethodType } from "../../../entities";
 import { NotFoundError } from "../../../errors";
 import { PaymentMethodRepository } from "../../../repositories";
 
-export type FetchEmployeePaymentMethod = (employeeId: number) => Promise<PaymentMethod>;
+export type FetchEmployeePaymentMethodAction = (employeeId: number) => Promise<PaymentMethod>;
 
 export function buildFetchEmployeePaymentMethod(
     paymentMethodRepository: PaymentMethodRepository
-): FetchEmployeePaymentMethod {
+): FetchEmployeePaymentMethodAction {
     return async function(employeeId: number) {
         try {
             return await paymentMethodRepository.fetchByEmployeeId(employeeId);

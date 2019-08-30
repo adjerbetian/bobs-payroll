@@ -1,4 +1,5 @@
 import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
+import { buildComputeHourlyEmployeePaymentDueAmountAction, buildFetchEmployeePaymentMethod } from "./actions";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
 import { buildRunPayrollDispatcher } from "./runPayrollDispatcher";
@@ -18,12 +19,19 @@ export function buildRunPayrollAction({
     timeCardRepository,
     paymentMethodRepository
 }: Dependencies): RunPayrollAction {
+    const fetchEmployeePaymentMethod = buildFetchEmployeePaymentMethod(paymentMethodRepository);
+    const computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmountAction({
+        paymentRepository,
+        timeCardRepository
+    });
+
     return buildRunPayrollDispatcher({
-        runHourlyPayroll: buildRunHourlyPayrollAction({
-            paymentRepository,
-            employeeRepository,
-            timeCardRepository,
-            paymentMethodRepository
-        })
+        runHourlyPayroll: buildRunHourlyPayrollAction(
+            { employeeRepository, paymentRepository },
+            {
+                fetchEmployeePaymentMethod,
+                computeHourlyEmployeePaymentDueAmount
+            }
+        )
     });
 }
