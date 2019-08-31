@@ -27,3 +27,13 @@ export const mongoServiceChargeRepository = buildMongoServiceChargeRepository(db
 export const mongoTimeCardRepository = buildMongoTimeCardRepository(dbTimeCards);
 export const mongoUnionMemberRepository = buildMongoUnionMemberRepository(dbUnionMembers);
 export const mongoPaymentRepository = buildMongoPaymentRepository(dbPayments);
+
+export {
+    dbEmployees,
+    dbTimeCards,
+    dbPaymentMethods,
+    dbPayments,
+    dbSalesReceipts,
+    dbServiceCharges,
+    dbUnionMembers
+} from "./db";

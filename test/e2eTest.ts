@@ -1,6 +1,7 @@
 import { execute } from "./utils";
 
 export * from "./integrationTest";
+export * from "./utils/execute";
 
 before(async () => {
     await execute("IF EXIST dist\\ DEL /F/Q/S dist\\*.*");
