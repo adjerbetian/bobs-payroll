@@ -28,7 +28,7 @@ export function buildMongoDbAdapter<T>(db: Collection<DbModel<T>>): MongoDbAdapt
             const [entity] = await db
                 .find(query)
                 .limit(1)
-                .sort({ _id: -1 })
+                .sort({ $natural: -1 })
                 .toArray();
             if (!entity) throw buildNotFoundError(query);
 
