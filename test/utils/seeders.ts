@@ -5,8 +5,10 @@ import {
     HourlyEmployee,
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
+    mongoPaymentRepository,
     mongoTimeCardRepository,
     mongoUnionMemberRepository,
+    Payment,
     SalariedEmployee,
     TimeCard,
     UnionMember
@@ -16,6 +18,7 @@ import {
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
     generateHourlyEmployee,
+    generatePayment,
     generateSalariedEmployee,
     generateTimeCard,
     generateUnionMember
@@ -63,4 +66,10 @@ export async function seedTimeCard(args: Partial<TimeCard> = {}): Promise<TimeCa
     const timeCard = generateTimeCard(args);
     await mongoTimeCardRepository.insert(timeCard);
     return timeCard;
+}
+
+export async function seedPayment(args: Partial<Payment> = {}): Promise<Payment> {
+    const payment = generatePayment(args);
+    await mongoPaymentRepository.insert(payment);
+    return payment;
 }
