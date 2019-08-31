@@ -1,19 +1,30 @@
-import { Payment } from "../../../entities";
-import { PaymentRepository } from "../../../repositories";
+import { Payment, PaymentMethod, PaymentMethodType } from "../../../entities";
+import { NotFoundError } from "../../../errors";
+import { PaymentMethodRepository, PaymentRepository } from "../../../repositories";
 import { CreatePaymentForEmployeeAction } from "../CreatePaymentForEmployeeAction";
-import { FetchEmployeePaymentMethodAction } from "../FetchEmployeePaymentMethodAction";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
-    fetchEmployeePaymentMethod: FetchEmployeePaymentMethodAction;
+    paymentMethodRepository: PaymentMethodRepository;
 }
 
 export function buildCreatePaymentForEmployee({
     paymentRepository,
-    fetchEmployeePaymentMethod
+    paymentMethodRepository
 }: Dependencies): CreatePaymentForEmployeeAction {
     return async function(basicPayment: Omit<Payment, "method">): Promise<void> {
         const method = await fetchEmployeePaymentMethod(basicPayment.employeeId);
         await paymentRepository.insert({ ...basicPayment, method });
     };
+
+    async function fetchEmployeePaymentMethod(employeeId: number): Promise<PaymentMethod> {
+        try {
+            return await paymentMethodRepository.fetchByEmployeeId(employeeId);
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return { type: PaymentMethodType.HOLD, employeeId };
+            }
+            throw err;
+        }
+    }
 }

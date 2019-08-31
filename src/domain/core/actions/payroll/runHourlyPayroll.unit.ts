@@ -30,6 +30,8 @@ describe("action runHourlyPayroll", () => {
             computeHourlyEmployeePaymentDueAmount: stubComputeHourlyEmployeePaymentDueAmount,
             createPaymentForEmployee: stubCreatePaymentForEmployee
         });
+
+        stubCreatePaymentForEmployee.resolves();
     });
 
     it("should insert the right payment the employee", async () => {
