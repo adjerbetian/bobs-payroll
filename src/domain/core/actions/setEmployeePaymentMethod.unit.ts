@@ -1,5 +1,6 @@
-import { buildStubbedPaymentMethodRepository, expect, generateHoldPaymentMethod, Stub } from "@test/unit";
+import { expect, generateHoldPaymentMethod, Stub } from "@test/unit";
 import { PaymentMethodRepository } from "../repositories";
+import { buildStubbedPaymentMethodRepository } from "../test";
 import { buildSetEmployeePaymentMethod, SetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
 
 describe("action setEmployeePaymentMethod", () => {

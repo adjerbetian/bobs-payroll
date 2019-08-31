@@ -1,11 +1,12 @@
-import { buildStubbedMongoDbAdapter, expect, generateDirectPaymentMethod, generateIndex, Stub } from "@test/unit";
-import { PaymentMethod, PaymentMethodRepository } from "../../domain";
+import { expect, generateDirectPaymentMethod, generateIndex, Stub } from "@test/unit";
+import { PaymentMethod } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
+import { buildStubbedMongoDbAdapter } from "../test";
 import { buildMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
 
 describe("mongoPaymentMethodRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<PaymentMethod>>;
-    let repository: PaymentMethodRepository;
+    let repository: ReturnType<typeof buildMongoPaymentMethodRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();

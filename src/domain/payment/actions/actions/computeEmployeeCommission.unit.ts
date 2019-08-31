@@ -1,11 +1,6 @@
-import {
-    buildStubbedSalesReceiptRepository,
-    expect,
-    generateCommissionedEmployee,
-    generateSalesReceipt,
-    Stub
-} from "@test/unit";
+import { expect, generateCommissionedEmployee, generateSalesReceipt, Stub } from "@test/unit";
 import { CommissionedEmployee, SalesReceiptRepository } from "../../../core";
+import { buildStubbedSalesReceiptRepository } from "../../../core/test";
 import { buildComputeEmployeeCommission } from "./computeEmployeeCommission";
 
 describe("action computeEmployeeCommission", () => {

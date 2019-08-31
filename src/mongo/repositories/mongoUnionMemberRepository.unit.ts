@@ -1,11 +1,12 @@
-import { buildStubbedMongoDbAdapter, expect, generateIndex, generateUnionMember, Stub } from "@test/unit";
-import { UnionMember, UnionMemberRepository } from "../../domain";
+import { expect, generateIndex, generateUnionMember, Stub } from "@test/unit";
+import { UnionMember } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
+import { buildStubbedMongoDbAdapter } from "../test";
 import { buildMongoUnionMemberRepository } from "./mongoUnionMemberRepository";
 
 describe("mongoUnionMemberRepository", () => {
-    let repository: UnionMemberRepository;
     let stubbedDb: Stub<MongoDbAdapter<UnionMember>>;
+    let repository: ReturnType<typeof buildMongoUnionMemberRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();

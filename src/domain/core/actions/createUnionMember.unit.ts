@@ -1,14 +1,8 @@
-import {
-    buildStubbedEmployeeRepository,
-    buildStubbedUnionMemberRepository,
-    expect,
-    generateHourlyEmployee,
-    generateUnionMember,
-    Stub
-} from "@test/unit";
+import { expect, generateHourlyEmployee, generateUnionMember, Stub } from "@test/unit";
 import { UnionMember } from "../entities";
 import { NotFoundError, UnionMemberIdAlreadyUsedError } from "../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../repositories";
+import { buildStubbedEmployeeRepository, buildStubbedUnionMemberRepository } from "../test";
 import { buildCreateUnionMember, CreateUnionMember } from "./createUnionMember";
 
 describe("action createUnionMember", () => {

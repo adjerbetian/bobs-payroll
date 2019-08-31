@@ -1,15 +1,8 @@
-import {
-    buildStubbedPaymentRepository,
-    buildStubbedTimeCardRepository,
-    expect,
-    generateHourlyEmployee,
-    generateTimeCard,
-    lastFriday,
-    never,
-    Stub
-} from "@test/unit";
+import { expect, generateHourlyEmployee, generateTimeCard, lastFriday, never, Stub } from "@test/unit";
 import { HourlyEmployee, TimeCardRepository } from "../../../core";
+import { buildStubbedTimeCardRepository } from "../../../core/test";
 import { PaymentRepository } from "../../repositories";
+import { buildStubbedPaymentRepository } from "../../test";
 import { buildComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
 
 describe("action computeHourlyEmployeePaymentDueAmount", () => {

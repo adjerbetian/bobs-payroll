@@ -1,12 +1,6 @@
-import {
-    buildStubbedEmployeeRepository,
-    buildStubFor,
-    expect,
-    generateSalariedEmployee,
-    lastDayOfMonth,
-    Stub
-} from "@test/unit";
+import { buildStubFor, expect, generateSalariedEmployee, lastDayOfMonth, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../core";
+import { buildStubbedEmployeeRepository } from "../../core/test";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { RunPayroll } from "./RunPayroll";
 import { buildRunSalariedPayroll } from "./runSalariedPayroll";

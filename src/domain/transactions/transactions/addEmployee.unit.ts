@@ -1,29 +1,25 @@
 import {
     buildStubbedCoreActions,
-    buildStubbedEmployeeRepository,
     expect,
     generateCommissionedEmployee,
     generateHourlyEmployee,
     generateSalariedEmployee,
     Stub
 } from "@test/unit";
-import { CoreActions, EmployeeRepository } from "../../core";
+import { CoreActions } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 
 describe("addEmployee", () => {
     let stubbedActions: Stub<CoreActions>;
-    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
     let addEmployee: Transaction;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();
-        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
         addEmployee = buildAddEmployeeTransaction(stubbedActions);
 
         stubbedActions.createEmployee.resolves();
-        stubbedEmployeeRepository.insert.resolves();
     });
 
     it("should insert an hourly employee", async () => {

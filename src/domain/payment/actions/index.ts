@@ -14,7 +14,7 @@ import { buildRunSalariedPayroll } from "./runSalariedPayroll";
 
 export { PaymentActions } from "./PaymentActions";
 
-interface Dependencies {
+export interface PaymentActionsDependencies {
     paymentRepository: PaymentRepository;
     employeeRepository: EmployeeRepository;
     timeCardRepository: TimeCardRepository;
@@ -28,7 +28,7 @@ export function buildPaymentActions({
     timeCardRepository,
     paymentMethodRepository,
     salesReceiptRepository
-}: Dependencies): PaymentActions {
+}: PaymentActionsDependencies): PaymentActions {
     return {
         runPayroll: buildRunPayroll()
     };

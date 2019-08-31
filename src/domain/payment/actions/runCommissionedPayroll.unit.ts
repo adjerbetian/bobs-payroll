@@ -1,5 +1,4 @@
 import {
-    buildStubbedEmployeeRepository,
     buildStubFor,
     expect,
     generateCommissionedEmployee,
@@ -9,6 +8,7 @@ import {
     Stub
 } from "@test/unit";
 import { EmployeeRepository } from "../../core";
+import { buildStubbedEmployeeRepository } from "../../core/test";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { buildRunCommissionedPayroll, ComputeEmployeeCommission } from "./runCommissionedPayroll";
 import { RunPayroll } from "./RunPayroll";

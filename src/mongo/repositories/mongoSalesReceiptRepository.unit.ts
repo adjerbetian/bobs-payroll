@@ -1,11 +1,12 @@
-import { buildStubbedMongoDbAdapter, expect, generateIndex, generateSalesReceipt, Stub } from "@test/unit";
-import { SalesReceipt, SalesReceiptRepository } from "../../domain";
+import { expect, generateIndex, generateSalesReceipt, Stub } from "@test/unit";
+import { SalesReceipt } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
+import { buildStubbedMongoDbAdapter } from "../test";
 import { buildMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 
 describe("mongoSalesReceiptRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<SalesReceipt>>;
-    let repository: SalesReceiptRepository;
+    let repository: ReturnType<typeof buildMongoSalesReceiptRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();

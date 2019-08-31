@@ -1,14 +1,7 @@
-import {
-    buildStubbedEmployeeRepository,
-    buildStubbedSalesReceiptRepository,
-    expect,
-    generateCommissionedEmployee,
-    generateSalariedEmployee,
-    generateSalesReceipt,
-    Stub
-} from "@test/unit";
+import { expect, generateCommissionedEmployee, generateSalariedEmployee, generateSalesReceipt, Stub } from "@test/unit";
 import { EmployeeTypeError } from "../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
+import { buildStubbedEmployeeRepository, buildStubbedSalesReceiptRepository } from "../test";
 import { buildCreateSalesReceipt, CreateSalesReceipt } from "./createSalesReceipt";
 
 describe("action createSalesReceipt", () => {

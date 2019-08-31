@@ -1,6 +1,4 @@
 import {
-    buildStubbedPaymentMethodRepository,
-    buildStubbedPaymentRepository,
     expect,
     generateFloatBetween,
     generateHoldPaymentMethod,
@@ -9,8 +7,10 @@ import {
     Stub
 } from "@test/unit";
 import { NotFoundError, PaymentMethodRepository } from "../../../core";
+import { buildStubbedPaymentMethodRepository } from "../../../core/test";
 import { Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
+import { buildStubbedPaymentRepository } from "../../test";
 import { buildCreatePaymentForEmployee } from "./createPaymentForEmployee";
 
 describe("createPaymentForEmployee", () => {

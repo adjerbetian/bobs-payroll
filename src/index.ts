@@ -8,7 +8,6 @@ export {
     dbPaymentMethods,
     dbTimeCards,
     dbEmployees,
-    MongoDbAdapter,
     initConnection,
     closeConnection,
     cleanCollections

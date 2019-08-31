@@ -1,5 +1,6 @@
-import { buildStubbedEmployeeRepository, expect, generateHourlyEmployee, Stub } from "@test/unit";
+import { expect, generateHourlyEmployee, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
+import { buildStubbedEmployeeRepository } from "../../test";
 import { buildCreateEmployee, CreateEmployee } from "./createEmployee";
 
 describe("action createEmployee", () => {

@@ -1,14 +1,16 @@
 import {
     CommissionedEmployee,
+    CoreActionsDependencies,
     Employee,
-    EmployeeRepository,
     EmployeeType,
     HourlyEmployee,
     SalariedEmployee
 } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): EmployeeRepository {
+export function buildMongoEmployeeRepository(
+    db: MongoDbAdapter<Employee>
+): CoreActionsDependencies["employeeRepository"] {
     return {
         async fetchById(id: number): Promise<Employee> {
             return db.fetch({ id });

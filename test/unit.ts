@@ -12,5 +12,5 @@ export const sandbox = sinon.createSandbox();
 afterEach((): void => sandbox.restore());
 
 export * from "./utils/dates";
-export * from "./utils/stubBuilders";
+export * from "./utils/stubBuilder";
 export * from "./utils/generators";

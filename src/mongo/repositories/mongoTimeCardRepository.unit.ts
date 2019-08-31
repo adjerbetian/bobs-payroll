@@ -1,11 +1,12 @@
-import { buildStubbedMongoDbAdapter, expect, generateIndex, generateTimeCard, monday, Stub } from "@test/unit";
-import { TimeCard, TimeCardRepository } from "../../domain";
+import { expect, generateIndex, generateTimeCard, monday, Stub } from "@test/unit";
+import { TimeCard } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
+import { buildStubbedMongoDbAdapter } from "../test";
 import { buildMongoTimeCardRepository } from "./mongoTimeCardRepository";
 
 describe("mongoTimeCardRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<TimeCard>>;
-    let repository: TimeCardRepository;
+    let repository: ReturnType<typeof buildMongoTimeCardRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();

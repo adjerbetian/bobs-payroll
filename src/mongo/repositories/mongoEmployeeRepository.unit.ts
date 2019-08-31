@@ -1,5 +1,4 @@
 import {
-    buildStubbedMongoDbAdapter,
     expect,
     generateCommissionedEmployee,
     generateHourlyEmployee,
@@ -7,12 +6,13 @@ import {
     generateSalariedEmployee,
     Stub
 } from "@test/unit";
-import { Employee, EmployeeRepository, EmployeeType, HourlyEmployee } from "../../domain";
+import { Employee, EmployeeType, HourlyEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
+import { buildStubbedMongoDbAdapter } from "../test";
 import { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";
 
 describe("mongoEmployeeRepository", () => {
-    let repository: EmployeeRepository;
+    let repository: ReturnType<typeof buildMongoEmployeeRepository>;
     let stubbedDb: Stub<MongoDbAdapter<Employee>>;
 
     beforeEach(() => {

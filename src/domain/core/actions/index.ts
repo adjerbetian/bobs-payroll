@@ -17,7 +17,7 @@ import { buildSetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
 
 export { CoreActions } from "./CoreActions";
 
-export interface ActionsDependencies {
+export interface CoreActionsDependencies {
     employeeRepository: EmployeeRepository;
     timeCardRepository: TimeCardRepository;
     serviceChargeRepository: ServiceChargeRepository;
@@ -33,7 +33,7 @@ export function buildCoreActions({
     unionMemberRepository,
     salesReceiptRepository,
     paymentMethodRepository
-}: ActionsDependencies): CoreActions {
+}: CoreActionsDependencies): CoreActions {
     return {
         deleteEmployee: buildDeleteEmployee({ employeeRepository }),
         createTimeCard: buildCreateTimeCard({ employeeRepository, timeCardRepository }),
