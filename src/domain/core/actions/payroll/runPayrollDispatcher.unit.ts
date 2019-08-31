@@ -1,6 +1,7 @@
 import {
     buildStubFor,
     expect,
+    firstDayOfMonth,
     friday,
     lastDayOfMonth,
     monday,
@@ -39,6 +40,7 @@ describe("action runPayroll", () => {
         expect(stubPayrollActions.runHourlyPayroll).to.have.been.calledOnceWith(friday);
     });
     it("should should call the runSalariedPayroll only at the end of the month", async () => {
+        await runPayroll(firstDayOfMonth);
         await runPayroll(lastDayOfMonth);
 
         expect(stubPayrollActions.runSalariedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);

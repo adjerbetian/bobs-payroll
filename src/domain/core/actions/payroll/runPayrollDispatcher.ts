@@ -13,10 +13,16 @@ export function buildRunPayrollDispatcher(payrollActions: PayrollActions): RunPa
         if (isFriday(date)) {
             await payrollActions.runHourlyPayroll(date);
         }
-        await payrollActions.runSalariedPayroll(date);
+        if (isLastDayOfMonth(date)) {
+            await payrollActions.runSalariedPayroll(date);
+        }
     };
 
     function isFriday(date: string): boolean {
         return moment(date).day() === FRIDAY;
+    }
+    function isLastDayOfMonth(date: string): boolean {
+        const lastDayOfMonth = moment(date).endOf("month");
+        return moment(date).isSame(lastDayOfMonth, "day");
     }
 }
