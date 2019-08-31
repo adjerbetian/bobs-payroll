@@ -19,7 +19,8 @@ export function buildStubEmployeeRepository(): Stub<EmployeeRepository> {
         deleteById: true,
         updateById: true,
         fetchAllHourly: true,
-        fetchAllSalaried: true
+        fetchAllSalaried: true,
+        fetchAllCommissioned: true
     });
 }
 

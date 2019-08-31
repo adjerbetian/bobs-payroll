@@ -1,39 +1,35 @@
 import {
     buildStubEmployeeRepository,
-    buildStubFor,
     buildStubPaymentRepository,
     expect,
-    friday,
-    generateFloatBetween,
-    generateHoldPaymentMethod,
-    generateHourlyEmployee,
+    generateCommissionedEmployee,
+    lastDayOfMonth,
+    Stub,
+    buildStubFor,
     generatePayment,
-    Stub
+    generateHoldPaymentMethod
 } from "@test/unit";
-import { HourlyEmployee, PaymentMethod } from "../../entities";
+import { PaymentMethod, CommissionedEmployee } from "../../entities";
 import { EmployeeRepository, PaymentRepository } from "../../repositories";
 import { FetchEmployeePaymentMethodAction } from "./FetchEmployeePaymentMethodAction";
-import { buildRunHourlyPayrollAction, ComputeHourlyEmployeePaymentDueAmountAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
+import { buildRunCommissionedPayrollAction } from "./runCommissionedPayroll";
 
-describe("action runHourlyPayroll", () => {
+describe("action runCommissionedPayroll", () => {
     let stubEmployeeRepository: Stub<EmployeeRepository>;
     let stubPaymentRepository: Stub<PaymentRepository>;
-    let stubComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmountAction>;
     let stubFetchEmployeePaymentMethod: Stub<FetchEmployeePaymentMethodAction>;
 
-    let runHourlyPayroll: RunPayrollAction;
+    let runCommissionedPayroll: RunPayrollAction;
 
     beforeEach(() => {
         stubEmployeeRepository = buildStubEmployeeRepository();
         stubPaymentRepository = buildStubPaymentRepository();
-        stubComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
         stubFetchEmployeePaymentMethod = buildStubFor("fetchEmployeePaymentMethod");
 
-        runHourlyPayroll = buildRunHourlyPayrollAction({
+        runCommissionedPayroll = buildRunCommissionedPayrollAction({
             employeeRepository: stubEmployeeRepository,
             paymentRepository: stubPaymentRepository,
-            computeHourlyEmployeePaymentDueAmount: stubComputeHourlyEmployeePaymentDueAmount,
             fetchEmployeePaymentMethod: stubFetchEmployeePaymentMethod
         });
 
@@ -41,39 +37,37 @@ describe("action runHourlyPayroll", () => {
     });
 
     it("should insert the right payment the employee", async () => {
-        const employee = generateHourlyEmployee();
-        const { amount, method } = generateEmployeeModels(employee);
-        stubEmployeeRepository.fetchAllHourly.resolves([employee]);
+        const employee = generateCommissionedEmployee();
+        const { method } = generateEmployeeModels(employee);
+        stubEmployeeRepository.fetchAllCommissioned.resolves([employee]);
 
-        await runHourlyPayroll(friday);
+        await runCommissionedPayroll(lastDayOfMonth);
 
         expect(stubPaymentRepository.insert).to.have.been.calledOnceWith(
             generatePayment({
                 employeeId: employee.id,
-                date: friday,
-                amount,
+                date: lastDayOfMonth,
+                amount: employee.work.monthlySalary,
                 method
             })
         );
     });
 
     it("should insert payments for each employee", async () => {
-        const employee1 = generateHourlyEmployee();
-        const employee2 = generateHourlyEmployee();
+        const employee1 = generateCommissionedEmployee();
+        const employee2 = generateCommissionedEmployee();
         generateEmployeeModels(employee1);
         generateEmployeeModels(employee2);
-        stubEmployeeRepository.fetchAllHourly.resolves([employee1, employee2]);
+        stubEmployeeRepository.fetchAllCommissioned.resolves([employee1, employee2]);
 
-        await runHourlyPayroll(friday);
+        await runCommissionedPayroll(lastDayOfMonth);
 
         expect(stubPaymentRepository.insert).to.have.been.calledTwice;
     });
 
-    function generateEmployeeModels(employee: HourlyEmployee): { amount: number; method: PaymentMethod } {
-        const amount = generateFloatBetween(100, 500);
+    function generateEmployeeModels(employee: CommissionedEmployee): { method: PaymentMethod } {
         const method = generateHoldPaymentMethod();
-        stubComputeHourlyEmployeePaymentDueAmount.withArgs(employee).resolves(amount);
         stubFetchEmployeePaymentMethod.withArgs(employee.id).resolves(method);
-        return { amount, method };
+        return { method };
     }
 });

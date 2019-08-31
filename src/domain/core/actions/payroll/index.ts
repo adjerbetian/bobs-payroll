@@ -1,5 +1,6 @@
 import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
 import { buildComputeHourlyEmployeePaymentDueAmountAction, buildFetchEmployeePaymentMethod } from "./actions";
+import { buildRunCommissionedPayrollAction } from "./runCommissionedPayroll";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
 import { buildRunPayrollDispatcher } from "./runPayrollDispatcher";
@@ -37,6 +38,11 @@ export function buildRunPayrollAction({
             paymentRepository,
             employeeRepository,
             fetchEmployeePaymentMethod
+        }),
+        runCommissionedPayroll: buildRunCommissionedPayrollAction({
+            fetchEmployeePaymentMethod,
+            employeeRepository,
+            paymentRepository
         })
     });
 }

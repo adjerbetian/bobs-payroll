@@ -4,6 +4,7 @@ import { RunPayrollAction } from "./RunPayrollAction";
 export interface PayrollActions {
     runHourlyPayroll: (date: string) => Promise<void>;
     runSalariedPayroll: (date: string) => Promise<void>;
+    runCommissionedPayroll: (date: string) => Promise<void>;
 }
 
 const FRIDAY = 5;
@@ -15,6 +16,7 @@ export function buildRunPayrollDispatcher(payrollActions: PayrollActions): RunPa
         }
         if (isLastDayOfMonth(date)) {
             await payrollActions.runSalariedPayroll(date);
+            await payrollActions.runCommissionedPayroll(date);
         }
     };
 

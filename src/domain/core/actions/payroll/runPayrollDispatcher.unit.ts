@@ -26,6 +26,7 @@ describe("action runPayroll", () => {
 
         stubPayrollActions.runHourlyPayroll.resolves();
         stubPayrollActions.runSalariedPayroll.resolves();
+        stubPayrollActions.runCommissionedPayroll.resolves();
     });
 
     it("should should call the runHourlyPayroll only on fridays", async () => {
@@ -45,11 +46,18 @@ describe("action runPayroll", () => {
 
         expect(stubPayrollActions.runSalariedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);
     });
+    it("should should call the runCommissionedPayroll only at the end of the month", async () => {
+        await runPayroll(firstDayOfMonth);
+        await runPayroll(lastDayOfMonth);
+
+        expect(stubPayrollActions.runCommissionedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);
+    });
 });
 
 function buildStubPayrollActions(): Stub<PayrollActions> {
     return buildStubFor({
         runHourlyPayroll: true,
-        runSalariedPayroll: true
+        runSalariedPayroll: true,
+        runCommissionedPayroll: true
     });
 }

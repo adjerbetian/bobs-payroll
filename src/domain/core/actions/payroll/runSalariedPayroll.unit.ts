@@ -53,7 +53,7 @@ describe("action runSalariedPayroll", () => {
         );
     });
 
-    it("should insert payments for each hourly employee", async () => {
+    it("should insert payments for each employee", async () => {
         const employee1 = generateSalariedEmployee();
         const employee2 = generateSalariedEmployee();
         generateEmployeeModels(employee1);

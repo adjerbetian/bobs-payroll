@@ -1,6 +1,7 @@
 import {
     buildStubMongoDbAdapter,
     expect,
+    generateCommissionedEmployee,
     generateHourlyEmployee,
     generateIndex,
     generateSalariedEmployee,
@@ -102,6 +103,16 @@ describe("mongoEmployeeRepository", () => {
             stubDb.fetchAll.withArgs({ "work.type": EmployeeType.SALARIED }).resolves(employees);
 
             const result = await repository.fetchAllSalaried();
+
+            expect(result).to.deep.equal(employees);
+        });
+    });
+    describe("fetchAllCommissioned", () => {
+        it("should only fetch commissioned employees", async () => {
+            const employees = [generateCommissionedEmployee(), generateCommissionedEmployee()];
+            stubDb.fetchAll.withArgs({ "work.type": EmployeeType.COMMISSIONED }).resolves(employees);
+
+            const result = await repository.fetchAllCommissioned();
 
             expect(result).to.deep.equal(employees);
         });
