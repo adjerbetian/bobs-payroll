@@ -1,16 +1,16 @@
 import { HourlyEmployee, TimeCard } from "../../../entities";
 import { PaymentRepository, TimeCardRepository } from "../../../repositories";
-import { ComputeHourlyEmployeePaymentDueAmountAction } from "../runHourlyPayroll";
+import { ComputeHourlyEmployeePaymentDueAmount } from "../runHourlyPayroll";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
     timeCardRepository: TimeCardRepository;
 }
 
-export function buildComputeHourlyEmployeePaymentDueAmountAction({
+export function buildComputeHourlyEmployeePaymentDueAmount({
     paymentRepository,
     timeCardRepository
-}: Dependencies): ComputeHourlyEmployeePaymentDueAmountAction {
+}: Dependencies): ComputeHourlyEmployeePaymentDueAmount {
     return async function(employee: HourlyEmployee): Promise<number> {
         const dueTimeCards = await fetchEmployeeDueTimeCards(employee.id);
         const regularHours = computeTimeCardsRegularHours(dueTimeCards);

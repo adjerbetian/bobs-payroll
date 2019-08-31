@@ -7,12 +7,9 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export type CreateUnionMemberAction = (unionMember: UnionMember) => Promise<void>;
+export type CreateUnionMember = (unionMember: UnionMember) => Promise<void>;
 
-export function buildCreateUnionMemberAction({
-    unionMemberRepository,
-    employeeRepository
-}: Dependencies): CreateUnionMemberAction {
+export function buildCreateUnionMember({ unionMemberRepository, employeeRepository }: Dependencies): CreateUnionMember {
     return async function(unionMember: UnionMember): Promise<void> {
         await assertEmployeeExists(unionMember.employeeId);
         await assertMemberIdIsNotTaken(unionMember);

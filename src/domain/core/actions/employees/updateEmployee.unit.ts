@@ -1,14 +1,14 @@
 import { buildStubEmployeeRepository, expect, generateIndex, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
-import { buildUpdateEmployeeAction, UpdateEmployeeAction } from "./updateEmployee";
+import { buildUpdateEmployee, UpdateEmployee } from "./updateEmployee";
 
 describe("action updateEmployee", () => {
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let updateEmployee: UpdateEmployeeAction;
+    let updateEmployee: UpdateEmployee;
 
     beforeEach(() => {
         stubEmployeeRepository = buildStubEmployeeRepository();
-        updateEmployee = buildUpdateEmployeeAction({ employeeRepository: stubEmployeeRepository });
+        updateEmployee = buildUpdateEmployee({ employeeRepository: stubEmployeeRepository });
     });
 
     it("should update the given employee", async () => {

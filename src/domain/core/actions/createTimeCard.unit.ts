@@ -9,17 +9,17 @@ import {
 } from "@test/unit";
 import { EmployeeTypeError } from "../errors";
 import { EmployeeRepository, TimeCardRepository } from "../repositories";
-import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";
+import { buildCreateTimeCard, CreateTimeCard } from "./createTimeCard";
 
 describe("action createTimeCard", () => {
     let stubTimeCardRepository: Stub<TimeCardRepository>;
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let createTimeCard: CreateTimeCardAction;
+    let createTimeCard: CreateTimeCard;
 
     beforeEach(() => {
         stubTimeCardRepository = buildStubTimeCardRepository();
         stubEmployeeRepository = buildStubEmployeeRepository();
-        createTimeCard = buildCreateTimeCardAction({
+        createTimeCard = buildCreateTimeCard({
             employeeRepository: stubEmployeeRepository,
             timeCardRepository: stubTimeCardRepository
         });

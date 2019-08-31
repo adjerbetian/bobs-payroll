@@ -8,17 +8,17 @@ import {
 } from "@test/unit";
 import { NotFoundError } from "../errors";
 import { ServiceChargeRepository, UnionMemberRepository } from "../repositories";
-import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";
+import { buildCreateServiceCharge, CreateServiceCharge } from "./createServiceCharge";
 
 describe("action createServiceCharge", () => {
     let stubServiceChargeRepository: Stub<ServiceChargeRepository>;
     let stubUnionMemberRepository: Stub<UnionMemberRepository>;
-    let createServiceCharge: CreateServiceChargeAction;
+    let createServiceCharge: CreateServiceCharge;
 
     beforeEach(() => {
         stubServiceChargeRepository = buildStubServiceChargeRepository();
         stubUnionMemberRepository = buildStubUnionMemberRepository();
-        createServiceCharge = buildCreateServiceChargeAction({
+        createServiceCharge = buildCreateServiceCharge({
             serviceChargeRepository: stubServiceChargeRepository,
             unionMemberRepository: stubUnionMemberRepository
         });

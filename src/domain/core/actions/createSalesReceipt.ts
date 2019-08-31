@@ -7,12 +7,12 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export type CreateSalesReceiptAction = (salesReceipt: SalesReceipt) => Promise<void>;
+export type CreateSalesReceipt = (salesReceipt: SalesReceipt) => Promise<void>;
 
-export function buildCreateSalesReceiptAction({
+export function buildCreateSalesReceipt({
     salesReceiptRepository,
     employeeRepository
-}: Dependencies): CreateSalesReceiptAction {
+}: Dependencies): CreateSalesReceipt {
     return async function(salesReceipt: SalesReceipt): Promise<void> {
         await assertEmployeeIsCommissioned(salesReceipt.employeeId);
         return salesReceiptRepository.insert(salesReceipt);

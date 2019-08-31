@@ -9,17 +9,17 @@ import {
 } from "@test/unit";
 import { EmployeeTypeError } from "../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
-import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";
+import { buildCreateSalesReceipt, CreateSalesReceipt } from "./createSalesReceipt";
 
 describe("action createSalesReceipt", () => {
     let stubSalesReceiptRepository: Stub<SalesReceiptRepository>;
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let createSalesReceipt: CreateSalesReceiptAction;
+    let createSalesReceipt: CreateSalesReceipt;
 
     beforeEach(() => {
         stubSalesReceiptRepository = buildStubSalesReceiptRepository();
         stubEmployeeRepository = buildStubEmployeeRepository();
-        createSalesReceipt = buildCreateSalesReceiptAction({
+        createSalesReceipt = buildCreateSalesReceipt({
             salesReceiptRepository: stubSalesReceiptRepository,
             employeeRepository: stubEmployeeRepository
         });

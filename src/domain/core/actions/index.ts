@@ -7,33 +7,33 @@ import {
     TimeCardRepository,
     UnionMemberRepository
 } from "../repositories";
-import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";
-import { buildCreateServiceChargeAction, CreateServiceChargeAction } from "./createServiceCharge";
-import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";
-import { buildCreateUnionMemberAction, CreateUnionMemberAction } from "./createUnionMember";
+import { buildCreateSalesReceipt, CreateSalesReceipt } from "./createSalesReceipt";
+import { buildCreateServiceCharge, CreateServiceCharge } from "./createServiceCharge";
+import { buildCreateTimeCard, CreateTimeCard } from "./createTimeCard";
+import { buildCreateUnionMember, CreateUnionMember } from "./createUnionMember";
 import {
-    buildCreateEmployeeAction,
-    buildDeleteEmployeeAction,
-    buildUpdateEmployeeAction,
-    CreateEmployeeAction,
-    DeleteEmployeeAction,
-    UpdateEmployeeAction
+    buildCreateEmployee,
+    buildDeleteEmployee,
+    buildUpdateEmployee,
+    CreateEmployee,
+    DeleteEmployee,
+    UpdateEmployee
 } from "./employees";
-import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
-import { buildRunPayrollAction, RunPayrollAction } from "./payroll";
-import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
+import { buildRunPayroll, RunPayroll } from "./payroll";
+import { buildRemoveEmployeeFromUnion, RemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
+import { buildSetEmployeePaymentMethod, SetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
 
 export interface Actions {
-    deleteEmployee: DeleteEmployeeAction;
-    createTimeCard: CreateTimeCardAction;
-    createServiceCharge: CreateServiceChargeAction;
-    createSalesReceipt: CreateSalesReceiptAction;
-    createEmployee: CreateEmployeeAction;
-    updateEmployee: UpdateEmployeeAction;
-    setEmployeePaymentMethod: SetEmployeePaymentMethodAction;
-    createUnionMember: CreateUnionMemberAction;
-    removeEmployeeFromUnion: RemoveEmployeeFromUnionAction;
-    runPayroll: RunPayrollAction;
+    deleteEmployee: DeleteEmployee;
+    createTimeCard: CreateTimeCard;
+    createServiceCharge: CreateServiceCharge;
+    createSalesReceipt: CreateSalesReceipt;
+    createEmployee: CreateEmployee;
+    updateEmployee: UpdateEmployee;
+    setEmployeePaymentMethod: SetEmployeePaymentMethod;
+    createUnionMember: CreateUnionMember;
+    removeEmployeeFromUnion: RemoveEmployeeFromUnion;
+    runPayroll: RunPayroll;
 }
 
 export interface ActionsDependencies {
@@ -56,16 +56,16 @@ export function buildActions({
     paymentRepository
 }: ActionsDependencies): Actions {
     return {
-        deleteEmployee: buildDeleteEmployeeAction({ employeeRepository }),
-        createTimeCard: buildCreateTimeCardAction({ employeeRepository, timeCardRepository }),
-        createServiceCharge: buildCreateServiceChargeAction({ serviceChargeRepository, unionMemberRepository }),
-        createSalesReceipt: buildCreateSalesReceiptAction({ employeeRepository, salesReceiptRepository }),
-        createEmployee: buildCreateEmployeeAction({ employeeRepository }),
-        updateEmployee: buildUpdateEmployeeAction({ employeeRepository }),
-        setEmployeePaymentMethod: buildSetEmployeePaymentMethodAction({ paymentMethodRepository }),
-        createUnionMember: buildCreateUnionMemberAction({ unionMemberRepository, employeeRepository }),
-        removeEmployeeFromUnion: buildRemoveEmployeeFromUnionAction({ unionMemberRepository }),
-        runPayroll: buildRunPayrollAction({
+        deleteEmployee: buildDeleteEmployee({ employeeRepository }),
+        createTimeCard: buildCreateTimeCard({ employeeRepository, timeCardRepository }),
+        createServiceCharge: buildCreateServiceCharge({ serviceChargeRepository, unionMemberRepository }),
+        createSalesReceipt: buildCreateSalesReceipt({ employeeRepository, salesReceiptRepository }),
+        createEmployee: buildCreateEmployee({ employeeRepository }),
+        updateEmployee: buildUpdateEmployee({ employeeRepository }),
+        setEmployeePaymentMethod: buildSetEmployeePaymentMethod({ paymentMethodRepository }),
+        createUnionMember: buildCreateUnionMember({ unionMemberRepository, employeeRepository }),
+        removeEmployeeFromUnion: buildRemoveEmployeeFromUnion({ unionMemberRepository }),
+        runPayroll: buildRunPayroll({
             paymentRepository,
             timeCardRepository,
             paymentMethodRepository,

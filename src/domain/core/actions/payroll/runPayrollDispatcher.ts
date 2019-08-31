@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { RunPayroll } from "./RunPayroll";
 
 export interface PayrollActions {
     runHourlyPayroll: (date: string) => Promise<void>;
@@ -9,7 +9,7 @@ export interface PayrollActions {
 
 const FRIDAY = 5;
 
-export function buildRunPayrollDispatcher(payrollActions: PayrollActions): RunPayrollAction {
+export function buildRunPayrollDispatcher(payrollActions: PayrollActions): RunPayroll {
     return async function(date: string): Promise<void> {
         if (isFriday(date)) {
             await payrollActions.runHourlyPayroll(date);

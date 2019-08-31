@@ -5,11 +5,9 @@ interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;
 }
 
-export type SetEmployeePaymentMethodAction = (paymentMethod: PaymentMethod) => Promise<void>;
+export type SetEmployeePaymentMethod = (paymentMethod: PaymentMethod) => Promise<void>;
 
-export function buildSetEmployeePaymentMethodAction({
-    paymentMethodRepository
-}: Dependencies): SetEmployeePaymentMethodAction {
+export function buildSetEmployeePaymentMethod({ paymentMethodRepository }: Dependencies): SetEmployeePaymentMethod {
     return async function(paymentMethod: PaymentMethod): Promise<void> {
         await paymentMethodRepository.deleteByEmployeeId(paymentMethod.employeeId);
         return paymentMethodRepository.insert(paymentMethod);

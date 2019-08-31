@@ -9,23 +9,23 @@ import {
 } from "@test/unit";
 import { HourlyEmployee } from "../../entities";
 import { EmployeeRepository } from "../../repositories";
-import { CreatePaymentForEmployeeAction } from "./CreatePaymentForEmployeeAction";
-import { buildRunHourlyPayrollAction, ComputeHourlyEmployeePaymentDueAmountAction } from "./runHourlyPayroll";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
+import { buildRunHourlyPayroll, ComputeHourlyEmployeePaymentDueAmount } from "./runHourlyPayroll";
+import { RunPayroll } from "./RunPayroll";
 
 describe("action runHourlyPayroll", () => {
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let stubComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmountAction>;
-    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployeeAction>;
+    let stubComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmount>;
+    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runHourlyPayroll: RunPayrollAction;
+    let runHourlyPayroll: RunPayroll;
 
     beforeEach(() => {
         stubEmployeeRepository = buildStubEmployeeRepository();
         stubComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
         stubCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
 
-        runHourlyPayroll = buildRunHourlyPayrollAction({
+        runHourlyPayroll = buildRunHourlyPayroll({
             employeeRepository: stubEmployeeRepository,
             computeHourlyEmployeePaymentDueAmount: stubComputeHourlyEmployeePaymentDueAmount,
             createPaymentForEmployee: stubCreatePaymentForEmployee

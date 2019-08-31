@@ -1,14 +1,14 @@
 import { buildStubPaymentMethodRepository, expect, generateHoldPaymentMethod, Stub } from "@test/unit";
 import { PaymentMethodRepository } from "../repositories";
-import { buildSetEmployeePaymentMethodAction, SetEmployeePaymentMethodAction } from "./setEmployeePaymentMethod";
+import { buildSetEmployeePaymentMethod, SetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
 
 describe("action setEmployeePaymentMethod", () => {
     let stubPaymentMethodRepository: Stub<PaymentMethodRepository>;
-    let setEmployeePaymentMethod: SetEmployeePaymentMethodAction;
+    let setEmployeePaymentMethod: SetEmployeePaymentMethod;
 
     beforeEach(() => {
         stubPaymentMethodRepository = buildStubPaymentMethodRepository();
-        setEmployeePaymentMethod = buildSetEmployeePaymentMethodAction({
+        setEmployeePaymentMethod = buildSetEmployeePaymentMethod({
             paymentMethodRepository: stubPaymentMethodRepository
         });
 

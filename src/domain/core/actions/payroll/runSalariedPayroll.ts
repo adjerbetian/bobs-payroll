@@ -1,17 +1,14 @@
 import { SalariedEmployee } from "../../entities";
 import { EmployeeRepository } from "../../repositories";
-import { CreatePaymentForEmployeeAction } from "./CreatePaymentForEmployeeAction";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
+import { RunPayroll } from "./RunPayroll";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
-    createPaymentForEmployee: CreatePaymentForEmployeeAction;
+    createPaymentForEmployee: CreatePaymentForEmployee;
 }
 
-export function buildRunSalariedPayrollAction({
-    employeeRepository,
-    createPaymentForEmployee
-}: Dependencies): RunPayrollAction {
+export function buildRunSalariedPayroll({ employeeRepository, createPaymentForEmployee }: Dependencies): RunPayroll {
     return async function(date: string): Promise<void> {
         const employees = await employeeRepository.fetchAllSalaried();
         for (const employee of employees) {

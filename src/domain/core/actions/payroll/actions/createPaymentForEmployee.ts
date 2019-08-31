@@ -1,7 +1,7 @@
 import { Payment, PaymentMethod, PaymentMethodType } from "../../../entities";
 import { NotFoundError } from "../../../errors";
 import { PaymentMethodRepository, PaymentRepository } from "../../../repositories";
-import { CreatePaymentForEmployeeAction } from "../CreatePaymentForEmployeeAction";
+import { CreatePaymentForEmployee } from "../CreatePaymentForEmployee";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
@@ -11,7 +11,7 @@ interface Dependencies {
 export function buildCreatePaymentForEmployee({
     paymentRepository,
     paymentMethodRepository
-}: Dependencies): CreatePaymentForEmployeeAction {
+}: Dependencies): CreatePaymentForEmployee {
     return async function(basicPayment: Omit<Payment, "method">): Promise<void> {
         const method = await fetchEmployeePaymentMethod(basicPayment.employeeId);
         await paymentRepository.insert({ ...basicPayment, method });

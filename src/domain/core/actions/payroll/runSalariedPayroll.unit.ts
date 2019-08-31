@@ -7,21 +7,21 @@ import {
     Stub
 } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
-import { CreatePaymentForEmployeeAction } from "./CreatePaymentForEmployeeAction";
-import { RunPayrollAction } from "./RunPayrollAction";
-import { buildRunSalariedPayrollAction } from "./runSalariedPayroll";
+import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
+import { RunPayroll } from "./RunPayroll";
+import { buildRunSalariedPayroll } from "./runSalariedPayroll";
 
 describe("action runSalariedPayroll", () => {
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployeeAction>;
+    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runSalariedPayroll: RunPayrollAction;
+    let runSalariedPayroll: RunPayroll;
 
     beforeEach(() => {
         stubEmployeeRepository = buildStubEmployeeRepository();
         stubCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
 
-        runSalariedPayroll = buildRunSalariedPayrollAction({
+        runSalariedPayroll = buildRunSalariedPayroll({
             employeeRepository: stubEmployeeRepository,
             createPaymentForEmployee: stubCreatePaymentForEmployee
         });

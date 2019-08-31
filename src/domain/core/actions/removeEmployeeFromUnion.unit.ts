@@ -1,14 +1,14 @@
 import { buildStubUnionMemberRepository, expect, generateIndex, Stub } from "@test/unit";
 import { UnionMemberRepository } from "../repositories";
-import { buildRemoveEmployeeFromUnionAction, RemoveEmployeeFromUnionAction } from "./removeEmployeeFromUnion";
+import { buildRemoveEmployeeFromUnion, RemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
 
 describe("action removeEmployeeFromUnion", () => {
     let stubUnionMemberRepository: Stub<UnionMemberRepository>;
-    let removeEmployeeFromUnion: RemoveEmployeeFromUnionAction;
+    let removeEmployeeFromUnion: RemoveEmployeeFromUnion;
 
     beforeEach(() => {
         stubUnionMemberRepository = buildStubUnionMemberRepository();
-        removeEmployeeFromUnion = buildRemoveEmployeeFromUnionAction({
+        removeEmployeeFromUnion = buildRemoveEmployeeFromUnion({
             unionMemberRepository: stubUnionMemberRepository
         });
     });

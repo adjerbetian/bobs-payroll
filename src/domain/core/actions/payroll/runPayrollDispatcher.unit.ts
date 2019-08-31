@@ -12,13 +12,13 @@ import {
     tuesday,
     wednesday
 } from "@test/unit";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { RunPayroll } from "./RunPayroll";
 import { buildRunPayrollDispatcher, PayrollActions } from "./runPayrollDispatcher";
 
 describe("action runPayroll", () => {
     let stubPayrollActions: Stub<PayrollActions>;
 
-    let runPayroll: RunPayrollAction;
+    let runPayroll: RunPayroll;
 
     beforeEach(() => {
         stubPayrollActions = buildStubPayrollActions();

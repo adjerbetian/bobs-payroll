@@ -9,23 +9,23 @@ import {
     Stub
 } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
-import { CreatePaymentForEmployeeAction } from "./CreatePaymentForEmployeeAction";
-import { buildRunCommissionedPayrollAction, ComputeEmployeeCommissionAction } from "./runCommissionedPayroll";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
+import { buildRunCommissionedPayroll, ComputeEmployeeCommission } from "./runCommissionedPayroll";
+import { RunPayroll } from "./RunPayroll";
 
 describe("action runCommissionedPayroll", () => {
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let stubComputeEmployeeCommission: Stub<ComputeEmployeeCommissionAction>;
-    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployeeAction>;
+    let stubComputeEmployeeCommission: Stub<ComputeEmployeeCommission>;
+    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runCommissionedPayroll: RunPayrollAction;
+    let runCommissionedPayroll: RunPayroll;
 
     beforeEach(() => {
         stubEmployeeRepository = buildStubEmployeeRepository();
         stubCreatePaymentForEmployee = buildStubFor("fetchEmployeePaymentMethod");
         stubComputeEmployeeCommission = buildStubFor("createPaymentForEmployee");
 
-        runCommissionedPayroll = buildRunCommissionedPayrollAction({
+        runCommissionedPayroll = buildRunCommissionedPayroll({
             employeeRepository: stubEmployeeRepository,
             computeEmployeeCommission: stubComputeEmployeeCommission,
             createPaymentForEmployee: stubCreatePaymentForEmployee

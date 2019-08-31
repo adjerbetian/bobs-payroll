@@ -10,20 +10,20 @@ import {
 } from "@test/unit";
 import { HourlyEmployee } from "../../../entities";
 import { PaymentRepository, TimeCardRepository } from "../../../repositories";
-import { buildComputeHourlyEmployeePaymentDueAmountAction } from "./computeHourlyEmployeePaymentDueAmount";
+import { buildComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
 
 describe("action computeHourlyEmployeePaymentDueAmount", () => {
     let stubPaymentRepository: Stub<PaymentRepository>;
     let stubTimeCardRepository: Stub<TimeCardRepository>;
 
-    let computeHourlyEmployeePaymentDueAmount: ReturnType<typeof buildComputeHourlyEmployeePaymentDueAmountAction>;
+    let computeHourlyEmployeePaymentDueAmount: ReturnType<typeof buildComputeHourlyEmployeePaymentDueAmount>;
     let employee: HourlyEmployee;
 
     beforeEach(() => {
         stubPaymentRepository = buildStubPaymentRepository();
         stubTimeCardRepository = buildStubTimeCardRepository();
 
-        computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmountAction({
+        computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmount({
             paymentRepository: stubPaymentRepository,
             timeCardRepository: stubTimeCardRepository
         });

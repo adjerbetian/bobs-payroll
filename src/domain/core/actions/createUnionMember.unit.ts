@@ -9,19 +9,19 @@ import {
 import { UnionMember } from "../entities";
 import { NotFoundError, UnionMemberIdAlreadyUsedError } from "../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../repositories";
-import { buildCreateUnionMemberAction, CreateUnionMemberAction } from "./createUnionMember";
+import { buildCreateUnionMember, CreateUnionMember } from "./createUnionMember";
 
 describe("action createUnionMember", () => {
     let stubUnionMemberRepository: Stub<UnionMemberRepository>;
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let createUnionMember: CreateUnionMemberAction;
+    let createUnionMember: CreateUnionMember;
 
     let unionMember: UnionMember;
 
     beforeEach(() => {
         stubUnionMemberRepository = buildStubUnionMemberRepository();
         stubEmployeeRepository = buildStubEmployeeRepository();
-        createUnionMember = buildCreateUnionMemberAction({
+        createUnionMember = buildCreateUnionMember({
             unionMemberRepository: stubUnionMemberRepository,
             employeeRepository: stubEmployeeRepository
         });

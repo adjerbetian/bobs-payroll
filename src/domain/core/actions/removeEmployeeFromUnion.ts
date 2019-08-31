@@ -4,11 +4,9 @@ interface Dependencies {
     unionMemberRepository: UnionMemberRepository;
 }
 
-export type RemoveEmployeeFromUnionAction = (employeeId: number) => Promise<void>;
+export type RemoveEmployeeFromUnion = (employeeId: number) => Promise<void>;
 
-export function buildRemoveEmployeeFromUnionAction({
-    unionMemberRepository
-}: Dependencies): RemoveEmployeeFromUnionAction {
+export function buildRemoveEmployeeFromUnion({ unionMemberRepository }: Dependencies): RemoveEmployeeFromUnion {
     return async function(employeeId: number): Promise<void> {
         await unionMemberRepository.deleteByEmployeeId(employeeId);
     };

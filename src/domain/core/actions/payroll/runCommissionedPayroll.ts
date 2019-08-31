@@ -1,21 +1,21 @@
 import { CommissionedEmployee } from "../../entities";
 import { EmployeeRepository } from "../../repositories";
-import { CreatePaymentForEmployeeAction } from "./CreatePaymentForEmployeeAction";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
+import { RunPayroll } from "./RunPayroll";
 
-export type ComputeEmployeeCommissionAction = (employee: CommissionedEmployee) => Promise<number>;
+export type ComputeEmployeeCommission = (employee: CommissionedEmployee) => Promise<number>;
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
-    createPaymentForEmployee: CreatePaymentForEmployeeAction;
-    computeEmployeeCommission: ComputeEmployeeCommissionAction;
+    createPaymentForEmployee: CreatePaymentForEmployee;
+    computeEmployeeCommission: ComputeEmployeeCommission;
 }
 
-export function buildRunCommissionedPayrollAction({
+export function buildRunCommissionedPayroll({
     employeeRepository,
     createPaymentForEmployee,
     computeEmployeeCommission
-}: Dependencies): RunPayrollAction {
+}: Dependencies): RunPayroll {
     return async function(date: string): Promise<void> {
         const employees = await employeeRepository.fetchAllCommissioned();
         for (const employee of employees) {

@@ -5,9 +5,9 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export type CreateEmployeeAction = (employee: Employee) => Promise<void>;
+export type CreateEmployee = (employee: Employee) => Promise<void>;
 
-export function buildCreateEmployeeAction({ employeeRepository }: Dependencies): CreateEmployeeAction {
+export function buildCreateEmployee({ employeeRepository }: Dependencies): CreateEmployee {
     return async function(employee: Employee): Promise<void> {
         await employeeRepository.insert(employee);
     };

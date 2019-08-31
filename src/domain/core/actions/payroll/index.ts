@@ -7,16 +7,16 @@ import {
 } from "../../repositories";
 import {
     buildComputeEmployeeCommission,
-    buildComputeHourlyEmployeePaymentDueAmountAction,
+    buildComputeHourlyEmployeePaymentDueAmount,
     buildCreatePaymentForEmployee
 } from "./actions";
-import { buildRunCommissionedPayrollAction } from "./runCommissionedPayroll";
-import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { buildRunCommissionedPayroll } from "./runCommissionedPayroll";
+import { buildRunHourlyPayroll } from "./runHourlyPayroll";
+import { RunPayroll } from "./RunPayroll";
 import { buildRunPayrollDispatcher } from "./runPayrollDispatcher";
-import { buildRunSalariedPayrollAction } from "./runSalariedPayroll";
+import { buildRunSalariedPayroll } from "./runSalariedPayroll";
 
-export { RunPayrollAction } from "./RunPayrollAction";
+export { RunPayroll } from "./RunPayroll";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
@@ -26,31 +26,31 @@ interface Dependencies {
     salesReceiptRepository: SalesReceiptRepository;
 }
 
-export function buildRunPayrollAction({
+export function buildRunPayroll({
     employeeRepository,
     paymentRepository,
     timeCardRepository,
     paymentMethodRepository,
     salesReceiptRepository
-}: Dependencies): RunPayrollAction {
+}: Dependencies): RunPayroll {
     const createPaymentForEmployee = buildCreatePaymentForEmployee({ paymentRepository, paymentMethodRepository });
     const computeEmployeeCommission = buildComputeEmployeeCommission({ salesReceiptRepository });
-    const computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmountAction({
+    const computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmount({
         paymentRepository,
         timeCardRepository
     });
 
     return buildRunPayrollDispatcher({
-        runHourlyPayroll: buildRunHourlyPayrollAction({
+        runHourlyPayroll: buildRunHourlyPayroll({
             employeeRepository,
             computeHourlyEmployeePaymentDueAmount,
             createPaymentForEmployee
         }),
-        runSalariedPayroll: buildRunSalariedPayrollAction({
+        runSalariedPayroll: buildRunSalariedPayroll({
             employeeRepository,
             createPaymentForEmployee
         }),
-        runCommissionedPayroll: buildRunCommissionedPayrollAction({
+        runCommissionedPayroll: buildRunCommissionedPayroll({
             employeeRepository,
             createPaymentForEmployee,
             computeEmployeeCommission
