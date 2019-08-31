@@ -1,4 +1,4 @@
-import { execute, ExecuteOptions } from "./utils";
+import { execute } from "./utils";
 
 export * from "./integrationTest";
 
@@ -7,6 +7,6 @@ before(async () => {
     await execute("npm run build");
 });
 
-export async function executePayrollCommand(command: string, options?: ExecuteOptions): Promise<void> {
-    await execute("node dist/main.js " + command, options);
+export async function executePayrollCommand(command: string): Promise<string> {
+    return await execute("node dist/main.js " + command);
 }

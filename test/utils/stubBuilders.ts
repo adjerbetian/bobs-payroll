@@ -11,12 +11,6 @@ import {
 } from "../../src";
 import { sandbox } from "@test/unit";
 
-export type Stub<T> = T extends Function ? StubFunction : StubObject<T>;
-type StubFunction = SinonStub;
-type StubObject<T> = {
-    [K in keyof T]: SinonStub;
-};
-
 export function buildStubEmployeeRepository(): Stub<EmployeeRepository> {
     return buildStubFor({
         fetchById: true,
@@ -98,11 +92,15 @@ export function buildStubActions(): Stub<Actions> {
     });
 }
 
-export function buildStubFor<T extends Record<string, boolean>>(object: T): { [K in keyof T]: SinonStub };
-export function buildStubFor(name: string): SinonStub;
-export function buildStubFor<T extends Record<string, boolean>>(
-    object: T | string
-): { [K in keyof T]: SinonStub } | SinonStub {
+export type Stub<T> = T extends Function ? StubFunction : StubObject<T>;
+type StubFunction = SinonStub;
+type StubObject<T> = {
+    [K in keyof T]: SinonStub;
+};
+
+export function buildStubFor<T extends Record<string, boolean>>(object: T): StubObject<T>;
+export function buildStubFor(name: string): StubFunction;
+export function buildStubFor<T extends Record<string, boolean>>(object: T | string): StubObject<T> | StubFunction {
     if (typeof object === "string") {
         return buildStubForFunction(object);
     } else {
@@ -110,7 +108,7 @@ export function buildStubFor<T extends Record<string, boolean>>(
     }
 }
 
-function buildStubForObject<T extends Record<string, boolean>>(object: T): { [K in keyof T]: SinonStub } {
+function buildStubForObject<T extends Record<string, boolean>>(object: T): StubObject<T> {
     const result: Record<string, SinonStub> = {};
     for (const key in object) {
         // noinspection JSUnfilteredForInLoop
@@ -119,6 +117,6 @@ function buildStubForObject<T extends Record<string, boolean>>(object: T): { [K 
     return result as { [K in keyof T]: SinonStub };
 }
 
-function buildStubForFunction(name: string): SinonStub {
+function buildStubForFunction(name: string): StubFunction {
     return sandbox.stub().rejects(`${name} should not have been called`);
 }
