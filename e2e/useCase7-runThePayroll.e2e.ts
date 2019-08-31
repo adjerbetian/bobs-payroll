@@ -123,15 +123,7 @@ describe.only("Use Case 7: Run the Payroll for Today", () => {
 
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary);
         });
-        it.skip("should not pay twice the monthly salary", async () => {
-            await seedPayment({ date: lastDayOfMonth, employeeId: employee.id });
-
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
-
-            const payments = await dbPayments.fetchAll({ employeeId: employee.id });
-            expect(payments).to.have.lengthOf(1);
-        });
-        it.skip("should not pay if it's not the last day of the month", async () => {
+        it("should not pay if it's not the last day of the month", async () => {
             await executePayrollCommand(`Payroll ${firstDayOfMonth}`);
 
             await expectEmployeeNotToHaveBeenPaid(employee.id);
