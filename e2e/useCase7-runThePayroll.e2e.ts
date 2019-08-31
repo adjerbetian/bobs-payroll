@@ -1,7 +1,9 @@
 import {
     executePayrollCommand,
     expect,
+    firstDayOfMonth,
     friday,
+    lastDayOfMonth,
     lastFriday,
     lastMonday,
     lastTuesday,
@@ -9,14 +11,15 @@ import {
     never,
     seedHourlyEmployee,
     seedPayment,
+    seedSalariedEmployee,
     seedTimeCard,
     thursday,
     tuesday,
     wednesday
 } from "@test/e2e";
-import { dbPayments, HourlyEmployee } from "../src";
+import { dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
 
-describe("Use Case 7: Run the Payroll for Today", () => {
+describe.only("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
         let employee: HourlyEmployee;
 
@@ -51,8 +54,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await executePayrollCommand(`Payroll ${monday}`);
 
-            const paymentDate = await fetchEmployeeLastPaymentDate(employee.id);
-            expect(paymentDate).to.equal(never);
+            await expectEmployeeNotToHaveBeenPaid(employee.id);
         });
         it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
             const regularHours = 8;
@@ -105,14 +107,27 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             }
             async function seedPreviousPayment(employeeId: number): Promise<void> {
                 await seedTimeCard({ date: lastMonday, hours: 5, employeeId });
-                await seedTimeCard({ date: lastTuesday, hours: 10, employeeId });
+                await seedTimeCard({ date: lastTuesday, hours: 12, employeeId });
                 await seedPayment({ date: lastFriday, employeeId });
             }
         });
     });
     describe("salaried employees", () => {
-        it.skip("should pay the monthly salary", async () => {});
-        it.skip("should not pay if it's not the last day of the month", async () => {});
+        let employee: SalariedEmployee;
+
+        beforeEach(async () => {
+            employee = await seedSalariedEmployee();
+        });
+        it("should pay the monthly salary", async () => {
+            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+
+            await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary);
+        });
+        it.skip("should not pay if it's not the last day of the month", async () => {
+            await executePayrollCommand(`Payroll ${firstDayOfMonth}`);
+
+            await expectEmployeeNotToHaveBeenPaid(employee.id);
+        });
     });
     describe("salaried employees", () => {
         it.skip("should pay the monthly salary", async () => {});
@@ -140,6 +155,10 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 async function expectEmployeePaymentAmountToEqual(employeeId: number, amount: number): Promise<void> {
     const employeeLastPayment = await dbPayments.fetchLast({ employeeId });
     expect(employeeLastPayment.amount).to.equal(amount);
+}
+async function expectEmployeeNotToHaveBeenPaid(employeeId: number): Promise<void> {
+    const paymentDate = await fetchEmployeeLastPaymentDate(employeeId);
+    expect(paymentDate).to.equal(never);
 }
 async function fetchEmployeeLastPaymentDate(employeeId: number): Promise<string> {
     if (await dbPayments.exists({ employeeId })) {
