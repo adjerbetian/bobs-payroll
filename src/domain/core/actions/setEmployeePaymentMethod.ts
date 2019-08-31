@@ -1,4 +1,5 @@
-import { PaymentMethod, PaymentMethodRepository } from "../../core";
+import { PaymentMethod } from "../entities";
+import { PaymentMethodRepository } from "../repositories";
 
 interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;

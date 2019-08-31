@@ -7,8 +7,8 @@ import {
     generateTimeCard,
     Stub
 } from "@test/unit";
-import { EmployeeRepository, TimeCardRepository } from "../../core";
 import { EmployeeTypeError } from "../errors";
+import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildCreateTimeCardAction, CreateTimeCardAction } from "./createTimeCard";
 
 describe("action createTimeCard", () => {
