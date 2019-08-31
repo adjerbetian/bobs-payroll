@@ -35,6 +35,7 @@ module.exports = {
         "import/no-internal-modules": ["error", { allow: ["module-alias/*"] }],
         "import/no-unresolved": ["error", { ignore: ["@test"] }],
         "import/no-cycle": "error",
+        "import/no-unused-modules": "off",
 
         // typescript-eslint
         "@typescript-eslint/explicit-function-return-type": [

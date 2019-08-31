@@ -9,10 +9,12 @@ import {
     lastTuesday,
     monday,
     never,
+    secondDayOfMonth,
     seedCommissionedEmployee,
     seedHourlyEmployee,
     seedPayment,
     seedSalariedEmployee,
+    seedSalesReceipt,
     seedTimeCard,
     thursday,
     tuesday,
@@ -143,7 +145,19 @@ describe.only("Use Case 7: Run the Payroll for Today", () => {
 
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary);
         });
-        it.skip("should include the commissions of all the sales receipts", async () => {});
+        it("should include the commissions of all the sales receipts", async () => {
+            const salesReceipts = [
+                await seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth }),
+                await seedSalesReceipt({ employeeId: employee.id, date: secondDayOfMonth })
+            ];
+
+            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+
+            const commission = (salesReceipts[0].amount + salesReceipts[1].amount) * employee.work.commissionRate;
+            await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary + commission);
+        });
+        // todo : remove action keyword
+        // todo : separate the payment in another domain
         it.skip("should not include the commissions of the sales receipts of the previous month", async () => {});
         it.skip("should not pay if it's not the last day of the month", async () => {});
         it.skip("should not pay twice the salary and the commission even if we run the program twice on the same day", async () => {});

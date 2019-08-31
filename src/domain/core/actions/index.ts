@@ -69,7 +69,8 @@ export function buildActions({
             paymentRepository,
             timeCardRepository,
             paymentMethodRepository,
-            employeeRepository
+            employeeRepository,
+            salesReceiptRepository
         })
     };
 }

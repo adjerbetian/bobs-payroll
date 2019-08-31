@@ -3,6 +3,7 @@ import {
     dbEmployees,
     dbPaymentMethods,
     dbPayments,
+    dbSalesReceipts,
     dbTimeCards,
     dbUnionMembers,
     DirectPaymentMethod,
@@ -10,6 +11,7 @@ import {
     HourlyEmployee,
     Payment,
     SalariedEmployee,
+    SalesReceipt,
     TimeCard,
     UnionMember
 } from "../../src";
@@ -20,6 +22,7 @@ import {
     generateHourlyEmployee,
     generatePayment,
     generateSalariedEmployee,
+    generateSalesReceipt,
     generateTimeCard,
     generateUnionMember
 } from "./generators";
@@ -66,6 +69,12 @@ export async function seedTimeCard(args: Partial<TimeCard> = {}): Promise<TimeCa
     const timeCard = generateTimeCard(args);
     await dbTimeCards.insert(timeCard);
     return timeCard;
+}
+
+export async function seedSalesReceipt(args: Partial<SalesReceipt> = {}): Promise<SalesReceipt> {
+    const salesReceipt = generateSalesReceipt(args);
+    await dbSalesReceipts.insert(salesReceipt);
+    return salesReceipt;
 }
 
 export async function seedPayment(args: Partial<Payment> = {}): Promise<Payment> {

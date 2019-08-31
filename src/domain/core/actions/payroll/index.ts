@@ -1,5 +1,15 @@
-import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
-import { buildComputeHourlyEmployeePaymentDueAmountAction, buildCreatePaymentForEmployee } from "./actions";
+import {
+    EmployeeRepository,
+    PaymentMethodRepository,
+    PaymentRepository,
+    SalesReceiptRepository,
+    TimeCardRepository
+} from "../../repositories";
+import {
+    buildComputeEmployeeCommission,
+    buildComputeHourlyEmployeePaymentDueAmountAction,
+    buildCreatePaymentForEmployee
+} from "./actions";
 import { buildRunCommissionedPayrollAction } from "./runCommissionedPayroll";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
@@ -13,15 +23,18 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
     timeCardRepository: TimeCardRepository;
     paymentMethodRepository: PaymentMethodRepository;
+    salesReceiptRepository: SalesReceiptRepository;
 }
 
 export function buildRunPayrollAction({
     employeeRepository,
     paymentRepository,
     timeCardRepository,
-    paymentMethodRepository
+    paymentMethodRepository,
+    salesReceiptRepository
 }: Dependencies): RunPayrollAction {
     const createPaymentForEmployee = buildCreatePaymentForEmployee({ paymentRepository, paymentMethodRepository });
+    const computeEmployeeCommission = buildComputeEmployeeCommission({ salesReceiptRepository });
     const computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmountAction({
         paymentRepository,
         timeCardRepository
@@ -39,7 +52,8 @@ export function buildRunPayrollAction({
         }),
         runCommissionedPayroll: buildRunCommissionedPayrollAction({
             employeeRepository,
-            createPaymentForEmployee
+            createPaymentForEmployee,
+            computeEmployeeCommission
         })
     });
 }

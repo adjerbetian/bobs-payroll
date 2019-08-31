@@ -1,6 +1,6 @@
 import {
     buildStubEmployeeRepository,
-    buildStubTimeCardRepository,
+    buildStubSalesReceiptRepository,
     expect,
     generateCommissionedEmployee,
     generateSalariedEmployee,
@@ -8,16 +8,16 @@ import {
     Stub
 } from "@test/unit";
 import { EmployeeTypeError } from "../errors";
-import { EmployeeRepository, TimeCardRepository } from "../repositories";
+import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
 import { buildCreateSalesReceiptAction, CreateSalesReceiptAction } from "./createSalesReceipt";
 
-describe("action createTimeCard", () => {
-    let stubSalesReceiptRepository: Stub<TimeCardRepository>;
+describe("action createSalesReceipt", () => {
+    let stubSalesReceiptRepository: Stub<SalesReceiptRepository>;
     let stubEmployeeRepository: Stub<EmployeeRepository>;
     let createSalesReceipt: CreateSalesReceiptAction;
 
     beforeEach(() => {
-        stubSalesReceiptRepository = buildStubTimeCardRepository();
+        stubSalesReceiptRepository = buildStubSalesReceiptRepository();
         stubEmployeeRepository = buildStubEmployeeRepository();
         createSalesReceipt = buildCreateSalesReceiptAction({
             salesReceiptRepository: stubSalesReceiptRepository,

@@ -7,7 +7,8 @@ import {
     TimeCardRepository,
     UnionMemberRepository,
     Actions,
-    PaymentRepository
+    PaymentRepository,
+    SalesReceiptRepository
 } from "../../src";
 import { sandbox } from "@test/unit";
 
@@ -33,6 +34,14 @@ export function buildStubPaymentMethodRepository(): Stub<PaymentMethodRepository
 }
 
 export function buildStubTimeCardRepository(): Stub<TimeCardRepository> {
+    return buildStubFor({
+        insert: true,
+        fetchAllOfEmployee: true,
+        fetchAllOfEmployeeSince: true
+    });
+}
+
+export function buildStubSalesReceiptRepository(): Stub<SalesReceiptRepository> {
     return buildStubFor({
         insert: true,
         fetchAllOfEmployee: true,
