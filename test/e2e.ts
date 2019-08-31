@@ -1,6 +1,6 @@
 import { execute } from "./utils";
 
-export * from "./integrationTest";
+export * from "./integration";
 export * from "./utils/execute";
 
 before(async () => {

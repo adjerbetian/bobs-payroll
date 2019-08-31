@@ -33,7 +33,7 @@ module.exports = {
 
         // import
         "import/no-internal-modules": ["error", { allow: ["module-alias/*"] }],
-        "import/no-unresolved": ["error", { ignore: ["@"] }],
+        "import/no-unresolved": ["error", { ignore: ["@test"] }],
         "import/no-cycle": "error",
 
         // typescript-eslint

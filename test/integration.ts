@@ -1,7 +1,7 @@
-import "./unitTest";
+import "./unit";
 import { closeConnection, initConnection, cleanCollections } from "../src";
 
-export * from "./unitTest";
+export * from "./unit";
 export * from "./utils/seeders";
 
 before(async function() {

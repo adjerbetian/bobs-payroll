@@ -22,9 +22,7 @@
         "mongodb": "^3.3.2"
     },
     "_moduleAliases": {
-        "@test/unit": "test/unitTest",
-        "@test/integration": "test/integrationTest",
-        "@test/e2e": "test/e2eTest"
+        "@test": "test"
     },
     "devDependencies": {
         "@types/chai": "^4.2.0",
