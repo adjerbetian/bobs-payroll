@@ -14,7 +14,7 @@ import {
     tuesday,
     wednesday
 } from "@test/e2e";
-import { HourlyEmployee, mongoPaymentRepository } from "../src";
+import { dbPayments, HourlyEmployee } from "../src";
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
@@ -51,7 +51,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await executePayrollCommand(`Payroll ${monday}`);
 
-            const paymentDate = await mongoPaymentRepository.fetchEmployeeLastPaymentDate(employee.id);
+            const paymentDate = await fetchEmployeeLastPaymentDate(employee.id);
             expect(paymentDate).to.equal(never);
         });
         it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
@@ -135,9 +135,17 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         it.skip("should deduce the service charges", async () => {});
         it.skip("should not deduce the already paid service charges", async () => {});
     });
-
-    async function expectEmployeePaymentAmountToEqual(employeeId: number, amount: number): Promise<void> {
-        const employeeLastPayment = await mongoPaymentRepository.fetchLastOfEmployee(employeeId);
-        expect(employeeLastPayment.amount).to.equal(amount);
-    }
 });
+
+async function expectEmployeePaymentAmountToEqual(employeeId: number, amount: number): Promise<void> {
+    const employeeLastPayment = await dbPayments.fetchLast({ employeeId });
+    expect(employeeLastPayment.amount).to.equal(amount);
+}
+async function fetchEmployeeLastPaymentDate(employeeId: number): Promise<string> {
+    if (await dbPayments.exists({ employeeId })) {
+        const payment = await dbPayments.fetchLast({ employeeId });
+        return payment.date;
+    } else {
+        return never;
+    }
+}

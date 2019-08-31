@@ -1,5 +1,5 @@
 import { executePayrollCommand, expect, generateTimeCard, seedHourlyEmployee, seedSalariedEmployee } from "@test/e2e";
-import { mongoTimeCardRepository, TimeCard } from "../src";
+import { dbTimeCards, TimeCard } from "../src";
 
 describe("Use Case 3: Post a Time Card", () => {
     it("should insert the time card in the db", async () => {
@@ -40,11 +40,11 @@ async function executePostTimeCard(timeCard: TimeCard): Promise<void> {
 }
 
 async function expectEmployeeToHaveTimeCard(employeeId: number, timeCard: TimeCard): Promise<void> {
-    const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(employeeId);
-    expect(dbTimeCards).to.deep.include(timeCard);
+    const timeCards = await dbTimeCards.fetchAll({ employeeId });
+    expect(timeCards).to.deep.include(timeCard);
 }
 
 async function expectEmployeeToHaveNoTimeCards(employeeId: number): Promise<void> {
-    const dbTimeCards = await mongoTimeCardRepository.fetchAllOfEmployee(employeeId);
-    expect(dbTimeCards).to.be.empty;
+    const timeCards = await dbTimeCards.fetchAll({ employeeId });
+    expect(timeCards).to.be.empty;
 }

@@ -5,7 +5,7 @@ import {
     generateHourlyEmployee,
     generateSalariedEmployee
 } from "@test/e2e";
-import { Employee, mongoEmployeeRepository } from "../src";
+import { dbEmployees, Employee } from "../src";
 
 describe("Use Case 1: Add New Employee", () => {
     it("should add an hourly employee", async () => {
@@ -42,12 +42,12 @@ describe("Use Case 1: Add New Employee", () => {
             `AddEmp ${employee.id} "${employee.name}" "${employee.address}" C ${employee.work.monthlySalary}`
         );
 
-        const employeeExistsInDb = await mongoEmployeeRepository.exists({ id: employee.id });
+        const employeeExistsInDb = await dbEmployees.exists({ id: employee.id });
         expect(employeeExistsInDb).to.be.false;
     });
 });
 
 async function expectUserToExistInDb(employee: Employee): Promise<void> {
-    const dbEmployee = await mongoEmployeeRepository.fetchById(employee.id);
+    const dbEmployee = await dbEmployees.fetch({ id: employee.id });
     expect(dbEmployee).to.deep.equal(employee);
 }

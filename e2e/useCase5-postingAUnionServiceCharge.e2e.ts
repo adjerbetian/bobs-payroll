@@ -1,5 +1,5 @@
 import { executePayrollCommand, expect, generateServiceCharge, seedUnionMember } from "@test/e2e";
-import { mongoServiceChargeRepository, ServiceCharge } from "../src";
+import { dbServiceCharges, ServiceCharge } from "../src";
 
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
@@ -32,11 +32,11 @@ async function executePostServiceCharge(serviceCharge: ServiceCharge): Promise<v
 }
 
 async function expectServiceChargeToHaveBeenInserted(serviceCharge: ServiceCharge): Promise<void> {
-    const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
-    expect(dbServiceCharges).to.deep.include(serviceCharge);
+    const serviceCharges = await dbServiceCharges.fetchAll({});
+    expect(serviceCharges).to.deep.include(serviceCharge);
 }
 
 async function expectServiceChargeNotToHaveBeenInserted(serviceCharge: ServiceCharge): Promise<void> {
-    const dbServiceCharges = await mongoServiceChargeRepository.fetchAll();
-    expect(dbServiceCharges).not.to.deep.include(serviceCharge);
+    const serviceCharges = await dbServiceCharges.fetchAll({});
+    expect(serviceCharges).not.to.deep.include(serviceCharge);
 }

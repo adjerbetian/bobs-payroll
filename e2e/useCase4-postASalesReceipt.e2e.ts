@@ -5,7 +5,7 @@ import {
     seedCommissionedEmployee,
     seedSalariedEmployee
 } from "@test/e2e";
-import { mongoSalesReceiptRepository, SalesReceipt } from "../src";
+import { SalesReceipt, dbSalesReceipts } from "../src";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {
@@ -46,11 +46,11 @@ async function executePostSalesReceipt(salesReceipt: SalesReceipt): Promise<void
 }
 
 async function expectEmployeeToHaveSalesReceipt(employeeId: number, salesReceipt: SalesReceipt): Promise<void> {
-    const dbSalesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(employeeId);
-    expect(dbSalesReceipts).to.deep.include(salesReceipt);
+    const salesReceipts = await dbSalesReceipts.fetchAll({ employeeId });
+    expect(salesReceipts).to.deep.include(salesReceipt);
 }
 
 async function expectEmployeeToHaveNoSalesReceipt(employeeId: number): Promise<void> {
-    const dbSalesReceipts = await mongoSalesReceiptRepository.fetchAllOfEmployee(employeeId);
-    expect(dbSalesReceipts).to.be.empty;
+    const salesReceipts = await dbSalesReceipts.fetchAll({ employeeId });
+    expect(salesReceipts).to.be.empty;
 }

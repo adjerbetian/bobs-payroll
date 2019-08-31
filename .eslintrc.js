@@ -32,7 +32,7 @@ module.exports = {
         "no-shadow": "error",
 
         // import
-        "import/no-internal-modules": ["error", { allow: ["test/*", "module-alias/*"] }],
+        "import/no-internal-modules": ["error", { allow: ["module-alias/*"] }],
         "import/no-unresolved": ["error", { ignore: ["@"] }],
         "import/no-cycle": "error",
 
