@@ -1,6 +1,6 @@
-import { Payment, PaymentMethod, PaymentMethodType } from "../../../entities";
-import { NotFoundError } from "../../../errors";
-import { PaymentMethodRepository, PaymentRepository } from "../../../repositories";
+import { NotFoundError, PaymentMethod, PaymentMethodRepository, PaymentMethodType } from "../../../core";
+import { Payment } from "../../entities";
+import { PaymentRepository } from "../../repositories";
 import { CreatePaymentForEmployee } from "../CreatePaymentForEmployee";
 
 interface Dependencies {

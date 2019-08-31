@@ -6,7 +6,7 @@ import {
     lastDayOfMonth,
     Stub
 } from "@test/unit";
-import { EmployeeRepository } from "../../repositories";
+import { EmployeeRepository } from "../../core";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { RunPayroll } from "./RunPayroll";
 import { buildRunSalariedPayroll } from "./runSalariedPayroll";

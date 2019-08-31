@@ -8,8 +8,8 @@ import {
     never,
     Stub
 } from "@test/unit";
-import { HourlyEmployee } from "../../../entities";
-import { PaymentRepository, TimeCardRepository } from "../../../repositories";
+import { HourlyEmployee, TimeCardRepository } from "../../../core";
+import { PaymentRepository } from "../../repositories";
 import { buildComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
 
 describe("action computeHourlyEmployeePaymentDueAmount", () => {

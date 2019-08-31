@@ -1,5 +1,4 @@
-import { CommissionedEmployee } from "../../entities";
-import { EmployeeRepository } from "../../repositories";
+import { CommissionedEmployee, EmployeeRepository } from "../../core";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { RunPayroll } from "./RunPayroll";
 

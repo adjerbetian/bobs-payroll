@@ -1,4 +1,5 @@
-import { Actions } from "../../core";
+import { CoreActions } from "../../core";
+import { PaymentActions } from "../../payment";
 import { Transaction } from "../Transaction";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
@@ -8,7 +9,7 @@ import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 import { buildPostTimeCardTransaction } from "./postTimeCard";
 import { buildRunPayrollTransaction } from "./runPayroll";
 
-export function buildTransactions(actions: Actions): Transactions {
+export function buildTransactions(actions: CoreActions, paymentActions: PaymentActions): Transactions {
     return {
         addEmployee: buildAddEmployeeTransaction(actions),
         deleteEmployee: buildDeleteEmployeeTransaction(actions),
@@ -16,7 +17,7 @@ export function buildTransactions(actions: Actions): Transactions {
         postSalesReceipt: buildPostSalesReceiptTransaction(actions),
         postServiceCharge: buildPostServiceChargeTransaction(actions),
         changeEmployee: buildChangeEmployeeTransaction(actions),
-        runPayroll: buildRunPayrollTransaction(actions)
+        runPayroll: buildRunPayrollTransaction(paymentActions)
     };
 }
 

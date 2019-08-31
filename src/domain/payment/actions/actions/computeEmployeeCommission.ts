@@ -1,5 +1,4 @@
-import { CommissionedEmployee } from "../../../entities";
-import { SalesReceiptRepository } from "../../../repositories";
+import { CommissionedEmployee, SalesReceiptRepository } from "../../../core";
 import { ComputeEmployeeCommission } from "../runCommissionedPayroll";
 
 interface Dependencies {

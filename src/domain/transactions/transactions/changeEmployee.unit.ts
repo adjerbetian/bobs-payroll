@@ -1,5 +1,5 @@
 import {
-    buildStubActions,
+    buildStubCoreActions,
     expect,
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
@@ -8,18 +8,18 @@ import {
     generateUnionMember,
     Stub
 } from "@test/unit";
-import { Actions, EmployeeType } from "../../core";
+import { CoreActions, EmployeeType } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
-    let stubActions: Stub<Actions>;
+    let stubActions: Stub<CoreActions>;
     let changeEmployee: Transaction;
     let employeeId: number;
 
     beforeEach(() => {
-        stubActions = buildStubActions();
+        stubActions = buildStubCoreActions();
         changeEmployee = buildChangeEmployeeTransaction(stubActions);
 
         stubActions.updateEmployee.resolves();

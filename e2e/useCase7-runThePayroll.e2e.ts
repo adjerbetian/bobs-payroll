@@ -22,7 +22,7 @@ import {
 } from "@test/e2e";
 import { CommissionedEmployee, dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
 
-describe.only("Use Case 7: Run the Payroll for Today", () => {
+describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
         let employee: HourlyEmployee;
 
@@ -156,7 +156,8 @@ describe.only("Use Case 7: Run the Payroll for Today", () => {
             const commission = (salesReceipts[0].amount + salesReceipts[1].amount) * employee.work.commissionRate;
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary + commission);
         });
-        // todo : separate the payment in another domain
+        // todo : rename buildStubWhatever --> buildWhateverStub
+        // todo : remove usage of core repositories in payment domain
         // todo : look for a dependency injection framework
         it.skip("should not include the commissions of the sales receipts of the previous month", async () => {});
         it.skip("should not pay if it's not the last day of the month", async () => {});

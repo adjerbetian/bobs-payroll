@@ -1,5 +1,5 @@
 import {
-    buildStubActions,
+    buildStubCoreActions,
     buildStubEmployeeRepository,
     expect,
     generateCommissionedEmployee,
@@ -7,18 +7,18 @@ import {
     generateSalariedEmployee,
     Stub
 } from "@test/unit";
-import { Actions, EmployeeRepository } from "../../core";
+import { CoreActions, EmployeeRepository } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 
 describe("addEmployee", () => {
-    let stubActions: Stub<Actions>;
+    let stubActions: Stub<CoreActions>;
     let stubEmployeeRepository: Stub<EmployeeRepository>;
     let addEmployee: Transaction;
 
     beforeEach(() => {
-        stubActions = buildStubActions();
+        stubActions = buildStubCoreActions();
         stubEmployeeRepository = buildStubEmployeeRepository();
         addEmployee = buildAddEmployeeTransaction(stubActions);
 

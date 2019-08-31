@@ -1,17 +1,17 @@
-import { buildStubActions, expect, Stub } from "@test/unit";
+import { buildStubPaymentActions, expect, Stub } from "@test/unit";
 import * as moment from "moment";
 import { isoDate } from "../../../utils";
-import { Actions } from "../../core";
+import { PaymentActions } from "../../payment";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildRunPayrollTransaction } from "./runPayroll";
 
 describe("runPayroll", () => {
-    let stubActions: Stub<Actions>;
+    let stubActions: Stub<PaymentActions>;
     let runPayroll: Transaction;
 
     beforeEach(() => {
-        stubActions = buildStubActions();
+        stubActions = buildStubPaymentActions();
         runPayroll = buildRunPayrollTransaction(stubActions);
 
         stubActions.runPayroll.resolves();

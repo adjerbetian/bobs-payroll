@@ -5,8 +5,7 @@ import {
     generateSalesReceipt,
     Stub
 } from "@test/unit";
-import { CommissionedEmployee } from "../../../entities";
-import { SalesReceiptRepository } from "../../../repositories";
+import { CommissionedEmployee, SalesReceiptRepository } from "../../../core";
 import { buildComputeEmployeeCommission } from "./computeEmployeeCommission";
 
 describe("action computeEmployeeCommission", () => {

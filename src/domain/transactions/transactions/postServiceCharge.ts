@@ -1,10 +1,10 @@
-import { Actions, ServiceCharge } from "../../core";
+import { CoreActions, ServiceCharge } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("ServiceCharge");
 
-export function buildPostServiceChargeTransaction(actions: Actions): Transaction {
+export function buildPostServiceChargeTransaction(actions: CoreActions): Transaction {
     return async function(memberId: string, amount: string): Promise<void> {
         assertTransactionValid(memberId, amount);
 

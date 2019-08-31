@@ -1,4 +1,4 @@
-import { PaymentMethod } from "./PaymentMethod";
+import { PaymentMethod } from "../../core";
 
 export interface Payment {
     employeeId: number;

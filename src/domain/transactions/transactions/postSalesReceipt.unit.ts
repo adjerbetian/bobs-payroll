@@ -1,16 +1,16 @@
-import { buildStubActions, expect, generateSalesReceipt, Stub } from "@test/unit";
+import { buildStubCoreActions, expect, generateSalesReceipt, Stub } from "@test/unit";
 import * as moment from "moment";
-import { Actions, SalesReceipt } from "../../core";
+import { CoreActions, SalesReceipt } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
 
 describe("postTimeCard", () => {
-    let stubActions: Stub<Actions>;
+    let stubActions: Stub<CoreActions>;
     let postSalesReceipt: Transaction;
 
     beforeEach(() => {
-        stubActions = buildStubActions();
+        stubActions = buildStubCoreActions();
         postSalesReceipt = buildPostSalesReceiptTransaction(stubActions);
 
         stubActions.createSalesReceipt.resolves();

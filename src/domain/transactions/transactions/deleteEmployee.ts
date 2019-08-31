@@ -1,10 +1,10 @@
-import { Actions } from "../../core";
+import { CoreActions } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("DelEmp");
 
-export function buildDeleteEmployeeTransaction(actions: Actions): Transaction {
+export function buildDeleteEmployeeTransaction(actions: CoreActions): Transaction {
     return async function(employeeId: string): Promise<void> {
         assertTransactionIsValid();
         await actions.deleteEmployee(parseInt(employeeId));

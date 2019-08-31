@@ -1,11 +1,18 @@
-import { Actions, CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../../core";
+import {
+    CommissionedEmployee,
+    CoreActions,
+    Employee,
+    EmployeeType,
+    HourlyEmployee,
+    SalariedEmployee
+} from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
 
-export function buildAddEmployeeTransaction(actions: Actions): Transaction {
+export function buildAddEmployeeTransaction(actions: CoreActions): Transaction {
     return async function(
         id: string,
         name: string,

@@ -7,8 +7,7 @@ import {
     generateHourlyEmployee,
     Stub
 } from "@test/unit";
-import { HourlyEmployee } from "../../entities";
-import { EmployeeRepository } from "../../repositories";
+import { EmployeeRepository, HourlyEmployee } from "../../core";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { buildRunHourlyPayroll, ComputeHourlyEmployeePaymentDueAmount } from "./runHourlyPayroll";
 import { RunPayroll } from "./RunPayroll";

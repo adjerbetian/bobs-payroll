@@ -8,9 +8,9 @@ import {
     lastDayOfMonth,
     Stub
 } from "@test/unit";
-import { Payment } from "../../../entities";
-import { NotFoundError } from "../../../errors";
-import { PaymentMethodRepository, PaymentRepository } from "../../../repositories";
+import { NotFoundError, PaymentMethodRepository } from "../../../core";
+import { Payment } from "../../entities";
+import { PaymentRepository } from "../../repositories";
 import { buildCreatePaymentForEmployee } from "./createPaymentForEmployee";
 
 describe("createPaymentForEmployee", () => {

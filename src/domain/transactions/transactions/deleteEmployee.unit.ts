@@ -1,15 +1,15 @@
-import { buildStubActions, expect, generateIndex, Stub } from "@test/unit";
-import { Actions } from "../../core";
+import { buildStubCoreActions, expect, generateIndex, Stub } from "@test/unit";
+import { CoreActions } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildDeleteEmployeeTransaction } from "./deleteEmployee";
 
 describe("deleteEmployee", () => {
-    let stubActions: Stub<Actions>;
+    let stubActions: Stub<CoreActions>;
     let deleteEmployee: Transaction;
 
     beforeEach(() => {
-        stubActions = buildStubActions();
+        stubActions = buildStubCoreActions();
         deleteEmployee = buildDeleteEmployeeTransaction(stubActions);
 
         stubActions.deleteEmployee.resolves();

@@ -1,10 +1,10 @@
-import { Actions, EmployeeType, PaymentMethodType } from "../../core";
+import { CoreActions, EmployeeType, PaymentMethodType } from "../../core";
 import { Transaction } from "../Transaction";
 import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
-export function buildChangeEmployeeTransaction(actions: Actions): Transaction {
+export function buildChangeEmployeeTransaction(actions: CoreActions): Transaction {
     return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
         const employeeId = parseInt(id);
 

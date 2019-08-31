@@ -1,40 +1,21 @@
 import {
     EmployeeRepository,
     PaymentMethodRepository,
-    PaymentRepository,
     SalesReceiptRepository,
     ServiceChargeRepository,
     TimeCardRepository,
     UnionMemberRepository
 } from "../repositories";
-import { buildCreateSalesReceipt, CreateSalesReceipt } from "./createSalesReceipt";
-import { buildCreateServiceCharge, CreateServiceCharge } from "./createServiceCharge";
-import { buildCreateTimeCard, CreateTimeCard } from "./createTimeCard";
-import { buildCreateUnionMember, CreateUnionMember } from "./createUnionMember";
-import {
-    buildCreateEmployee,
-    buildDeleteEmployee,
-    buildUpdateEmployee,
-    CreateEmployee,
-    DeleteEmployee,
-    UpdateEmployee
-} from "./employees";
-import { buildRunPayroll, RunPayroll } from "./payroll";
-import { buildRemoveEmployeeFromUnion, RemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
-import { buildSetEmployeePaymentMethod, SetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
+import { CoreActions } from "./CoreActions";
+import { buildCreateSalesReceipt } from "./createSalesReceipt";
+import { buildCreateServiceCharge } from "./createServiceCharge";
+import { buildCreateTimeCard } from "./createTimeCard";
+import { buildCreateUnionMember } from "./createUnionMember";
+import { buildCreateEmployee, buildDeleteEmployee, buildUpdateEmployee } from "./employees";
+import { buildRemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
+import { buildSetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
 
-export interface Actions {
-    deleteEmployee: DeleteEmployee;
-    createTimeCard: CreateTimeCard;
-    createServiceCharge: CreateServiceCharge;
-    createSalesReceipt: CreateSalesReceipt;
-    createEmployee: CreateEmployee;
-    updateEmployee: UpdateEmployee;
-    setEmployeePaymentMethod: SetEmployeePaymentMethod;
-    createUnionMember: CreateUnionMember;
-    removeEmployeeFromUnion: RemoveEmployeeFromUnion;
-    runPayroll: RunPayroll;
-}
+export { CoreActions } from "./CoreActions";
 
 export interface ActionsDependencies {
     employeeRepository: EmployeeRepository;
@@ -43,18 +24,16 @@ export interface ActionsDependencies {
     unionMemberRepository: UnionMemberRepository;
     salesReceiptRepository: SalesReceiptRepository;
     paymentMethodRepository: PaymentMethodRepository;
-    paymentRepository: PaymentRepository;
 }
 
-export function buildActions({
+export function buildCoreActions({
     employeeRepository,
     timeCardRepository,
     serviceChargeRepository,
     unionMemberRepository,
     salesReceiptRepository,
-    paymentMethodRepository,
-    paymentRepository
-}: ActionsDependencies): Actions {
+    paymentMethodRepository
+}: ActionsDependencies): CoreActions {
     return {
         deleteEmployee: buildDeleteEmployee({ employeeRepository }),
         createTimeCard: buildCreateTimeCard({ employeeRepository, timeCardRepository }),
@@ -64,13 +43,6 @@ export function buildActions({
         updateEmployee: buildUpdateEmployee({ employeeRepository }),
         setEmployeePaymentMethod: buildSetEmployeePaymentMethod({ paymentMethodRepository }),
         createUnionMember: buildCreateUnionMember({ unionMemberRepository, employeeRepository }),
-        removeEmployeeFromUnion: buildRemoveEmployeeFromUnion({ unionMemberRepository }),
-        runPayroll: buildRunPayroll({
-            paymentRepository,
-            timeCardRepository,
-            paymentMethodRepository,
-            employeeRepository,
-            salesReceiptRepository
-        })
+        removeEmployeeFromUnion: buildRemoveEmployeeFromUnion({ unionMemberRepository })
     };
 }

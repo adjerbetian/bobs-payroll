@@ -6,9 +6,10 @@ import {
     ServiceChargeRepository,
     TimeCardRepository,
     UnionMemberRepository,
-    Actions,
+    CoreActions,
     PaymentRepository,
-    SalesReceiptRepository
+    SalesReceiptRepository,
+    PaymentActions
 } from "../../src";
 import { sandbox } from "@test/unit";
 
@@ -88,7 +89,7 @@ export function buildStubMongoDbAdapter<T>(): Stub<MongoDbAdapter<T>> {
     });
 }
 
-export function buildStubActions(): Stub<Actions> {
+export function buildStubCoreActions(): Stub<CoreActions> {
     return buildStubFor({
         deleteEmployee: true,
         createTimeCard: true,
@@ -98,7 +99,12 @@ export function buildStubActions(): Stub<Actions> {
         updateEmployee: true,
         setEmployeePaymentMethod: true,
         createUnionMember: true,
-        removeEmployeeFromUnion: true,
+        removeEmployeeFromUnion: true
+    });
+}
+
+export function buildStubPaymentActions(): Stub<PaymentActions> {
+    return buildStubFor({
         runPayroll: true
     });
 }
