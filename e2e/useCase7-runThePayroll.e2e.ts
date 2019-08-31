@@ -5,17 +5,23 @@ import {
     lastFriday,
     lastMonday,
     monday,
+    never,
     seedHourlyEmployee,
     seedPayment,
     seedTimeCard,
     tuesday
 } from "@test/e2e";
-import { mongoPaymentRepository } from "../src";
+import { HourlyEmployee, mongoPaymentRepository } from "../src";
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
+        let employee: HourlyEmployee;
+
+        beforeEach(async () => {
+            employee = await seedHourlyEmployee();
+        });
+
         it("should pay the hours made in the employee's time cards", async () => {
-            const employee = await seedHourlyEmployee();
             const timeCards = [
                 await seedTimeCard({ date: monday, hours: 5, employeeId: employee.id }),
                 await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id })
@@ -23,23 +29,28 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await executePayrollCommand(`Payroll ${friday}`);
 
-            const workedHours = timeCards.reduce((total, tc) => total + tc.hours, 0);
-            const expectedPaymentAmount = workedHours * employee.work.hourlyRate;
-            await expectPaymentAmountToBe(employee.id, expectedPaymentAmount);
+            await expectPaymentAmountToBe(
+                employee.id,
+                (timeCards[0].hours + timeCards[1].hours) * employee.work.hourlyRate
+            );
         });
         it("should not include the time cards already paid", async () => {
-            const employee = await seedHourlyEmployee();
             await seedTimeCard({ date: lastMonday, hours: 5, employeeId: employee.id });
-            const newTimeCard = await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
             await seedPayment({ employeeId: employee.id, date: lastFriday });
+            const newTimeCard = await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${friday}`);
 
-            const workedHours = newTimeCard.hours;
-            const expectedPaymentAmount = workedHours * employee.work.hourlyRate;
-            await expectPaymentAmountToBe(employee.id, expectedPaymentAmount);
+            await expectPaymentAmountToBe(employee.id, newTimeCard.hours * employee.work.hourlyRate);
         });
-        it.skip("should not pay if it's not Friday", async () => {});
+        it("should not pay if it's not Friday", async () => {
+            await seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
+
+            await executePayrollCommand(`Payroll ${monday}`);
+
+            const paymentDate = await mongoPaymentRepository.fetchEmployeeLastPaymentDate(employee.id);
+            expect(paymentDate).to.equal(never);
+        });
         it.skip("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {});
         it.skip("work on a complex example", async () => {});
     });
