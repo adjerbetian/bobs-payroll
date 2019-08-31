@@ -9,6 +9,7 @@ import {
     lastTuesday,
     monday,
     never,
+    seedCommissionedEmployee,
     seedHourlyEmployee,
     seedPayment,
     seedSalariedEmployee,
@@ -17,7 +18,7 @@ import {
     tuesday,
     wednesday
 } from "@test/e2e";
-import { dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
+import { CommissionedEmployee, dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
 
 describe.only("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
@@ -118,6 +119,7 @@ describe.only("Use Case 7: Run the Payroll for Today", () => {
         beforeEach(async () => {
             employee = await seedSalariedEmployee();
         });
+
         it("should pay the monthly salary", async () => {
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
@@ -129,13 +131,18 @@ describe.only("Use Case 7: Run the Payroll for Today", () => {
             await expectEmployeeNotToHaveBeenPaid(employee.id);
         });
     });
-    describe("salaried employees", () => {
-        it.skip("should pay the monthly salary", async () => {});
-        it.skip("should not pay if it's not the last day of the month", async () => {});
-        it.skip("should not pay twice even if we run the program twice on the same day", async () => {});
-    });
     describe("commissioned employees", () => {
-        it.skip("should pay only the monthly salary when there are no sales receipt", async () => {});
+        let employee: CommissionedEmployee;
+
+        beforeEach(async () => {
+            employee = await seedCommissionedEmployee();
+        });
+
+        it("should pay only the monthly salary when there are no sales receipt", async () => {
+            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+
+            await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary);
+        });
         it.skip("should include the commissions of all the sales receipts", async () => {});
         it.skip("should not include the commissions of the sales receipts of the previous month", async () => {});
         it.skip("should not pay if it's not the last day of the month", async () => {});
