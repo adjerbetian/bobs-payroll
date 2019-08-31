@@ -1,5 +1,9 @@
 import { EmployeeRepository, PaymentMethodRepository, PaymentRepository, TimeCardRepository } from "../../repositories";
-import { buildComputeHourlyEmployeePaymentDueAmountAction, buildFetchEmployeePaymentMethod } from "./actions";
+import {
+    buildComputeHourlyEmployeePaymentDueAmountAction,
+    buildCreatePaymentForEmployee,
+    buildFetchEmployeePaymentMethod
+} from "./actions";
 import { buildRunCommissionedPayrollAction } from "./runCommissionedPayroll";
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
@@ -22,6 +26,7 @@ export function buildRunPayrollAction({
     paymentMethodRepository
 }: Dependencies): RunPayrollAction {
     const fetchEmployeePaymentMethod = buildFetchEmployeePaymentMethod(paymentMethodRepository);
+    const createPaymentForEmployee = buildCreatePaymentForEmployee({ fetchEmployeePaymentMethod, paymentRepository });
     const computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmountAction({
         paymentRepository,
         timeCardRepository
@@ -30,19 +35,16 @@ export function buildRunPayrollAction({
     return buildRunPayrollDispatcher({
         runHourlyPayroll: buildRunHourlyPayrollAction({
             employeeRepository,
-            paymentRepository,
-            fetchEmployeePaymentMethod,
-            computeHourlyEmployeePaymentDueAmount
+            computeHourlyEmployeePaymentDueAmount,
+            createPaymentForEmployee
         }),
         runSalariedPayroll: buildRunSalariedPayrollAction({
-            paymentRepository,
             employeeRepository,
-            fetchEmployeePaymentMethod
+            createPaymentForEmployee
         }),
         runCommissionedPayroll: buildRunCommissionedPayrollAction({
-            fetchEmployeePaymentMethod,
             employeeRepository,
-            paymentRepository
+            createPaymentForEmployee
         })
     });
 }

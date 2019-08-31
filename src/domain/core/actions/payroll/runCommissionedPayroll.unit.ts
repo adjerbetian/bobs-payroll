@@ -1,73 +1,53 @@
 import {
     buildStubEmployeeRepository,
-    buildStubPaymentRepository,
+    buildStubFor,
     expect,
     generateCommissionedEmployee,
     lastDayOfMonth,
-    Stub,
-    buildStubFor,
-    generatePayment,
-    generateHoldPaymentMethod
+    Stub
 } from "@test/unit";
-import { PaymentMethod, CommissionedEmployee } from "../../entities";
-import { EmployeeRepository, PaymentRepository } from "../../repositories";
-import { FetchEmployeePaymentMethodAction } from "./FetchEmployeePaymentMethodAction";
-import { RunPayrollAction } from "./RunPayrollAction";
+import { EmployeeRepository } from "../../repositories";
+import { CreatePaymentForEmployeeAction } from "./CreatePaymentForEmployeeAction";
 import { buildRunCommissionedPayrollAction } from "./runCommissionedPayroll";
+import { RunPayrollAction } from "./RunPayrollAction";
 
 describe("action runCommissionedPayroll", () => {
     let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let stubPaymentRepository: Stub<PaymentRepository>;
-    let stubFetchEmployeePaymentMethod: Stub<FetchEmployeePaymentMethodAction>;
+    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployeeAction>;
 
     let runCommissionedPayroll: RunPayrollAction;
 
     beforeEach(() => {
         stubEmployeeRepository = buildStubEmployeeRepository();
-        stubPaymentRepository = buildStubPaymentRepository();
-        stubFetchEmployeePaymentMethod = buildStubFor("fetchEmployeePaymentMethod");
+        stubCreatePaymentForEmployee = buildStubFor("fetchEmployeePaymentMethod");
 
         runCommissionedPayroll = buildRunCommissionedPayrollAction({
             employeeRepository: stubEmployeeRepository,
-            paymentRepository: stubPaymentRepository,
-            fetchEmployeePaymentMethod: stubFetchEmployeePaymentMethod
+            createPaymentForEmployee: stubCreatePaymentForEmployee
         });
 
-        stubPaymentRepository.insert.resolves();
+        stubCreatePaymentForEmployee.resolves();
     });
 
     it("should insert the right payment the employee", async () => {
         const employee = generateCommissionedEmployee();
-        const { method } = generateEmployeeModels(employee);
         stubEmployeeRepository.fetchAllCommissioned.resolves([employee]);
 
         await runCommissionedPayroll(lastDayOfMonth);
 
-        expect(stubPaymentRepository.insert).to.have.been.calledOnceWith(
-            generatePayment({
-                employeeId: employee.id,
-                date: lastDayOfMonth,
-                amount: employee.work.monthlySalary,
-                method
-            })
-        );
+        expect(stubCreatePaymentForEmployee).to.have.been.calledOnceWith({
+            employeeId: employee.id,
+            date: lastDayOfMonth,
+            amount: employee.work.monthlySalary
+        });
     });
 
     it("should insert payments for each employee", async () => {
-        const employee1 = generateCommissionedEmployee();
-        const employee2 = generateCommissionedEmployee();
-        generateEmployeeModels(employee1);
-        generateEmployeeModels(employee2);
-        stubEmployeeRepository.fetchAllCommissioned.resolves([employee1, employee2]);
+        const employees = [generateCommissionedEmployee(), generateCommissionedEmployee()];
+        stubEmployeeRepository.fetchAllCommissioned.resolves(employees);
 
         await runCommissionedPayroll(lastDayOfMonth);
 
-        expect(stubPaymentRepository.insert).to.have.been.calledTwice;
+        expect(stubCreatePaymentForEmployee).to.have.been.calledTwice;
     });
-
-    function generateEmployeeModels(employee: CommissionedEmployee): { method: PaymentMethod } {
-        const method = generateHoldPaymentMethod();
-        stubFetchEmployeePaymentMethod.withArgs(employee.id).resolves(method);
-        return { method };
-    }
 });
