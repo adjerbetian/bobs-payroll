@@ -1,35 +1,32 @@
-import { HourlyEmployee } from "../../entities";
+import { SalariedEmployee } from "../../entities";
 import { EmployeeRepository, PaymentRepository } from "../../repositories";
 import { FetchEmployeePaymentMethodAction } from "./FetchEmployeePaymentMethodAction";
 import { RunPayrollAction } from "./RunPayrollAction";
 
-export type ComputeHourlyEmployeePaymentDueAmountAction = (employee: HourlyEmployee) => Promise<number>;
 interface Dependencies {
     paymentRepository: PaymentRepository;
     employeeRepository: EmployeeRepository;
-    computeHourlyEmployeePaymentDueAmount: ComputeHourlyEmployeePaymentDueAmountAction;
     fetchEmployeePaymentMethod: FetchEmployeePaymentMethodAction;
 }
 
-export function buildRunHourlyPayrollAction({
+export function buildRunSalariedPayrollAction({
     employeeRepository,
     paymentRepository,
-    computeHourlyEmployeePaymentDueAmount,
     fetchEmployeePaymentMethod
 }: Dependencies): RunPayrollAction {
     return async function(date: string): Promise<void> {
-        const employees = await employeeRepository.fetchAllHourly();
+        const employees = await employeeRepository.fetchAllSalaried();
         for (const employee of employees) {
             await payEmployee(date, employee);
         }
     };
 
-    async function payEmployee(date: string, employee: HourlyEmployee): Promise<void> {
+    async function payEmployee(date: string, employee: SalariedEmployee): Promise<void> {
         await paymentRepository.insert({
             employeeId: employee.id,
             date: date,
             method: await fetchEmployeePaymentMethod(employee.id),
-            amount: await computeHourlyEmployeePaymentDueAmount(employee)
+            amount: employee.work.monthlySalary
         });
     }
 }

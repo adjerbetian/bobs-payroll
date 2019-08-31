@@ -1,4 +1,4 @@
-import { Employee, HourlyEmployee } from "../entities";
+import { Employee, HourlyEmployee, SalariedEmployee } from "../entities";
 
 export interface EmployeeRepository {
     fetchById(id: number): Promise<Employee>;
@@ -8,4 +8,5 @@ export interface EmployeeRepository {
     deleteById(id: number): Promise<void>;
 
     fetchAllHourly(): Promise<HourlyEmployee[]>;
+    fetchAllSalaried(): Promise<SalariedEmployee[]>;
 }

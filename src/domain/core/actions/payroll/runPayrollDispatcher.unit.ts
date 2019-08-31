@@ -1,4 +1,16 @@
-import { buildStubFor, expect, friday, monday, saturday, Stub, sunday, thursday, tuesday, wednesday } from "@test/unit";
+import {
+    buildStubFor,
+    expect,
+    friday,
+    lastDayOfMonth,
+    monday,
+    saturday,
+    Stub,
+    sunday,
+    thursday,
+    tuesday,
+    wednesday
+} from "@test/unit";
 import { RunPayrollAction } from "./RunPayrollAction";
 import { buildRunPayrollDispatcher, PayrollActions } from "./runPayrollDispatcher";
 
@@ -10,11 +22,12 @@ describe("action runPayroll", () => {
     beforeEach(() => {
         stubPayrollActions = buildStubPayrollActions();
         runPayroll = buildRunPayrollDispatcher(stubPayrollActions);
+
+        stubPayrollActions.runHourlyPayroll.resolves();
+        stubPayrollActions.runSalariedPayroll.resolves();
     });
 
     it("should should call the runHourlyPayroll only on fridays", async () => {
-        stubPayrollActions.runHourlyPayroll.resolves();
-
         await runPayroll(monday);
         await runPayroll(tuesday);
         await runPayroll(wednesday);
@@ -25,10 +38,16 @@ describe("action runPayroll", () => {
 
         expect(stubPayrollActions.runHourlyPayroll).to.have.been.calledOnceWith(friday);
     });
+    it("should should call the runSalariedPayroll only at the end of the month", async () => {
+        await runPayroll(lastDayOfMonth);
+
+        expect(stubPayrollActions.runSalariedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);
+    });
 });
 
 function buildStubPayrollActions(): Stub<PayrollActions> {
     return buildStubFor({
-        runHourlyPayroll: true
+        runHourlyPayroll: true,
+        runSalariedPayroll: true
     });
 }

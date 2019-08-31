@@ -3,6 +3,7 @@ import { buildComputeHourlyEmployeePaymentDueAmountAction, buildFetchEmployeePay
 import { buildRunHourlyPayrollAction } from "./runHourlyPayroll";
 import { RunPayrollAction } from "./RunPayrollAction";
 import { buildRunPayrollDispatcher } from "./runPayrollDispatcher";
+import { buildRunSalariedPayrollAction } from "./runSalariedPayroll";
 
 export { RunPayrollAction } from "./RunPayrollAction";
 
@@ -31,6 +32,11 @@ export function buildRunPayrollAction({
             paymentRepository,
             fetchEmployeePaymentMethod,
             computeHourlyEmployeePaymentDueAmount
+        }),
+        runSalariedPayroll: buildRunSalariedPayrollAction({
+            paymentRepository,
+            employeeRepository,
+            fetchEmployeePaymentMethod
         })
     });
 }

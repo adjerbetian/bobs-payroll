@@ -1,7 +1,7 @@
 import { PaymentMethodType } from "../../../entities";
 import { NotFoundError } from "../../../errors";
 import { PaymentMethodRepository } from "../../../repositories";
-import { FetchEmployeePaymentMethodAction } from "../runHourlyPayroll";
+import { FetchEmployeePaymentMethodAction } from "../FetchEmployeePaymentMethodAction";
 
 export function buildFetchEmployeePaymentMethod(
     paymentMethodRepository: PaymentMethodRepository

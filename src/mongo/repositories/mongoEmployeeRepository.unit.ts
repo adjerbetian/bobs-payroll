@@ -1,4 +1,11 @@
-import { buildStubMongoDbAdapter, expect, generateHourlyEmployee, generateIndex, Stub } from "@test/unit";
+import {
+    buildStubMongoDbAdapter,
+    expect,
+    generateHourlyEmployee,
+    generateIndex,
+    generateSalariedEmployee,
+    Stub
+} from "@test/unit";
 import { Employee, EmployeeRepository, EmployeeType, HourlyEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";
@@ -85,6 +92,16 @@ describe("mongoEmployeeRepository", () => {
             stubDb.fetchAll.withArgs({ "work.type": EmployeeType.HOURLY }).resolves(employees);
 
             const result = await repository.fetchAllHourly();
+
+            expect(result).to.deep.equal(employees);
+        });
+    });
+    describe("fetchAllSalaried", () => {
+        it("should only fetch salaried employees", async () => {
+            const employees = [generateSalariedEmployee(), generateSalariedEmployee()];
+            stubDb.fetchAll.withArgs({ "work.type": EmployeeType.SALARIED }).resolves(employees);
+
+            const result = await repository.fetchAllSalaried();
 
             expect(result).to.deep.equal(employees);
         });

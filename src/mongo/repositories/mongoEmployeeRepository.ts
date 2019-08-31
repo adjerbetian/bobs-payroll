@@ -1,4 +1,4 @@
-import { Employee, EmployeeRepository, EmployeeType, HourlyEmployee } from "../../domain";
+import { Employee, EmployeeRepository, EmployeeType, HourlyEmployee, SalariedEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): EmployeeRepository {
@@ -22,6 +22,10 @@ export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): Empl
         async fetchAllHourly(): Promise<HourlyEmployee[]> {
             const employees = await db.fetchAll({ "work.type": EmployeeType.HOURLY });
             return employees as HourlyEmployee[];
+        },
+        async fetchAllSalaried(): Promise<SalariedEmployee[]> {
+            const employees = await db.fetchAll({ "work.type": EmployeeType.SALARIED });
+            return employees as SalariedEmployee[];
         }
     };
 }
