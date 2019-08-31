@@ -1,22 +1,22 @@
-import { buildStubMongoDbAdapter, expect, generateIndex, generatePayment, never, Stub } from "@test/unit";
+import { buildStubbedMongoDbAdapter, expect, generateIndex, generatePayment, never, Stub } from "@test/unit";
 import { Payment, PaymentRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoPaymentRepository } from "./mongoPaymentRepository";
 
 describe("mongoPaymentRepository", () => {
-    let stubDb: Stub<MongoDbAdapter<Payment>>;
+    let stubbedDb: Stub<MongoDbAdapter<Payment>>;
     let repository: PaymentRepository;
 
     beforeEach(() => {
-        stubDb = buildStubMongoDbAdapter();
-        repository = buildMongoPaymentRepository(stubDb);
+        stubbedDb = buildStubbedMongoDbAdapter();
+        repository = buildMongoPaymentRepository(stubbedDb);
     });
 
     describe("fetchLastOfEmployee", () => {
         it("should return last the payment to the employee", async () => {
             const employeeId = generateIndex();
             const payment = generatePayment();
-            stubDb.fetchLast.withArgs({ employeeId }).resolves(payment);
+            stubbedDb.fetchLast.withArgs({ employeeId }).resolves(payment);
 
             const dbPayment = await repository.fetchLastOfEmployee(employeeId);
 
@@ -27,8 +27,8 @@ describe("mongoPaymentRepository", () => {
         it("should return the date of the employee's last payment", async () => {
             const employeeId = generateIndex();
             const payment = generatePayment();
-            stubDb.exists.withArgs({ employeeId }).resolves(true);
-            stubDb.fetchLast.withArgs({ employeeId }).resolves(payment);
+            stubbedDb.exists.withArgs({ employeeId }).resolves(true);
+            stubbedDb.fetchLast.withArgs({ employeeId }).resolves(payment);
 
             const date = await repository.fetchEmployeeLastPaymentDate(employeeId);
 
@@ -36,7 +36,7 @@ describe("mongoPaymentRepository", () => {
         });
         it("should return the 0 date when the employee was never paid", async () => {
             const employeeId = generateIndex();
-            stubDb.exists.withArgs({ employeeId }).resolves(false);
+            stubbedDb.exists.withArgs({ employeeId }).resolves(false);
 
             const date = await repository.fetchEmployeeLastPaymentDate(employeeId);
 
@@ -46,11 +46,11 @@ describe("mongoPaymentRepository", () => {
     describe("insert", () => {
         it("should insert the payment", async () => {
             const payment = generatePayment();
-            stubDb.insert.resolves();
+            stubbedDb.insert.resolves();
 
             await repository.insert(payment);
 
-            expect(stubDb.insert).to.have.been.calledWith(payment);
+            expect(stubbedDb.insert).to.have.been.calledWith(payment);
         });
     });
 });

@@ -1,6 +1,6 @@
 import {
-    buildStubEmployeeRepository,
-    buildStubTimeCardRepository,
+    buildStubbedEmployeeRepository,
+    buildStubbedTimeCardRepository,
     expect,
     generateHourlyEmployee,
     generateSalariedEmployee,
@@ -12,32 +12,32 @@ import { EmployeeRepository, TimeCardRepository } from "../repositories";
 import { buildCreateTimeCard, CreateTimeCard } from "./createTimeCard";
 
 describe("action createTimeCard", () => {
-    let stubTimeCardRepository: Stub<TimeCardRepository>;
-    let stubEmployeeRepository: Stub<EmployeeRepository>;
+    let stubbedTimeCardRepository: Stub<TimeCardRepository>;
+    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
     let createTimeCard: CreateTimeCard;
 
     beforeEach(() => {
-        stubTimeCardRepository = buildStubTimeCardRepository();
-        stubEmployeeRepository = buildStubEmployeeRepository();
+        stubbedTimeCardRepository = buildStubbedTimeCardRepository();
+        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
         createTimeCard = buildCreateTimeCard({
-            employeeRepository: stubEmployeeRepository,
-            timeCardRepository: stubTimeCardRepository
+            employeeRepository: stubbedEmployeeRepository,
+            timeCardRepository: stubbedTimeCardRepository
         });
 
-        stubTimeCardRepository.insert.resolves();
+        stubbedTimeCardRepository.insert.resolves();
     });
 
     it("should create a time card for the employee", async () => {
         const timeCard = generateTimeCard();
-        stubEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
+        stubbedEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
 
         await createTimeCard(timeCard);
 
-        expect(stubTimeCardRepository.insert).to.have.been.calledOnceWith(timeCard);
+        expect(stubbedTimeCardRepository.insert).to.have.been.calledOnceWith(timeCard);
     });
     it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
         const timeCard = generateTimeCard();
-        stubEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateSalariedEmployee());
+        stubbedEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateSalariedEmployee());
 
         const promise = createTimeCard(timeCard);
 

@@ -1,6 +1,6 @@
 import {
-    buildStubPaymentRepository,
-    buildStubTimeCardRepository,
+    buildStubbedPaymentRepository,
+    buildStubbedTimeCardRepository,
     expect,
     generateHourlyEmployee,
     generateTimeCard,
@@ -13,31 +13,31 @@ import { PaymentRepository } from "../../repositories";
 import { buildComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
 
 describe("action computeHourlyEmployeePaymentDueAmount", () => {
-    let stubPaymentRepository: Stub<PaymentRepository>;
-    let stubTimeCardRepository: Stub<TimeCardRepository>;
+    let stubbedPaymentRepository: Stub<PaymentRepository>;
+    let stubbedTimeCardRepository: Stub<TimeCardRepository>;
 
     let computeHourlyEmployeePaymentDueAmount: ReturnType<typeof buildComputeHourlyEmployeePaymentDueAmount>;
     let employee: HourlyEmployee;
 
     beforeEach(() => {
-        stubPaymentRepository = buildStubPaymentRepository();
-        stubTimeCardRepository = buildStubTimeCardRepository();
+        stubbedPaymentRepository = buildStubbedPaymentRepository();
+        stubbedTimeCardRepository = buildStubbedTimeCardRepository();
 
         computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmount({
-            paymentRepository: stubPaymentRepository,
-            timeCardRepository: stubTimeCardRepository
+            paymentRepository: stubbedPaymentRepository,
+            timeCardRepository: stubbedTimeCardRepository
         });
 
-        stubPaymentRepository.insert.resolves();
-        stubTimeCardRepository.fetchAllOfEmployeeSince.resolves([]);
+        stubbedPaymentRepository.insert.resolves();
+        stubbedTimeCardRepository.fetchAllOfEmployeeSince.resolves([]);
         employee = generateHourlyEmployee();
-        stubPaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(never);
+        stubbedPaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(never);
     });
 
     it("should take into account the regular hours made on the employee's time cards", async () => {
         const timeCard1 = generateTimeCard();
         const timeCard2 = generateTimeCard();
-        stubTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard1, timeCard2]);
+        stubbedTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard1, timeCard2]);
 
         const amount = await computeHourlyEmployeePaymentDueAmount(employee);
 
@@ -45,8 +45,8 @@ describe("action computeHourlyEmployeePaymentDueAmount", () => {
     });
     it("should not include the time cards already paid", async () => {
         const timeCard = generateTimeCard();
-        stubPaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(lastFriday);
-        stubTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id, lastFriday).resolves([timeCard]);
+        stubbedPaymentRepository.fetchEmployeeLastPaymentDate.withArgs(employee.id).resolves(lastFriday);
+        stubbedTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id, lastFriday).resolves([timeCard]);
 
         const amount = await computeHourlyEmployeePaymentDueAmount(employee);
 
@@ -54,7 +54,7 @@ describe("action computeHourlyEmployeePaymentDueAmount", () => {
     });
     it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
         const timeCard = generateTimeCard({ hours: 8 + 2 });
-        stubTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard]);
+        stubbedTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employee.id).resolves([timeCard]);
 
         const amount = await computeHourlyEmployeePaymentDueAmount(employee);
 

@@ -1,24 +1,24 @@
-import { buildStubUnionMemberRepository, expect, generateIndex, Stub } from "@test/unit";
+import { buildStubbedUnionMemberRepository, expect, generateIndex, Stub } from "@test/unit";
 import { UnionMemberRepository } from "../repositories";
 import { buildRemoveEmployeeFromUnion, RemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
 
 describe("action removeEmployeeFromUnion", () => {
-    let stubUnionMemberRepository: Stub<UnionMemberRepository>;
+    let stubbedUnionMemberRepository: Stub<UnionMemberRepository>;
     let removeEmployeeFromUnion: RemoveEmployeeFromUnion;
 
     beforeEach(() => {
-        stubUnionMemberRepository = buildStubUnionMemberRepository();
+        stubbedUnionMemberRepository = buildStubbedUnionMemberRepository();
         removeEmployeeFromUnion = buildRemoveEmployeeFromUnion({
-            unionMemberRepository: stubUnionMemberRepository
+            unionMemberRepository: stubbedUnionMemberRepository
         });
     });
 
     it("should delete the employee union member", async () => {
         const employeeId = generateIndex();
-        stubUnionMemberRepository.deleteByEmployeeId.resolves();
+        stubbedUnionMemberRepository.deleteByEmployeeId.resolves();
 
         await removeEmployeeFromUnion(employeeId);
 
-        expect(stubUnionMemberRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
+        expect(stubbedUnionMemberRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
     });
 });

@@ -1,18 +1,18 @@
-import { buildStubCoreActions, expect, generateServiceCharge, Stub } from "@test/unit";
+import { buildStubbedCoreActions, expect, generateServiceCharge, Stub } from "@test/unit";
 import { CoreActions, ServiceCharge } from "../../core";
 import { TransactionFormatError } from "../errors";
 import { Transaction } from "../Transaction";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 
 describe("postServiceCharge", () => {
-    let stubActions: Stub<CoreActions>;
+    let stubbedActions: Stub<CoreActions>;
     let postServiceCharge: Transaction;
 
     beforeEach(() => {
-        stubActions = buildStubCoreActions();
-        postServiceCharge = buildPostServiceChargeTransaction(stubActions);
+        stubbedActions = buildStubbedCoreActions();
+        postServiceCharge = buildPostServiceChargeTransaction(stubbedActions);
 
-        stubActions.createServiceCharge.resolves();
+        stubbedActions.createServiceCharge.resolves();
     });
 
     it("should create a service charge for the employee", async () => {
@@ -20,7 +20,7 @@ describe("postServiceCharge", () => {
 
         await postServiceChargeEntity(serviceCharge);
 
-        expect(stubActions.createServiceCharge).to.have.been.calledOnceWith(serviceCharge);
+        expect(stubbedActions.createServiceCharge).to.have.been.calledOnceWith(serviceCharge);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generateServiceCharge();

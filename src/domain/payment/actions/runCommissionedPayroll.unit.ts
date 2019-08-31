@@ -1,5 +1,5 @@
 import {
-    buildStubEmployeeRepository,
+    buildStubbedEmployeeRepository,
     buildStubFor,
     expect,
     generateCommissionedEmployee,
@@ -14,36 +14,36 @@ import { buildRunCommissionedPayroll, ComputeEmployeeCommission } from "./runCom
 import { RunPayroll } from "./RunPayroll";
 
 describe("action runCommissionedPayroll", () => {
-    let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let stubComputeEmployeeCommission: Stub<ComputeEmployeeCommission>;
-    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
+    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
+    let stubbedComputeEmployeeCommission: Stub<ComputeEmployeeCommission>;
+    let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
     let runCommissionedPayroll: RunPayroll;
 
     beforeEach(() => {
-        stubEmployeeRepository = buildStubEmployeeRepository();
-        stubCreatePaymentForEmployee = buildStubFor("fetchEmployeePaymentMethod");
-        stubComputeEmployeeCommission = buildStubFor("createPaymentForEmployee");
+        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
+        stubbedCreatePaymentForEmployee = buildStubFor("fetchEmployeePaymentMethod");
+        stubbedComputeEmployeeCommission = buildStubFor("createPaymentForEmployee");
 
         runCommissionedPayroll = buildRunCommissionedPayroll({
-            employeeRepository: stubEmployeeRepository,
-            computeEmployeeCommission: stubComputeEmployeeCommission,
-            createPaymentForEmployee: stubCreatePaymentForEmployee
+            employeeRepository: stubbedEmployeeRepository,
+            computeEmployeeCommission: stubbedComputeEmployeeCommission,
+            createPaymentForEmployee: stubbedCreatePaymentForEmployee
         });
 
-        stubComputeEmployeeCommission.resolves(generateIndex());
-        stubCreatePaymentForEmployee.resolves();
+        stubbedComputeEmployeeCommission.resolves(generateIndex());
+        stubbedCreatePaymentForEmployee.resolves();
     });
 
     it("should insert the right payment the employee", async () => {
         const employee = generateCommissionedEmployee();
         const commission = generateFloatBetween(1000, 2000);
-        stubEmployeeRepository.fetchAllCommissioned.resolves([employee]);
-        stubComputeEmployeeCommission.resolves(commission);
+        stubbedEmployeeRepository.fetchAllCommissioned.resolves([employee]);
+        stubbedComputeEmployeeCommission.resolves(commission);
 
         await runCommissionedPayroll(lastDayOfMonth);
 
-        expect(stubCreatePaymentForEmployee).to.have.been.calledOnceWith({
+        expect(stubbedCreatePaymentForEmployee).to.have.been.calledOnceWith({
             employeeId: employee.id,
             date: lastDayOfMonth,
             amount: employee.work.monthlySalary + commission
@@ -52,10 +52,10 @@ describe("action runCommissionedPayroll", () => {
 
     it("should insert payments for each employee", async () => {
         const employees = [generateCommissionedEmployee(), generateCommissionedEmployee()];
-        stubEmployeeRepository.fetchAllCommissioned.resolves(employees);
+        stubbedEmployeeRepository.fetchAllCommissioned.resolves(employees);
 
         await runCommissionedPayroll(lastDayOfMonth);
 
-        expect(stubCreatePaymentForEmployee).to.have.been.calledTwice;
+        expect(stubbedCreatePaymentForEmployee).to.have.been.calledTwice;
     });
 });

@@ -1,4 +1,4 @@
-import { buildStubCoreActions, expect, generateSalesReceipt, Stub } from "@test/unit";
+import { buildStubbedCoreActions, expect, generateSalesReceipt, Stub } from "@test/unit";
 import * as moment from "moment";
 import { CoreActions, SalesReceipt } from "../../core";
 import { TransactionFormatError } from "../errors";
@@ -6,14 +6,14 @@ import { Transaction } from "../Transaction";
 import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
 
 describe("postTimeCard", () => {
-    let stubActions: Stub<CoreActions>;
+    let stubbedActions: Stub<CoreActions>;
     let postSalesReceipt: Transaction;
 
     beforeEach(() => {
-        stubActions = buildStubCoreActions();
-        postSalesReceipt = buildPostSalesReceiptTransaction(stubActions);
+        stubbedActions = buildStubbedCoreActions();
+        postSalesReceipt = buildPostSalesReceiptTransaction(stubbedActions);
 
-        stubActions.createSalesReceipt.resolves();
+        stubbedActions.createSalesReceipt.resolves();
     });
 
     it("should create a sales receipt for the employee", async () => {
@@ -21,7 +21,7 @@ describe("postTimeCard", () => {
 
         await postSalesReceiptEntity(salesReceipt);
 
-        expect(stubActions.createSalesReceipt).to.have.been.calledOnceWith(salesReceipt);
+        expect(stubbedActions.createSalesReceipt).to.have.been.calledOnceWith(salesReceipt);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const salesReceipt = generateSalesReceipt();

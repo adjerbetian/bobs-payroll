@@ -1,24 +1,24 @@
-import { buildStubEmployeeRepository, expect, generateIndex, Stub } from "@test/unit";
+import { buildStubbedEmployeeRepository, expect, generateIndex, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildDeleteEmployee, DeleteEmployee } from "./deleteEmployee";
 
 describe("action deleteEmployee", () => {
-    let stubEmployeeRepository: Stub<EmployeeRepository>;
+    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
     let deleteEmployee: DeleteEmployee;
 
     beforeEach(() => {
-        stubEmployeeRepository = buildStubEmployeeRepository();
+        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
         deleteEmployee = buildDeleteEmployee({
-            employeeRepository: stubEmployeeRepository
+            employeeRepository: stubbedEmployeeRepository
         });
     });
 
     it("should delete the employee", async () => {
-        stubEmployeeRepository.deleteById.resolves();
+        stubbedEmployeeRepository.deleteById.resolves();
         const employeeId = generateIndex();
 
         await deleteEmployee(employeeId);
 
-        expect(stubEmployeeRepository.deleteById).to.have.been.calledOnceWith(employeeId);
+        expect(stubbedEmployeeRepository.deleteById).to.have.been.calledOnceWith(employeeId);
     });
 });

@@ -13,7 +13,7 @@ import {
 } from "../../src";
 import { sandbox } from "@test/unit";
 
-export function buildStubEmployeeRepository(): Stub<EmployeeRepository> {
+export function buildStubbedEmployeeRepository(): Stub<EmployeeRepository> {
     return buildStubFor({
         fetchById: true,
         insert: true,
@@ -26,7 +26,7 @@ export function buildStubEmployeeRepository(): Stub<EmployeeRepository> {
     });
 }
 
-export function buildStubPaymentMethodRepository(): Stub<PaymentMethodRepository> {
+export function buildStubbedPaymentMethodRepository(): Stub<PaymentMethodRepository> {
     return buildStubFor({
         fetchByEmployeeId: true,
         insert: true,
@@ -34,7 +34,7 @@ export function buildStubPaymentMethodRepository(): Stub<PaymentMethodRepository
     });
 }
 
-export function buildStubTimeCardRepository(): Stub<TimeCardRepository> {
+export function buildStubbedTimeCardRepository(): Stub<TimeCardRepository> {
     return buildStubFor({
         insert: true,
         fetchAllOfEmployee: true,
@@ -42,7 +42,7 @@ export function buildStubTimeCardRepository(): Stub<TimeCardRepository> {
     });
 }
 
-export function buildStubSalesReceiptRepository(): Stub<SalesReceiptRepository> {
+export function buildStubbedSalesReceiptRepository(): Stub<SalesReceiptRepository> {
     return buildStubFor({
         insert: true,
         fetchAllOfEmployee: true,
@@ -50,7 +50,7 @@ export function buildStubSalesReceiptRepository(): Stub<SalesReceiptRepository> 
     });
 }
 
-export function buildStubServiceChargeRepository(): Stub<ServiceChargeRepository> {
+export function buildStubbedServiceChargeRepository(): Stub<ServiceChargeRepository> {
     return buildStubFor({
         insert: true,
         fetchAllOfMember: true,
@@ -58,7 +58,7 @@ export function buildStubServiceChargeRepository(): Stub<ServiceChargeRepository
     });
 }
 
-export function buildStubUnionMemberRepository(): Stub<UnionMemberRepository> {
+export function buildStubbedUnionMemberRepository(): Stub<UnionMemberRepository> {
     return buildStubFor({
         fetchByMemberId: true,
         fetchByEmployeeId: true,
@@ -68,7 +68,7 @@ export function buildStubUnionMemberRepository(): Stub<UnionMemberRepository> {
     });
 }
 
-export function buildStubPaymentRepository(): Stub<PaymentRepository> {
+export function buildStubbedPaymentRepository(): Stub<PaymentRepository> {
     return buildStubFor({
         fetchLastOfEmployee: true,
         fetchEmployeeLastPaymentDate: true,
@@ -76,7 +76,7 @@ export function buildStubPaymentRepository(): Stub<PaymentRepository> {
     });
 }
 
-export function buildStubMongoDbAdapter<T>(): Stub<MongoDbAdapter<T>> {
+export function buildStubbedMongoDbAdapter<T>(): Stub<MongoDbAdapter<T>> {
     return buildStubFor({
         fetch: true,
         fetchLast: true,
@@ -89,7 +89,7 @@ export function buildStubMongoDbAdapter<T>(): Stub<MongoDbAdapter<T>> {
     });
 }
 
-export function buildStubCoreActions(): Stub<CoreActions> {
+export function buildStubbedCoreActions(): Stub<CoreActions> {
     return buildStubFor({
         deleteEmployee: true,
         createTimeCard: true,
@@ -103,21 +103,23 @@ export function buildStubCoreActions(): Stub<CoreActions> {
     });
 }
 
-export function buildStubPaymentActions(): Stub<PaymentActions> {
+export function buildStubbedPaymentActions(): Stub<PaymentActions> {
     return buildStubFor({
         runPayroll: true
     });
 }
 
-export type Stub<T> = T extends Function ? StubFunction : StubObject<T>;
-type StubFunction = SinonStub;
-type StubObject<T> = {
+export type Stub<T> = T extends Function ? StubbedFunction : StubbedObject<T>;
+type StubbedFunction = SinonStub;
+type StubbedObject<T> = {
     [K in keyof T]: SinonStub;
 };
 
-export function buildStubFor<T extends Record<string, boolean>>(object: T): StubObject<T>;
-export function buildStubFor(name: string): StubFunction;
-export function buildStubFor<T extends Record<string, boolean>>(object: T | string): StubObject<T> | StubFunction {
+export function buildStubFor<T extends Record<string, boolean>>(object: T): StubbedObject<T>;
+export function buildStubFor(name: string): StubbedFunction;
+export function buildStubFor<T extends Record<string, boolean>>(
+    object: T | string
+): StubbedObject<T> | StubbedFunction {
     if (typeof object === "string") {
         return buildStubForFunction(object);
     } else {
@@ -125,7 +127,7 @@ export function buildStubFor<T extends Record<string, boolean>>(object: T | stri
     }
 }
 
-function buildStubForObject<T extends Record<string, boolean>>(object: T): StubObject<T> {
+function buildStubForObject<T extends Record<string, boolean>>(object: T): StubbedObject<T> {
     const result: Record<string, SinonStub> = {};
     for (const key in object) {
         // noinspection JSUnfilteredForInLoop
@@ -134,6 +136,6 @@ function buildStubForObject<T extends Record<string, boolean>>(object: T): StubO
     return result as { [K in keyof T]: SinonStub };
 }
 
-function buildStubForFunction(name: string): StubFunction {
+function buildStubForFunction(name: string): StubbedFunction {
     return sandbox.stub().rejects(`${name} should not have been called`);
 }

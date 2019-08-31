@@ -1,6 +1,6 @@
 import {
-    buildStubPaymentMethodRepository,
-    buildStubPaymentRepository,
+    buildStubbedPaymentMethodRepository,
+    buildStubbedPaymentRepository,
     expect,
     generateFloatBetween,
     generateHoldPaymentMethod,
@@ -15,18 +15,18 @@ import { buildCreatePaymentForEmployee } from "./createPaymentForEmployee";
 
 describe("createPaymentForEmployee", () => {
     let createPaymentForEmployee: ReturnType<typeof buildCreatePaymentForEmployee>;
-    let stubPaymentMethodRepository: Stub<PaymentMethodRepository>;
-    let stubPaymentRepository: Stub<PaymentRepository>;
+    let stubbedPaymentMethodRepository: Stub<PaymentMethodRepository>;
+    let stubbedPaymentRepository: Stub<PaymentRepository>;
 
     beforeEach(() => {
-        stubPaymentRepository = buildStubPaymentRepository();
-        stubPaymentMethodRepository = buildStubPaymentMethodRepository();
+        stubbedPaymentRepository = buildStubbedPaymentRepository();
+        stubbedPaymentMethodRepository = buildStubbedPaymentMethodRepository();
         createPaymentForEmployee = buildCreatePaymentForEmployee({
-            paymentRepository: stubPaymentRepository,
-            paymentMethodRepository: stubPaymentMethodRepository
+            paymentRepository: stubbedPaymentRepository,
+            paymentMethodRepository: stubbedPaymentMethodRepository
         });
 
-        stubPaymentRepository.insert.resolves();
+        stubbedPaymentRepository.insert.resolves();
     });
 
     const employeeId = generateIndex();
@@ -35,17 +35,17 @@ describe("createPaymentForEmployee", () => {
 
     it("should insert a payment with the given info", async () => {
         const method = generateHoldPaymentMethod({ employeeId });
-        stubPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(method);
+        stubbedPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(method);
 
         await createPaymentForEmployee({ employeeId, date, amount });
 
-        expect(stubPaymentRepository.insert).to.have.been.calledOnce;
+        expect(stubbedPaymentRepository.insert).to.have.been.calledOnce;
         expect(getInsertedPayment()).to.deep.include({ employeeId, date, amount });
     });
 
     it("should insert a payment with the existing employee payment method", async () => {
         const method = generateHoldPaymentMethod({ employeeId });
-        stubPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(method);
+        stubbedPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(method);
 
         await createPaymentForEmployee({ employeeId, date, amount });
 
@@ -53,7 +53,7 @@ describe("createPaymentForEmployee", () => {
     });
 
     it("should insert a payment with the hold payment method when the employee has to payment method", async () => {
-        stubPaymentMethodRepository.fetchByEmployeeId
+        stubbedPaymentMethodRepository.fetchByEmployeeId
             .withArgs(employeeId)
             .rejects(new NotFoundError("no methods found"));
 
@@ -63,6 +63,6 @@ describe("createPaymentForEmployee", () => {
     });
 
     function getInsertedPayment(): Payment {
-        return stubPaymentRepository.insert.getCall(0).args[0];
+        return stubbedPaymentRepository.insert.getCall(0).args[0];
     }
 });

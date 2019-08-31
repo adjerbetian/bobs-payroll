@@ -1,22 +1,22 @@
-import { buildStubMongoDbAdapter, expect, generateIndex, generateUnionMember, Stub } from "@test/unit";
+import { buildStubbedMongoDbAdapter, expect, generateIndex, generateUnionMember, Stub } from "@test/unit";
 import { UnionMember, UnionMemberRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoUnionMemberRepository } from "./mongoUnionMemberRepository";
 
 describe("mongoUnionMemberRepository", () => {
     let repository: UnionMemberRepository;
-    let stubDb: Stub<MongoDbAdapter<UnionMember>>;
+    let stubbedDb: Stub<MongoDbAdapter<UnionMember>>;
 
     beforeEach(() => {
-        stubDb = buildStubMongoDbAdapter();
-        repository = buildMongoUnionMemberRepository(stubDb);
+        stubbedDb = buildStubbedMongoDbAdapter();
+        repository = buildMongoUnionMemberRepository(stubbedDb);
     });
 
     describe("fetchByMemberId", () => {
         it("return the union member", async () => {
             const memberId = `member-${generateIndex()}`;
             const unionMember = generateUnionMember({ memberId });
-            stubDb.fetch.withArgs({ memberId }).resolves(unionMember);
+            stubbedDb.fetch.withArgs({ memberId }).resolves(unionMember);
 
             const result = await repository.fetchByMemberId(memberId);
 
@@ -27,7 +27,7 @@ describe("mongoUnionMemberRepository", () => {
         it("return the union member", async () => {
             const employeeId = generateIndex();
             const unionMember = generateUnionMember({ employeeId });
-            stubDb.fetch.withArgs({ employeeId }).resolves(unionMember);
+            stubbedDb.fetch.withArgs({ employeeId }).resolves(unionMember);
 
             const result = await repository.fetchByEmployeeId(employeeId);
 
@@ -37,17 +37,17 @@ describe("mongoUnionMemberRepository", () => {
     describe("insert", () => {
         it("insert the given time card", async () => {
             const unionMember = generateUnionMember();
-            stubDb.insert.resolves();
+            stubbedDb.insert.resolves();
 
             await repository.insert(unionMember);
 
-            expect(stubDb.insert).to.have.been.calledOnceWith(unionMember);
+            expect(stubbedDb.insert).to.have.been.calledOnceWith(unionMember);
         });
     });
     describe("exists", () => {
         it("should return true when the union member exists", async () => {
             const query = { memberId: "memberId", employeeId: generateIndex() };
-            stubDb.exists.withArgs(query).resolves(true);
+            stubbedDb.exists.withArgs(query).resolves(true);
 
             const result = await repository.exists(query);
 
@@ -55,7 +55,7 @@ describe("mongoUnionMemberRepository", () => {
         });
         it("should return false when the union member does not exists", async () => {
             const query = { memberId: "memberId", employeeId: generateIndex() };
-            stubDb.exists.withArgs(query).resolves(false);
+            stubbedDb.exists.withArgs(query).resolves(false);
 
             const result = await repository.exists(query);
 
@@ -65,11 +65,11 @@ describe("mongoUnionMemberRepository", () => {
     describe("deleteByEmployeeId", () => {
         it("should delete the employee's union members", async () => {
             const employeeId = generateIndex();
-            stubDb.remove.resolves();
+            stubbedDb.remove.resolves();
 
             await repository.deleteByEmployeeId(employeeId);
 
-            expect(stubDb.remove).to.have.been.calledOnceWith({ employeeId });
+            expect(stubbedDb.remove).to.have.been.calledOnceWith({ employeeId });
         });
     });
 });

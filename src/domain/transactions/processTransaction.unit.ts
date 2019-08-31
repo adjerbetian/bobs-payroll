@@ -14,16 +14,16 @@ import { Transactions } from "./transactions";
 
 describe("processTransaction", () => {
     let processTransaction: ProcessTransaction;
-    let stubTransactions: Stub<Transactions>;
+    let stubbedTransactions: Stub<Transactions>;
 
     beforeEach(() => {
-        stubTransactions = buildStubTransactions();
-        processTransaction = buildProcessTransaction(stubTransactions);
+        stubbedTransactions = buildStubTransactions();
+        processTransaction = buildProcessTransaction(stubbedTransactions);
     });
 
     describe("AddEmp", () => {
         it("should call the addEmployee transaction", async () => {
-            stubTransactions.addEmployee.resolves();
+            stubbedTransactions.addEmployee.resolves();
             const employee = generateHourlyEmployee();
 
             await processTransaction([
@@ -35,7 +35,7 @@ describe("processTransaction", () => {
                 `${employee.work.hourlyRate}`
             ]);
 
-            expect(stubTransactions.addEmployee).to.have.been.calledOnceWith(
+            expect(stubbedTransactions.addEmployee).to.have.been.calledOnceWith(
                 `${employee.id}`,
                 `"${employee.name}"`,
                 `"${employee.address}"`,
@@ -46,22 +46,22 @@ describe("processTransaction", () => {
     });
     describe("DelEmp", () => {
         it("should call the deleteEmployee transaction", async () => {
-            stubTransactions.deleteEmployee.resolves();
+            stubbedTransactions.deleteEmployee.resolves();
             const employeeId = generateIndex();
 
             await processTransaction(["DelEmp", `${employeeId}`]);
 
-            expect(stubTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
+            expect(stubbedTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
         });
     });
     describe("TimeCard", () => {
         it("should call the postTimeCard transaction", async () => {
-            stubTransactions.postTimeCard.resolves();
+            stubbedTransactions.postTimeCard.resolves();
             const timeCard = generateTimeCard();
 
             await processTransaction(["TimeCard", `${timeCard.employeeId}`, `${timeCard.date}`, `${timeCard.hours}`]);
 
-            expect(stubTransactions.postTimeCard).to.have.been.calledOnceWith(
+            expect(stubbedTransactions.postTimeCard).to.have.been.calledOnceWith(
                 `${timeCard.employeeId}`,
                 `${timeCard.date}`,
                 `${timeCard.hours}`
@@ -70,7 +70,7 @@ describe("processTransaction", () => {
     });
     describe("SalesReceipt", () => {
         it("should call the postSalesReceipt transaction", async () => {
-            stubTransactions.postSalesReceipt.resolves();
+            stubbedTransactions.postSalesReceipt.resolves();
             const salesReceipt = generateSalesReceipt();
 
             await processTransaction([
@@ -80,7 +80,7 @@ describe("processTransaction", () => {
                 `${salesReceipt.amount}`
             ]);
 
-            expect(stubTransactions.postSalesReceipt).to.have.been.calledOnceWith(
+            expect(stubbedTransactions.postSalesReceipt).to.have.been.calledOnceWith(
                 `${salesReceipt.employeeId}`,
                 `${salesReceipt.date}`,
                 `${salesReceipt.amount}`
@@ -89,12 +89,12 @@ describe("processTransaction", () => {
     });
     describe("ServiceCharge", () => {
         it("should call the postServiceCharge transaction", async () => {
-            stubTransactions.postServiceCharge.resolves();
+            stubbedTransactions.postServiceCharge.resolves();
             const serviceCharge = generateServiceCharge();
 
             await processTransaction(["ServiceCharge", `${serviceCharge.memberId}`, `${serviceCharge.amount}`]);
 
-            expect(stubTransactions.postServiceCharge).to.have.been.calledOnceWith(
+            expect(stubbedTransactions.postServiceCharge).to.have.been.calledOnceWith(
                 `${serviceCharge.memberId}`,
                 `${serviceCharge.amount}`
             );
@@ -102,22 +102,26 @@ describe("processTransaction", () => {
     });
     describe("ChgEmp", () => {
         it("should call the changeEmployee transaction", async () => {
-            stubTransactions.changeEmployee.resolves();
+            stubbedTransactions.changeEmployee.resolves();
             const employee = generateHourlyEmployee();
 
             await processTransaction(["ChgEmp", `${employee.id}`, "Name", "James Bond"]);
 
-            expect(stubTransactions.changeEmployee).to.have.been.calledOnceWith(`${employee.id}`, "Name", "James Bond");
+            expect(stubbedTransactions.changeEmployee).to.have.been.calledOnceWith(
+                `${employee.id}`,
+                "Name",
+                "James Bond"
+            );
         });
     });
     describe("Payroll", () => {
         it("should call the runPayroll transaction", async () => {
-            stubTransactions.runPayroll.resolves();
+            stubbedTransactions.runPayroll.resolves();
             const date = isoDate();
 
             await processTransaction(["Payroll", `${date}`]);
 
-            expect(stubTransactions.runPayroll).to.have.been.calledOnceWith(`${date}`);
+            expect(stubbedTransactions.runPayroll).to.have.been.calledOnceWith(`${date}`);
         });
     });
 });

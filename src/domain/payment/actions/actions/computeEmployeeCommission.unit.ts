@@ -1,5 +1,5 @@
 import {
-    buildStubSalesReceiptRepository,
+    buildStubbedSalesReceiptRepository,
     expect,
     generateCommissionedEmployee,
     generateSalesReceipt,
@@ -9,14 +9,14 @@ import { CommissionedEmployee, SalesReceiptRepository } from "../../../core";
 import { buildComputeEmployeeCommission } from "./computeEmployeeCommission";
 
 describe("action computeEmployeeCommission", () => {
-    let stubSalesReceiptRepository: Stub<SalesReceiptRepository>;
+    let stubbedSalesReceiptRepository: Stub<SalesReceiptRepository>;
     let computeEmployeeCommission: ReturnType<typeof buildComputeEmployeeCommission>;
 
     beforeEach(() => {
-        stubSalesReceiptRepository = buildStubSalesReceiptRepository();
+        stubbedSalesReceiptRepository = buildStubbedSalesReceiptRepository();
 
         computeEmployeeCommission = buildComputeEmployeeCommission({
-            salesReceiptRepository: stubSalesReceiptRepository
+            salesReceiptRepository: stubbedSalesReceiptRepository
         });
     });
 
@@ -28,7 +28,7 @@ describe("action computeEmployeeCommission", () => {
 
     it("should take into account the regular hours made on the employee's time cards", async () => {
         const salesReceipts = [generateSalesReceipt(), generateSalesReceipt()];
-        stubSalesReceiptRepository.fetchAllOfEmployee.withArgs(employee.id).resolves(salesReceipts);
+        stubbedSalesReceiptRepository.fetchAllOfEmployee.withArgs(employee.id).resolves(salesReceipts);
 
         const amount = await computeEmployeeCommission(employee);
 

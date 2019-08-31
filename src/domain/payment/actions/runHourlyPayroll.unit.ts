@@ -1,5 +1,5 @@
 import {
-    buildStubEmployeeRepository,
+    buildStubbedEmployeeRepository,
     buildStubFor,
     expect,
     friday,
@@ -13,34 +13,34 @@ import { buildRunHourlyPayroll, ComputeHourlyEmployeePaymentDueAmount } from "./
 import { RunPayroll } from "./RunPayroll";
 
 describe("action runHourlyPayroll", () => {
-    let stubEmployeeRepository: Stub<EmployeeRepository>;
-    let stubComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmount>;
-    let stubCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
+    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
+    let stubbedComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmount>;
+    let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
     let runHourlyPayroll: RunPayroll;
 
     beforeEach(() => {
-        stubEmployeeRepository = buildStubEmployeeRepository();
-        stubComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
-        stubCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
+        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
+        stubbedComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
+        stubbedCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
 
         runHourlyPayroll = buildRunHourlyPayroll({
-            employeeRepository: stubEmployeeRepository,
-            computeHourlyEmployeePaymentDueAmount: stubComputeHourlyEmployeePaymentDueAmount,
-            createPaymentForEmployee: stubCreatePaymentForEmployee
+            employeeRepository: stubbedEmployeeRepository,
+            computeHourlyEmployeePaymentDueAmount: stubbedComputeHourlyEmployeePaymentDueAmount,
+            createPaymentForEmployee: stubbedCreatePaymentForEmployee
         });
 
-        stubCreatePaymentForEmployee.resolves();
+        stubbedCreatePaymentForEmployee.resolves();
     });
 
     it("should insert the right payment the employee", async () => {
         const employee = generateHourlyEmployee();
         const amount = generateEmployeePayAmount(employee);
-        stubEmployeeRepository.fetchAllHourly.resolves([employee]);
+        stubbedEmployeeRepository.fetchAllHourly.resolves([employee]);
 
         await runHourlyPayroll(friday);
 
-        expect(stubCreatePaymentForEmployee).to.have.been.calledOnceWith({
+        expect(stubbedCreatePaymentForEmployee).to.have.been.calledOnceWith({
             employeeId: employee.id,
             date: friday,
             amount
@@ -50,16 +50,16 @@ describe("action runHourlyPayroll", () => {
     it("should insert payments for each employee", async () => {
         const employees = [generateHourlyEmployee(), generateHourlyEmployee()];
         employees.forEach(emp => generateEmployeePayAmount(emp));
-        stubEmployeeRepository.fetchAllHourly.resolves(employees);
+        stubbedEmployeeRepository.fetchAllHourly.resolves(employees);
 
         await runHourlyPayroll(friday);
 
-        expect(stubCreatePaymentForEmployee).to.have.been.calledTwice;
+        expect(stubbedCreatePaymentForEmployee).to.have.been.calledTwice;
     });
 
     function generateEmployeePayAmount(employee: HourlyEmployee): number {
         const amount = generateFloatBetween(100, 500);
-        stubComputeHourlyEmployeePaymentDueAmount.withArgs(employee).resolves(amount);
+        stubbedComputeHourlyEmployeePaymentDueAmount.withArgs(employee).resolves(amount);
         return amount;
     }
 });

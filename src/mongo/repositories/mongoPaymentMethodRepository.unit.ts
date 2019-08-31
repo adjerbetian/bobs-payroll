@@ -1,22 +1,22 @@
-import { buildStubMongoDbAdapter, expect, generateDirectPaymentMethod, generateIndex, Stub } from "@test/unit";
+import { buildStubbedMongoDbAdapter, expect, generateDirectPaymentMethod, generateIndex, Stub } from "@test/unit";
 import { PaymentMethod, PaymentMethodRepository } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
 
 describe("mongoPaymentMethodRepository", () => {
-    let stubDb: Stub<MongoDbAdapter<PaymentMethod>>;
+    let stubbedDb: Stub<MongoDbAdapter<PaymentMethod>>;
     let repository: PaymentMethodRepository;
 
     beforeEach(() => {
-        stubDb = buildStubMongoDbAdapter();
-        repository = buildMongoPaymentMethodRepository(stubDb);
+        stubbedDb = buildStubbedMongoDbAdapter();
+        repository = buildMongoPaymentMethodRepository(stubbedDb);
     });
 
     describe("fetchByEmployeeId", () => {
         it("should return the paymentMethod matching the employee id", async () => {
             const employeeId = generateIndex();
             const paymentMethod = generateDirectPaymentMethod();
-            stubDb.fetch.withArgs({ employeeId }).resolves(paymentMethod);
+            stubbedDb.fetch.withArgs({ employeeId }).resolves(paymentMethod);
 
             const dbPaymentMethod = await repository.fetchByEmployeeId(employeeId);
 
@@ -26,21 +26,21 @@ describe("mongoPaymentMethodRepository", () => {
     describe("deleteByEmployeeId", () => {
         it("delete the payment method of the employee", async () => {
             const employeeId = generateIndex();
-            await stubDb.removeAll.resolves();
+            await stubbedDb.removeAll.resolves();
 
             await repository.deleteByEmployeeId(employeeId);
 
-            await expect(stubDb.removeAll).to.have.been.calledOnceWith({ employeeId });
+            await expect(stubbedDb.removeAll).to.have.been.calledOnceWith({ employeeId });
         });
     });
     describe("insert", () => {
         it("insert the given paymentMethod", async () => {
             const paymentMethod = generateDirectPaymentMethod();
-            await stubDb.insert.resolves();
+            await stubbedDb.insert.resolves();
 
             await repository.insert(paymentMethod);
 
-            expect(stubDb.insert).to.have.been.calledOnceWith(paymentMethod);
+            expect(stubbedDb.insert).to.have.been.calledOnceWith(paymentMethod);
         });
     });
 });

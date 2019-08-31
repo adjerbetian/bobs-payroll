@@ -1,5 +1,5 @@
 import {
-    buildStubMongoDbAdapter,
+    buildStubbedMongoDbAdapter,
     expect,
     generateCommissionedEmployee,
     generateHourlyEmployee,
@@ -13,17 +13,17 @@ import { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";
 
 describe("mongoEmployeeRepository", () => {
     let repository: EmployeeRepository;
-    let stubDb: Stub<MongoDbAdapter<Employee>>;
+    let stubbedDb: Stub<MongoDbAdapter<Employee>>;
 
     beforeEach(() => {
-        stubDb = buildStubMongoDbAdapter();
-        repository = buildMongoEmployeeRepository(stubDb);
+        stubbedDb = buildStubbedMongoDbAdapter();
+        repository = buildMongoEmployeeRepository(stubbedDb);
     });
 
     describe("fetchById", () => {
         it("should return the employee", async () => {
             const employee = generateHourlyEmployee();
-            stubDb.fetch.withArgs({ id: employee.id }).resolves(employee);
+            stubbedDb.fetch.withArgs({ id: employee.id }).resolves(employee);
 
             const dbEmployee = await repository.fetchById(employee.id);
 
@@ -33,17 +33,17 @@ describe("mongoEmployeeRepository", () => {
     describe("insert", () => {
         it("insert the given employee", async () => {
             const employee = generateHourlyEmployee();
-            stubDb.insert.resolves();
+            stubbedDb.insert.resolves();
 
             await repository.insert(employee);
 
-            expect(stubDb.insert).to.have.been.calledWith(employee);
+            expect(stubbedDb.insert).to.have.been.calledWith(employee);
         });
     });
     describe("exists", () => {
         it("return true when the employee exists", async () => {
             const query = { id: generateIndex() };
-            stubDb.exists.withArgs(query).resolves(true);
+            stubbedDb.exists.withArgs(query).resolves(true);
 
             const result = await repository.exists(query);
 
@@ -51,7 +51,7 @@ describe("mongoEmployeeRepository", () => {
         });
         it("return false when the employee exists", async () => {
             const query = { id: generateIndex() };
-            stubDb.exists.withArgs(query).resolves(false);
+            stubbedDb.exists.withArgs(query).resolves(false);
 
             const result = await repository.exists(query);
 
@@ -61,15 +61,15 @@ describe("mongoEmployeeRepository", () => {
     describe("deleteById", () => {
         it("delete the employee", async () => {
             const employeeId = generateIndex();
-            await stubDb.remove.resolves();
+            await stubbedDb.remove.resolves();
 
             await repository.deleteById(employeeId);
 
-            expect(stubDb.remove).to.have.been.calledWith({ id: employeeId });
+            expect(stubbedDb.remove).to.have.been.calledWith({ id: employeeId });
         });
     });
     describe("updateById", () => {
-        beforeEach(() => stubDb.update.resolves());
+        beforeEach(() => stubbedDb.update.resolves());
 
         it("should update the employee information", async () => {
             const employeeId = generateIndex();
@@ -83,14 +83,14 @@ describe("mongoEmployeeRepository", () => {
 
             await repository.updateById(employeeId, update);
 
-            expect(stubDb.update).to.have.been.calledWith({ id: employeeId }, { $set: update });
+            expect(stubbedDb.update).to.have.been.calledWith({ id: employeeId }, { $set: update });
         });
     });
 
     describe("fetchAllHourly", () => {
         it("should only fetch hourly employees", async () => {
             const employees = [generateHourlyEmployee(), generateHourlyEmployee()];
-            stubDb.fetchAll.withArgs({ "work.type": EmployeeType.HOURLY }).resolves(employees);
+            stubbedDb.fetchAll.withArgs({ "work.type": EmployeeType.HOURLY }).resolves(employees);
 
             const result = await repository.fetchAllHourly();
 
@@ -100,7 +100,7 @@ describe("mongoEmployeeRepository", () => {
     describe("fetchAllSalaried", () => {
         it("should only fetch salaried employees", async () => {
             const employees = [generateSalariedEmployee(), generateSalariedEmployee()];
-            stubDb.fetchAll.withArgs({ "work.type": EmployeeType.SALARIED }).resolves(employees);
+            stubbedDb.fetchAll.withArgs({ "work.type": EmployeeType.SALARIED }).resolves(employees);
 
             const result = await repository.fetchAllSalaried();
 
@@ -110,7 +110,7 @@ describe("mongoEmployeeRepository", () => {
     describe("fetchAllCommissioned", () => {
         it("should only fetch commissioned employees", async () => {
             const employees = [generateCommissionedEmployee(), generateCommissionedEmployee()];
-            stubDb.fetchAll.withArgs({ "work.type": EmployeeType.COMMISSIONED }).resolves(employees);
+            stubbedDb.fetchAll.withArgs({ "work.type": EmployeeType.COMMISSIONED }).resolves(employees);
 
             const result = await repository.fetchAllCommissioned();
 

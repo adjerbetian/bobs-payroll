@@ -1,22 +1,22 @@
-import { buildStubEmployeeRepository, expect, generateHourlyEmployee, Stub } from "@test/unit";
+import { buildStubbedEmployeeRepository, expect, generateHourlyEmployee, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildCreateEmployee, CreateEmployee } from "./createEmployee";
 
 describe("action createEmployee", () => {
-    let stubEmployeeRepository: Stub<EmployeeRepository>;
+    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
     let createEmployee: CreateEmployee;
 
     beforeEach(() => {
-        stubEmployeeRepository = buildStubEmployeeRepository();
-        createEmployee = buildCreateEmployee({ employeeRepository: stubEmployeeRepository });
+        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
+        createEmployee = buildCreateEmployee({ employeeRepository: stubbedEmployeeRepository });
     });
 
     it("should insert the given employee", async () => {
         const employee = generateHourlyEmployee();
-        stubEmployeeRepository.insert.resolves();
+        stubbedEmployeeRepository.insert.resolves();
 
         await createEmployee(employee);
 
-        expect(stubEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
+        expect(stubbedEmployeeRepository.insert).to.have.been.calledOnceWith(employee);
     });
 });

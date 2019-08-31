@@ -16,17 +16,17 @@ import { RunPayroll } from "./RunPayroll";
 import { buildRunPayrollDispatcher, PayrollActions } from "./runPayrollDispatcher";
 
 describe("action runPayroll", () => {
-    let stubPayrollActions: Stub<PayrollActions>;
+    let stubbedPayrollActions: Stub<PayrollActions>;
 
     let runPayroll: RunPayroll;
 
     beforeEach(() => {
-        stubPayrollActions = buildStubPayrollActions();
-        runPayroll = buildRunPayrollDispatcher(stubPayrollActions);
+        stubbedPayrollActions = buildStubPayrollActions();
+        runPayroll = buildRunPayrollDispatcher(stubbedPayrollActions);
 
-        stubPayrollActions.runHourlyPayroll.resolves();
-        stubPayrollActions.runSalariedPayroll.resolves();
-        stubPayrollActions.runCommissionedPayroll.resolves();
+        stubbedPayrollActions.runHourlyPayroll.resolves();
+        stubbedPayrollActions.runSalariedPayroll.resolves();
+        stubbedPayrollActions.runCommissionedPayroll.resolves();
     });
 
     it("should should call the runHourlyPayroll only on fridays", async () => {
@@ -38,19 +38,19 @@ describe("action runPayroll", () => {
         await runPayroll(saturday);
         await runPayroll(sunday);
 
-        expect(stubPayrollActions.runHourlyPayroll).to.have.been.calledOnceWith(friday);
+        expect(stubbedPayrollActions.runHourlyPayroll).to.have.been.calledOnceWith(friday);
     });
     it("should should call the runSalariedPayroll only at the end of the month", async () => {
         await runPayroll(firstDayOfMonth);
         await runPayroll(lastDayOfMonth);
 
-        expect(stubPayrollActions.runSalariedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);
+        expect(stubbedPayrollActions.runSalariedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);
     });
     it("should should call the runCommissionedPayroll only at the end of the month", async () => {
         await runPayroll(firstDayOfMonth);
         await runPayroll(lastDayOfMonth);
 
-        expect(stubPayrollActions.runCommissionedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);
+        expect(stubbedPayrollActions.runCommissionedPayroll).to.have.been.calledOnceWith(lastDayOfMonth);
     });
 });
 
