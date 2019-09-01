@@ -3,5 +3,5 @@
     "compilerOptions": {
         "noEmit": false
     },
-    "exclude": ["e2e", "./src/**/*.spec.ts", "./src/**/*.unit.ts", "test"]
+    "exclude": ["./e2e/**", "./src/**/*.spec.ts", "./src/**/*.unit.ts", "./**/test/**"]
 }

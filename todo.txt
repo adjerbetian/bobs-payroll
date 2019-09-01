@@ -1,5 +1,5 @@
-Todo: remove the src folder in the dist folder
 Todo: reorganise payment/actions
 Todo: use ReturnTypes in payment/actions
 Todo: create employee aggregate in core
 Todo: look for a dependency injection framework
+Todo: try to use ts-node without compiling

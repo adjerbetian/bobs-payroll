@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Not Tests" pattern="file[asdppp-1-payroll]:*/&amp;&amp;file:*ts&amp;&amp;!file:*.unit.*&amp;&amp;!file:*.spec.*&amp;&amp;!file:*.e2e.*&amp;&amp;!file:*test//**" />
+</component>
