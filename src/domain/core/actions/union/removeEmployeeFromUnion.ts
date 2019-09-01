@@ -1,4 +1,4 @@
-import { UnionMemberRepository } from "../repositories";
+import { UnionMemberRepository } from "../../repositories";
 
 interface Dependencies {
     unionMemberRepository: UnionMemberRepository;

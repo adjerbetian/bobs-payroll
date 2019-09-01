@@ -1,6 +1,6 @@
-import { UnionMember } from "../entities";
-import { UnionMemberIdAlreadyUsedError } from "../errors";
-import { EmployeeRepository, UnionMemberRepository } from "../repositories";
+import { UnionMember } from "../../entities";
+import { UnionMemberIdAlreadyUsedError } from "../../errors";
+import { EmployeeRepository, UnionMemberRepository } from "../../repositories";
 
 interface Dependencies {
     unionMemberRepository: UnionMemberRepository;

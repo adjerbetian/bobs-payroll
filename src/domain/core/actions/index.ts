@@ -7,13 +7,12 @@ import {
     UnionMemberRepository
 } from "../repositories";
 import { CoreActions } from "./CoreActions";
-import { buildCreateSalesReceipt } from "./createSalesReceipt";
-import { buildCreateServiceCharge } from "./createServiceCharge";
-import { buildCreateTimeCard } from "./createTimeCard";
-import { buildCreateUnionMember } from "./createUnionMember";
-import { buildCreateEmployee, buildDeleteEmployee, buildUpdateEmployee } from "./employees";
-import { buildRemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
-import { buildSetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
+import { buildCoreEmployeeActions } from "./employees";
+import { buildCorePaymentMethodActions } from "./paymentMethod";
+import { buildCoreSalesReceiptActions } from "./salesReceipts";
+import { buildCoreServiceChargesActions } from "./serviceCharges";
+import { buildCoreTimeCardActions } from "./timeCards";
+import { buildCoreUnionActions } from "./union";
 
 export { CoreActions } from "./CoreActions";
 
@@ -35,14 +34,11 @@ export function buildCoreActions({
     paymentMethodRepository
 }: CoreActionsDependencies): CoreActions {
     return {
-        deleteEmployee: buildDeleteEmployee({ employeeRepository }),
-        createTimeCard: buildCreateTimeCard({ employeeRepository, timeCardRepository }),
-        createServiceCharge: buildCreateServiceCharge({ serviceChargeRepository, unionMemberRepository }),
-        createSalesReceipt: buildCreateSalesReceipt({ employeeRepository, salesReceiptRepository }),
-        createEmployee: buildCreateEmployee({ employeeRepository }),
-        updateEmployee: buildUpdateEmployee({ employeeRepository }),
-        setEmployeePaymentMethod: buildSetEmployeePaymentMethod({ paymentMethodRepository }),
-        createUnionMember: buildCreateUnionMember({ unionMemberRepository, employeeRepository }),
-        removeEmployeeFromUnion: buildRemoveEmployeeFromUnion({ unionMemberRepository })
+        ...buildCoreEmployeeActions({ employeeRepository }),
+        ...buildCorePaymentMethodActions({ paymentMethodRepository }),
+        ...buildCoreSalesReceiptActions({ employeeRepository, salesReceiptRepository }),
+        ...buildCoreServiceChargesActions({ unionMemberRepository, serviceChargeRepository }),
+        ...buildCoreTimeCardActions({ employeeRepository, timeCardRepository }),
+        ...buildCoreUnionActions({ employeeRepository, unionMemberRepository })
     };
 }

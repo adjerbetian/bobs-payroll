@@ -1,6 +1,6 @@
 import { expect, generateIndex, Stub } from "@test/unit";
-import { UnionMemberRepository } from "../repositories";
-import { buildStubbedUnionMemberRepository } from "../test";
+import { UnionMemberRepository } from "../../repositories";
+import { buildStubbedUnionMemberRepository } from "../../test";
 import { buildRemoveEmployeeFromUnion, RemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
 
 describe("action removeEmployeeFromUnion", () => {

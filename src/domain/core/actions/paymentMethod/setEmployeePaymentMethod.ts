@@ -1,5 +1,5 @@
-import { PaymentMethod } from "../entities";
-import { PaymentMethodRepository } from "../repositories";
+import { PaymentMethod } from "../../entities";
+import { PaymentMethodRepository } from "../../repositories";
 
 interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;

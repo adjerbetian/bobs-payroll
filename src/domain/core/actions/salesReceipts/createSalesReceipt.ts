@@ -1,6 +1,6 @@
-import { EmployeeType, SalesReceipt } from "../entities";
-import { EmployeeTypeError } from "../errors";
-import { EmployeeRepository, SalesReceiptRepository } from "../repositories";
+import { EmployeeType, SalesReceipt } from "../../entities";
+import { EmployeeTypeError } from "../../errors";
+import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
 
 interface Dependencies {
     salesReceiptRepository: SalesReceiptRepository;

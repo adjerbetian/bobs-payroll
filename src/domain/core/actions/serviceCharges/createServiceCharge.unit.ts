@@ -1,7 +1,7 @@
 import { expect, generateServiceCharge, generateUnionMember, Stub } from "@test/unit";
-import { NotFoundError } from "../errors";
-import { ServiceChargeRepository, UnionMemberRepository } from "../repositories";
-import { buildStubbedServiceChargeRepository, buildStubbedUnionMemberRepository } from "../test";
+import { NotFoundError } from "../../errors";
+import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
+import { buildStubbedServiceChargeRepository, buildStubbedUnionMemberRepository } from "../../test";
 import { buildCreateServiceCharge, CreateServiceCharge } from "./createServiceCharge";
 
 describe("action createServiceCharge", () => {

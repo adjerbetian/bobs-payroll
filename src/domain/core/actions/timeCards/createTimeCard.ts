@@ -1,6 +1,6 @@
-import { EmployeeTypeError } from "../errors";
-import { EmployeeType, TimeCard } from "../entities";
-import { EmployeeRepository, TimeCardRepository } from "../repositories";
+import { EmployeeTypeError } from "../../errors";
+import { EmployeeType, TimeCard } from "../../entities";
+import { EmployeeRepository, TimeCardRepository } from "../../repositories";
 
 export type CreateTimeCard = (timeCard: TimeCard) => Promise<void>;
 

@@ -1,5 +1,5 @@
-import { ServiceCharge } from "../entities";
-import { ServiceChargeRepository, UnionMemberRepository } from "../repositories";
+import { ServiceCharge } from "../../entities";
+import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
 
 interface Dependencies {
     serviceChargeRepository: ServiceChargeRepository;

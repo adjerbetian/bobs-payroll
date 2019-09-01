@@ -1,19 +1,13 @@
-import { CreateSalesReceipt } from "./createSalesReceipt";
-import { CreateServiceCharge } from "./createServiceCharge";
-import { CreateTimeCard } from "./createTimeCard";
-import { CreateUnionMember } from "./createUnionMember";
-import { CreateEmployee, DeleteEmployee, UpdateEmployee } from "./employees";
-import { RemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
-import { SetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
+import { CoreEmployeeActions } from "./employees";
+import { CorePaymentMethodActions } from "./paymentMethod";
+import { CoreSalesReceiptActions } from "./salesReceipts";
+import { CoreServiceChargeActions } from "./serviceCharges";
+import { CoreTimeCardActions } from "./timeCards";
+import { CoreUnionActions } from "./union";
 
-export interface CoreActions {
-    deleteEmployee: DeleteEmployee;
-    createTimeCard: CreateTimeCard;
-    createServiceCharge: CreateServiceCharge;
-    createSalesReceipt: CreateSalesReceipt;
-    createEmployee: CreateEmployee;
-    updateEmployee: UpdateEmployee;
-    setEmployeePaymentMethod: SetEmployeePaymentMethod;
-    createUnionMember: CreateUnionMember;
-    removeEmployeeFromUnion: RemoveEmployeeFromUnion;
-}
+export type CoreActions = CoreEmployeeActions &
+    CorePaymentMethodActions &
+    CoreSalesReceiptActions &
+    CoreServiceChargeActions &
+    CoreTimeCardActions &
+    CoreUnionActions;
