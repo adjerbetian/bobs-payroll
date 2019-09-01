@@ -117,14 +117,14 @@ describe("changeEmployee", () => {
         });
     });
     describe("payment method", () => {
-        beforeEach(() => stubbedActions.setEmployeePaymentMethod.resolves());
+        beforeEach(() => stubbedActions.createPaymentMethod.resolves());
 
         describe("Hold", () => {
             it("should add the hold paycheck payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Hold");
 
                 const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId });
-                expect(stubbedActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
         });
         describe("Direct", () => {
@@ -136,7 +136,7 @@ describe("changeEmployee", () => {
                     bank: "bank-id",
                     account: "account-id"
                 });
-                expect(stubbedActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the bank-id is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Direct");
@@ -157,7 +157,7 @@ describe("changeEmployee", () => {
                     employeeId,
                     address: "my paycheck address"
                 });
-                expect(stubbedActions.setEmployeePaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the address is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Mail");

@@ -159,6 +159,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         // todo : remove usage of core repositories in payment domain
         // todo : remove export of repositories from domains
         // todo : reorganise payment/actions
+        // todo : create employee aggregate in core
         // todo : look for a dependency injection framework
         it.skip("should not include the commissions of the sales receipts of the previous month", async () => {});
         it.skip("should not pay if it's not the last day of the month", async () => {});

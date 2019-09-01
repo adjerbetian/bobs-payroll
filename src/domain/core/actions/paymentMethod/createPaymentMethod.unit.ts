@@ -1,15 +1,15 @@
 import { expect, generateHoldPaymentMethod, Stub } from "@test/unit";
 import { PaymentMethodRepository } from "../../repositories";
 import { buildStubbedPaymentMethodRepository } from "../../test";
-import { buildSetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
+import { buildCreatePaymentMethod } from "./createPaymentMethod";
 
 describe("action setEmployeePaymentMethod", () => {
     let stubbedPaymentMethodRepository: Stub<PaymentMethodRepository>;
-    let setEmployeePaymentMethod: ReturnType<typeof buildSetEmployeePaymentMethod>;
+    let createPaymentMethod: ReturnType<typeof buildCreatePaymentMethod>;
 
     beforeEach(() => {
         stubbedPaymentMethodRepository = buildStubbedPaymentMethodRepository();
-        setEmployeePaymentMethod = buildSetEmployeePaymentMethod({
+        createPaymentMethod = buildCreatePaymentMethod({
             paymentMethodRepository: stubbedPaymentMethodRepository
         });
 
@@ -20,14 +20,14 @@ describe("action setEmployeePaymentMethod", () => {
     it("should add the hold paycheck payment method to the employee", async () => {
         const paymentMethod = generateHoldPaymentMethod();
 
-        await setEmployeePaymentMethod(paymentMethod);
+        await createPaymentMethod(paymentMethod);
 
         expect(stubbedPaymentMethodRepository.insert).to.have.been.calledOnceWith(paymentMethod);
     });
     it("should delete the previous payment method of the employee", async () => {
         const paymentMethod = generateHoldPaymentMethod();
 
-        await setEmployeePaymentMethod(paymentMethod);
+        await createPaymentMethod(paymentMethod);
 
         expect(stubbedPaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(paymentMethod.employeeId);
         expect(stubbedPaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(

@@ -72,7 +72,7 @@ export function buildChangeEmployeeTransaction(actions: CoreActions): Transactio
         }
 
         async function changeEmployeePaymentMethodToHold(): Promise<void> {
-            await actions.setEmployeePaymentMethod({
+            await actions.createPaymentMethod({
                 type: PaymentMethodType.HOLD,
                 employeeId: employeeId
             });
@@ -83,7 +83,7 @@ export function buildChangeEmployeeTransaction(actions: CoreActions): Transactio
             transactionValidator.assertIsNotEmpty(bank);
             transactionValidator.assertIsNotEmpty(account);
 
-            await actions.setEmployeePaymentMethod({
+            await actions.createPaymentMethod({
                 type: PaymentMethodType.DIRECT,
                 employeeId: employeeId,
                 account,
@@ -95,7 +95,7 @@ export function buildChangeEmployeeTransaction(actions: CoreActions): Transactio
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
 
-            await actions.setEmployeePaymentMethod({
+            await actions.createPaymentMethod({
                 type: PaymentMethodType.MAIL,
                 employeeId: employeeId,
                 address

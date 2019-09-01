@@ -6,9 +6,9 @@ interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;
 }
 
-export function buildSetEmployeePaymentMethod({
+export function buildCreatePaymentMethod({
     paymentMethodRepository
-}: Dependencies): CorePaymentMethodActions["setEmployeePaymentMethod"] {
+}: Dependencies): CorePaymentMethodActions["createPaymentMethod"] {
     return async function(paymentMethod: PaymentMethod): Promise<void> {
         await paymentMethodRepository.deleteByEmployeeId(paymentMethod.employeeId);
         return paymentMethodRepository.insert(paymentMethod);

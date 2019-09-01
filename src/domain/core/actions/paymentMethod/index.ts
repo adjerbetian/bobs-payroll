@@ -1,6 +1,6 @@
 import { PaymentMethodRepository } from "../../repositories";
 import { CorePaymentMethodActions } from "../CoreActions";
-import { buildSetEmployeePaymentMethod } from "./setEmployeePaymentMethod";
+import { buildCreatePaymentMethod } from "./createPaymentMethod";
 
 interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;
@@ -8,7 +8,7 @@ interface Dependencies {
 
 export function buildCorePaymentMethodActions({ paymentMethodRepository }: Dependencies): CorePaymentMethodActions {
     return {
-        setEmployeePaymentMethod: buildSetEmployeePaymentMethod({ paymentMethodRepository })
+        createPaymentMethod: buildCreatePaymentMethod({ paymentMethodRepository })
     };
 }
 export { CorePaymentMethodActions } from "../CoreActions";

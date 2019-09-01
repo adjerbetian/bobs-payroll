@@ -3,7 +3,7 @@ import { SinonStub } from "sinon";
 import { CoreActions, PaymentActions } from "../../src";
 
 export function buildStubbedCoreActions(): Stub<CoreActions> {
-    return buildStubFor({
+    return buildStubFor<CoreActions>({
         createEmployee: true,
         deleteEmployee: true,
         updateEmployee: true,
@@ -18,7 +18,7 @@ export function buildStubbedCoreActions(): Stub<CoreActions> {
 
         createSalesReceipt: true,
 
-        setEmployeePaymentMethod: true,
+        createPaymentMethod: true,
 
         createUnionMember: true,
         removeEmployeeFromUnion: true
@@ -37,7 +37,8 @@ type StubbedObject<T> = {
     [K in keyof T]: SinonStub;
 };
 
-export function buildStubFor<T extends Record<string, boolean>>(object: T): StubbedObject<T>;
+type BooleansOf<T> = { [K in keyof T]: true };
+export function buildStubFor<T>(object: BooleansOf<T>): StubbedObject<T>;
 export function buildStubFor(name: string): StubbedFunction;
 export function buildStubFor<T extends Record<string, boolean>>(
     object: T | string
