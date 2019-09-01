@@ -1,3 +1,6 @@
+import { PaymentActionsDependencies } from "./actions";
+
 export * from "./entities";
 export * from "./actions";
-export * from "./repositories";
+
+export type PaymentDependencies = PaymentActionsDependencies;

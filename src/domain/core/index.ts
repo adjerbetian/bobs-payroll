@@ -1,4 +1,7 @@
+import { CoreActionsDependencies } from "./actions";
+
 export * from "./entities";
 export * from "./errors";
 export * from "./actions";
-export * from "./repositories"; // todo : remove that
+
+export type CoreDependencies = CoreActionsDependencies;

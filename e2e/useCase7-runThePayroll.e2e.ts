@@ -156,8 +156,6 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const commission = (salesReceipts[0].amount + salesReceipts[1].amount) * employee.work.commissionRate;
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary + commission);
         });
-        // todo : remove usage of core repositories in payment domain
-        // todo : remove export of repositories from domains
         // todo : reorganise payment/actions
         // todo : create employee aggregate in core
         // todo : look for a dependency injection framework

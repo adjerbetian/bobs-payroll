@@ -1,13 +1,5 @@
-import {
-    buildCoreActions,
-    EmployeeRepository,
-    PaymentMethodRepository,
-    SalesReceiptRepository,
-    ServiceChargeRepository,
-    TimeCardRepository,
-    UnionMemberRepository
-} from "./core";
-import { buildPaymentActions, PaymentRepository } from "./payment";
+import { buildCoreActions, CoreDependencies } from "./core";
+import { buildPaymentActions, PaymentDependencies } from "./payment";
 import { buildTransactionDomain } from "./transactions";
 
 export interface App {
@@ -15,13 +7,14 @@ export interface App {
 }
 
 interface AppDependencies {
-    employeeRepository: EmployeeRepository;
-    paymentMethodRepository: PaymentMethodRepository;
-    salesReceiptRepository: SalesReceiptRepository;
-    serviceChargeRepository: ServiceChargeRepository;
-    timeCardRepository: TimeCardRepository;
-    unionMemberRepository: UnionMemberRepository;
-    paymentRepository: PaymentRepository;
+    employeeRepository: CoreDependencies["employeeRepository"];
+    paymentMethodRepository: CoreDependencies["paymentMethodRepository"];
+    salesReceiptRepository: CoreDependencies["salesReceiptRepository"];
+    serviceChargeRepository: CoreDependencies["serviceChargeRepository"];
+    timeCardRepository: CoreDependencies["timeCardRepository"];
+    unionMemberRepository: CoreDependencies["unionMemberRepository"];
+
+    paymentRepository: PaymentDependencies["paymentRepository"];
 }
 
 export function buildApp({
