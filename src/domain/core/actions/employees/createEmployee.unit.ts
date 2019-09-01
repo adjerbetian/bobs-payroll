@@ -1,11 +1,11 @@
 import { expect, generateHourlyEmployee, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
-import { buildCreateEmployee, CreateEmployee } from "./createEmployee";
+import { buildCreateEmployee } from "./createEmployee";
 
 describe("action createEmployee", () => {
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let createEmployee: CreateEmployee;
+    let createEmployee: ReturnType<typeof buildCreateEmployee>;
 
     beforeEach(() => {
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();

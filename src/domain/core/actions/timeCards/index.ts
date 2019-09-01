@@ -1,8 +1,6 @@
 import { EmployeeRepository, TimeCardRepository } from "../../repositories";
-import { CoreTimeCardActions } from "./CoreTimeCardActions";
+import { CoreTimeCardActions } from "../CoreActions";
 import { buildCreateTimeCard } from "./createTimeCard";
-
-export { CoreTimeCardActions } from "./CoreTimeCardActions";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
@@ -17,3 +15,4 @@ export function buildCoreTimeCardActions({
         createTimeCard: buildCreateTimeCard({ employeeRepository, timeCardRepository })
     };
 }
+export { CoreTimeCardActions } from "../CoreActions";

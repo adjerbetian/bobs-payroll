@@ -1,9 +1,7 @@
 import { EmployeeRepository, UnionMemberRepository } from "../../repositories";
-import { CoreUnionActions } from "./CoreUnionActions";
+import { CoreUnionActions } from "../CoreActions";
 import { buildCreateUnionMember } from "./createUnionMember";
 import { buildRemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
-
-export { CoreUnionActions } from "./CoreUnionActions";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
@@ -16,3 +14,4 @@ export function buildCoreUnionActions({ unionMemberRepository, employeeRepositor
         removeEmployeeFromUnion: buildRemoveEmployeeFromUnion({ unionMemberRepository })
     };
 }
+export { CoreUnionActions } from "../CoreActions";

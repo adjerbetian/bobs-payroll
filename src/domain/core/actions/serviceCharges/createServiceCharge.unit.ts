@@ -2,12 +2,12 @@ import { expect, generateServiceCharge, generateUnionMember, Stub } from "@test/
 import { NotFoundError } from "../../errors";
 import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
 import { buildStubbedServiceChargeRepository, buildStubbedUnionMemberRepository } from "../../test";
-import { buildCreateServiceCharge, CreateServiceCharge } from "./createServiceCharge";
+import { buildCreateServiceCharge } from "./createServiceCharge";
 
 describe("action createServiceCharge", () => {
     let stubbedServiceChargeRepository: Stub<ServiceChargeRepository>;
     let stubbedUnionMemberRepository: Stub<UnionMemberRepository>;
-    let createServiceCharge: CreateServiceCharge;
+    let createServiceCharge: ReturnType<typeof buildCreateServiceCharge>;
 
     beforeEach(() => {
         stubbedServiceChargeRepository = buildStubbedServiceChargeRepository();

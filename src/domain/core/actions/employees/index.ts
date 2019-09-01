@@ -1,10 +1,8 @@
 import { EmployeeRepository } from "../../repositories";
-import { CoreEmployeeActions } from "./CoreEmployeeActions";
+import { CoreEmployeeActions } from "../CoreActions";
 import { buildCreateEmployee } from "./createEmployee";
 import { buildDeleteEmployee } from "./deleteEmployee";
 import { buildUpdateEmployee } from "./updateEmployee";
-
-export { CoreEmployeeActions } from "./CoreEmployeeActions";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
@@ -17,3 +15,4 @@ export function buildCoreEmployeeActions({ employeeRepository }: Dependencies): 
         updateEmployee: buildUpdateEmployee({ employeeRepository })
     };
 }
+export { CoreEmployeeActions } from "../CoreActions";

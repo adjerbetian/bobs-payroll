@@ -1,15 +1,17 @@
-import { EmployeeTypeError } from "../../errors";
 import { EmployeeType, TimeCard } from "../../entities";
+import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, TimeCardRepository } from "../../repositories";
-
-export type CreateTimeCard = (timeCard: TimeCard) => Promise<void>;
+import { CoreTimeCardActions } from "../CoreActions";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
     timeCardRepository: TimeCardRepository;
 }
 
-export function buildCreateTimeCard({ employeeRepository, timeCardRepository }: Dependencies): CreateTimeCard {
+export function buildCreateTimeCard({
+    employeeRepository,
+    timeCardRepository
+}: Dependencies): CoreTimeCardActions["createTimeCard"] {
     return async function(timeCard: TimeCard): Promise<void> {
         await assertEmployeeIsHourly(timeCard.employeeId);
         await timeCardRepository.insert(timeCard);

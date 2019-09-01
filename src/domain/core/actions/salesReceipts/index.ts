@@ -1,8 +1,6 @@
 import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
-import { CoreSalesReceiptActions } from "./CoreSalesReceiptActions";
+import { CoreSalesReceiptActions } from "../CoreActions";
 import { buildCreateSalesReceipt } from "./createSalesReceipt";
-
-export { CoreSalesReceiptActions } from "./CoreSalesReceiptActions";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;

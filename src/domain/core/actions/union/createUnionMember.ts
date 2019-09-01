@@ -1,15 +1,17 @@
 import { UnionMember } from "../../entities";
 import { UnionMemberIdAlreadyUsedError } from "../../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../../repositories";
+import { CoreUnionActions } from "../CoreActions";
 
 interface Dependencies {
     unionMemberRepository: UnionMemberRepository;
     employeeRepository: EmployeeRepository;
 }
 
-export type CreateUnionMember = (unionMember: UnionMember) => Promise<void>;
-
-export function buildCreateUnionMember({ unionMemberRepository, employeeRepository }: Dependencies): CreateUnionMember {
+export function buildCreateUnionMember({
+    unionMemberRepository,
+    employeeRepository
+}: Dependencies): CoreUnionActions["createUnionMember"] {
     return async function(unionMember: UnionMember): Promise<void> {
         await assertEmployeeExists(unionMember.employeeId);
         await assertMemberIdIsNotTaken(unionMember);

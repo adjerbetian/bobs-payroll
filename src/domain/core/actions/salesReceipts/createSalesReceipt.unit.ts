@@ -2,12 +2,12 @@ import { expect, generateCommissionedEmployee, generateSalariedEmployee, generat
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedSalesReceiptRepository } from "../../test";
-import { buildCreateSalesReceipt, CreateSalesReceipt } from "./createSalesReceipt";
+import { buildCreateSalesReceipt } from "./createSalesReceipt";
 
 describe("action createSalesReceipt", () => {
     let stubbedSalesReceiptRepository: Stub<SalesReceiptRepository>;
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let createSalesReceipt: CreateSalesReceipt;
+    let createSalesReceipt: ReturnType<typeof buildCreateSalesReceipt>;
 
     beforeEach(() => {
         stubbedSalesReceiptRepository = buildStubbedSalesReceiptRepository();

@@ -2,12 +2,12 @@ import { expect, generateHourlyEmployee, generateSalariedEmployee, generateTimeC
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, TimeCardRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedTimeCardRepository } from "../../test";
-import { buildCreateTimeCard, CreateTimeCard } from "./createTimeCard";
+import { buildCreateTimeCard } from "./createTimeCard";
 
 describe("action createTimeCard", () => {
     let stubbedTimeCardRepository: Stub<TimeCardRepository>;
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let createTimeCard: CreateTimeCard;
+    let createTimeCard: ReturnType<typeof buildCreateTimeCard>;
 
     beforeEach(() => {
         stubbedTimeCardRepository = buildStubbedTimeCardRepository();

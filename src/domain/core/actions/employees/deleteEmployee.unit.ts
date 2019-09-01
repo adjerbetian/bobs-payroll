@@ -1,11 +1,11 @@
 import { expect, generateIndex, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
-import { buildDeleteEmployee, DeleteEmployee } from "./deleteEmployee";
+import { buildDeleteEmployee } from "./deleteEmployee";
 
 describe("action deleteEmployee", () => {
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let deleteEmployee: DeleteEmployee;
+    let deleteEmployee: ReturnType<typeof buildDeleteEmployee>;
 
     beforeEach(() => {
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();

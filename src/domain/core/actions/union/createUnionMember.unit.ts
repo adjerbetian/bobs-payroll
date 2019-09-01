@@ -3,12 +3,12 @@ import { UnionMember } from "../../entities";
 import { NotFoundError, UnionMemberIdAlreadyUsedError } from "../../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedUnionMemberRepository } from "../../test";
-import { buildCreateUnionMember, CreateUnionMember } from "./createUnionMember";
+import { buildCreateUnionMember } from "./createUnionMember";
 
 describe("action createUnionMember", () => {
     let stubbedUnionMemberRepository: Stub<UnionMemberRepository>;
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let createUnionMember: CreateUnionMember;
+    let createUnionMember: ReturnType<typeof buildCreateUnionMember>;
 
     let unionMember: UnionMember;
 

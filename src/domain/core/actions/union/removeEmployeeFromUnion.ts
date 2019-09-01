@@ -1,12 +1,13 @@
 import { UnionMemberRepository } from "../../repositories";
+import { CoreUnionActions } from "../CoreActions";
 
 interface Dependencies {
     unionMemberRepository: UnionMemberRepository;
 }
 
-export type RemoveEmployeeFromUnion = (employeeId: number) => Promise<void>;
-
-export function buildRemoveEmployeeFromUnion({ unionMemberRepository }: Dependencies): RemoveEmployeeFromUnion {
+export function buildRemoveEmployeeFromUnion({
+    unionMemberRepository
+}: Dependencies): CoreUnionActions["removeEmployeeFromUnion"] {
     return async function(employeeId: number): Promise<void> {
         await unionMemberRepository.deleteByEmployeeId(employeeId);
     };

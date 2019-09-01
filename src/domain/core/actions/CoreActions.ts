@@ -1,9 +1,4 @@
-import { CoreEmployeeActions } from "./employees";
-import { CorePaymentMethodActions } from "./paymentMethod";
-import { CoreSalesReceiptActions } from "./salesReceipts";
-import { CoreServiceChargeActions } from "./serviceCharges";
-import { CoreTimeCardActions } from "./timeCards";
-import { CoreUnionActions } from "./union";
+import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../entities";
 
 export type CoreActions = CoreEmployeeActions &
     CorePaymentMethodActions &
@@ -11,3 +6,30 @@ export type CoreActions = CoreEmployeeActions &
     CoreServiceChargeActions &
     CoreTimeCardActions &
     CoreUnionActions;
+
+export interface CoreEmployeeActions {
+    createEmployee: (employee: Employee) => Promise<void>;
+    updateEmployee: (employeeId: number, update: Partial<Employee>) => Promise<void>;
+    deleteEmployee: (employeeId: number) => Promise<void>;
+}
+
+export interface CorePaymentMethodActions {
+    setEmployeePaymentMethod: (paymentMethod: PaymentMethod) => Promise<void>;
+}
+
+export interface CoreSalesReceiptActions {
+    createSalesReceipt: (salesReceipt: SalesReceipt) => Promise<void>;
+}
+
+export interface CoreServiceChargeActions {
+    createServiceCharge: (serviceCharge: ServiceCharge) => Promise<void>;
+}
+
+export interface CoreTimeCardActions {
+    createTimeCard: (timeCard: TimeCard) => Promise<void>;
+}
+
+export interface CoreUnionActions {
+    createUnionMember: (unionMember: UnionMember) => Promise<void>;
+    removeEmployeeFromUnion: (employeeId: number) => Promise<void>;
+}
