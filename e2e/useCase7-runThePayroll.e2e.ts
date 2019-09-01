@@ -156,9 +156,6 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const commission = (salesReceipts[0].amount + salesReceipts[1].amount) * employee.work.commissionRate;
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary + commission);
         });
-        // todo : reorganise payment/actions
-        // todo : create employee aggregate in core
-        // todo : look for a dependency injection framework
         it.skip("should not include the commissions of the sales receipts of the previous month", async () => {});
         it.skip("should not pay if it's not the last day of the month", async () => {});
         it.skip("should not pay twice the salary and the commission even if we run the program twice on the same day", async () => {});

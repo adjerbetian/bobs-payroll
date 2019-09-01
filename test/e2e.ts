@@ -9,6 +9,5 @@ before(async () => {
 });
 
 export async function executePayrollCommand(command: string): Promise<string> {
-    //todo : remove the src folder
     return await execute("node dist/src/main.js " + command);
 }

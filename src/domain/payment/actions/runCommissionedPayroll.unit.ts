@@ -18,7 +18,7 @@ describe("action runCommissionedPayroll", () => {
     let stubbedComputeEmployeeCommission: Stub<ComputeEmployeeCommission>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runCommissionedPayroll: RunPayroll; // todo : use ReturnType
+    let runCommissionedPayroll: RunPayroll;
 
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();
