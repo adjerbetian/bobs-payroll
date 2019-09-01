@@ -45,8 +45,7 @@ export function buildApp({
         coreActions,
         paymentMethodRepository,
         paymentRepository,
-        salesReceiptRepository,
-        timeCardRepository
+        salesReceiptRepository
     });
     const transactionDomain = buildTransactionDomain(coreActions, paymentActions);
 

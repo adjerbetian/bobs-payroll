@@ -1,15 +1,15 @@
-import { HourlyEmployee, TimeCard, TimeCardRepository } from "../../../core";
+import { CoreActions, HourlyEmployee, TimeCard } from "../../../core";
 import { PaymentRepository } from "../../repositories";
 import { ComputeHourlyEmployeePaymentDueAmount } from "../runHourlyPayroll";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;
-    timeCardRepository: TimeCardRepository;
+    coreActions: CoreActions;
 }
 
 export function buildComputeHourlyEmployeePaymentDueAmount({
     paymentRepository,
-    timeCardRepository
+    coreActions
 }: Dependencies): ComputeHourlyEmployeePaymentDueAmount {
     return async function(employee: HourlyEmployee): Promise<number> {
         const dueTimeCards = await fetchEmployeeDueTimeCards(employee.id);
@@ -20,7 +20,7 @@ export function buildComputeHourlyEmployeePaymentDueAmount({
 
     async function fetchEmployeeDueTimeCards(employeeId: number): Promise<TimeCard[]> {
         const lastPaymentDate = await paymentRepository.fetchEmployeeLastPaymentDate(employeeId);
-        return timeCardRepository.fetchAllOfEmployeeSince(employeeId, lastPaymentDate);
+        return coreActions.fetchEmployeeTimeCardsSince(employeeId, lastPaymentDate);
     }
 
     function computeTimeCardsRegularHours(timeCards: TimeCard[]): number {

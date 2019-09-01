@@ -12,6 +12,7 @@ export function buildStubbedCoreActions(): Stub<CoreActions> {
         fetchAllCommissioned: true,
 
         createTimeCard: true,
+        fetchEmployeeTimeCardsSince: true,
 
         createServiceCharge: true,
 

@@ -40,6 +40,7 @@ export interface CoreServiceChargeActions {
 
 export interface CoreTimeCardActions {
     createTimeCard: (timeCard: TimeCard) => Promise<void>;
+    fetchEmployeeTimeCardsSince: (employeeId: number, date: string) => Promise<TimeCard[]>;
 }
 
 export interface CoreUnionActions {
