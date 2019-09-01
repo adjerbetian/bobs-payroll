@@ -1,6 +1,6 @@
-import { CoreActions, HourlyEmployee, TimeCard } from "../../../core";
-import { PaymentRepository } from "../../repositories";
-import { ComputeHourlyEmployeePaymentDueAmount } from "../runHourlyPayroll";
+import { CoreActions, HourlyEmployee, TimeCard } from "../../../../core";
+import { PaymentRepository } from "../../../repositories";
+import { ComputeHourlyEmployeePaymentDueAmount } from "./runHourlyPayroll";
 
 interface Dependencies {
     paymentRepository: PaymentRepository;

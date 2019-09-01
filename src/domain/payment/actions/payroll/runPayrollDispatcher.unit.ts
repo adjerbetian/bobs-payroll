@@ -12,13 +12,12 @@ import {
     tuesday,
     wednesday
 } from "@test/unit";
-import { RunPayroll } from "./RunPayroll";
-import { buildRunPayrollDispatcher, PayrollActions } from "./runPayrollDispatcher";
+import { buildRunPayrollDispatcher, RunPayrollActions } from "./runPayrollDispatcher";
 
 describe("action runPayroll", () => {
-    let stubbedPayrollActions: Stub<PayrollActions>;
+    let stubbedPayrollActions: Stub<RunPayrollActions>;
 
-    let runPayroll: RunPayroll;
+    let runPayroll: ReturnType<typeof buildRunPayrollDispatcher>;
 
     beforeEach(() => {
         stubbedPayrollActions = buildStubPayrollActions();
@@ -54,7 +53,7 @@ describe("action runPayroll", () => {
     });
 });
 
-function buildStubPayrollActions(): Stub<PayrollActions> {
+function buildStubPayrollActions(): Stub<RunPayrollActions> {
     return buildStubFor({
         runHourlyPayroll: true,
         runSalariedPayroll: true,

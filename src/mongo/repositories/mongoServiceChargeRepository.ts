@@ -1,9 +1,9 @@
-import { CoreActionsDependencies, ServiceCharge } from "../../domain";
+import { CoreDependencies, ServiceCharge } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoServiceChargeRepository(
     db: MongoDbAdapter<ServiceCharge>
-): CoreActionsDependencies["serviceChargeRepository"] {
+): CoreDependencies["serviceChargeRepository"] {
     return {
         async fetchAll(): Promise<ServiceCharge[]> {
             return db.fetchAll({});

@@ -1,9 +1,9 @@
-import { CoreActionsDependencies, PaymentMethod } from "../../domain";
+import { CoreDependencies, PaymentMethod } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoPaymentMethodRepository(
     db: MongoDbAdapter<PaymentMethod>
-): CoreActionsDependencies["paymentMethodRepository"] {
+): CoreDependencies["paymentMethodRepository"] {
     return {
         async fetchByEmployeeId(employeeId: number): Promise<PaymentMethod> {
             return db.fetch({ employeeId });

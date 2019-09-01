@@ -8,17 +8,16 @@ import {
     lastDayOfMonth,
     Stub
 } from "@test/unit";
-import { CoreActions } from "../../core";
-import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
+import { CoreActions } from "../../../../core";
+import { CreatePaymentForEmployee } from "../../payment";
 import { buildRunCommissionedPayroll, ComputeEmployeeCommission } from "./runCommissionedPayroll";
-import { RunPayroll } from "./RunPayroll";
 
 describe("action runCommissionedPayroll", () => {
     let stubbedCoreActions: Stub<CoreActions>;
     let stubbedComputeEmployeeCommission: Stub<ComputeEmployeeCommission>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runCommissionedPayroll: RunPayroll;
+    let runCommissionedPayroll: ReturnType<typeof buildRunCommissionedPayroll>;
 
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();

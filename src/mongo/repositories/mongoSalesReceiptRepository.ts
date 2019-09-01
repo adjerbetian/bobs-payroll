@@ -1,9 +1,9 @@
-import { CoreActionsDependencies, SalesReceipt } from "../../domain";
+import { CoreDependencies, SalesReceipt } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoSalesReceiptRepository(
     db: MongoDbAdapter<SalesReceipt>
-): CoreActionsDependencies["salesReceiptRepository"] {
+): CoreDependencies["salesReceiptRepository"] {
     return {
         async fetchAllOfEmployee(employeeId: number): Promise<SalesReceipt[]> {
             return db.fetchAll({ employeeId });

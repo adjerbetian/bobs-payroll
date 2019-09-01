@@ -1,9 +1,9 @@
-import { CoreActionsDependencies, UnionMember } from "../../domain";
+import { CoreDependencies, UnionMember } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
 export function buildMongoUnionMemberRepository(
     db: MongoDbAdapter<UnionMember>
-): CoreActionsDependencies["unionMemberRepository"] {
+): CoreDependencies["unionMemberRepository"] {
     return {
         async fetchByEmployeeId(employeeId: number): Promise<UnionMember> {
             return db.fetch({ employeeId });

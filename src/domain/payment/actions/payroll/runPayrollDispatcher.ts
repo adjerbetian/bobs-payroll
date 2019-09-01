@@ -1,7 +1,7 @@
 import * as moment from "moment";
-import { RunPayroll } from "./RunPayroll";
+import { PaymentActions } from "../PaymentActions";
 
-export interface PayrollActions {
+export interface RunPayrollActions {
     runHourlyPayroll: (date: string) => Promise<void>;
     runSalariedPayroll: (date: string) => Promise<void>;
     runCommissionedPayroll: (date: string) => Promise<void>;
@@ -9,14 +9,18 @@ export interface PayrollActions {
 
 const FRIDAY = 5;
 
-export function buildRunPayrollDispatcher(payrollActions: PayrollActions): RunPayroll {
+export function buildRunPayrollDispatcher({
+    runCommissionedPayroll,
+    runHourlyPayroll,
+    runSalariedPayroll
+}: RunPayrollActions): PaymentActions["runPayroll"] {
     return async function(date: string): Promise<void> {
         if (isFriday(date)) {
-            await payrollActions.runHourlyPayroll(date);
+            await runHourlyPayroll(date);
         }
         if (isLastDayOfMonth(date)) {
-            await payrollActions.runSalariedPayroll(date);
-            await payrollActions.runCommissionedPayroll(date);
+            await runSalariedPayroll(date);
+            await runCommissionedPayroll(date);
         }
     };
 

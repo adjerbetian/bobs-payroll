@@ -1,6 +1,6 @@
-import { CoreActions, HourlyEmployee } from "../../core";
-import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
-import { RunPayroll } from "./RunPayroll";
+import { CoreActions, HourlyEmployee } from "../../../../core";
+import { CreatePaymentForEmployee } from "../../payment";
+import { RunPayrollActions } from "../runPayrollDispatcher";
 
 export type ComputeHourlyEmployeePaymentDueAmount = (employee: HourlyEmployee) => Promise<number>;
 interface Dependencies {
@@ -13,7 +13,7 @@ export function buildRunHourlyPayroll({
     coreActions,
     computeHourlyEmployeePaymentDueAmount,
     createPaymentForEmployee
-}: Dependencies): RunPayroll {
+}: Dependencies): RunPayrollActions["runHourlyPayroll"] {
     return async function(date: string): Promise<void> {
         const employees = await coreActions.fetchAllHourlyEmployees();
         for (const employee of employees) {

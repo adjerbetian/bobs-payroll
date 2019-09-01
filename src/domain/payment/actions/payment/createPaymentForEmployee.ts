@@ -1,12 +1,13 @@
 import { CoreActions, NotFoundError, PaymentMethod, PaymentMethodType } from "../../../core";
 import { Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
-import { CreatePaymentForEmployee } from "../CreatePaymentForEmployee";
 
 interface Dependencies {
     coreActions: CoreActions;
     paymentRepository: PaymentRepository;
 }
+
+export type CreatePaymentForEmployee = (basicPayment: Omit<Payment, "method">) => Promise<void>;
 
 export function buildCreatePaymentForEmployee({
     coreActions,

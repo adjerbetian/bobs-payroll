@@ -1,16 +1,7 @@
 import { CoreActions } from "../../core";
 import { PaymentRepository } from "../repositories";
-import {
-    buildComputeEmployeeCommission,
-    buildComputeHourlyEmployeePaymentDueAmount,
-    buildCreatePaymentForEmployee
-} from "./actions";
 import { PaymentActions } from "./PaymentActions";
-import { buildRunCommissionedPayroll } from "./runCommissionedPayroll";
-import { buildRunHourlyPayroll } from "./runHourlyPayroll";
-import { RunPayroll } from "./RunPayroll";
-import { buildRunPayrollDispatcher } from "./runPayrollDispatcher";
-import { buildRunSalariedPayroll } from "./runSalariedPayroll";
+import { buildRunPayroll } from "./payroll";
 
 export { PaymentActions } from "./PaymentActions";
 
@@ -21,32 +12,6 @@ export interface PaymentActionsDependencies {
 
 export function buildPaymentActions({ coreActions, paymentRepository }: PaymentActionsDependencies): PaymentActions {
     return {
-        runPayroll: buildRunPayroll()
+        runPayroll: buildRunPayroll({ coreActions, paymentRepository })
     };
-
-    function buildRunPayroll(): RunPayroll {
-        const createPaymentForEmployee = buildCreatePaymentForEmployee({ coreActions, paymentRepository });
-        const computeEmployeeCommission = buildComputeEmployeeCommission({ coreActions });
-        const computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmount({
-            coreActions,
-            paymentRepository
-        });
-
-        return buildRunPayrollDispatcher({
-            runHourlyPayroll: buildRunHourlyPayroll({
-                coreActions,
-                computeHourlyEmployeePaymentDueAmount,
-                createPaymentForEmployee
-            }),
-            runSalariedPayroll: buildRunSalariedPayroll({
-                coreActions,
-                createPaymentForEmployee
-            }),
-            runCommissionedPayroll: buildRunCommissionedPayroll({
-                coreActions,
-                createPaymentForEmployee,
-                computeEmployeeCommission
-            })
-        });
-    }
 }

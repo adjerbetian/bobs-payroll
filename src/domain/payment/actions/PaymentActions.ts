@@ -1,5 +1,3 @@
-import { RunPayroll } from "./RunPayroll";
-
 export interface PaymentActions {
-    runPayroll: RunPayroll;
+    runPayroll: (date: string) => Promise<void>;
 }

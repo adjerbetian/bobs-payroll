@@ -1,9 +1,7 @@
-import { CoreActionsDependencies, TimeCard } from "../../domain";
+import { CoreDependencies, TimeCard } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export function buildMongoTimeCardRepository(
-    db: MongoDbAdapter<TimeCard>
-): CoreActionsDependencies["timeCardRepository"] {
+export function buildMongoTimeCardRepository(db: MongoDbAdapter<TimeCard>): CoreDependencies["timeCardRepository"] {
     return {
         async fetchAllOfEmployee(employeeId: number): Promise<TimeCard[]> {
             return db.fetchAll({ employeeId });

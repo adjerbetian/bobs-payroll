@@ -7,17 +7,16 @@ import {
     generateHourlyEmployee,
     Stub
 } from "@test/unit";
-import { CoreActions, HourlyEmployee } from "../../core";
-import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
+import { CoreActions, HourlyEmployee } from "../../../../core";
+import { CreatePaymentForEmployee } from "../../payment";
 import { buildRunHourlyPayroll, ComputeHourlyEmployeePaymentDueAmount } from "./runHourlyPayroll";
-import { RunPayroll } from "./RunPayroll";
 
 describe("action runHourlyPayroll", () => {
     let stubbedCoreActions: Stub<CoreActions>;
     let stubbedComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmount>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runHourlyPayroll: RunPayroll;
+    let runHourlyPayroll: ReturnType<typeof buildRunHourlyPayroll>;
 
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();

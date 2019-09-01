@@ -1,13 +1,16 @@
-import { CoreActions, SalariedEmployee } from "../../core";
-import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
-import { RunPayroll } from "./RunPayroll";
+import { CoreActions, SalariedEmployee } from "../../../../core";
+import { CreatePaymentForEmployee } from "../../payment";
+import { RunPayrollActions } from "../runPayrollDispatcher";
 
 interface Dependencies {
     coreActions: CoreActions;
     createPaymentForEmployee: CreatePaymentForEmployee;
 }
 
-export function buildRunSalariedPayroll({ coreActions, createPaymentForEmployee }: Dependencies): RunPayroll {
+export function buildRunSalariedPayroll({
+    coreActions,
+    createPaymentForEmployee
+}: Dependencies): RunPayrollActions["runSalariedPayroll"] {
     return async function(date: string): Promise<void> {
         const employees = await coreActions.fetchAllSalariedEmployees();
         for (const employee of employees) {

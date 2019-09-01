@@ -7,9 +7,9 @@ import {
     never,
     Stub
 } from "@test/unit";
-import { CoreActions, HourlyEmployee } from "../../../core";
-import { PaymentRepository } from "../../repositories";
-import { buildStubbedPaymentRepository } from "../../test";
+import { CoreActions, HourlyEmployee } from "../../../../core";
+import { PaymentRepository } from "../../../repositories";
+import { buildStubbedPaymentRepository } from "../../../test";
 import { buildComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
 
 describe("action computeHourlyEmployeePaymentDueAmount", () => {

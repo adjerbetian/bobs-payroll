@@ -1,5 +1,5 @@
 import { buildStubbedCoreActions, expect, generateCommissionedEmployee, generateSalesReceipt, Stub } from "@test/unit";
-import { CommissionedEmployee, CoreActions } from "../../../core";
+import { CommissionedEmployee, CoreActions } from "../../../../core";
 import { buildComputeEmployeeCommission } from "./computeEmployeeCommission";
 
 describe("action computeEmployeeCommission", () => {

@@ -1,5 +1,5 @@
-import { CommissionedEmployee, CoreActions } from "../../../core";
-import { ComputeEmployeeCommission } from "../runCommissionedPayroll";
+import { CommissionedEmployee, CoreActions } from "../../../../core";
+import { ComputeEmployeeCommission } from "./runCommissionedPayroll";
 
 interface Dependencies {
     coreActions: CoreActions;
