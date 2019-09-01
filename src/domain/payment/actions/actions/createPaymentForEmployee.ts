@@ -1,16 +1,16 @@
-import { NotFoundError, PaymentMethod, PaymentMethodRepository, PaymentMethodType } from "../../../core";
+import { CoreActions, NotFoundError, PaymentMethod, PaymentMethodType } from "../../../core";
 import { Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
 import { CreatePaymentForEmployee } from "../CreatePaymentForEmployee";
 
 interface Dependencies {
+    coreActions: CoreActions;
     paymentRepository: PaymentRepository;
-    paymentMethodRepository: PaymentMethodRepository;
 }
 
 export function buildCreatePaymentForEmployee({
-    paymentRepository,
-    paymentMethodRepository
+    coreActions,
+    paymentRepository
 }: Dependencies): CreatePaymentForEmployee {
     return async function(basicPayment: Omit<Payment, "method">): Promise<void> {
         const method = await fetchEmployeePaymentMethod(basicPayment.employeeId);
@@ -19,7 +19,7 @@ export function buildCreatePaymentForEmployee({
 
     async function fetchEmployeePaymentMethod(employeeId: number): Promise<PaymentMethod> {
         try {
-            return await paymentMethodRepository.fetchByEmployeeId(employeeId);
+            return await coreActions.fetchEmployeePaymentMethod(employeeId);
         } catch (err) {
             if (err instanceof NotFoundError) {
                 return { type: PaymentMethodType.HOLD, employeeId };

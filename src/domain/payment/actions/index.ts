@@ -1,4 +1,4 @@
-import { CoreActions, PaymentMethodRepository, SalesReceiptRepository } from "../../core";
+import { CoreActions, SalesReceiptRepository } from "../../core";
 import { PaymentRepository } from "../repositories";
 import {
     buildComputeEmployeeCommission,
@@ -17,14 +17,12 @@ export { PaymentActions } from "./PaymentActions";
 export interface PaymentActionsDependencies {
     coreActions: CoreActions;
     paymentRepository: PaymentRepository;
-    paymentMethodRepository: PaymentMethodRepository;
     salesReceiptRepository: SalesReceiptRepository;
 }
 
 export function buildPaymentActions({
     coreActions,
     paymentRepository,
-    paymentMethodRepository,
     salesReceiptRepository
 }: PaymentActionsDependencies): PaymentActions {
     return {
@@ -32,7 +30,7 @@ export function buildPaymentActions({
     };
 
     function buildRunPayroll(): RunPayroll {
-        const createPaymentForEmployee = buildCreatePaymentForEmployee({ paymentRepository, paymentMethodRepository });
+        const createPaymentForEmployee = buildCreatePaymentForEmployee({ coreActions, paymentRepository });
         const computeEmployeeCommission = buildComputeEmployeeCommission({ salesReceiptRepository });
         const computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmount({
             coreActions,

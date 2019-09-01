@@ -27,7 +27,7 @@ export interface CoreEmployeeActions {
 }
 
 export interface CorePaymentMethodActions {
-    // fetchEmployeePaymentMethod: (employeeId: number) => Promise<PaymentMethod>;
+    fetchEmployeePaymentMethod: (employeeId: number) => Promise<PaymentMethod>;
     createPaymentMethod: (paymentMethod: PaymentMethod) => Promise<void>;
 }
 

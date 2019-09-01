@@ -1,4 +1,5 @@
 import {
+    buildStubbedCoreActions,
     expect,
     generateFloatBetween,
     generateHoldPaymentMethod,
@@ -6,8 +7,7 @@ import {
     lastDayOfMonth,
     Stub
 } from "@test/unit";
-import { NotFoundError, PaymentMethodRepository } from "../../../core";
-import { buildStubbedPaymentMethodRepository } from "../../../core/test";
+import { CoreActions, NotFoundError } from "../../../core";
 import { Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
 import { buildStubbedPaymentRepository } from "../../test";
@@ -15,15 +15,15 @@ import { buildCreatePaymentForEmployee } from "./createPaymentForEmployee";
 
 describe("createPaymentForEmployee", () => {
     let createPaymentForEmployee: ReturnType<typeof buildCreatePaymentForEmployee>;
-    let stubbedPaymentMethodRepository: Stub<PaymentMethodRepository>;
+    let stubbedCoreActions: Stub<CoreActions>;
     let stubbedPaymentRepository: Stub<PaymentRepository>;
 
     beforeEach(() => {
         stubbedPaymentRepository = buildStubbedPaymentRepository();
-        stubbedPaymentMethodRepository = buildStubbedPaymentMethodRepository();
+        stubbedCoreActions = buildStubbedCoreActions();
         createPaymentForEmployee = buildCreatePaymentForEmployee({
             paymentRepository: stubbedPaymentRepository,
-            paymentMethodRepository: stubbedPaymentMethodRepository
+            coreActions: stubbedCoreActions
         });
 
         stubbedPaymentRepository.insert.resolves();
@@ -35,7 +35,7 @@ describe("createPaymentForEmployee", () => {
 
     it("should insert a payment with the given info", async () => {
         const method = generateHoldPaymentMethod({ employeeId });
-        stubbedPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(method);
+        stubbedCoreActions.fetchEmployeePaymentMethod.withArgs(employeeId).resolves(method);
 
         await createPaymentForEmployee({ employeeId, date, amount });
 
@@ -45,7 +45,7 @@ describe("createPaymentForEmployee", () => {
 
     it("should insert a payment with the existing employee payment method", async () => {
         const method = generateHoldPaymentMethod({ employeeId });
-        stubbedPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(method);
+        stubbedCoreActions.fetchEmployeePaymentMethod.withArgs(employeeId).resolves(method);
 
         await createPaymentForEmployee({ employeeId, date, amount });
 
@@ -53,7 +53,7 @@ describe("createPaymentForEmployee", () => {
     });
 
     it("should insert a payment with the hold payment method when the employee has to payment method", async () => {
-        stubbedPaymentMethodRepository.fetchByEmployeeId
+        stubbedCoreActions.fetchEmployeePaymentMethod
             .withArgs(employeeId)
             .rejects(new NotFoundError("no methods found"));
 

@@ -43,7 +43,6 @@ export function buildApp({
     });
     const paymentActions = buildPaymentActions({
         coreActions,
-        paymentMethodRepository,
         paymentRepository,
         salesReceiptRepository
     });

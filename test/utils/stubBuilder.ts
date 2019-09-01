@@ -19,6 +19,7 @@ export function buildStubbedCoreActions(): Stub<CoreActions> {
         createSalesReceipt: true,
 
         createPaymentMethod: true,
+        fetchEmployeePaymentMethod: true,
 
         createUnionMember: true,
         removeEmployeeFromUnion: true
