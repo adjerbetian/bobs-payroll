@@ -15,7 +15,7 @@ export function buildRunHourlyPayroll({
     createPaymentForEmployee
 }: Dependencies): RunPayroll {
     return async function(date: string): Promise<void> {
-        const employees = await coreActions.fetchAllHourly();
+        const employees = await coreActions.fetchAllHourlyEmployees();
         for (const employee of employees) {
             await payEmployee(date, employee);
         }

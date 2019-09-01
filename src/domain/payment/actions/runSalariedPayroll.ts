@@ -9,7 +9,7 @@ interface Dependencies {
 
 export function buildRunSalariedPayroll({ coreActions, createPaymentForEmployee }: Dependencies): RunPayroll {
     return async function(date: string): Promise<void> {
-        const employees = await coreActions.fetchAllSalaried();
+        const employees = await coreActions.fetchAllSalariedEmployees();
         for (const employee of employees) {
             await payEmployee(date, employee);
         }

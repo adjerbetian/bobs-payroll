@@ -16,7 +16,7 @@ export function buildRunCommissionedPayroll({
     computeEmployeeCommission
 }: Dependencies): RunPayroll {
     return async function(date: string): Promise<void> {
-        const employees = await coreActions.fetchAllCommissioned();
+        const employees = await coreActions.fetchAllCommissionedEmployees();
         for (const employee of employees) {
             await payEmployee(date, employee);
         }

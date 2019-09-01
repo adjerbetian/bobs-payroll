@@ -36,7 +36,7 @@ describe("action runHourlyPayroll", () => {
     it("should insert the right payment the employee", async () => {
         const employee = generateHourlyEmployee();
         const amount = generateEmployeePayAmount(employee);
-        stubbedCoreActions.fetchAllHourly.resolves([employee]);
+        stubbedCoreActions.fetchAllHourlyEmployees.resolves([employee]);
 
         await runHourlyPayroll(friday);
 
@@ -50,7 +50,7 @@ describe("action runHourlyPayroll", () => {
     it("should insert payments for each employee", async () => {
         const employees = [generateHourlyEmployee(), generateHourlyEmployee()];
         employees.forEach(emp => generateEmployeePayAmount(emp));
-        stubbedCoreActions.fetchAllHourly.resolves(employees);
+        stubbedCoreActions.fetchAllHourlyEmployees.resolves(employees);
 
         await runHourlyPayroll(friday);
 

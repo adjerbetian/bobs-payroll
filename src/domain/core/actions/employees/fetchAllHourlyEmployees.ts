@@ -6,7 +6,9 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildFetchAllHourly({ employeeRepository }: Dependencies): CoreEmployeeActions["fetchAllHourly"] {
+export function buildFetchAllHourlyEmployees({
+    employeeRepository
+}: Dependencies): CoreEmployeeActions["fetchAllHourlyEmployees"] {
     return async function(): Promise<HourlyEmployee[]> {
         return employeeRepository.fetchAllHourly();
     };

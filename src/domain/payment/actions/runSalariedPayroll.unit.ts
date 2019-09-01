@@ -31,7 +31,7 @@ describe("action runSalariedPayroll", () => {
 
     it("should insert the right payment the employee", async () => {
         const employee = generateSalariedEmployee();
-        stubbedCoreActions.fetchAllSalaried.resolves([employee]);
+        stubbedCoreActions.fetchAllSalariedEmployees.resolves([employee]);
 
         await runSalariedPayroll(lastDayOfMonth);
 
@@ -44,7 +44,7 @@ describe("action runSalariedPayroll", () => {
 
     it("should insert payments for each employee", async () => {
         const employees = [generateSalariedEmployee(), generateSalariedEmployee()];
-        stubbedCoreActions.fetchAllSalaried.resolves(employees);
+        stubbedCoreActions.fetchAllSalariedEmployees.resolves(employees);
 
         await runSalariedPayroll(lastDayOfMonth);
 

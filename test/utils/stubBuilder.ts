@@ -7,9 +7,9 @@ export function buildStubbedCoreActions(): Stub<CoreActions> {
         createEmployee: true,
         deleteEmployee: true,
         updateEmployee: true,
-        fetchAllHourly: true,
-        fetchAllSalaried: true,
-        fetchAllCommissioned: true,
+        fetchAllHourlyEmployees: true,
+        fetchAllSalariedEmployees: true,
+        fetchAllCommissionedEmployees: true,
 
         createTimeCard: true,
         fetchEmployeeTimeCardsSince: true,

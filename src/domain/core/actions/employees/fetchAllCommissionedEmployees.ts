@@ -6,9 +6,9 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildFetchAllCommissioned({
+export function buildFetchAllCommissionedEmployees({
     employeeRepository
-}: Dependencies): CoreEmployeeActions["fetchAllCommissioned"] {
+}: Dependencies): CoreEmployeeActions["fetchAllCommissionedEmployees"] {
     return async function(): Promise<CommissionedEmployee[]> {
         return employeeRepository.fetchAllCommissioned();
     };

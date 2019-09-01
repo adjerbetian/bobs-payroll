@@ -1,22 +1,24 @@
 import { expect, generateCommissionedEmployee, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
-import { buildFetchAllCommissioned } from "./fetchAllCommissioned";
+import { buildFetchAllCommissionedEmployees } from "./fetchAllCommissionedEmployees";
 
-describe("action fetchAllCommissioned", () => {
+describe("action fetchAllCommissionedEmployees", () => {
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let fetchAllCommissioned: ReturnType<typeof buildFetchAllCommissioned>;
+    let fetchAllCommissionedEmployees: ReturnType<typeof buildFetchAllCommissionedEmployees>;
 
     beforeEach(() => {
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();
-        fetchAllCommissioned = buildFetchAllCommissioned({ employeeRepository: stubbedEmployeeRepository });
+        fetchAllCommissionedEmployees = buildFetchAllCommissionedEmployees({
+            employeeRepository: stubbedEmployeeRepository
+        });
     });
 
     it("should return all the commissioned employees", async () => {
         const employees = [generateCommissionedEmployee(), generateCommissionedEmployee()];
         stubbedEmployeeRepository.fetchAllCommissioned.resolves(employees);
 
-        const result = await fetchAllCommissioned();
+        const result = await fetchAllCommissionedEmployees();
 
         expect(result).to.deep.equal(employees);
     });

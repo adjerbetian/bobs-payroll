@@ -38,7 +38,7 @@ describe("action runCommissionedPayroll", () => {
     it("should insert the right payment the employee", async () => {
         const employee = generateCommissionedEmployee();
         const commission = generateFloatBetween(1000, 2000);
-        stubbedCoreActions.fetchAllCommissioned.resolves([employee]);
+        stubbedCoreActions.fetchAllCommissionedEmployees.resolves([employee]);
         stubbedComputeEmployeeCommission.resolves(commission);
 
         await runCommissionedPayroll(lastDayOfMonth);
@@ -52,7 +52,7 @@ describe("action runCommissionedPayroll", () => {
 
     it("should insert payments for each employee", async () => {
         const employees = [generateCommissionedEmployee(), generateCommissionedEmployee()];
-        stubbedCoreActions.fetchAllCommissioned.resolves(employees);
+        stubbedCoreActions.fetchAllCommissionedEmployees.resolves(employees);
 
         await runCommissionedPayroll(lastDayOfMonth);
 
