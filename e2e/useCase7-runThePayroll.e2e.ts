@@ -157,6 +157,8 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary + commission);
         });
         // todo : remove usage of core repositories in payment domain
+        // todo : remove export of repositories from domains
+        // todo : reorganise payment/actions
         // todo : look for a dependency injection framework
         it.skip("should not include the commissions of the sales receipts of the previous month", async () => {});
         it.skip("should not pay if it's not the last day of the month", async () => {});

@@ -1,22 +1,28 @@
-import { buildStubFor, expect, generateSalariedEmployee, lastDayOfMonth, Stub } from "@test/unit";
-import { EmployeeRepository } from "../../core";
-import { buildStubbedEmployeeRepository } from "../../core/test";
+import {
+    buildStubbedCoreActions,
+    buildStubFor,
+    expect,
+    generateSalariedEmployee,
+    lastDayOfMonth,
+    Stub
+} from "@test/unit";
+import { CoreActions } from "../../core";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { RunPayroll } from "./RunPayroll";
 import { buildRunSalariedPayroll } from "./runSalariedPayroll";
 
 describe("action runSalariedPayroll", () => {
-    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
+    let stubbedCoreActions: Stub<CoreActions>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
     let runSalariedPayroll: RunPayroll;
 
     beforeEach(() => {
-        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
+        stubbedCoreActions = buildStubbedCoreActions();
         stubbedCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
 
         runSalariedPayroll = buildRunSalariedPayroll({
-            employeeRepository: stubbedEmployeeRepository,
+            coreActions: stubbedCoreActions,
             createPaymentForEmployee: stubbedCreatePaymentForEmployee
         });
 
@@ -25,7 +31,7 @@ describe("action runSalariedPayroll", () => {
 
     it("should insert the right payment the employee", async () => {
         const employee = generateSalariedEmployee();
-        stubbedEmployeeRepository.fetchAllSalaried.resolves([employee]);
+        stubbedCoreActions.fetchAllSalaried.resolves([employee]);
 
         await runSalariedPayroll(lastDayOfMonth);
 
@@ -38,7 +44,7 @@ describe("action runSalariedPayroll", () => {
 
     it("should insert payments for each employee", async () => {
         const employees = [generateSalariedEmployee(), generateSalariedEmployee()];
-        stubbedEmployeeRepository.fetchAllSalaried.resolves(employees);
+        stubbedCoreActions.fetchAllSalaried.resolves(employees);
 
         await runSalariedPayroll(lastDayOfMonth);
 

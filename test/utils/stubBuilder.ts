@@ -4,13 +4,21 @@ import { CoreActions, PaymentActions } from "../../src";
 
 export function buildStubbedCoreActions(): Stub<CoreActions> {
     return buildStubFor({
-        deleteEmployee: true,
-        createTimeCard: true,
-        createServiceCharge: true,
-        createSalesReceipt: true,
         createEmployee: true,
+        deleteEmployee: true,
         updateEmployee: true,
+        fetchAllHourly: true,
+        fetchAllSalaried: true,
+        fetchAllCommissioned: true,
+
+        createTimeCard: true,
+
+        createServiceCharge: true,
+
+        createSalesReceipt: true,
+
         setEmployeePaymentMethod: true,
+
         createUnionMember: true,
         removeEmployeeFromUnion: true
     });

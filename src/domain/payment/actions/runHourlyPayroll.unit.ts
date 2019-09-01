@@ -1,24 +1,31 @@
-import { buildStubFor, expect, friday, generateFloatBetween, generateHourlyEmployee, Stub } from "@test/unit";
-import { EmployeeRepository, HourlyEmployee } from "../../core";
-import { buildStubbedEmployeeRepository } from "../../core/test";
+import {
+    buildStubbedCoreActions,
+    buildStubFor,
+    expect,
+    friday,
+    generateFloatBetween,
+    generateHourlyEmployee,
+    Stub
+} from "@test/unit";
+import { CoreActions, HourlyEmployee } from "../../core";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { buildRunHourlyPayroll, ComputeHourlyEmployeePaymentDueAmount } from "./runHourlyPayroll";
 import { RunPayroll } from "./RunPayroll";
 
 describe("action runHourlyPayroll", () => {
-    let stubbedEmployeeRepository: Stub<EmployeeRepository>;
+    let stubbedCoreActions: Stub<CoreActions>;
     let stubbedComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmount>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
     let runHourlyPayroll: RunPayroll;
 
     beforeEach(() => {
-        stubbedEmployeeRepository = buildStubbedEmployeeRepository();
+        stubbedCoreActions = buildStubbedCoreActions();
         stubbedComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
         stubbedCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
 
         runHourlyPayroll = buildRunHourlyPayroll({
-            employeeRepository: stubbedEmployeeRepository,
+            coreActions: stubbedCoreActions,
             computeHourlyEmployeePaymentDueAmount: stubbedComputeHourlyEmployeePaymentDueAmount,
             createPaymentForEmployee: stubbedCreatePaymentForEmployee
         });
@@ -29,7 +36,7 @@ describe("action runHourlyPayroll", () => {
     it("should insert the right payment the employee", async () => {
         const employee = generateHourlyEmployee();
         const amount = generateEmployeePayAmount(employee);
-        stubbedEmployeeRepository.fetchAllHourly.resolves([employee]);
+        stubbedCoreActions.fetchAllHourly.resolves([employee]);
 
         await runHourlyPayroll(friday);
 
@@ -43,7 +50,7 @@ describe("action runHourlyPayroll", () => {
     it("should insert payments for each employee", async () => {
         const employees = [generateHourlyEmployee(), generateHourlyEmployee()];
         employees.forEach(emp => generateEmployeePayAmount(emp));
-        stubbedEmployeeRepository.fetchAllHourly.resolves(employees);
+        stubbedCoreActions.fetchAllHourly.resolves(employees);
 
         await runHourlyPayroll(friday);
 

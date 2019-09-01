@@ -1,22 +1,22 @@
-import { CommissionedEmployee, EmployeeRepository } from "../../core";
+import { CommissionedEmployee, CoreActions } from "../../core";
 import { CreatePaymentForEmployee } from "./CreatePaymentForEmployee";
 import { RunPayroll } from "./RunPayroll";
 
 export type ComputeEmployeeCommission = (employee: CommissionedEmployee) => Promise<number>;
 
 interface Dependencies {
-    employeeRepository: EmployeeRepository;
+    coreActions: CoreActions;
     createPaymentForEmployee: CreatePaymentForEmployee;
     computeEmployeeCommission: ComputeEmployeeCommission;
 }
 
 export function buildRunCommissionedPayroll({
-    employeeRepository,
+    coreActions,
     createPaymentForEmployee,
     computeEmployeeCommission
 }: Dependencies): RunPayroll {
     return async function(date: string): Promise<void> {
-        const employees = await employeeRepository.fetchAllCommissioned();
+        const employees = await coreActions.fetchAllCommissioned();
         for (const employee of employees) {
             await payEmployee(date, employee);
         }

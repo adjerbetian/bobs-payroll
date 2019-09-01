@@ -1,4 +1,14 @@
-import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../entities";
+import {
+    CommissionedEmployee,
+    Employee,
+    HourlyEmployee,
+    PaymentMethod,
+    SalariedEmployee,
+    SalesReceipt,
+    ServiceCharge,
+    TimeCard,
+    UnionMember
+} from "../entities";
 
 export type CoreActions = CoreEmployeeActions &
     CorePaymentMethodActions &
@@ -9,6 +19,9 @@ export type CoreActions = CoreEmployeeActions &
 
 export interface CoreEmployeeActions {
     createEmployee: (employee: Employee) => Promise<void>;
+    fetchAllHourly: () => Promise<HourlyEmployee[]>;
+    fetchAllSalaried: () => Promise<SalariedEmployee[]>;
+    fetchAllCommissioned: () => Promise<CommissionedEmployee[]>;
     updateEmployee: (employeeId: number, update: Partial<Employee>) => Promise<void>;
     deleteEmployee: (employeeId: number) => Promise<void>;
 }
