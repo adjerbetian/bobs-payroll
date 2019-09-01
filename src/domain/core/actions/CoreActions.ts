@@ -33,6 +33,7 @@ export interface CorePaymentMethodActions {
 
 export interface CoreSalesReceiptActions {
     createSalesReceipt: (salesReceipt: SalesReceipt) => Promise<void>;
+    fetchAllEmployeeSalesReceipts: (employeeId: number) => Promise<SalesReceipt[]>;
 }
 
 export interface CoreServiceChargeActions {

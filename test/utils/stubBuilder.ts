@@ -17,6 +17,7 @@ export function buildStubbedCoreActions(): Stub<CoreActions> {
         createServiceCharge: true,
 
         createSalesReceipt: true,
+        fetchAllEmployeeSalesReceipts: true,
 
         createPaymentMethod: true,
         fetchEmployeePaymentMethod: true,
