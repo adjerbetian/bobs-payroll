@@ -166,7 +166,13 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary);
         });
-        it.skip("should not pay if it's not the last day of the month", async () => {});
+        it("should not pay if it's not the last day of the month", async () => {
+            await seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth });
+
+            await executePayrollCommand(`Payroll ${secondDayOfMonth}`);
+
+            await expectEmployeeNotToHaveBeenPaid(employee.id);
+        });
         it.skip("should not pay twice the salary and the commission even if we run the program twice on the same day", async () => {});
     });
     describe("payment method", () => {
