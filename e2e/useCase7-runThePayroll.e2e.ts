@@ -1,6 +1,8 @@
 import {
+    endDayOfLastMonth,
     executePayrollCommand,
     expect,
+    firstDayOfLastMonth,
     firstDayOfMonth,
     friday,
     lastDayOfMonth,
@@ -156,7 +158,14 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const commission = (salesReceipts[0].amount + salesReceipts[1].amount) * employee.work.commissionRate;
             await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary + commission);
         });
-        it.skip("should not include the commissions of the sales receipts of the previous month", async () => {});
+        it("should not include the commissions of the sales receipts of the previous month", async () => {
+            await seedSalesReceipt({ employeeId: employee.id, date: firstDayOfLastMonth });
+            await seedPayment({ date: endDayOfLastMonth, employeeId: employee.id });
+
+            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+
+            await expectEmployeePaymentAmountToEqual(employee.id, employee.work.monthlySalary);
+        });
         it.skip("should not pay if it's not the last day of the month", async () => {});
         it.skip("should not pay twice the salary and the commission even if we run the program twice on the same day", async () => {});
     });

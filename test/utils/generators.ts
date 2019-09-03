@@ -36,7 +36,7 @@ export function generateHourlyEmployee(args: Partial<HourlyEmployee> = {}): Hour
 }
 
 export function generateSalariedEmployee(args: Partial<SalariedEmployee> = {}): SalariedEmployee {
-    const monthlySalary = generateFloatBetween(10, 20);
+    const monthlySalary = generateFloatBetween(2000, 5000);
     return {
         ...generateEmployee(),
         work: {
@@ -52,8 +52,8 @@ export function generateCommissionedEmployee(args: Partial<CommissionedEmployee>
         ...generateEmployee(),
         work: {
             type: EmployeeType.COMMISSIONED,
-            monthlySalary: generateFloatBetween(10, 20),
-            commissionRate: generateFloatBetween(20, 30)
+            monthlySalary: generateFloatBetween(1000, 3000),
+            commissionRate: generateFloatBetween(0, 0.2)
         },
         ...args
     };
@@ -83,7 +83,7 @@ export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesRec
     return {
         employeeId: index,
         date: moment().format("YYYY-MM-DD"),
-        amount: generateFloatBetween(2, 10),
+        amount: generateFloatBetween(10000, 50000),
         ...args
     };
 }
