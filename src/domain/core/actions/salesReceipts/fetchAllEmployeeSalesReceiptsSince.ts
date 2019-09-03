@@ -8,8 +8,8 @@ interface Dependencies {
 
 export function buildFetchAllEmployeeSalesReceipts({
     salesReceiptRepository
-}: Dependencies): CoreSalesReceiptActions["fetchAllEmployeeSalesReceipts"] {
-    return async function(employeeId: number): Promise<SalesReceipt[]> {
-        return salesReceiptRepository.fetchAllOfEmployee(employeeId);
+}: Dependencies): CoreSalesReceiptActions["fetchAllEmployeeSalesReceiptsSince"] {
+    return async function(employeeId: number, date: string): Promise<SalesReceipt[]> {
+        return salesReceiptRepository.fetchAllOfEmployeeSince(employeeId, date);
     };
 }

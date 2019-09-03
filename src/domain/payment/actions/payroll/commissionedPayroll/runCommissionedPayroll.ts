@@ -2,7 +2,7 @@ import { CommissionedEmployee, CoreActions } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
 import { RunPayrollActions } from "../runPayrollDispatcher";
 
-export type ComputeEmployeeCommission = (employee: CommissionedEmployee) => Promise<number>;
+export type ComputeEmployeeCommission = (date: string, employee: CommissionedEmployee) => Promise<number>;
 
 interface Dependencies {
     coreActions: CoreActions;
@@ -25,13 +25,13 @@ export function buildRunCommissionedPayroll({
     async function payEmployee(date: string, employee: CommissionedEmployee): Promise<void> {
         await createPaymentForEmployee({
             employeeId: employee.id,
-            amount: await computePayAmount(employee),
+            amount: await computePayAmount(date, employee),
             date
         });
     }
 
-    async function computePayAmount(employee: CommissionedEmployee): Promise<number> {
-        const commission = await computeEmployeeCommission(employee);
+    async function computePayAmount(date: string, employee: CommissionedEmployee): Promise<number> {
+        const commission = await computeEmployeeCommission(date, employee);
         return employee.work.monthlySalary + commission;
     }
 }

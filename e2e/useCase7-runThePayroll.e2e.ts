@@ -1,5 +1,5 @@
 import {
-    endDayOfLastMonth,
+    endOfLastMonth,
     executePayrollCommand,
     expect,
     firstDayOfLastMonth,
@@ -160,7 +160,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
         it("should not include the commissions of the sales receipts of the previous month", async () => {
             await seedSalesReceipt({ employeeId: employee.id, date: firstDayOfLastMonth });
-            await seedPayment({ date: endDayOfLastMonth, employeeId: employee.id });
+            await seedPayment({ date: endOfLastMonth, employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 

@@ -1,7 +1,7 @@
 import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
 import { CoreSalesReceiptActions } from "../CoreActions";
 import { buildCreateSalesReceipt } from "./createSalesReceipt";
-import { buildFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceipts";
+import { buildFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceiptsSince";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
@@ -14,6 +14,6 @@ export function buildCoreSalesReceiptActions({
 }: Dependencies): CoreSalesReceiptActions {
     return {
         createSalesReceipt: buildCreateSalesReceipt({ employeeRepository, salesReceiptRepository }),
-        fetchAllEmployeeSalesReceipts: buildFetchAllEmployeeSalesReceipts({ salesReceiptRepository })
+        fetchAllEmployeeSalesReceiptsSince: buildFetchAllEmployeeSalesReceipts({ salesReceiptRepository })
     };
 }

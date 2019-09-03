@@ -1,4 +1,4 @@
-import { expect, generateIndex, generateSalesReceipt, Stub } from "@test/unit";
+import { expect, generateIndex, generateSalesReceipt, monday, Stub } from "@test/unit";
 import { SalesReceipt } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
@@ -13,13 +13,13 @@ describe("mongoSalesReceiptRepository", () => {
         repository = buildMongoSalesReceiptRepository(stubbedDb);
     });
 
-    describe("fetchAllOfEmployee", () => {
+    describe("fetchAllOfEmployeeSince", () => {
         it("should return all the employee's sales receipt", async () => {
             const employeeId = generateIndex();
             const salesReceipts = [generateSalesReceipt()];
-            stubbedDb.fetchAll.withArgs({ employeeId }).resolves(salesReceipts);
+            stubbedDb.fetchAll.withArgs({ employeeId, date: { $gte: monday } }).resolves(salesReceipts);
 
-            const result = await repository.fetchAllOfEmployee(employeeId);
+            const result = await repository.fetchAllOfEmployeeSince(employeeId, monday);
 
             expect(result).to.deep.equal(salesReceipts);
         });

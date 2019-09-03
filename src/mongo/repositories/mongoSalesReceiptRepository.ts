@@ -5,8 +5,8 @@ export function buildMongoSalesReceiptRepository(
     db: MongoDbAdapter<SalesReceipt>
 ): CoreDependencies["salesReceiptRepository"] {
     return {
-        async fetchAllOfEmployee(employeeId: number): Promise<SalesReceipt[]> {
-            return db.fetchAll({ employeeId });
+        async fetchAllOfEmployeeSince(employeeId: number, date: string): Promise<SalesReceipt[]> {
+            return db.fetchAll({ employeeId, date: { $gte: date } });
         },
         async insert(salesReceipt: SalesReceipt): Promise<void> {
             await db.insert(salesReceipt);
