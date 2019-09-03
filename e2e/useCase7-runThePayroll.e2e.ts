@@ -13,6 +13,7 @@ import {
     never,
     secondDayOfMonth,
     seedCommissionedEmployee,
+    seedDirectPaymentMethod,
     seedHourlyEmployee,
     seedPayment,
     seedSalariedEmployee,
@@ -173,10 +174,17 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await expectEmployeeNotToHaveBeenPaid(employee.id);
         });
-        it.skip("should not pay twice the salary and the commission even if we run the program twice on the same day", async () => {});
     });
     describe("payment method", () => {
-        it.skip("should include the employee payment method", async () => {});
+        it("should include the employee payment method", async () => {
+            const employee = await seedSalariedEmployee();
+            const paymentMethod = await seedDirectPaymentMethod({ employeeId: employee.id });
+
+            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+
+            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
+            expect(payment.method).to.deep.equal(paymentMethod);
+        });
         it.skip("should include the hold payment method if not specified", async () => {});
     });
     describe("union", () => {
