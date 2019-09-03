@@ -1,12 +1,11 @@
 import { buildStubbedCoreActions, expect, generateServiceCharge, Stub } from "@test/unit";
-import { CoreActions, ServiceCharge } from "../../core";
-import { TransactionFormatError } from "../errors";
-import { Transaction } from "../Transaction";
+import { CoreActions, ServiceCharge } from "../../../core";
+import { TransactionFormatError } from "../../errors";
 import { buildPostServiceChargeTransaction } from "./postServiceCharge";
 
 describe("postServiceCharge", () => {
     let stubbedActions: Stub<CoreActions>;
-    let postServiceCharge: Transaction;
+    let postServiceCharge: ReturnType<typeof buildPostServiceChargeTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();

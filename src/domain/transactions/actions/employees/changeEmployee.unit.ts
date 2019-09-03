@@ -8,14 +8,13 @@ import {
     generateUnionMember,
     Stub
 } from "@test/unit";
-import { CoreActions, EmployeeType } from "../../core";
-import { TransactionFormatError } from "../errors";
-import { Transaction } from "../Transaction";
+import { CoreActions, EmployeeType } from "../../../core";
+import { TransactionFormatError } from "../../errors";
 import { buildChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
     let stubbedActions: Stub<CoreActions>;
-    let changeEmployee: Transaction;
+    let changeEmployee: ReturnType<typeof buildChangeEmployeeTransaction>;
     let employeeId: number;
 
     beforeEach(() => {

@@ -5,14 +5,14 @@ import {
     EmployeeType,
     HourlyEmployee,
     SalariedEmployee
-} from "../../core";
-import { TransactionFormatError } from "../errors";
-import { Transaction } from "../Transaction";
+} from "../../../core";
+import { TransactionFormatError } from "../../errors";
 import { buildTransactionValidator, stripQuotationMarks } from "../utils";
+import { Transactions } from "../processTransaction";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
 
-export function buildAddEmployeeTransaction(actions: CoreActions): Transaction {
+export function buildAddEmployeeTransaction(actions: CoreActions): Transactions["addEmployee"] {
     return async function(
         id: string,
         name: string,

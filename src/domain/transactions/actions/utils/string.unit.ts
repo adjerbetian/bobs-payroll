@@ -1,7 +1,7 @@
 import { expect } from "@test/unit";
-import { stripQuotationMarks } from "./utils";
+import { stripQuotationMarks } from "./strings";
 
-describe("utils", () => {
+describe("string utils", () => {
     describe("stripQuotationMarks", () => {
         it("should strip quotation marks", () => {
             const result = stripQuotationMarks(`"text"`);

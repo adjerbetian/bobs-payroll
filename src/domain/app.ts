@@ -1,6 +1,6 @@
 import { buildCoreActions, CoreDependencies } from "./core";
 import { buildPaymentActions, PaymentDependencies } from "./payment";
-import { buildTransactionDomain } from "./transactions";
+import { buildTransactionsActions } from "./transactions";
 
 export interface App {
     processTransaction(args: string[]): Promise<void>;
@@ -38,7 +38,7 @@ export function buildApp({
         coreActions,
         paymentRepository
     });
-    const transactionDomain = buildTransactionDomain(coreActions, paymentActions);
+    const transactionDomain = buildTransactionsActions(coreActions, paymentActions);
 
     return {
         processTransaction: transactionDomain.processTransaction

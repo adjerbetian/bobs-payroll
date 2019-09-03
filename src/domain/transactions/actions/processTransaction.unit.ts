@@ -8,12 +8,11 @@ import {
     generateTimeCard,
     Stub
 } from "@test/unit";
-import { isoDate } from "../../utils";
-import { buildProcessTransaction, ProcessTransaction } from "./processTransaction";
-import { Transactions } from "./transactions";
+import { isoDate } from "../../../utils";
+import { buildProcessTransaction, Transactions } from "./processTransaction";
 
 describe("processTransaction", () => {
-    let processTransaction: ProcessTransaction;
+    let processTransaction: ReturnType<typeof buildProcessTransaction>;
     let stubbedTransactions: Stub<Transactions>;
 
     beforeEach(() => {

@@ -1,10 +1,10 @@
-import { CoreActions, TimeCard } from "../../core";
-import { Transaction } from "../Transaction";
+import { CoreActions, TimeCard } from "../../../core";
 import { buildTransactionValidator } from "../utils";
+import { Transactions } from "../processTransaction";
 
 const transactionValidator = buildTransactionValidator("TimeCard");
 
-export function buildPostTimeCardTransaction(actions: CoreActions): Transaction {
+export function buildPostTimeCardTransaction(actions: CoreActions): Transactions["postTimeCard"] {
     return async function(employeeId: string, date: string, hours: string): Promise<void> {
         assertTransactionValid(employeeId, date, hours);
 

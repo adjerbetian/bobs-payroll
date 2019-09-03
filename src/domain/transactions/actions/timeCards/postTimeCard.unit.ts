@@ -1,13 +1,12 @@
 import { buildStubbedCoreActions, expect, generateTimeCard, Stub } from "@test/unit";
 import * as moment from "moment";
-import { CoreActions, TimeCard } from "../../core";
-import { TransactionFormatError } from "../errors";
-import { Transaction } from "../Transaction";
+import { CoreActions, TimeCard } from "../../../core";
+import { TransactionFormatError } from "../../errors";
 import { buildPostTimeCardTransaction } from "./postTimeCard";
 
 describe("postTimeCard", () => {
     let stubbedActions: Stub<CoreActions>;
-    let postTimeCard: Transaction;
+    let postTimeCard: ReturnType<typeof buildPostTimeCardTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();

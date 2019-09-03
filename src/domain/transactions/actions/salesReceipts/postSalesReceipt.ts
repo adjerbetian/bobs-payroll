@@ -1,10 +1,10 @@
-import { CoreActions, SalesReceipt } from "../../core";
-import { Transaction } from "../Transaction";
+import { CoreActions, SalesReceipt } from "../../../core";
 import { buildTransactionValidator } from "../utils";
+import { Transactions } from "../processTransaction";
 
 const transactionValidator = buildTransactionValidator("SalesReceipt");
 
-export function buildPostSalesReceiptTransaction(actions: CoreActions): Transaction {
+export function buildPostSalesReceiptTransaction(actions: CoreActions): Transactions["postSalesReceipt"] {
     return async function(employeeId: string, date: string, amount: string): Promise<void> {
         assertTransactionIsValid();
 

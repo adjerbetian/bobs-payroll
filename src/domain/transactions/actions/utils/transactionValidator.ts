@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { isNull, isUndefined, isEmpty, isNumber } from "lodash";
 import * as moment from "moment";
-import { TransactionFormatError } from "../errors";
+import { TransactionFormatError } from "../../errors";
 
 export interface TransactionValidator {
     assertIsISODate(date?: string): date is string;

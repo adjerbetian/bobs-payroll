@@ -1,14 +1,13 @@
 import { buildStubbedPaymentActions, expect, Stub } from "@test/unit";
 import * as moment from "moment";
-import { isoDate } from "../../../utils";
-import { PaymentActions } from "../../payment";
-import { TransactionFormatError } from "../errors";
-import { Transaction } from "../Transaction";
+import { isoDate } from "../../../../utils";
+import { PaymentActions } from "../../../payment";
+import { TransactionFormatError } from "../../errors";
 import { buildRunPayrollTransaction } from "./runPayroll";
 
 describe("runPayroll", () => {
     let stubbedActions: Stub<PaymentActions>;
-    let runPayroll: Transaction;
+    let runPayroll: ReturnType<typeof buildRunPayrollTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedPaymentActions();

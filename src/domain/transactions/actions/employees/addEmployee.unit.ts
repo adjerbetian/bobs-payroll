@@ -6,14 +6,13 @@ import {
     generateSalariedEmployee,
     Stub
 } from "@test/unit";
-import { CoreActions } from "../../core";
-import { TransactionFormatError } from "../errors";
-import { Transaction } from "../Transaction";
+import { CoreActions } from "../../../core";
+import { TransactionFormatError } from "../../errors";
 import { buildAddEmployeeTransaction } from "./addEmployee";
 
 describe("addEmployee", () => {
     let stubbedActions: Stub<CoreActions>;
-    let addEmployee: Transaction;
+    let addEmployee: ReturnType<typeof buildAddEmployeeTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();

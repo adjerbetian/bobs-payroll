@@ -1,6 +1,16 @@
-import { Transactions } from "./transactions";
-
 export type ProcessTransaction = (args: string[]) => Promise<void>;
+
+type Transaction = (...args: string[]) => Promise<void>;
+
+export interface Transactions {
+    addEmployee: Transaction;
+    deleteEmployee: Transaction;
+    postTimeCard: Transaction;
+    postSalesReceipt: Transaction;
+    postServiceCharge: Transaction;
+    changeEmployee: Transaction;
+    runPayroll: Transaction;
+}
 
 export function buildProcessTransaction(transactions: Transactions): ProcessTransaction {
     return async ([transactionName, ...args]: string[]) => {
