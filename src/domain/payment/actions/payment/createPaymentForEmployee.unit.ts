@@ -7,7 +7,7 @@ import {
     lastDayOfMonth,
     Stub
 } from "@test/unit";
-import { CoreActions, NotFoundError } from "../../../core";
+import { CoreActions } from "../../../core";
 import { Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
 import { buildStubbedPaymentRepository } from "../../test";
@@ -50,16 +50,6 @@ describe("createPaymentForEmployee", () => {
         await createPaymentForEmployee({ employeeId, date, amount });
 
         expect(getInsertedPayment().method).to.deep.equal(method);
-    });
-
-    it("should insert a payment with the hold payment method when the employee has to payment method", async () => {
-        stubbedCoreActions.fetchEmployeePaymentMethod
-            .withArgs(employeeId)
-            .rejects(new NotFoundError("no methods found"));
-
-        await createPaymentForEmployee({ employeeId, date, amount });
-
-        expect(getInsertedPayment().method).to.deep.equal(generateHoldPaymentMethod({ employeeId }));
     });
 
     function getInsertedPayment(): Payment {

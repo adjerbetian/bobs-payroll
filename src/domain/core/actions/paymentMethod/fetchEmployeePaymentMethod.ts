@@ -1,4 +1,5 @@
-import { PaymentMethod } from "../../entities";
+import { PaymentMethod, PaymentMethodType } from "../../entities";
+import { NotFoundError } from "../../errors";
 import { PaymentMethodRepository } from "../../repositories";
 import { CorePaymentMethodActions } from "../CoreActions";
 
@@ -10,6 +11,16 @@ export function buildFetchEmployeePaymentMethod({
     paymentMethodRepository
 }: Dependencies): CorePaymentMethodActions["fetchEmployeePaymentMethod"] {
     return async function(employeeId: number): Promise<PaymentMethod> {
-        return paymentMethodRepository.fetchByEmployeeId(employeeId);
+        try {
+            return await paymentMethodRepository.fetchByEmployeeId(employeeId);
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return {
+                    employeeId,
+                    type: PaymentMethodType.HOLD
+                };
+            }
+            throw err;
+        }
     };
 }

@@ -5,6 +5,7 @@ import {
     firstDayOfLastMonth,
     firstDayOfMonth,
     friday,
+    generateHoldPaymentMethod,
     lastDayOfMonth,
     lastFriday,
     lastMonday,
@@ -23,7 +24,7 @@ import {
     tuesday,
     wednesday
 } from "@test/e2e";
-import { CommissionedEmployee, dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
+import { CommissionedEmployee, dbPaymentMethods, dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
@@ -185,7 +186,16 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
             expect(payment.method).to.deep.equal(paymentMethod);
         });
-        it.skip("should include the hold payment method if not specified", async () => {});
+        it("should include the hold payment method if not specified", async () => {
+            const employee = await seedSalariedEmployee();
+            console.log({ methods: await dbPaymentMethods.fetchAll({}) });
+
+            console.log(await executePayrollCommand(`Payroll ${lastDayOfMonth}`));
+
+            const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId: employee.id });
+            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
+            expect(payment.method).to.deep.equal(expectedPaymentMethod);
+        });
     });
     describe("union", () => {
         it.skip("should deduce the weekly dues rate from the salary", async () => {});

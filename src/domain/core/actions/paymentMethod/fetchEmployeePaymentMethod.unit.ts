@@ -1,4 +1,5 @@
 import { expect, generateHoldPaymentMethod, generateIndex, Stub } from "@test/unit";
+import { NotFoundError } from "../../errors";
 import { PaymentMethodRepository } from "../../repositories";
 import { buildStubbedPaymentMethodRepository } from "../../test";
 import { buildFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
@@ -22,5 +23,16 @@ describe("action fetchEmployeePaymentMethod", () => {
         const result = await fetchEmployeePaymentMethod(employeeId);
 
         expect(result).to.deep.equal(paymentMethod);
+    });
+
+    it("should return the hold payment method when the employee has to payment method", async () => {
+        const employeeId = generateIndex();
+        stubbedPaymentMethodRepository.fetchByEmployeeId
+            .withArgs(employeeId)
+            .rejects(new NotFoundError("no payment method found"));
+
+        const result = await fetchEmployeePaymentMethod(employeeId);
+
+        expect(result).to.deep.equal(generateHoldPaymentMethod({ employeeId }));
     });
 });
