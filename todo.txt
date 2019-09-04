@@ -1,3 +1,5 @@
 Todo: look for a dependency injection framework
 Todo: try to use ts-node without compiling
 Todo: create employee aggregate in core
+Todo: consider renaming actions into commands
+
