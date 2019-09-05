@@ -135,7 +135,7 @@ export function generateUnionMember(args: Partial<UnionMember> = {}): UnionMembe
     return {
         employeeId: generateIndex(),
         memberId: `member-${generateIndex()}`,
-        rate: generateFloatBetween(0, 100),
+        rate: generateFloatBetween(0, 0.1),
         ...args
     };
 }

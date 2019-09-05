@@ -20,11 +20,13 @@ import {
     seedSalariedEmployee,
     seedSalesReceipt,
     seedTimeCard,
+    seedUnionMember,
     thursday,
     tuesday,
     wednesday
 } from "@test/e2e";
-import { CommissionedEmployee, dbPaymentMethods, dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
+import * as moment from "moment";
+import { CommissionedEmployee, dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
@@ -188,9 +190,8 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
         it("should include the hold payment method if not specified", async () => {
             const employee = await seedSalariedEmployee();
-            console.log({ methods: await dbPaymentMethods.fetchAll({}) });
 
-            console.log(await executePayrollCommand(`Payroll ${lastDayOfMonth}`));
+            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
             const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId: employee.id });
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
@@ -198,7 +199,16 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
     });
     describe("union", () => {
-        it.skip("should deduce the weekly dues rate from the salary", async () => {});
+        it("should deduce the weekly dues rate from the salary", async () => {
+            const employee = await seedSalariedEmployee();
+            const unionMember = await seedUnionMember({ employeeId: employee.id });
+
+            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+
+            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
+            const unionDues = employee.work.monthlySalary * unionMember.rate * nFridaysInMonth(firstDayOfMonth);
+            expect(payment.amount).to.equal(employee.work.monthlySalary - unionDues);
+        });
         it.skip("should deduce the service charges", async () => {});
         it.skip("should not deduce the already paid service charges", async () => {});
     });
@@ -219,4 +229,13 @@ async function fetchEmployeeLastPaymentDate(employeeId: number): Promise<string>
     } else {
         return never;
     }
+}
+function nFridaysInMonth(date: string): number {
+    const start = moment(date).startOf("month");
+    const end = moment(date).endOf("month");
+    let n = 0;
+    for (let d = moment(start); d.isSameOrBefore(end); d.add(1, "day")) {
+        if (d.weekday() === 5) n++;
+    }
+    return n;
 }
