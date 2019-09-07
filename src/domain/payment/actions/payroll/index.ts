@@ -1,9 +1,9 @@
 import { CoreActions } from "../../../core";
 import { PaymentRepository } from "../../repositories";
-import { PaymentActions } from "../PaymentActions";
-import { makeComputeEmployeeCommission, makeRunCommissionedPayroll } from "./commissionedPayroll";
 import { makeCreatePaymentForEmployee } from "../payment";
-import { makeComputeHourlyEmployeePaymentDueAmount, makeRunHourlyPayroll } from "./hourlyPayroll";
+import { PaymentActions } from "../PaymentActions";
+import { makeRunCommissionedPayroll } from "./commissionedPayroll";
+import { makeRunHourlyPayroll } from "./hourlyPayroll";
 import { makeRunPayrollDispatcher } from "./runPayrollDispatcher";
 import { makeRunSalariedPayroll } from "./salariedPayroll";
 
@@ -17,16 +17,11 @@ export function makeRunPayroll({
     paymentRepository
 }: PaymentActionsDependencies): PaymentActions["runPayroll"] {
     const createPaymentForEmployee = makeCreatePaymentForEmployee({ coreActions, paymentRepository });
-    const computeEmployeeCommission = makeComputeEmployeeCommission({ coreActions });
-    const computeHourlyEmployeePaymentDueAmount = makeComputeHourlyEmployeePaymentDueAmount({
-        coreActions,
-        paymentRepository
-    });
 
     return makeRunPayrollDispatcher({
         runHourlyPayroll: makeRunHourlyPayroll({
             coreActions,
-            computeHourlyEmployeePaymentDueAmount,
+            paymentRepository,
             createPaymentForEmployee
         }),
         runSalariedPayroll: makeRunSalariedPayroll({
@@ -35,8 +30,7 @@ export function makeRunPayroll({
         }),
         runCommissionedPayroll: makeRunCommissionedPayroll({
             coreActions,
-            createPaymentForEmployee,
-            computeEmployeeCommission
+            createPaymentForEmployee
         })
     });
 }

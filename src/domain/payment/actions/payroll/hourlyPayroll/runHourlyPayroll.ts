@@ -1,17 +1,17 @@
-import { CoreActions, HourlyEmployee } from "../../../../core";
+import { buildEmployeeEntity, CoreActions, HourlyEmployee, TimeCard } from "../../../../core";
+import { PaymentRepository } from "../../../repositories";
 import { CreatePaymentForEmployee } from "../../payment";
 import { RunPayrollActions } from "../runPayrollDispatcher";
 
-export type ComputeHourlyEmployeePaymentDueAmount = (employee: HourlyEmployee) => Promise<number>;
 interface Dependencies {
     coreActions: CoreActions;
-    computeHourlyEmployeePaymentDueAmount: ComputeHourlyEmployeePaymentDueAmount;
+    paymentRepository: PaymentRepository;
     createPaymentForEmployee: CreatePaymentForEmployee;
 }
 
 export function makeRunHourlyPayroll({
     coreActions,
-    computeHourlyEmployeePaymentDueAmount,
+    paymentRepository,
     createPaymentForEmployee
 }: Dependencies): RunPayrollActions["runHourlyPayroll"] {
     return async function(date: string): Promise<void> {
@@ -25,7 +25,18 @@ export function makeRunHourlyPayroll({
         await createPaymentForEmployee({
             employeeId: employee.id,
             date: date,
-            amount: await computeHourlyEmployeePaymentDueAmount(employee)
+            amount: await computePayAmount()
         });
+
+        async function computePayAmount(): Promise<number> {
+            const dueTimeCards = await fetchEmployeeDueTimeCards(employee.id);
+            const entity = buildEmployeeEntity(employee);
+            return entity.computePayAmount(dueTimeCards);
+        }
+
+        async function fetchEmployeeDueTimeCards(employeeId: number): Promise<TimeCard[]> {
+            const lastPaymentDate = await paymentRepository.fetchEmployeeLastPaymentDate(employeeId);
+            return coreActions.fetchEmployeeTimeCardsSince(employeeId, lastPaymentDate);
+        }
     }
 }

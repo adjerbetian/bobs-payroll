@@ -2,19 +2,18 @@ import {
     buildStubbedCoreActions,
     buildStubFor,
     expect,
+    firstDayOfMonth,
     generateCommissionedEmployee,
-    generateFloatBetween,
-    generateIndex,
+    generateSalesReceipt,
     lastDayOfMonth,
     Stub
 } from "@test/unit";
-import { CoreActions } from "../../../../core";
+import { buildEmployeeEntity, CoreActions } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
-import { makeRunCommissionedPayroll, ComputeEmployeeCommission } from "./runCommissionedPayroll";
+import { makeRunCommissionedPayroll } from "./runCommissionedPayroll";
 
 describe("action runCommissionedPayroll", () => {
     let stubbedCoreActions: Stub<CoreActions>;
-    let stubbedComputeEmployeeCommission: Stub<ComputeEmployeeCommission>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
     let runCommissionedPayroll: ReturnType<typeof makeRunCommissionedPayroll>;
@@ -22,30 +21,30 @@ describe("action runCommissionedPayroll", () => {
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();
         stubbedCreatePaymentForEmployee = buildStubFor("fetchEmployeePaymentMethod");
-        stubbedComputeEmployeeCommission = buildStubFor("createPaymentForEmployee");
 
         runCommissionedPayroll = makeRunCommissionedPayroll({
             coreActions: stubbedCoreActions,
-            computeEmployeeCommission: stubbedComputeEmployeeCommission,
             createPaymentForEmployee: stubbedCreatePaymentForEmployee
         });
 
-        stubbedComputeEmployeeCommission.resolves(generateIndex());
         stubbedCreatePaymentForEmployee.resolves();
+        stubbedCoreActions.fetchAllEmployeeSalesReceiptsSince.resolves([]);
     });
 
     it("should insert the right payment the employee", async () => {
         const employee = generateCommissionedEmployee();
-        const commission = generateFloatBetween(1000, 2000);
+        const salesReceipts = [generateSalesReceipt(), generateSalesReceipt()];
         stubbedCoreActions.fetchAllCommissionedEmployees.resolves([employee]);
-        stubbedComputeEmployeeCommission.resolves(commission);
+        stubbedCoreActions.fetchAllEmployeeSalesReceiptsSince
+            .withArgs(employee.id, firstDayOfMonth)
+            .resolves(salesReceipts);
 
         await runCommissionedPayroll(lastDayOfMonth);
 
         expect(stubbedCreatePaymentForEmployee).to.have.been.calledOnceWith({
             employeeId: employee.id,
             date: lastDayOfMonth,
-            amount: employee.work.monthlySalary + commission
+            amount: buildEmployeeEntity(employee).computeCommissionedSalary(salesReceipts)
         });
     });
 

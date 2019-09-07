@@ -1,6 +1,7 @@
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     export namespace Chai {
+        // noinspection JSUnusedGlobalSymbols
         interface Assertion {
             entity: Assertion;
         }

@@ -1,4 +1,3 @@
-Todo: add methods to entity (salary computation in employee)
 Todo: look for a dependency injection framework
 Todo: try to use ts-node without compiling
 Todo: create employee aggregate in core
