@@ -209,6 +209,18 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const unionDues = employee.work.monthlySalary * unionMember.rate * nFridaysInMonth(firstDayOfMonth);
             expect(payment.amount).to.equal(employee.work.monthlySalary - unionDues);
         });
+        it.skip("should deduce the weekly dues rate from the hourly payment", async () => {
+            const employee = await seedHourlyEmployee();
+            const timeCard = await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
+            const unionMember = await seedUnionMember({ employeeId: employee.id });
+
+            await executePayrollCommand(`Payroll ${friday}`);
+
+            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
+            const fullPaymentAmount = employee.work.hourlyRate * timeCard.hours;
+            const unionDues = fullPaymentAmount * unionMember.rate;
+            expect(payment.amount).to.equal(fullPaymentAmount - unionDues);
+        });
         it.skip("should deduce the service charges", async () => {});
         it.skip("should not deduce the already paid service charges", async () => {});
     });
