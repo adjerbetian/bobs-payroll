@@ -5,7 +5,7 @@ interface Dependencies {
     unionMemberRepository: UnionMemberRepository;
 }
 
-export function buildRemoveEmployeeFromUnion({
+export function makeRemoveEmployeeFromUnion({
     unionMemberRepository
 }: Dependencies): CoreUnionActions["removeEmployeeFromUnion"] {
     return async function(employeeId: number): Promise<void> {

@@ -1,15 +1,15 @@
 import { expect, generateIndex, generateTimeCard, monday, Stub } from "@test/unit";
 import { TimeCardRepository } from "../../repositories";
 import { buildStubbedTimeCardRepository } from "../../test";
-import { buildFetchEmployeeTimeCardsSince } from "./fetchAllOfEmployeeSince";
+import { makeFetchEmployeeTimeCardsSince } from "./fetchAllOfEmployeeSince";
 
 describe("action fetchAllOfEmployeeSince", () => {
     let stubbedTimeCardRepository: Stub<TimeCardRepository>;
-    let fetchEmployeeTimeCardsSince: ReturnType<typeof buildFetchEmployeeTimeCardsSince>;
+    let fetchEmployeeTimeCardsSince: ReturnType<typeof makeFetchEmployeeTimeCardsSince>;
 
     beforeEach(() => {
         stubbedTimeCardRepository = buildStubbedTimeCardRepository();
-        fetchEmployeeTimeCardsSince = buildFetchEmployeeTimeCardsSince({
+        fetchEmployeeTimeCardsSince = makeFetchEmployeeTimeCardsSince({
             timeCardRepository: stubbedTimeCardRepository
         });
     });

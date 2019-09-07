@@ -9,21 +9,21 @@ import {
 } from "@test/unit";
 import { CoreActions, HourlyEmployee } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
-import { buildRunHourlyPayroll, ComputeHourlyEmployeePaymentDueAmount } from "./runHourlyPayroll";
+import { makeRunHourlyPayroll, ComputeHourlyEmployeePaymentDueAmount } from "./runHourlyPayroll";
 
 describe("action runHourlyPayroll", () => {
     let stubbedCoreActions: Stub<CoreActions>;
     let stubbedComputeHourlyEmployeePaymentDueAmount: Stub<ComputeHourlyEmployeePaymentDueAmount>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runHourlyPayroll: ReturnType<typeof buildRunHourlyPayroll>;
+    let runHourlyPayroll: ReturnType<typeof makeRunHourlyPayroll>;
 
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();
         stubbedComputeHourlyEmployeePaymentDueAmount = buildStubFor("computeHourlyEmployeePaymentDueAmount");
         stubbedCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
 
-        runHourlyPayroll = buildRunHourlyPayroll({
+        runHourlyPayroll = makeRunHourlyPayroll({
             coreActions: stubbedCoreActions,
             computeHourlyEmployeePaymentDueAmount: stubbedComputeHourlyEmployeePaymentDueAmount,
             createPaymentForEmployee: stubbedCreatePaymentForEmployee

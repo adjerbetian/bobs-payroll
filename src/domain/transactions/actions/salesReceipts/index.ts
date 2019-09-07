@@ -1,1 +1,1 @@
-export { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
+export { makePostSalesReceiptTransaction } from "./postSalesReceipt";

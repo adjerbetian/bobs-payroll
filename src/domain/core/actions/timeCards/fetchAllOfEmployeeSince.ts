@@ -6,7 +6,7 @@ interface Dependencies {
     timeCardRepository: TimeCardRepository;
 }
 
-export function buildFetchEmployeeTimeCardsSince({
+export function makeFetchEmployeeTimeCardsSince({
     timeCardRepository
 }: Dependencies): CoreTimeCardActions["fetchEmployeeTimeCardsSince"] {
     return async function(employeeId: number, date: string): Promise<TimeCard[]> {

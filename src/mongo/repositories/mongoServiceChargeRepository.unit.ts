@@ -2,15 +2,15 @@ import { expect, generateIndex, generateServiceCharge, Stub } from "@test/unit";
 import { ServiceCharge } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
-import { buildMongoServiceChargeRepository } from "./mongoServiceChargeRepository";
+import { makeMongoServiceChargeRepository } from "./mongoServiceChargeRepository";
 
 describe("mongoServiceChargeRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<ServiceCharge>>;
-    let repository: ReturnType<typeof buildMongoServiceChargeRepository>;
+    let repository: ReturnType<typeof makeMongoServiceChargeRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();
-        repository = buildMongoServiceChargeRepository(stubbedDb);
+        repository = makeMongoServiceChargeRepository(stubbedDb);
     });
 
     describe("fetchAll", () => {

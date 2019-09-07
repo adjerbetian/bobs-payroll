@@ -2,15 +2,15 @@ import { buildStubbedCoreActions, expect, generateSalesReceipt, Stub } from "@te
 import * as moment from "moment";
 import { CoreActions, SalesReceipt } from "../../../core";
 import { TransactionFormatError } from "../../errors";
-import { buildPostSalesReceiptTransaction } from "./postSalesReceipt";
+import { makePostSalesReceiptTransaction } from "./postSalesReceipt";
 
 describe("postTimeCard", () => {
     let stubbedActions: Stub<CoreActions>;
-    let postSalesReceipt: ReturnType<typeof buildPostSalesReceiptTransaction>;
+    let postSalesReceipt: ReturnType<typeof makePostSalesReceiptTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();
-        postSalesReceipt = buildPostSalesReceiptTransaction(stubbedActions);
+        postSalesReceipt = makePostSalesReceiptTransaction(stubbedActions);
 
         stubbedActions.createSalesReceipt.resolves();
     });

@@ -3,7 +3,7 @@ import { cloneDeep } from "lodash";
 import { Collection } from "mongodb";
 import { NotFoundError } from "../domain";
 import { getDb } from "./db";
-import { buildMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
+import { makeMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 
 interface Entity {
     id: number;
@@ -16,7 +16,7 @@ let adapter: MongoDbAdapter<Entity>;
 describe("mongoDbAdapter", () => {
     beforeEach(() => {
         mongo = getDb().collection<Entity>("test-collection");
-        adapter = buildMongoDbAdapter(mongo);
+        adapter = makeMongoDbAdapter(mongo);
     });
 
     describe("fetch", () => {

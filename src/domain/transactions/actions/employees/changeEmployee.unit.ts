@@ -10,16 +10,16 @@ import {
 } from "@test/unit";
 import { CoreActions, EmployeeType } from "../../../core";
 import { TransactionFormatError } from "../../errors";
-import { buildChangeEmployeeTransaction } from "./changeEmployee";
+import { makeChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
     let stubbedActions: Stub<CoreActions>;
-    let changeEmployee: ReturnType<typeof buildChangeEmployeeTransaction>;
+    let changeEmployee: ReturnType<typeof makeChangeEmployeeTransaction>;
     let employeeId: number;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();
-        changeEmployee = buildChangeEmployeeTransaction(stubbedActions);
+        changeEmployee = makeChangeEmployeeTransaction(stubbedActions);
 
         stubbedActions.updateEmployee.resolves();
 

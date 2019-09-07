@@ -10,20 +10,20 @@ import {
 import { CoreActions, HourlyEmployee } from "../../../../core";
 import { PaymentRepository } from "../../../repositories";
 import { buildStubbedPaymentRepository } from "../../../test";
-import { buildComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
+import { makeComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
 
 describe("action computeHourlyEmployeePaymentDueAmount", () => {
     let stubbedPaymentRepository: Stub<PaymentRepository>;
     let stubbedCoreActions: Stub<CoreActions>;
 
-    let computeHourlyEmployeePaymentDueAmount: ReturnType<typeof buildComputeHourlyEmployeePaymentDueAmount>;
+    let computeHourlyEmployeePaymentDueAmount: ReturnType<typeof makeComputeHourlyEmployeePaymentDueAmount>;
     let employee: HourlyEmployee;
 
     beforeEach(() => {
         stubbedPaymentRepository = buildStubbedPaymentRepository();
         stubbedCoreActions = buildStubbedCoreActions();
 
-        computeHourlyEmployeePaymentDueAmount = buildComputeHourlyEmployeePaymentDueAmount({
+        computeHourlyEmployeePaymentDueAmount = makeComputeHourlyEmployeePaymentDueAmount({
             paymentRepository: stubbedPaymentRepository,
             coreActions: stubbedCoreActions
         });

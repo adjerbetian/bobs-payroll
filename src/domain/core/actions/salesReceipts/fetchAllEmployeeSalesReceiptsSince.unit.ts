@@ -1,15 +1,15 @@
 import { expect, generateIndex, generateSalesReceipt, monday, Stub } from "@test/unit";
 import { SalesReceiptRepository } from "../../repositories";
 import { buildStubbedSalesReceiptRepository } from "../../test";
-import { buildFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceiptsSince";
+import { makeFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceiptsSince";
 
 describe("action fetchAllEmployeeSalesReceipts", () => {
     let stubbedSalesReceiptRepository: Stub<SalesReceiptRepository>;
-    let fetchAllEmployeeSalesReceipts: ReturnType<typeof buildFetchAllEmployeeSalesReceipts>;
+    let fetchAllEmployeeSalesReceipts: ReturnType<typeof makeFetchAllEmployeeSalesReceipts>;
 
     beforeEach(() => {
         stubbedSalesReceiptRepository = buildStubbedSalesReceiptRepository();
-        fetchAllEmployeeSalesReceipts = buildFetchAllEmployeeSalesReceipts({
+        fetchAllEmployeeSalesReceipts = makeFetchAllEmployeeSalesReceipts({
             salesReceiptRepository: stubbedSalesReceiptRepository
         });
     });

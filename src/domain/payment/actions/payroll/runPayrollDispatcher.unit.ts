@@ -12,16 +12,16 @@ import {
     tuesday,
     wednesday
 } from "@test/unit";
-import { buildRunPayrollDispatcher, RunPayrollActions } from "./runPayrollDispatcher";
+import { makeRunPayrollDispatcher, RunPayrollActions } from "./runPayrollDispatcher";
 
 describe("action runPayroll", () => {
     let stubbedPayrollActions: Stub<RunPayrollActions>;
 
-    let runPayroll: ReturnType<typeof buildRunPayrollDispatcher>;
+    let runPayroll: ReturnType<typeof makeRunPayrollDispatcher>;
 
     beforeEach(() => {
         stubbedPayrollActions = buildStubPayrollActions();
-        runPayroll = buildRunPayrollDispatcher(stubbedPayrollActions);
+        runPayroll = makeRunPayrollDispatcher(stubbedPayrollActions);
 
         stubbedPayrollActions.runHourlyPayroll.resolves();
         stubbedPayrollActions.runSalariedPayroll.resolves();

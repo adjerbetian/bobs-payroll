@@ -1,19 +1,19 @@
 import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
 import { CoreSalesReceiptActions } from "../CoreActions";
-import { buildCreateSalesReceipt } from "./createSalesReceipt";
-import { buildFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceiptsSince";
+import { makeCreateSalesReceipt } from "./createSalesReceipt";
+import { makeFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceiptsSince";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
     salesReceiptRepository: SalesReceiptRepository;
 }
 
-export function buildCoreSalesReceiptActions({
+export function makeCoreSalesReceiptActions({
     employeeRepository,
     salesReceiptRepository
 }: Dependencies): CoreSalesReceiptActions {
     return {
-        createSalesReceipt: buildCreateSalesReceipt({ employeeRepository, salesReceiptRepository }),
-        fetchAllEmployeeSalesReceiptsSince: buildFetchAllEmployeeSalesReceipts({ salesReceiptRepository })
+        createSalesReceipt: makeCreateSalesReceipt({ employeeRepository, salesReceiptRepository }),
+        fetchAllEmployeeSalesReceiptsSince: makeFetchAllEmployeeSalesReceipts({ salesReceiptRepository })
     };
 }

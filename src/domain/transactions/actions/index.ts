@@ -1,30 +1,23 @@
 import { CoreActions } from "../../core";
 import { PaymentActions } from "../../payment";
-import {
-    buildAddEmployeeTransaction,
-    buildChangeEmployeeTransaction,
-    buildDeleteEmployeeTransaction
-} from "./employees";
-import { buildRunPayrollTransaction } from "./payroll";
-import { buildProcessTransaction } from "./processTransaction";
-import { buildPostSalesReceiptTransaction } from "./salesReceipts";
-import { buildPostServiceChargeTransaction } from "./serviceCharges";
-import { buildPostTimeCardTransaction } from "./timeCards";
+import { makeAddEmployeeTransaction, makeChangeEmployeeTransaction, makeDeleteEmployeeTransaction } from "./employees";
+import { makeRunPayrollTransaction } from "./payroll";
+import { makeProcessTransaction } from "./processTransaction";
+import { makePostSalesReceiptTransaction } from "./salesReceipts";
+import { makePostServiceChargeTransaction } from "./serviceCharges";
+import { makePostTimeCardTransaction } from "./timeCards";
 import { TransactionsActions } from "./TransactionsActions";
 
-export function buildTransactionsActions(
-    coreActions: CoreActions,
-    paymentActions: PaymentActions
-): TransactionsActions {
+export function makeTransactionsActions(coreActions: CoreActions, paymentActions: PaymentActions): TransactionsActions {
     return {
-        processTransaction: buildProcessTransaction({
-            addEmployee: buildAddEmployeeTransaction(coreActions),
-            deleteEmployee: buildDeleteEmployeeTransaction(coreActions),
-            postTimeCard: buildPostTimeCardTransaction(coreActions),
-            postSalesReceipt: buildPostSalesReceiptTransaction(coreActions),
-            postServiceCharge: buildPostServiceChargeTransaction(coreActions),
-            changeEmployee: buildChangeEmployeeTransaction(coreActions),
-            runPayroll: buildRunPayrollTransaction(paymentActions)
+        processTransaction: makeProcessTransaction({
+            addEmployee: makeAddEmployeeTransaction(coreActions),
+            deleteEmployee: makeDeleteEmployeeTransaction(coreActions),
+            postTimeCard: makePostTimeCardTransaction(coreActions),
+            postSalesReceipt: makePostSalesReceiptTransaction(coreActions),
+            postServiceCharge: makePostServiceChargeTransaction(coreActions),
+            changeEmployee: makeChangeEmployeeTransaction(coreActions),
+            runPayroll: makeRunPayrollTransaction(paymentActions)
         })
     };
 }

@@ -10,7 +10,7 @@ interface Dependencies {
     computeEmployeeCommission: ComputeEmployeeCommission;
 }
 
-export function buildRunCommissionedPayroll({
+export function makeRunCommissionedPayroll({
     coreActions,
     createPaymentForEmployee,
     computeEmployeeCommission

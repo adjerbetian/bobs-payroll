@@ -6,7 +6,7 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildUpdateEmployee({ employeeRepository }: Dependencies): CoreEmployeeActions["updateEmployee"] {
+export function makeUpdateEmployee({ employeeRepository }: Dependencies): CoreEmployeeActions["updateEmployee"] {
     return async function(employeeId: number, update: Partial<Employee>): Promise<void> {
         await employeeRepository.updateById(employeeId, update);
     };

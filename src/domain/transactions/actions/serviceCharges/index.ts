@@ -1,1 +1,1 @@
-export { buildPostServiceChargeTransaction } from "./postServiceCharge";
+export { makePostServiceChargeTransaction } from "./postServiceCharge";

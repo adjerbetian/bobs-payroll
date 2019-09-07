@@ -8,7 +8,7 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildCreateUnionMember({
+export function makeCreateUnionMember({
     unionMemberRepository,
     employeeRepository
 }: Dependencies): CoreUnionActions["createUnionMember"] {

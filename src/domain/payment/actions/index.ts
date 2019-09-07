@@ -1,7 +1,7 @@
 import { CoreActions } from "../../core";
 import { PaymentRepository } from "../repositories";
 import { PaymentActions } from "./PaymentActions";
-import { buildRunPayroll } from "./payroll";
+import { makeRunPayroll } from "./payroll";
 
 export { PaymentActions } from "./PaymentActions";
 
@@ -10,8 +10,8 @@ export interface PaymentActionsDependencies {
     paymentRepository: PaymentRepository;
 }
 
-export function buildPaymentActions({ coreActions, paymentRepository }: PaymentActionsDependencies): PaymentActions {
+export function makePaymentActions({ coreActions, paymentRepository }: PaymentActionsDependencies): PaymentActions {
     return {
-        runPayroll: buildRunPayroll({ coreActions, paymentRepository })
+        runPayroll: makeRunPayroll({ coreActions, paymentRepository })
     };
 }

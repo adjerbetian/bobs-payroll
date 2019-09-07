@@ -1,20 +1,17 @@
 import { EmployeeRepository, TimeCardRepository } from "../../repositories";
 import { CoreTimeCardActions } from "../CoreActions";
-import { buildCreateTimeCard } from "./createTimeCard";
-import { buildFetchEmployeeTimeCardsSince } from "./fetchAllOfEmployeeSince";
+import { makeCreateTimeCard } from "./createTimeCard";
+import { makeFetchEmployeeTimeCardsSince } from "./fetchAllOfEmployeeSince";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
     timeCardRepository: TimeCardRepository;
 }
 
-export function buildCoreTimeCardActions({
-    timeCardRepository,
-    employeeRepository
-}: Dependencies): CoreTimeCardActions {
+export function makeCoreTimeCardActions({ timeCardRepository, employeeRepository }: Dependencies): CoreTimeCardActions {
     return {
-        createTimeCard: buildCreateTimeCard({ employeeRepository, timeCardRepository }),
-        fetchEmployeeTimeCardsSince: buildFetchEmployeeTimeCardsSince({ timeCardRepository })
+        createTimeCard: makeCreateTimeCard({ employeeRepository, timeCardRepository }),
+        fetchEmployeeTimeCardsSince: makeFetchEmployeeTimeCardsSince({ timeCardRepository })
     };
 }
 export { CoreTimeCardActions } from "../CoreActions";

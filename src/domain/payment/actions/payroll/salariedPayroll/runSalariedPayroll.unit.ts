@@ -8,19 +8,19 @@ import {
 } from "@test/unit";
 import { CoreActions } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
-import { buildRunSalariedPayroll } from "./runSalariedPayroll";
+import { makeRunSalariedPayroll } from "./runSalariedPayroll";
 
 describe("action runSalariedPayroll", () => {
     let stubbedCoreActions: Stub<CoreActions>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runSalariedPayroll: ReturnType<typeof buildRunSalariedPayroll>;
+    let runSalariedPayroll: ReturnType<typeof makeRunSalariedPayroll>;
 
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();
         stubbedCreatePaymentForEmployee = buildStubFor("createPaymentForEmployee");
 
-        runSalariedPayroll = buildRunSalariedPayroll({
+        runSalariedPayroll = makeRunSalariedPayroll({
             coreActions: stubbedCoreActions,
             createPaymentForEmployee: stubbedCreatePaymentForEmployee
         });

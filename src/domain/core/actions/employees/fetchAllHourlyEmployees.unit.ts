@@ -1,15 +1,15 @@
 import { expect, generateHourlyEmployee, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
-import { buildFetchAllHourlyEmployees } from "./fetchAllHourlyEmployees";
+import { makeFetchAllHourlyEmployees } from "./fetchAllHourlyEmployees";
 
 describe("action fetchAllHourlyEmployees", () => {
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let fetchAllHourlyEmployees: ReturnType<typeof buildFetchAllHourlyEmployees>;
+    let fetchAllHourlyEmployees: ReturnType<typeof makeFetchAllHourlyEmployees>;
 
     beforeEach(() => {
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();
-        fetchAllHourlyEmployees = buildFetchAllHourlyEmployees({ employeeRepository: stubbedEmployeeRepository });
+        fetchAllHourlyEmployees = makeFetchAllHourlyEmployees({ employeeRepository: stubbedEmployeeRepository });
     });
 
     it("should return all the hourly employees", async () => {

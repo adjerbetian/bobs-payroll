@@ -9,15 +9,15 @@ import {
 import { Employee, EmployeeType, HourlyEmployee } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
-import { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";
+import { makeMongoEmployeeRepository } from "./mongoEmployeeRepository";
 
 describe("mongoEmployeeRepository", () => {
-    let repository: ReturnType<typeof buildMongoEmployeeRepository>;
+    let repository: ReturnType<typeof makeMongoEmployeeRepository>;
     let stubbedDb: Stub<MongoDbAdapter<Employee>>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();
-        repository = buildMongoEmployeeRepository(stubbedDb);
+        repository = makeMongoEmployeeRepository(stubbedDb);
     });
 
     describe("fetchById", () => {

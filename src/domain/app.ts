@@ -1,6 +1,6 @@
-import { buildCoreActions, CoreDependencies } from "./core";
-import { buildPaymentActions, PaymentDependencies } from "./payment";
-import { buildTransactionsActions } from "./transactions";
+import { makeCoreActions, CoreDependencies } from "./core";
+import { makePaymentActions, PaymentDependencies } from "./payment";
+import { makeTransactionsActions } from "./transactions";
 
 export interface App {
     processTransaction(args: string[]): Promise<void>;
@@ -26,7 +26,7 @@ export function buildApp({
     unionMemberRepository,
     paymentRepository
 }: AppDependencies): App {
-    const coreActions = buildCoreActions({
+    const coreActions = makeCoreActions({
         employeeRepository,
         paymentMethodRepository,
         salesReceiptRepository,
@@ -34,11 +34,11 @@ export function buildApp({
         timeCardRepository,
         unionMemberRepository
     });
-    const paymentActions = buildPaymentActions({
+    const paymentActions = makePaymentActions({
         coreActions,
         paymentRepository
     });
-    const transactionDomain = buildTransactionsActions(coreActions, paymentActions);
+    const transactionDomain = makeTransactionsActions(coreActions, paymentActions);
 
     return {
         processTransaction: transactionDomain.processTransaction

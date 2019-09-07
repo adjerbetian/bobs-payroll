@@ -9,7 +9,7 @@ interface Dependencies {
     createPaymentForEmployee: CreatePaymentForEmployee;
 }
 
-export function buildRunHourlyPayroll({
+export function makeRunHourlyPayroll({
     coreActions,
     computeHourlyEmployeePaymentDueAmount,
     createPaymentForEmployee

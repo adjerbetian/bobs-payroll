@@ -1,7 +1,7 @@
 import { CoreDependencies, SalesReceipt } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export function buildMongoSalesReceiptRepository(
+export function makeMongoSalesReceiptRepository(
     db: MongoDbAdapter<SalesReceipt>
 ): CoreDependencies["salesReceiptRepository"] {
     return {

@@ -2,15 +2,15 @@ import { expect, generateIndex, generatePayment, never, Stub } from "@test/unit"
 import { Payment } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
-import { buildMongoPaymentRepository } from "./mongoPaymentRepository";
+import { makeMongoPaymentRepository } from "./mongoPaymentRepository";
 
 describe("mongoPaymentRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<Payment>>;
-    let repository: ReturnType<typeof buildMongoPaymentRepository>;
+    let repository: ReturnType<typeof makeMongoPaymentRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();
-        repository = buildMongoPaymentRepository(stubbedDb);
+        repository = makeMongoPaymentRepository(stubbedDb);
     });
 
     describe("fetchLastOfEmployee", () => {

@@ -7,7 +7,7 @@ interface Dependencies {
     coreActions: CoreActions;
 }
 
-export function buildComputeEmployeeCommission({ coreActions }: Dependencies): ComputeEmployeeCommission {
+export function makeComputeEmployeeCommission({ coreActions }: Dependencies): ComputeEmployeeCommission {
     return async function(date: string, employee: CommissionedEmployee): Promise<number> {
         const salesReceipts = await fetchEmployeeSalesReceiptOfTheMonth(date, employee);
         const totalSold = computeSalesReceiptsTotalAmount(salesReceipts);

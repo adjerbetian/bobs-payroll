@@ -3,15 +3,15 @@ import * as moment from "moment";
 import { isoDate } from "../../../../utils";
 import { PaymentActions } from "../../../payment";
 import { TransactionFormatError } from "../../errors";
-import { buildRunPayrollTransaction } from "./runPayroll";
+import { makeRunPayrollTransaction } from "./runPayroll";
 
 describe("runPayroll", () => {
     let stubbedActions: Stub<PaymentActions>;
-    let runPayroll: ReturnType<typeof buildRunPayrollTransaction>;
+    let runPayroll: ReturnType<typeof makeRunPayrollTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedPaymentActions();
-        runPayroll = buildRunPayrollTransaction(stubbedActions);
+        runPayroll = makeRunPayrollTransaction(stubbedActions);
 
         stubbedActions.runPayroll.resolves();
     });

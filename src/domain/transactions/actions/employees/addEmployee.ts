@@ -12,7 +12,7 @@ import { Transactions } from "../processTransaction";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
 
-export function buildAddEmployeeTransaction(actions: CoreActions): Transactions["addEmployee"] {
+export function makeAddEmployeeTransaction(actions: CoreActions): Transactions["addEmployee"] {
     return async function(
         id: string,
         name: string,

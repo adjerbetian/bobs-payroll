@@ -7,7 +7,7 @@ interface Dependencies {
     unionMemberRepository: UnionMemberRepository;
 }
 
-export function buildCreateServiceCharge({
+export function makeCreateServiceCharge({
     serviceChargeRepository,
     unionMemberRepository
 }: Dependencies): CoreServiceChargeActions["createServiceCharge"] {

@@ -6,7 +6,7 @@ interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;
 }
 
-export function buildCreatePaymentMethod({
+export function makeCreatePaymentMethod({
     paymentMethodRepository
 }: Dependencies): CorePaymentMethodActions["createPaymentMethod"] {
     return async function(paymentMethod: PaymentMethod): Promise<void> {

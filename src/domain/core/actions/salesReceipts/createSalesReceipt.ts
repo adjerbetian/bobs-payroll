@@ -8,7 +8,7 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildCreateSalesReceipt({
+export function makeCreateSalesReceipt({
     salesReceiptRepository,
     employeeRepository
 }: Dependencies): CoreSalesReceiptActions["createSalesReceipt"] {

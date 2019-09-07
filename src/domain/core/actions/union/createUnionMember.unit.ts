@@ -3,19 +3,19 @@ import { UnionMember } from "../../entities";
 import { NotFoundError, UnionMemberIdAlreadyUsedError } from "../../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedUnionMemberRepository } from "../../test";
-import { buildCreateUnionMember } from "./createUnionMember";
+import { makeCreateUnionMember } from "./createUnionMember";
 
 describe("action createUnionMember", () => {
     let stubbedUnionMemberRepository: Stub<UnionMemberRepository>;
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let createUnionMember: ReturnType<typeof buildCreateUnionMember>;
+    let createUnionMember: ReturnType<typeof makeCreateUnionMember>;
 
     let unionMember: UnionMember;
 
     beforeEach(() => {
         stubbedUnionMemberRepository = buildStubbedUnionMemberRepository();
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();
-        createUnionMember = buildCreateUnionMember({
+        createUnionMember = makeCreateUnionMember({
             unionMemberRepository: stubbedUnionMemberRepository,
             employeeRepository: stubbedEmployeeRepository
         });

@@ -11,17 +11,17 @@ import { CoreActions } from "../../../core";
 import { Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
 import { buildStubbedPaymentRepository } from "../../test";
-import { buildCreatePaymentForEmployee } from "./createPaymentForEmployee";
+import { makeCreatePaymentForEmployee } from "./createPaymentForEmployee";
 
 describe("createPaymentForEmployee", () => {
-    let createPaymentForEmployee: ReturnType<typeof buildCreatePaymentForEmployee>;
+    let createPaymentForEmployee: ReturnType<typeof makeCreatePaymentForEmployee>;
     let stubbedCoreActions: Stub<CoreActions>;
     let stubbedPaymentRepository: Stub<PaymentRepository>;
 
     beforeEach(() => {
         stubbedPaymentRepository = buildStubbedPaymentRepository();
         stubbedCoreActions = buildStubbedCoreActions();
-        createPaymentForEmployee = buildCreatePaymentForEmployee({
+        createPaymentForEmployee = makeCreatePaymentForEmployee({
             paymentRepository: stubbedPaymentRepository,
             coreActions: stubbedCoreActions
         });

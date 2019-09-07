@@ -1,7 +1,7 @@
 import { CoreDependencies, UnionMember } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export function buildMongoUnionMemberRepository(
+export function makeMongoUnionMemberRepository(
     db: MongoDbAdapter<UnionMember>
 ): CoreDependencies["unionMemberRepository"] {
     return {

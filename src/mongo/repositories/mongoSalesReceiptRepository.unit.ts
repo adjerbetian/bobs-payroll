@@ -2,15 +2,15 @@ import { expect, generateIndex, generateSalesReceipt, monday, Stub } from "@test
 import { SalesReceipt } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
-import { buildMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
+import { makeMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 
 describe("mongoSalesReceiptRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<SalesReceipt>>;
-    let repository: ReturnType<typeof buildMongoSalesReceiptRepository>;
+    let repository: ReturnType<typeof makeMongoSalesReceiptRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();
-        repository = buildMongoSalesReceiptRepository(stubbedDb);
+        repository = makeMongoSalesReceiptRepository(stubbedDb);
     });
 
     describe("fetchAllOfEmployeeSince", () => {

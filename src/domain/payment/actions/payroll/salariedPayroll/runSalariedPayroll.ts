@@ -7,7 +7,7 @@ interface Dependencies {
     createPaymentForEmployee: CreatePaymentForEmployee;
 }
 
-export function buildRunSalariedPayroll({
+export function makeRunSalariedPayroll({
     coreActions,
     createPaymentForEmployee
 }: Dependencies): RunPayrollActions["runSalariedPayroll"] {

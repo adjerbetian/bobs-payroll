@@ -2,17 +2,17 @@ import { expect, generateServiceCharge, generateUnionMember, Stub } from "@test/
 import { NotFoundError } from "../../errors";
 import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
 import { buildStubbedServiceChargeRepository, buildStubbedUnionMemberRepository } from "../../test";
-import { buildCreateServiceCharge } from "./createServiceCharge";
+import { makeCreateServiceCharge } from "./createServiceCharge";
 
 describe("action createServiceCharge", () => {
     let stubbedServiceChargeRepository: Stub<ServiceChargeRepository>;
     let stubbedUnionMemberRepository: Stub<UnionMemberRepository>;
-    let createServiceCharge: ReturnType<typeof buildCreateServiceCharge>;
+    let createServiceCharge: ReturnType<typeof makeCreateServiceCharge>;
 
     beforeEach(() => {
         stubbedServiceChargeRepository = buildStubbedServiceChargeRepository();
         stubbedUnionMemberRepository = buildStubbedUnionMemberRepository();
-        createServiceCharge = buildCreateServiceCharge({
+        createServiceCharge = makeCreateServiceCharge({
             serviceChargeRepository: stubbedServiceChargeRepository,
             unionMemberRepository: stubbedUnionMemberRepository
         });

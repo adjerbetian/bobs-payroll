@@ -9,15 +9,15 @@ import {
     Stub
 } from "@test/unit";
 import { isoDate } from "../../../utils";
-import { buildProcessTransaction, Transactions } from "./processTransaction";
+import { makeProcessTransaction, Transactions } from "./processTransaction";
 
 describe("processTransaction", () => {
-    let processTransaction: ReturnType<typeof buildProcessTransaction>;
+    let processTransaction: ReturnType<typeof makeProcessTransaction>;
     let stubbedTransactions: Stub<Transactions>;
 
     beforeEach(() => {
         stubbedTransactions = buildStubTransactions();
-        processTransaction = buildProcessTransaction(stubbedTransactions);
+        processTransaction = makeProcessTransaction(stubbedTransactions);
     });
 
     describe("AddEmp", () => {

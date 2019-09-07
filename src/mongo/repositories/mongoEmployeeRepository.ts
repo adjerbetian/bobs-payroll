@@ -8,7 +8,7 @@ import {
 } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export function buildMongoEmployeeRepository(db: MongoDbAdapter<Employee>): CoreDependencies["employeeRepository"] {
+export function makeMongoEmployeeRepository(db: MongoDbAdapter<Employee>): CoreDependencies["employeeRepository"] {
     return {
         async fetchById(id: number): Promise<Employee> {
             return db.fetch({ id });

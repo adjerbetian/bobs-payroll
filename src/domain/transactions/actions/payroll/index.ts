@@ -1,1 +1,1 @@
-export { buildRunPayrollTransaction } from "./runPayroll";
+export { makeRunPayrollTransaction } from "./runPayroll";

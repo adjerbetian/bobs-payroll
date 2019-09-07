@@ -1,2 +1,2 @@
-export { buildComputeEmployeeCommission } from "./computeEmployeeCommission";
-export { buildRunCommissionedPayroll } from "./runCommissionedPayroll";
+export { makeComputeEmployeeCommission } from "./computeEmployeeCommission";
+export { makeRunCommissionedPayroll } from "./runCommissionedPayroll";

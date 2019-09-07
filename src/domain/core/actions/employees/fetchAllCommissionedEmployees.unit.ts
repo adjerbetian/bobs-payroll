@@ -1,15 +1,15 @@
 import { expect, generateCommissionedEmployee, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
-import { buildFetchAllCommissionedEmployees } from "./fetchAllCommissionedEmployees";
+import { makeFetchAllCommissionedEmployees } from "./fetchAllCommissionedEmployees";
 
 describe("action fetchAllCommissionedEmployees", () => {
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let fetchAllCommissionedEmployees: ReturnType<typeof buildFetchAllCommissionedEmployees>;
+    let fetchAllCommissionedEmployees: ReturnType<typeof makeFetchAllCommissionedEmployees>;
 
     beforeEach(() => {
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();
-        fetchAllCommissionedEmployees = buildFetchAllCommissionedEmployees({
+        fetchAllCommissionedEmployees = makeFetchAllCommissionedEmployees({
             employeeRepository: stubbedEmployeeRepository
         });
     });

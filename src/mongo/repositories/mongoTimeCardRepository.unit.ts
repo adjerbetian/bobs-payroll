@@ -2,15 +2,15 @@ import { expect, generateIndex, generateTimeCard, monday, Stub } from "@test/uni
 import { TimeCard } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
-import { buildMongoTimeCardRepository } from "./mongoTimeCardRepository";
+import { makeMongoTimeCardRepository } from "./mongoTimeCardRepository";
 
 describe("mongoTimeCardRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<TimeCard>>;
-    let repository: ReturnType<typeof buildMongoTimeCardRepository>;
+    let repository: ReturnType<typeof makeMongoTimeCardRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();
-        repository = buildMongoTimeCardRepository(stubbedDb);
+        repository = makeMongoTimeCardRepository(stubbedDb);
     });
 
     describe("fetchAllOfEmployee", () => {

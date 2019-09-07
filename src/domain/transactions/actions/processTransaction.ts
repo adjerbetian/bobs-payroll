@@ -12,7 +12,7 @@ export interface Transactions {
     runPayroll: Transaction;
 }
 
-export function buildProcessTransaction(transactions: Transactions): ProcessTransaction {
+export function makeProcessTransaction(transactions: Transactions): ProcessTransaction {
     return async ([transactionName, ...args]: string[]) => {
         try {
             if (transactionName === "AddEmp") await transactions.addEmployee(...args);

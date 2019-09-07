@@ -1,18 +1,18 @@
 import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
 import { CoreServiceChargeActions } from "../CoreActions";
-import { buildCreateServiceCharge } from "./createServiceCharge";
+import { makeCreateServiceCharge } from "./createServiceCharge";
 
 interface Dependencies {
     unionMemberRepository: UnionMemberRepository;
     serviceChargeRepository: ServiceChargeRepository;
 }
 
-export function buildCoreServiceChargesActions({
+export function makeCoreServiceChargesActions({
     unionMemberRepository,
     serviceChargeRepository
 }: Dependencies): CoreServiceChargeActions {
     return {
-        createServiceCharge: buildCreateServiceCharge({ unionMemberRepository, serviceChargeRepository })
+        createServiceCharge: makeCreateServiceCharge({ unionMemberRepository, serviceChargeRepository })
     };
 }
 export { CoreServiceChargeActions } from "../CoreActions";

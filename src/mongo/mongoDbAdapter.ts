@@ -15,7 +15,7 @@ export interface MongoDbAdapter<T> {
     removeAll(query: FilterQuery<T>): Promise<void>;
 }
 
-export function buildMongoDbAdapter<T>(db: Collection<DbModel<T>>): MongoDbAdapter<T> {
+export function makeMongoDbAdapter<T>(db: Collection<DbModel<T>>): MongoDbAdapter<T> {
     return {
         async fetch(query: FilterQuery<T>): Promise<T> {
             const entity = await db.findOne(query);

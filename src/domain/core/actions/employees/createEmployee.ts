@@ -6,7 +6,7 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildCreateEmployee({ employeeRepository }: Dependencies): CoreEmployeeActions["createEmployee"] {
+export function makeCreateEmployee({ employeeRepository }: Dependencies): CoreEmployeeActions["createEmployee"] {
     return async function(employee: Employee): Promise<void> {
         await employeeRepository.insert(employee);
     };

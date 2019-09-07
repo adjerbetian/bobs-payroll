@@ -1,2 +1,2 @@
-export { buildRunHourlyPayroll } from "./runHourlyPayroll";
-export { buildComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";
+export { makeRunHourlyPayroll } from "./runHourlyPayroll";
+export { makeComputeHourlyEmployeePaymentDueAmount } from "./computeHourlyEmployeePaymentDueAmount";

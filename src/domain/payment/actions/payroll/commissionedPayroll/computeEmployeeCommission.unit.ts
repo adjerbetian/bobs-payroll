@@ -8,16 +8,16 @@ import {
     Stub
 } from "@test/unit";
 import { CommissionedEmployee, CoreActions } from "../../../../core";
-import { buildComputeEmployeeCommission } from "./computeEmployeeCommission";
+import { makeComputeEmployeeCommission } from "./computeEmployeeCommission";
 
 describe("action computeEmployeeCommission", () => {
     let stubbedCoreActions: Stub<CoreActions>;
-    let computeEmployeeCommission: ReturnType<typeof buildComputeEmployeeCommission>;
+    let computeEmployeeCommission: ReturnType<typeof makeComputeEmployeeCommission>;
 
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();
 
-        computeEmployeeCommission = buildComputeEmployeeCommission({
+        computeEmployeeCommission = makeComputeEmployeeCommission({
             coreActions: stubbedCoreActions
         });
     });

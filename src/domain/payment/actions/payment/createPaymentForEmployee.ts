@@ -9,7 +9,7 @@ interface Dependencies {
 
 export type CreatePaymentForEmployee = (basicPayment: Omit<Payment, "method">) => Promise<void>;
 
-export function buildCreatePaymentForEmployee({
+export function makeCreatePaymentForEmployee({
     coreActions,
     paymentRepository
 }: Dependencies): CreatePaymentForEmployee {

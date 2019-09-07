@@ -1,1 +1,1 @@
-export { buildRunSalariedPayroll } from "./runSalariedPayroll";
+export { makeRunSalariedPayroll } from "./runSalariedPayroll";

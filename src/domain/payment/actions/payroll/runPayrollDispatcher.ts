@@ -9,7 +9,7 @@ export interface RunPayrollActions {
 
 const FRIDAY = 5;
 
-export function buildRunPayrollDispatcher({
+export function makeRunPayrollDispatcher({
     runCommissionedPayroll,
     runHourlyPayroll,
     runSalariedPayroll

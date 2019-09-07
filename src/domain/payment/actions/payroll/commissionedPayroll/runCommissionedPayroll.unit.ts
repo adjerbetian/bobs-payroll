@@ -10,21 +10,21 @@ import {
 } from "@test/unit";
 import { CoreActions } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
-import { buildRunCommissionedPayroll, ComputeEmployeeCommission } from "./runCommissionedPayroll";
+import { makeRunCommissionedPayroll, ComputeEmployeeCommission } from "./runCommissionedPayroll";
 
 describe("action runCommissionedPayroll", () => {
     let stubbedCoreActions: Stub<CoreActions>;
     let stubbedComputeEmployeeCommission: Stub<ComputeEmployeeCommission>;
     let stubbedCreatePaymentForEmployee: Stub<CreatePaymentForEmployee>;
 
-    let runCommissionedPayroll: ReturnType<typeof buildRunCommissionedPayroll>;
+    let runCommissionedPayroll: ReturnType<typeof makeRunCommissionedPayroll>;
 
     beforeEach(() => {
         stubbedCoreActions = buildStubbedCoreActions();
         stubbedCreatePaymentForEmployee = buildStubFor("fetchEmployeePaymentMethod");
         stubbedComputeEmployeeCommission = buildStubFor("createPaymentForEmployee");
 
-        runCommissionedPayroll = buildRunCommissionedPayroll({
+        runCommissionedPayroll = makeRunCommissionedPayroll({
             coreActions: stubbedCoreActions,
             computeEmployeeCommission: stubbedComputeEmployeeCommission,
             createPaymentForEmployee: stubbedCreatePaymentForEmployee

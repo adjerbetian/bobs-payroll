@@ -8,25 +8,25 @@ import {
     dbUnionMembers
 } from "./db";
 import {
-    buildMongoEmployeeRepository,
-    buildMongoPaymentMethodRepository,
-    buildMongoPaymentRepository,
-    buildMongoSalesReceiptRepository,
-    buildMongoServiceChargeRepository,
-    buildMongoTimeCardRepository,
-    buildMongoUnionMemberRepository
+    makeMongoEmployeeRepository,
+    makeMongoPaymentMethodRepository,
+    makeMongoPaymentRepository,
+    makeMongoSalesReceiptRepository,
+    makeMongoServiceChargeRepository,
+    makeMongoTimeCardRepository,
+    makeMongoUnionMemberRepository
 } from "./repositories";
 
 export { initConnection, closeConnection, cleanCollections } from "./db";
 export { MongoDbAdapter } from "./mongoDbAdapter";
 
-export const mongoEmployeeRepository = buildMongoEmployeeRepository(dbEmployees);
-export const mongoPaymentMethodRepository = buildMongoPaymentMethodRepository(dbPaymentMethods);
-export const mongoSalesReceiptRepository = buildMongoSalesReceiptRepository(dbSalesReceipts);
-export const mongoServiceChargeRepository = buildMongoServiceChargeRepository(dbServiceCharges);
-export const mongoTimeCardRepository = buildMongoTimeCardRepository(dbTimeCards);
-export const mongoUnionMemberRepository = buildMongoUnionMemberRepository(dbUnionMembers);
-export const mongoPaymentRepository = buildMongoPaymentRepository(dbPayments);
+export const mongoEmployeeRepository = makeMongoEmployeeRepository(dbEmployees);
+export const mongoPaymentMethodRepository = makeMongoPaymentMethodRepository(dbPaymentMethods);
+export const mongoSalesReceiptRepository = makeMongoSalesReceiptRepository(dbSalesReceipts);
+export const mongoServiceChargeRepository = makeMongoServiceChargeRepository(dbServiceCharges);
+export const mongoTimeCardRepository = makeMongoTimeCardRepository(dbTimeCards);
+export const mongoUnionMemberRepository = makeMongoUnionMemberRepository(dbUnionMembers);
+export const mongoPaymentRepository = makeMongoPaymentRepository(dbPayments);
 
 export {
     dbEmployees,

@@ -7,12 +7,12 @@ import {
     UnionMemberRepository
 } from "../repositories";
 import { CoreActions } from "./CoreActions";
-import { buildCoreEmployeeActions } from "./employees";
-import { buildCorePaymentMethodActions } from "./paymentMethod";
-import { buildCoreSalesReceiptActions } from "./salesReceipts";
-import { buildCoreServiceChargesActions } from "./serviceCharges";
-import { buildCoreTimeCardActions } from "./timeCards";
-import { buildCoreUnionActions } from "./union";
+import { makeCoreEmployeeActions } from "./employees";
+import { makeCorePaymentMethodActions } from "./paymentMethod";
+import { makeCoreSalesReceiptActions } from "./salesReceipts";
+import { makeCoreServiceChargesActions } from "./serviceCharges";
+import { makeCoreTimeCardActions } from "./timeCards";
+import { makeCoreUnionActions } from "./union";
 
 export { CoreActions } from "./CoreActions";
 
@@ -25,7 +25,7 @@ export interface CoreActionsDependencies {
     paymentMethodRepository: PaymentMethodRepository;
 }
 
-export function buildCoreActions({
+export function makeCoreActions({
     employeeRepository,
     timeCardRepository,
     serviceChargeRepository,
@@ -34,11 +34,11 @@ export function buildCoreActions({
     paymentMethodRepository
 }: CoreActionsDependencies): CoreActions {
     return {
-        ...buildCoreEmployeeActions({ employeeRepository }),
-        ...buildCorePaymentMethodActions({ paymentMethodRepository }),
-        ...buildCoreSalesReceiptActions({ employeeRepository, salesReceiptRepository }),
-        ...buildCoreServiceChargesActions({ unionMemberRepository, serviceChargeRepository }),
-        ...buildCoreTimeCardActions({ employeeRepository, timeCardRepository }),
-        ...buildCoreUnionActions({ employeeRepository, unionMemberRepository })
+        ...makeCoreEmployeeActions({ employeeRepository }),
+        ...makeCorePaymentMethodActions({ paymentMethodRepository }),
+        ...makeCoreSalesReceiptActions({ employeeRepository, salesReceiptRepository }),
+        ...makeCoreServiceChargesActions({ unionMemberRepository, serviceChargeRepository }),
+        ...makeCoreTimeCardActions({ employeeRepository, timeCardRepository }),
+        ...makeCoreUnionActions({ employeeRepository, unionMemberRepository })
     };
 }

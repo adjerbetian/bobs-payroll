@@ -4,7 +4,7 @@ import { Transactions } from "../processTransaction";
 
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
-export function buildChangeEmployeeTransaction(actions: CoreActions): Transactions["changeEmployee"] {
+export function makeChangeEmployeeTransaction(actions: CoreActions): Transactions["changeEmployee"] {
     return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
         const employeeId = parseInt(id);
 

@@ -1,3 +1,3 @@
-export { buildDeleteEmployeeTransaction } from "./deleteEmployee";
-export { buildAddEmployeeTransaction } from "./addEmployee";
-export { buildChangeEmployeeTransaction } from "./changeEmployee";
+export { makeDeleteEmployeeTransaction } from "./deleteEmployee";
+export { makeAddEmployeeTransaction } from "./addEmployee";
+export { makeChangeEmployeeTransaction } from "./changeEmployee";

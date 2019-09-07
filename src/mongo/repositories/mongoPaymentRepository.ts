@@ -5,7 +5,7 @@ import { MongoDbAdapter } from "../mongoDbAdapter";
 
 const NEVER = isoDate(moment(0));
 
-export function buildMongoPaymentRepository(db: MongoDbAdapter<Payment>): PaymentDependencies["paymentRepository"] {
+export function makeMongoPaymentRepository(db: MongoDbAdapter<Payment>): PaymentDependencies["paymentRepository"] {
     return {
         async fetchLastOfEmployee(employeeId: number): Promise<Payment> {
             return db.fetchLast({ employeeId });

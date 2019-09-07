@@ -8,15 +8,15 @@ import {
 } from "@test/unit";
 import { CoreActions } from "../../../core";
 import { TransactionFormatError } from "../../errors";
-import { buildAddEmployeeTransaction } from "./addEmployee";
+import { makeAddEmployeeTransaction } from "./addEmployee";
 
 describe("addEmployee", () => {
     let stubbedActions: Stub<CoreActions>;
-    let addEmployee: ReturnType<typeof buildAddEmployeeTransaction>;
+    let addEmployee: ReturnType<typeof makeAddEmployeeTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();
-        addEmployee = buildAddEmployeeTransaction(stubbedActions);
+        addEmployee = makeAddEmployeeTransaction(stubbedActions);
 
         stubbedActions.createEmployee.resolves();
     });

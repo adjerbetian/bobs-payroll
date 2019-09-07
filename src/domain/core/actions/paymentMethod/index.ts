@@ -1,16 +1,16 @@
 import { PaymentMethodRepository } from "../../repositories";
 import { CorePaymentMethodActions } from "../CoreActions";
-import { buildCreatePaymentMethod } from "./createPaymentMethod";
-import { buildFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
+import { makeCreatePaymentMethod } from "./createPaymentMethod";
+import { makeFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
 
 interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;
 }
 
-export function buildCorePaymentMethodActions({ paymentMethodRepository }: Dependencies): CorePaymentMethodActions {
+export function makeCorePaymentMethodActions({ paymentMethodRepository }: Dependencies): CorePaymentMethodActions {
     return {
-        createPaymentMethod: buildCreatePaymentMethod({ paymentMethodRepository }),
-        fetchEmployeePaymentMethod: buildFetchEmployeePaymentMethod({ paymentMethodRepository })
+        createPaymentMethod: makeCreatePaymentMethod({ paymentMethodRepository }),
+        fetchEmployeePaymentMethod: makeFetchEmployeePaymentMethod({ paymentMethodRepository })
     };
 }
 export { CorePaymentMethodActions } from "../CoreActions";

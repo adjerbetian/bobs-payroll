@@ -1,7 +1,7 @@
 import { CoreDependencies, PaymentMethod } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export function buildMongoPaymentMethodRepository(
+export function makeMongoPaymentMethodRepository(
     db: MongoDbAdapter<PaymentMethod>
 ): CoreDependencies["paymentMethodRepository"] {
     return {

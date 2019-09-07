@@ -2,17 +2,17 @@ import { expect, generateHourlyEmployee, generateSalariedEmployee, generateTimeC
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, TimeCardRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedTimeCardRepository } from "../../test";
-import { buildCreateTimeCard } from "./createTimeCard";
+import { makeCreateTimeCard } from "./createTimeCard";
 
 describe("action createTimeCard", () => {
     let stubbedTimeCardRepository: Stub<TimeCardRepository>;
     let stubbedEmployeeRepository: Stub<EmployeeRepository>;
-    let createTimeCard: ReturnType<typeof buildCreateTimeCard>;
+    let createTimeCard: ReturnType<typeof makeCreateTimeCard>;
 
     beforeEach(() => {
         stubbedTimeCardRepository = buildStubbedTimeCardRepository();
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();
-        createTimeCard = buildCreateTimeCard({
+        createTimeCard = makeCreateTimeCard({
             employeeRepository: stubbedEmployeeRepository,
             timeCardRepository: stubbedTimeCardRepository
         });

@@ -6,7 +6,7 @@ interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildFetchAllCommissionedEmployees({
+export function makeFetchAllCommissionedEmployees({
     employeeRepository
 }: Dependencies): CoreEmployeeActions["fetchAllCommissionedEmployees"] {
     return async function(): Promise<CommissionedEmployee[]> {

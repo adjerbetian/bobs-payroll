@@ -6,7 +6,7 @@ interface Dependencies {
     salesReceiptRepository: SalesReceiptRepository;
 }
 
-export function buildFetchAllEmployeeSalesReceipts({
+export function makeFetchAllEmployeeSalesReceipts({
     salesReceiptRepository
 }: Dependencies): CoreSalesReceiptActions["fetchAllEmployeeSalesReceiptsSince"] {
     return async function(employeeId: number, date: string): Promise<SalesReceipt[]> {

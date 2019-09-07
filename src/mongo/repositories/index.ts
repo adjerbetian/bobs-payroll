@@ -1,7 +1,7 @@
-export { buildMongoEmployeeRepository } from "./mongoEmployeeRepository";
-export { buildMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
-export { buildMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
-export { buildMongoServiceChargeRepository } from "./mongoServiceChargeRepository";
-export { buildMongoTimeCardRepository } from "./mongoTimeCardRepository";
-export { buildMongoUnionMemberRepository } from "./mongoUnionMemberRepository";
-export { buildMongoPaymentRepository } from "./mongoPaymentRepository";
+export { makeMongoEmployeeRepository } from "./mongoEmployeeRepository";
+export { makeMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
+export { makeMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
+export { makeMongoServiceChargeRepository } from "./mongoServiceChargeRepository";
+export { makeMongoTimeCardRepository } from "./mongoTimeCardRepository";
+export { makeMongoUnionMemberRepository } from "./mongoUnionMemberRepository";
+export { makeMongoPaymentRepository } from "./mongoPaymentRepository";

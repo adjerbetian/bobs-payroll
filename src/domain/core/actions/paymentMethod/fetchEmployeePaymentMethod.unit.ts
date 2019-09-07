@@ -2,15 +2,15 @@ import { expect, generateHoldPaymentMethod, generateIndex, Stub } from "@test/un
 import { NotFoundError } from "../../errors";
 import { PaymentMethodRepository } from "../../repositories";
 import { buildStubbedPaymentMethodRepository } from "../../test";
-import { buildFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
+import { makeFetchEmployeePaymentMethod } from "./fetchEmployeePaymentMethod";
 
 describe("action fetchEmployeePaymentMethod", () => {
     let stubbedPaymentMethodRepository: Stub<PaymentMethodRepository>;
-    let fetchEmployeePaymentMethod: ReturnType<typeof buildFetchEmployeePaymentMethod>;
+    let fetchEmployeePaymentMethod: ReturnType<typeof makeFetchEmployeePaymentMethod>;
 
     beforeEach(() => {
         stubbedPaymentMethodRepository = buildStubbedPaymentMethodRepository();
-        fetchEmployeePaymentMethod = buildFetchEmployeePaymentMethod({
+        fetchEmployeePaymentMethod = makeFetchEmployeePaymentMethod({
             paymentMethodRepository: stubbedPaymentMethodRepository
         });
     });

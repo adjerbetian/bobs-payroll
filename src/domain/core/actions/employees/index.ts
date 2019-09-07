@@ -1,24 +1,24 @@
 import { EmployeeRepository } from "../../repositories";
 import { CoreEmployeeActions } from "../CoreActions";
-import { buildCreateEmployee } from "./createEmployee";
-import { buildDeleteEmployee } from "./deleteEmployee";
-import { buildFetchAllCommissionedEmployees } from "./fetchAllCommissionedEmployees";
-import { buildFetchAllHourlyEmployees } from "./fetchAllHourlyEmployees";
-import { buildFetchAllSalariedEmployees } from "./fetchAllSalariedEmployees";
-import { buildUpdateEmployee } from "./updateEmployee";
+import { makeCreateEmployee } from "./createEmployee";
+import { makeDeleteEmployee } from "./deleteEmployee";
+import { makeFetchAllCommissionedEmployees } from "./fetchAllCommissionedEmployees";
+import { makeFetchAllHourlyEmployees } from "./fetchAllHourlyEmployees";
+import { makeFetchAllSalariedEmployees } from "./fetchAllSalariedEmployees";
+import { makeUpdateEmployee } from "./updateEmployee";
 
 interface Dependencies {
     employeeRepository: EmployeeRepository;
 }
 
-export function buildCoreEmployeeActions({ employeeRepository }: Dependencies): CoreEmployeeActions {
+export function makeCoreEmployeeActions({ employeeRepository }: Dependencies): CoreEmployeeActions {
     return {
-        createEmployee: buildCreateEmployee({ employeeRepository }),
-        deleteEmployee: buildDeleteEmployee({ employeeRepository }),
-        updateEmployee: buildUpdateEmployee({ employeeRepository }),
-        fetchAllHourlyEmployees: buildFetchAllHourlyEmployees({ employeeRepository }),
-        fetchAllSalariedEmployees: buildFetchAllSalariedEmployees({ employeeRepository }),
-        fetchAllCommissionedEmployees: buildFetchAllCommissionedEmployees({ employeeRepository })
+        createEmployee: makeCreateEmployee({ employeeRepository }),
+        deleteEmployee: makeDeleteEmployee({ employeeRepository }),
+        updateEmployee: makeUpdateEmployee({ employeeRepository }),
+        fetchAllHourlyEmployees: makeFetchAllHourlyEmployees({ employeeRepository }),
+        fetchAllSalariedEmployees: makeFetchAllSalariedEmployees({ employeeRepository }),
+        fetchAllCommissionedEmployees: makeFetchAllCommissionedEmployees({ employeeRepository })
     };
 }
 export { CoreEmployeeActions } from "../CoreActions";

@@ -7,7 +7,7 @@ interface Dependencies {
     paymentMethodRepository: PaymentMethodRepository;
 }
 
-export function buildFetchEmployeePaymentMethod({
+export function makeFetchEmployeePaymentMethod({
     paymentMethodRepository
 }: Dependencies): CorePaymentMethodActions["fetchEmployeePaymentMethod"] {
     return async function(employeeId: number): Promise<PaymentMethod> {

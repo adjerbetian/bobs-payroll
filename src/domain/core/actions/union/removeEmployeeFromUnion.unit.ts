@@ -1,15 +1,15 @@
 import { expect, generateIndex, Stub } from "@test/unit";
 import { UnionMemberRepository } from "../../repositories";
 import { buildStubbedUnionMemberRepository } from "../../test";
-import { buildRemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
+import { makeRemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
 
 describe("action removeEmployeeFromUnion", () => {
     let stubbedUnionMemberRepository: Stub<UnionMemberRepository>;
-    let removeEmployeeFromUnion: ReturnType<typeof buildRemoveEmployeeFromUnion>;
+    let removeEmployeeFromUnion: ReturnType<typeof makeRemoveEmployeeFromUnion>;
 
     beforeEach(() => {
         stubbedUnionMemberRepository = buildStubbedUnionMemberRepository();
-        removeEmployeeFromUnion = buildRemoveEmployeeFromUnion({
+        removeEmployeeFromUnion = makeRemoveEmployeeFromUnion({
             unionMemberRepository: stubbedUnionMemberRepository
         });
     });

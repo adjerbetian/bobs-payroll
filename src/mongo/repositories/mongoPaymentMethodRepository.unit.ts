@@ -2,15 +2,15 @@ import { expect, generateDirectPaymentMethod, generateIndex, Stub } from "@test/
 import { PaymentMethod } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
-import { buildMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
+import { makeMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
 
 describe("mongoPaymentMethodRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<PaymentMethod>>;
-    let repository: ReturnType<typeof buildMongoPaymentMethodRepository>;
+    let repository: ReturnType<typeof makeMongoPaymentMethodRepository>;
 
     beforeEach(() => {
         stubbedDb = buildStubbedMongoDbAdapter();
-        repository = buildMongoPaymentMethodRepository(stubbedDb);
+        repository = makeMongoPaymentMethodRepository(stubbedDb);
     });
 
     describe("fetchByEmployeeId", () => {

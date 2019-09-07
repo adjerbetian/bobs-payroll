@@ -1,1 +1,1 @@
-export { buildPostTimeCardTransaction } from "./postTimeCard";
+export { makePostTimeCardTransaction } from "./postTimeCard";

@@ -7,7 +7,7 @@ interface Dependencies {
     coreActions: CoreActions;
 }
 
-export function buildComputeHourlyEmployeePaymentDueAmount({
+export function makeComputeHourlyEmployeePaymentDueAmount({
     paymentRepository,
     coreActions
 }: Dependencies): ComputeHourlyEmployeePaymentDueAmount {

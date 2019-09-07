@@ -1,1 +1,1 @@
-export { buildCreatePaymentForEmployee, CreatePaymentForEmployee } from "./createPaymentForEmployee";
+export { makeCreatePaymentForEmployee, CreatePaymentForEmployee } from "./createPaymentForEmployee";

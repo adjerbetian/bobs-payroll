@@ -1,7 +1,7 @@
 import { CoreDependencies, ServiceCharge } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 
-export function buildMongoServiceChargeRepository(
+export function makeMongoServiceChargeRepository(
     db: MongoDbAdapter<ServiceCharge>
 ): CoreDependencies["serviceChargeRepository"] {
     return {

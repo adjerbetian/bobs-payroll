@@ -2,15 +2,15 @@ import { buildStubbedCoreActions, expect, generateTimeCard, Stub } from "@test/u
 import * as moment from "moment";
 import { CoreActions, TimeCard } from "../../../core";
 import { TransactionFormatError } from "../../errors";
-import { buildPostTimeCardTransaction } from "./postTimeCard";
+import { makePostTimeCardTransaction } from "./postTimeCard";
 
 describe("postTimeCard", () => {
     let stubbedActions: Stub<CoreActions>;
-    let postTimeCard: ReturnType<typeof buildPostTimeCardTransaction>;
+    let postTimeCard: ReturnType<typeof makePostTimeCardTransaction>;
 
     beforeEach(() => {
         stubbedActions = buildStubbedCoreActions();
-        postTimeCard = buildPostTimeCardTransaction(stubbedActions);
+        postTimeCard = makePostTimeCardTransaction(stubbedActions);
     });
 
     it("should create a time card for the employee", async () => {

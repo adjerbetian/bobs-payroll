@@ -8,7 +8,7 @@ interface Dependencies {
     timeCardRepository: TimeCardRepository;
 }
 
-export function buildCreateTimeCard({
+export function makeCreateTimeCard({
     employeeRepository,
     timeCardRepository
 }: Dependencies): CoreTimeCardActions["createTimeCard"] {
