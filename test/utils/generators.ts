@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 import * as moment from "moment";
 import {
+    buildUnionMember,
     CommissionedEmployee,
     DirectPaymentMethod,
     Employee,
@@ -15,7 +16,8 @@ import {
     SalesReceipt,
     ServiceCharge,
     TimeCard,
-    UnionMember
+    UnionMember,
+    UnionMemberDBModel
 } from "../../src";
 
 export const generateIndex = (() => {
@@ -131,13 +133,13 @@ export function generateMailPaymentMethod(args: Partial<MailPaymentMethod> = {})
     };
 }
 
-export function generateUnionMember(args: Partial<UnionMember> = {}): UnionMember {
-    return {
+export function generateUnionMember(args: Partial<UnionMemberDBModel> = {}): UnionMember {
+    return buildUnionMember({
         employeeId: generateIndex(),
         memberId: `member-${generateIndex()}`,
         rate: generateFloatBetween(0, 0.1),
         ...args
-    };
+    });
 }
 
 export function generatePayment(args: Partial<Payment> = {}): Payment {

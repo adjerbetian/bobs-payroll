@@ -178,7 +178,7 @@ describe("changeEmployee", () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
                 const expectedUnionMember = generateUnionMember({ memberId, employeeId, rate: 10.5 });
-                expect(stubbedActions.createUnionMember).to.have.been.calledOnceWith(expectedUnionMember);
+                expect(stubbedActions.createUnionMember).to.have.been.calledOnceWithEntity(expectedUnionMember);
             });
             it("should throw a TransactionFormatError when the dues rate is not specified", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues");

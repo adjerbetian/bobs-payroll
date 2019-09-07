@@ -13,18 +13,17 @@ export function makeCreateUnionMember({
     employeeRepository
 }: Dependencies): CoreUnionActions["createUnionMember"] {
     return async function(unionMember: UnionMember): Promise<void> {
-        await assertEmployeeExists(unionMember.employeeId);
-        await assertMemberIdIsNotTaken(unionMember);
-
+        await assertEmployeeExists();
+        await assertMemberIdIsNotTaken();
         await unionMemberRepository.insert(unionMember);
+
+        async function assertEmployeeExists(): Promise<void> {
+            await employeeRepository.fetchById(unionMember.getEmployeeId());
+        }
+
+        async function assertMemberIdIsNotTaken(): Promise<void> {
+            const memberIdExists = await unionMemberRepository.doesMemberIdExist(unionMember.getMemberId());
+            if (memberIdExists) throw new UnionMemberIdAlreadyUsedError(unionMember.getMemberId());
+        }
     };
-
-    async function assertEmployeeExists(employeeId: number): Promise<void> {
-        await employeeRepository.fetchById(employeeId);
-    }
-
-    async function assertMemberIdIsNotTaken(unionMember: UnionMember): Promise<void> {
-        const memberIdExists = await unionMemberRepository.exists({ memberId: unionMember.memberId });
-        if (memberIdExists) throw new UnionMemberIdAlreadyUsedError(unionMember.memberId);
-    }
 }

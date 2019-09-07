@@ -13,7 +13,8 @@ import {
     SalariedEmployee,
     SalesReceipt,
     TimeCard,
-    UnionMember
+    UnionMember,
+    UnionMemberDBModel
 } from "../../src";
 import {
     generateCommissionedEmployee,
@@ -59,9 +60,13 @@ export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod>
     return paymentMethod;
 }
 
-export async function seedUnionMember(args: Partial<UnionMember> = {}): Promise<UnionMember> {
+export async function seedUnionMember(args: Partial<UnionMemberDBModel> = {}): Promise<UnionMember> {
     const unionMember = generateUnionMember(args);
-    await dbUnionMembers.insert(unionMember);
+    await dbUnionMembers.insert({
+        rate: unionMember.getRate(),
+        memberId: unionMember.getMemberId(),
+        employeeId: unionMember.getEmployeeId()
+    });
     return unionMember;
 }
 

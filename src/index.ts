@@ -8,6 +8,7 @@ export {
     dbPaymentMethods,
     dbTimeCards,
     dbEmployees,
+    UnionMemberDBModel,
     initConnection,
     closeConnection,
     cleanCollections

@@ -206,7 +206,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            const unionDues = employee.work.monthlySalary * unionMember.rate * nFridaysInMonth(firstDayOfMonth);
+            const unionDues = employee.work.monthlySalary * unionMember.getRate() * nFridaysInMonth(firstDayOfMonth);
             expect(payment.amount).to.equal(employee.work.monthlySalary - unionDues);
         });
         it.skip("should deduce the weekly dues rate from the hourly payment", async () => {
@@ -218,7 +218,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
             const fullPaymentAmount = employee.work.hourlyRate * timeCard.hours;
-            const unionDues = fullPaymentAmount * unionMember.rate;
+            const unionDues = fullPaymentAmount * unionMember.getRate();
             expect(payment.amount).to.equal(fullPaymentAmount - unionDues);
         });
         it.skip("should deduce the service charges", async () => {});

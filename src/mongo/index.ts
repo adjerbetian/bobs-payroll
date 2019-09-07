@@ -37,3 +37,5 @@ export {
     dbServiceCharges,
     dbUnionMembers
 } from "./db";
+
+export * from "./DBModels";

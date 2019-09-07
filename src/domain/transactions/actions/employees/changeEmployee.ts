@@ -1,4 +1,4 @@
-import { CoreActions, EmployeeType, PaymentMethodType } from "../../../core";
+import { buildUnionMember, CoreActions, EmployeeType, PaymentMethodType } from "../../../core";
 import { buildTransactionValidator } from "../utils";
 import { Transactions } from "../processTransaction";
 
@@ -106,11 +106,12 @@ export function makeChangeEmployeeTransaction(actions: CoreActions): Transaction
             const [memberId, , rate] = params;
             transactionValidator.assertIsNotEmpty(rate);
 
-            return actions.createUnionMember({
+            const unionMember = buildUnionMember({
                 employeeId,
                 memberId,
                 rate: parseFloat(rate)
             });
+            return actions.createUnionMember(unionMember);
         }
 
         async function removeEmployeeFromUnion(): Promise<void> {

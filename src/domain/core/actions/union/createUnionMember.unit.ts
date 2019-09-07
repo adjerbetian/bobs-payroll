@@ -25,8 +25,8 @@ describe("action createUnionMember", () => {
         stubbedUnionMemberRepository.insert.resolves();
 
         unionMember = generateUnionMember();
-        stubbedEmployeeRepository.fetchById.withArgs(unionMember.employeeId).resolves(generateHourlyEmployee());
-        stubbedUnionMemberRepository.exists.resolves(false);
+        stubbedEmployeeRepository.fetchById.withArgs(unionMember.getEmployeeId()).resolves(generateHourlyEmployee());
+        stubbedUnionMemberRepository.doesMemberIdExist.resolves(false);
     });
 
     it("should create a union member", async () => {
@@ -35,17 +35,16 @@ describe("action createUnionMember", () => {
         expect(stubbedUnionMemberRepository.insert).to.have.been.calledOnceWith(unionMember);
     });
     it("should not create a union member if the employee does not exist", async () => {
-        stubbedEmployeeRepository.fetchById.withArgs(unionMember.employeeId).rejects(new NotFoundError("not found"));
+        stubbedEmployeeRepository.fetchById
+            .withArgs(unionMember.getEmployeeId())
+            .rejects(new NotFoundError("not found"));
 
         const promise = createUnionMember(unionMember);
 
         await expect(promise).to.be.rejectedWith(NotFoundError);
     });
     it("should throw a UnionMemberIdAlreadyUsedError if the member id already exists", async () => {
-        stubbedUnionMemberRepository.exists
-            .withArgs({ memberId: unionMember.memberId, employeeId: unionMember.employeeId })
-            .resolves(false);
-        stubbedUnionMemberRepository.exists.withArgs({ memberId: unionMember.memberId }).resolves(true);
+        stubbedUnionMemberRepository.doesMemberIdExist.withArgs(unionMember.getMemberId()).resolves(true);
 
         const promise = createUnionMember(unionMember);
 

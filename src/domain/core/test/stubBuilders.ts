@@ -57,7 +57,7 @@ export function buildStubbedUnionMemberRepository(): Stub<UnionMemberRepository>
     return buildStubFor({
         fetchByMemberId: true,
         fetchByEmployeeId: true,
-        exists: true,
+        doesMemberIdExist: true,
         insert: true,
         deleteByEmployeeId: true
     });

@@ -17,7 +17,7 @@ import {
     NotFoundError,
     PaymentMethod,
     PaymentMethodType,
-    UnionMember
+    UnionMemberDBModel
 } from "../src";
 
 describe("Use Case 6: Changing Employee Details", () => {
@@ -176,7 +176,9 @@ describe("Use Case 6: Changing Employee Details", () => {
             it("should do nothing when the member id is already used", async () => {
                 const alreadyUsedUnionMember = await seedUnionMember();
 
-                await executePayrollCommand(`ChgEmp ${employee.id} Member ${alreadyUsedUnionMember.memberId} Dues 20`);
+                await executePayrollCommand(
+                    `ChgEmp ${employee.id} Member ${alreadyUsedUnionMember.getMemberId()} Dues 20`
+                );
 
                 const promise = fetchUnionMemberByEmployeeId(employee.id);
                 await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -201,6 +203,6 @@ async function fetchEmployeeById(employeeId: number): Promise<Employee> {
 async function fetchPaymentMethodByEmployeeId(employeeId: number): Promise<PaymentMethod> {
     return dbPaymentMethods.fetch({ employeeId });
 }
-async function fetchUnionMemberByEmployeeId(employeeId: number): Promise<UnionMember> {
-    return dbUnionMembers.fetch({ employeeId });
+async function fetchUnionMemberByEmployeeId(employeeId: number): Promise<UnionMemberDBModel> {
+    return await dbUnionMembers.fetch({ employeeId });
 }

@@ -4,7 +4,7 @@ import { dbServiceCharges, ServiceCharge } from "../src";
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
         const unionMember = await seedUnionMember();
-        const serviceCharge = generateServiceCharge({ memberId: unionMember.memberId });
+        const serviceCharge = generateServiceCharge({ memberId: unionMember.getMemberId() });
 
         await executePostServiceCharge(serviceCharge);
 
@@ -19,7 +19,7 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
     });
     it("should do nothing when the transaction is not of the right format", async () => {
         const unionMember = await seedUnionMember();
-        const serviceCharge = generateServiceCharge({ memberId: unionMember.memberId });
+        const serviceCharge = generateServiceCharge({ memberId: unionMember.getMemberId() });
 
         await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId}`);
 
