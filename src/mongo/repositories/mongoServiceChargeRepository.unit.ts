@@ -1,6 +1,6 @@
 import { expect, generateIndex, generateServiceCharge, Stub } from "@test/unit";
 import { ServiceCharge } from "../../domain";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 import { buildStubbedMongoDbAdapter } from "../test";
 import { makeMongoServiceChargeRepository } from "./mongoServiceChargeRepository";
 

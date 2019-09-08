@@ -38,10 +38,8 @@ export function makeChangeEmployeeTransaction(actions: CoreActions): Transaction
             transactionValidator.assertIsNotEmpty(hourlyRate);
 
             return actions.updateEmployee(employeeId, {
-                work: {
-                    type: EmployeeType.HOURLY,
-                    hourlyRate: parseFloat(hourlyRate)
-                }
+                type: EmployeeType.HOURLY,
+                hourlyRate: parseFloat(hourlyRate)
             });
         }
 
@@ -50,10 +48,8 @@ export function makeChangeEmployeeTransaction(actions: CoreActions): Transaction
             transactionValidator.assertIsNotEmpty(monthlySalary);
 
             return actions.updateEmployee(employeeId, {
-                work: {
-                    type: EmployeeType.SALARIED,
-                    monthlySalary: parseFloat(monthlySalary)
-                }
+                type: EmployeeType.SALARIED,
+                salary: parseFloat(monthlySalary)
             });
         }
 
@@ -63,11 +59,9 @@ export function makeChangeEmployeeTransaction(actions: CoreActions): Transaction
             transactionValidator.assertIsNotEmpty(commissionRate);
 
             return actions.updateEmployee(employeeId, {
-                work: {
-                    type: EmployeeType.COMMISSIONED,
-                    monthlySalary: parseFloat(monthlySalary),
-                    commissionRate: parseFloat(commissionRate)
-                }
+                type: EmployeeType.COMMISSIONED,
+                salary: parseFloat(monthlySalary),
+                commissionRate: parseFloat(commissionRate)
             });
         }
 

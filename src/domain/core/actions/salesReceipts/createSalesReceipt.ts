@@ -19,7 +19,7 @@ export function makeCreateSalesReceipt({
 
     async function assertEmployeeIsCommissioned(employeeId: number): Promise<void> {
         const employee = await employeeRepository.fetchById(employeeId);
-        if (employee.work.type !== EmployeeType.COMMISSIONED) {
+        if (!employee.hasType(EmployeeType.COMMISSIONED)) {
             throw new EmployeeTypeError(employee, EmployeeType.COMMISSIONED);
         }
     }

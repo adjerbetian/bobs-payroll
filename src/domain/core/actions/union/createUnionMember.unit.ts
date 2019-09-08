@@ -1,4 +1,4 @@
-import { entityGenerators, expect, generateHourlyEmployee, Stub } from "@test/unit";
+import { entityGenerators, expect, Stub } from "@test/unit";
 import { UnionMember } from "../../entities";
 import { NotFoundError, UnionMemberIdAlreadyUsedError } from "../../errors";
 import { EmployeeRepository, UnionMemberRepository } from "../../repositories";
@@ -25,7 +25,9 @@ describe("action createUnionMember", () => {
         stubbedUnionMemberRepository.insert.resolves();
 
         unionMember = entityGenerators.generateUnionMember();
-        stubbedEmployeeRepository.fetchById.withArgs(unionMember.getEmployeeId()).resolves(generateHourlyEmployee());
+        stubbedEmployeeRepository.fetchById
+            .withArgs(unionMember.getEmployeeId())
+            .resolves(entityGenerators.generateHourlyEmployee());
         stubbedUnionMemberRepository.doesMemberIdExist.resolves(false);
     });
 

@@ -1,20 +1,20 @@
 import { buildTimeCard, CoreDependencies, TimeCard } from "../../domain";
 import { TimeCardDBModel } from "../DBModels";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 
 export function makeMongoTimeCardRepository(
     db: MongoDbAdapter<TimeCardDBModel>
 ): CoreDependencies["timeCardRepository"] {
     return {
-        async fetchAllOfEmployee(employeeId: number): Promise<TimeCard[]> {
+        async fetchAllOfEmployee(employeeId) {
             const dbModels = await db.fetchAll({ employeeId });
             return toEntities(dbModels);
         },
-        async fetchAllOfEmployeeSince(employeeId: number, date: string): Promise<TimeCard[]> {
+        async fetchAllOfEmployeeSince(employeeId, date) {
             const dbModels = await db.fetchAll({ employeeId, date: { $gt: date } });
             return toEntities(dbModels);
         },
-        async insert(timeCard: TimeCard) {
+        async insert(timeCard) {
             await db.insert(toDBModel(timeCard));
         }
     };

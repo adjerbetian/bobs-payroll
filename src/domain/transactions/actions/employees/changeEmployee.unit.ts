@@ -22,7 +22,6 @@ describe("changeEmployee", () => {
         changeEmployee = makeChangeEmployeeTransaction(stubbedActions);
 
         stubbedActions.updateEmployee.resolves();
-
         employeeId = generateIndex();
     });
 
@@ -62,10 +61,8 @@ describe("changeEmployee", () => {
                 await changeEmployee(`${employeeId}`, "Hourly", "10.5");
 
                 expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
-                    work: {
-                        type: EmployeeType.HOURLY,
-                        hourlyRate: 10.5
-                    }
+                    type: EmployeeType.HOURLY,
+                    hourlyRate: 10.5
                 });
             });
             it("should throw an error if the rate is not defined", async () => {
@@ -79,10 +76,8 @@ describe("changeEmployee", () => {
                 await changeEmployee(`${employeeId}`, "Salaried", "10.5");
 
                 expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
-                    work: {
-                        type: EmployeeType.SALARIED,
-                        monthlySalary: 10.5
-                    }
+                    type: EmployeeType.SALARIED,
+                    salary: 10.5
                 });
             });
             it("should throw an error if the salary is not defined", async () => {
@@ -96,11 +91,9 @@ describe("changeEmployee", () => {
                 await changeEmployee(`${employeeId}`, "Commissioned", "10", "30");
 
                 expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
-                    work: {
-                        type: EmployeeType.COMMISSIONED,
-                        monthlySalary: 10,
-                        commissionRate: 30
-                    }
+                    type: EmployeeType.COMMISSIONED,
+                    salary: 10,
+                    commissionRate: 30
                 });
             });
             it("should throw an error if the salary is not defined", async () => {

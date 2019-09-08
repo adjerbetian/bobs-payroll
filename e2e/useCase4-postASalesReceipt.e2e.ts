@@ -1,15 +1,9 @@
-import {
-    executePayrollCommand,
-    expect,
-    generateSalesReceipt,
-    seedCommissionedEmployee,
-    seedSalariedEmployee
-} from "@test/e2e";
+import { dbModelSeeders, executePayrollCommand, expect, generateSalesReceipt } from "@test/e2e";
 import { SalesReceipt, dbSalesReceipts } from "../src";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {
-        const employee = await seedCommissionedEmployee();
+        const employee = await dbModelSeeders.seedCommissionedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePostSalesReceipt(salesReceipt);
@@ -17,7 +11,7 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         await expectEmployeeToHaveSalesReceipt(employee.id, salesReceipt);
     });
     it("should do nothing when the employee is not commissioned", async () => {
-        const employee = await seedSalariedEmployee();
+        const employee = await dbModelSeeders.seedSalariedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePostSalesReceipt(salesReceipt);
@@ -32,7 +26,7 @@ describe("Use Case 4: Post a Sales Receipt", () => {
         await expectEmployeeToHaveNoSalesReceipt(salesReceipt.employeeId);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = await seedCommissionedEmployee();
+        const employee = await dbModelSeeders.seedCommissionedEmployee();
         const salesReceipt = generateSalesReceipt({ employeeId: employee.id });
 
         await executePayrollCommand(`TimeCard ${salesReceipt.employeeId} ${salesReceipt.amount} ${salesReceipt.date}`);

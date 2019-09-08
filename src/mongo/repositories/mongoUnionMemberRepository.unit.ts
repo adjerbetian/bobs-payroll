@@ -1,6 +1,6 @@
 import { entityGenerators, expect, generateIndex, Stub } from "@test/unit";
 import { UnionMember } from "../../domain";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 import { buildStubbedMongoDbAdapter } from "../test";
 import { makeMongoUnionMemberRepository, toDBModel } from "./mongoUnionMemberRepository";
 

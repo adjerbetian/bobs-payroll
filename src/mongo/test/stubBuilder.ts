@@ -1,5 +1,5 @@
 import { Stub, buildStubFor } from "@test/unit";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 
 export function buildStubbedMongoDbAdapter<T>(): Stub<MongoDbAdapter<T>> {
     return buildStubFor({

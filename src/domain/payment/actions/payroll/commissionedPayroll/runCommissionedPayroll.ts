@@ -1,6 +1,6 @@
 import * as moment from "moment";
 import { isoDate } from "../../../../../utils";
-import { buildEmployeeEntity, CommissionedEmployee, CoreActions, SalesReceipt } from "../../../../core";
+import { CommissionedEmployee, CoreActions, SalesReceipt } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
 import { RunPayrollActions } from "../runPayrollDispatcher";
 
@@ -22,20 +22,19 @@ export function makeRunCommissionedPayroll({
 
     async function payEmployee(date: string, employee: CommissionedEmployee): Promise<void> {
         await createPaymentForEmployee({
-            employeeId: employee.id,
+            employeeId: employee.getId(),
             amount: await computePayAmount(),
             date
         });
 
         async function computePayAmount(): Promise<number> {
             const salesReceipts = await fetchEmployeeSalesReceiptOfTheMonth();
-            const employeeEntity = buildEmployeeEntity(employee);
-            return employeeEntity.computeCommissionedSalary(salesReceipts);
+            return employee.computeCommissionedSalary(salesReceipts);
         }
 
         async function fetchEmployeeSalesReceiptOfTheMonth(): Promise<SalesReceipt[]> {
             const beginningOfMonth = isoDate(moment(date).startOf("month"));
-            return coreActions.fetchAllEmployeeSalesReceiptsSince(employee.id, beginningOfMonth);
+            return coreActions.fetchAllEmployeeSalesReceiptsSince(employee.getId(), beginningOfMonth);
         }
     }
 }

@@ -1,11 +1,4 @@
-import {
-    buildStubbedCoreActions,
-    buildStubFor,
-    expect,
-    generateSalariedEmployee,
-    lastDayOfMonth,
-    Stub
-} from "@test/unit";
+import { buildStubbedCoreActions, buildStubFor, entityGenerators, expect, lastDayOfMonth, Stub } from "@test/unit";
 import { CoreActions } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
 import { makeRunSalariedPayroll } from "./runSalariedPayroll";
@@ -29,20 +22,20 @@ describe("action runSalariedPayroll", () => {
     });
 
     it("should insert the right payment the employee", async () => {
-        const employee = generateSalariedEmployee();
+        const employee = entityGenerators.generateSalariedEmployee();
         stubbedCoreActions.fetchAllSalariedEmployees.resolves([employee]);
 
         await runSalariedPayroll(lastDayOfMonth);
 
         expect(stubbedCreatePaymentForEmployee).to.have.been.calledOnceWith({
-            employeeId: employee.id,
+            employeeId: employee.getId(),
             date: lastDayOfMonth,
-            amount: employee.work.monthlySalary
+            amount: employee.getSalary()
         });
     });
 
     it("should insert payments for each employee", async () => {
-        const employees = [generateSalariedEmployee(), generateSalariedEmployee()];
+        const employees = [entityGenerators.generateSalariedEmployee(), entityGenerators.generateSalariedEmployee()];
         stubbedCoreActions.fetchAllSalariedEmployees.resolves(employees);
 
         await runSalariedPayroll(lastDayOfMonth);

@@ -1,4 +1,4 @@
-import { buildEmployeeEntity, CoreActions, HourlyEmployee, TimeCard } from "../../../../core";
+import { CoreActions, HourlyEmployee, TimeCard } from "../../../../core";
 import { PaymentRepository } from "../../../repositories";
 import { CreatePaymentForEmployee } from "../../payment";
 import { RunPayrollActions } from "../runPayrollDispatcher";
@@ -23,16 +23,14 @@ export function makeRunHourlyPayroll({
 
     async function payEmployee(date: string, employee: HourlyEmployee): Promise<void> {
         await createPaymentForEmployee({
-            employeeId: employee.id,
+            employeeId: employee.getId(),
             date: date,
             amount: await computePayAmount()
         });
 
         async function computePayAmount(): Promise<number> {
-            const dueTimeCards = await fetchEmployeeDueTimeCards(employee.id);
-            console.log(dueTimeCards.map(tc => tc.getHours()));
-            const entity = buildEmployeeEntity(employee);
-            return entity.computePayAmount(dueTimeCards);
+            const dueTimeCards = await fetchEmployeeDueTimeCards(employee.getId());
+            return employee.computePayAmount(dueTimeCards);
         }
 
         async function fetchEmployeeDueTimeCards(employeeId: number): Promise<TimeCard[]> {

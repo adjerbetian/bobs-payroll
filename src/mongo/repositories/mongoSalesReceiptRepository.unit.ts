@@ -1,6 +1,6 @@
 import { expect, generateIndex, generateSalesReceipt, monday, Stub } from "@test/unit";
 import { SalesReceipt } from "../../domain";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 import { buildStubbedMongoDbAdapter } from "../test";
 import { makeMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 

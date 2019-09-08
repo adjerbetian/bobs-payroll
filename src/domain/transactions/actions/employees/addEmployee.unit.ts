@@ -1,11 +1,4 @@
-import {
-    buildStubbedCoreActions,
-    expect,
-    generateCommissionedEmployee,
-    generateHourlyEmployee,
-    generateSalariedEmployee,
-    Stub
-} from "@test/unit";
+import { buildStubbedCoreActions, entityGenerators, expect, Stub } from "@test/unit";
 import { CoreActions } from "../../../core";
 import { TransactionFormatError } from "../../errors";
 import { makeAddEmployeeTransaction } from "./addEmployee";
@@ -22,54 +15,54 @@ describe("addEmployee", () => {
     });
 
     it("should insert an hourly employee", async () => {
-        const employee = generateHourlyEmployee();
+        const employee = entityGenerators.generateHourlyEmployee();
 
         await addEmployee(
-            `${employee.id}`,
-            `"${employee.name}"`,
-            `"${employee.address}"`,
+            `${employee.getId()}`,
+            `"${employee.getName()}"`,
+            `"${employee.getAddress()}"`,
             "H",
-            `${employee.work.hourlyRate}`
+            `${employee.getHourlyRate()}`
         );
 
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(employee);
+        expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
     });
     it("should insert a salaried employee", async () => {
-        const employee = generateSalariedEmployee();
+        const employee = entityGenerators.generateSalariedEmployee();
 
         await addEmployee(
-            `${employee.id}`,
-            `"${employee.name}"`,
-            `"${employee.address}"`,
+            `${employee.getId()}`,
+            `"${employee.getName()}"`,
+            `"${employee.getAddress()}"`,
             "S",
-            `${employee.work.monthlySalary}`
+            `${employee.getSalary()}`
         );
 
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(employee);
+        expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
     });
     it("should insert an salaried with commission employee", async () => {
-        const employee = generateCommissionedEmployee();
+        const employee = entityGenerators.generateCommissionedEmployee();
 
         await addEmployee(
-            `${employee.id}`,
-            `"${employee.name}"`,
-            `"${employee.address}"`,
+            `${employee.getId()}`,
+            `"${employee.getName()}"`,
+            `"${employee.getAddress()}"`,
             "C",
-            `${employee.work.monthlySalary}`,
-            `${employee.work.commissionRate}`
+            `${employee.getSalary()}`,
+            `${employee.getCommissionRate()}`
         );
 
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(employee);
+        expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
     });
     it("should throw when the transaction is malformed", async () => {
-        const employee = generateCommissionedEmployee();
+        const employee = entityGenerators.generateCommissionedEmployee();
 
         const promise = addEmployee(
-            `${employee.id}`,
-            `"${employee.name}"`,
-            `"${employee.address}"`,
+            `${employee.getId()}`,
+            `"${employee.getName()}"`,
+            `"${employee.getAddress()}"`,
             "C",
-            `${employee.work.monthlySalary}`
+            `${employee.getSalary()}`
         );
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "AddEmp");

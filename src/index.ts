@@ -10,6 +10,10 @@ export {
     dbEmployees,
     UnionMemberDBModel,
     TimeCardDBModel,
+    EmployeeDBModel,
+    HourlyEmployeeDBModel,
+    SalariedEmployeeDBModel,
+    CommissionedEmployeeDBModel,
     initConnection,
     closeConnection,
     cleanCollections

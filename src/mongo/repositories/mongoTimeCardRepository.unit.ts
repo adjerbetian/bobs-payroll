@@ -1,6 +1,6 @@
 import { entityGenerators, expect, generateIndex, monday, Stub } from "@test/unit";
 import { TimeCard } from "../../domain";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 import { buildStubbedMongoDbAdapter } from "../test";
 import { makeMongoTimeCardRepository, toDBModel } from "./mongoTimeCardRepository";
 

@@ -2,65 +2,15 @@ import { generateIndex } from "@test/generators";
 import * as _ from "lodash";
 import * as moment from "moment";
 import {
-    CommissionedEmployee,
     DirectPaymentMethod,
-    Employee,
-    EmployeeType,
     HoldPaymentMethod,
-    HourlyEmployee,
     isoDate,
     MailPaymentMethod,
     Payment,
     PaymentMethodType,
-    SalariedEmployee,
     SalesReceipt,
     ServiceCharge
 } from "../../src";
-
-export function generateHourlyEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
-    const hourlyRate = generateFloatBetween(0, 10);
-    return {
-        ...generateEmployee(),
-        work: {
-            type: EmployeeType.HOURLY,
-            hourlyRate
-        },
-        ...args
-    };
-}
-
-export function generateSalariedEmployee(args: Partial<SalariedEmployee> = {}): SalariedEmployee {
-    const monthlySalary = generateFloatBetween(2000, 5000);
-    return {
-        ...generateEmployee(),
-        work: {
-            type: EmployeeType.SALARIED,
-            monthlySalary
-        },
-        ...args
-    };
-}
-
-export function generateCommissionedEmployee(args: Partial<CommissionedEmployee> = {}): CommissionedEmployee {
-    return {
-        ...generateEmployee(),
-        work: {
-            type: EmployeeType.COMMISSIONED,
-            monthlySalary: generateFloatBetween(1000, 3000),
-            commissionRate: generateFloatBetween(0, 0.2)
-        },
-        ...args
-    };
-}
-
-function generateEmployee(): Omit<Employee, "work"> {
-    const index = generateIndex();
-    return {
-        id: index,
-        name: `name of employee ${index}`,
-        address: `address of employee ${index}`
-    };
-}
 
 export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesReceipt {
     const index = generateIndex();

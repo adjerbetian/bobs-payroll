@@ -1,16 +1,16 @@
 import * as moment from "moment";
 import { Payment, PaymentDependencies } from "../../domain";
 import { isoDate } from "../../utils";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 
 const NEVER = isoDate(moment(0));
 
 export function makeMongoPaymentRepository(db: MongoDbAdapter<Payment>): PaymentDependencies["paymentRepository"] {
     return {
-        async fetchLastOfEmployee(employeeId: number): Promise<Payment> {
+        async fetchLastOfEmployee(employeeId) {
             return db.fetchLast({ employeeId });
         },
-        async fetchEmployeeLastPaymentDate(employeeId: number): Promise<string> {
+        async fetchEmployeeLastPaymentDate(employeeId) {
             if (await db.exists({ employeeId })) {
                 const payment = await db.fetchLast({ employeeId });
                 return payment.date;
@@ -18,7 +18,7 @@ export function makeMongoPaymentRepository(db: MongoDbAdapter<Payment>): Payment
                 return NEVER;
             }
         },
-        async insert(payment: Payment): Promise<void> {
+        async insert(payment) {
             await db.insert(payment);
         }
     };

@@ -1,6 +1,6 @@
 import { expect, generateIndex, generatePayment, never, Stub } from "@test/unit";
 import { Payment } from "../../domain";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 import { buildStubbedMongoDbAdapter } from "../test";
 import { makeMongoPaymentRepository } from "./mongoPaymentRepository";
 

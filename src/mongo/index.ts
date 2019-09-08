@@ -6,7 +6,7 @@ import {
     dbServiceCharges,
     dbTimeCards,
     dbUnionMembers
-} from "./db";
+} from "./databases";
 import {
     makeMongoEmployeeRepository,
     makeMongoPaymentMethodRepository,
@@ -17,8 +17,8 @@ import {
     makeMongoUnionMemberRepository
 } from "./repositories";
 
-export { initConnection, closeConnection, cleanCollections } from "./db";
-export { MongoDbAdapter } from "./mongoDbAdapter";
+export * from "./databases";
+export * from "./DBModels";
 
 export const mongoEmployeeRepository = makeMongoEmployeeRepository(dbEmployees);
 export const mongoPaymentMethodRepository = makeMongoPaymentMethodRepository(dbPaymentMethods);
@@ -27,15 +27,3 @@ export const mongoServiceChargeRepository = makeMongoServiceChargeRepository(dbS
 export const mongoTimeCardRepository = makeMongoTimeCardRepository(dbTimeCards);
 export const mongoUnionMemberRepository = makeMongoUnionMemberRepository(dbUnionMembers);
 export const mongoPaymentRepository = makeMongoPaymentRepository(dbPayments);
-
-export {
-    dbEmployees,
-    dbTimeCards,
-    dbPaymentMethods,
-    dbPayments,
-    dbSalesReceipts,
-    dbServiceCharges,
-    dbUnionMembers
-} from "./db";
-
-export * from "./DBModels";

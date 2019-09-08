@@ -1,4 +1,4 @@
-import { expect, generateHourlyEmployee, Stub } from "@test/unit";
+import { entityGenerators, expect, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
 import { makeFetchAllHourlyEmployees } from "./fetchAllHourlyEmployees";
@@ -13,7 +13,7 @@ describe("action fetchAllHourlyEmployees", () => {
     });
 
     it("should return all the hourly employees", async () => {
-        const employees = [generateHourlyEmployee(), generateHourlyEmployee()];
+        const employees = [entityGenerators.generateHourlyEmployee(), entityGenerators.generateHourlyEmployee()];
         stubbedEmployeeRepository.fetchAllHourly.resolves(employees);
 
         const result = await fetchAllHourlyEmployees();

@@ -1,6 +1,6 @@
 import { expect, generateDirectPaymentMethod, generateIndex, Stub } from "@test/unit";
 import { PaymentMethod } from "../../domain";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 import { buildStubbedMongoDbAdapter } from "../test";
 import { makeMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
 

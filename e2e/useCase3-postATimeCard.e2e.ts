@@ -1,9 +1,9 @@
-import { dbModelGenerators, executePayrollCommand, expect, seedHourlyEmployee, seedSalariedEmployee } from "@test/e2e";
+import { dbModelGenerators, dbModelSeeders, executePayrollCommand, expect } from "@test/e2e";
 import { dbTimeCards, TimeCardDBModel } from "../src";
 
 describe("Use Case 3: Post a Time Card", () => {
     it("should insert the time card in the db", async () => {
-        const employee = await seedHourlyEmployee();
+        const employee = await dbModelSeeders.seedHourlyEmployee();
         const timeCard = dbModelGenerators.generateTimeCard({ employeeId: employee.id });
 
         await executePostTimeCard(timeCard);
@@ -11,7 +11,7 @@ describe("Use Case 3: Post a Time Card", () => {
         await expectEmployeeToHaveTimeCard(employee.id, timeCard);
     });
     it("should do nothing when the employee is an hourly employee", async () => {
-        const employee = await seedSalariedEmployee();
+        const employee = await dbModelSeeders.seedSalariedEmployee();
         const timeCard = dbModelGenerators.generateTimeCard({ employeeId: employee.id });
 
         await executePostTimeCard(timeCard);
@@ -26,7 +26,7 @@ describe("Use Case 3: Post a Time Card", () => {
         await expectEmployeeToHaveNoTimeCards(timeCard.employeeId);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = await seedHourlyEmployee();
+        const employee = await dbModelSeeders.seedHourlyEmployee();
         const timeCard = dbModelGenerators.generateTimeCard({ employeeId: employee.id });
 
         await executePayrollCommand(`TimeCard ${timeCard.employeeId} ${timeCard.hours} ${timeCard.date}`);

@@ -1,9 +1,9 @@
-import { executePayrollCommand, expect, seedHourlyEmployee } from "@test/e2e";
+import { dbModelSeeders, executePayrollCommand, expect } from "@test/e2e";
 import { dbEmployees } from "../src";
 
 describe("Use Case 2: Deleting an Employee", () => {
     it("should delete an existing employee from the database", async () => {
-        const employee = await seedHourlyEmployee();
+        const employee = await dbModelSeeders.seedHourlyEmployee();
 
         await executePayrollCommand(`DelEmp ${employee.id}`);
 
@@ -11,7 +11,7 @@ describe("Use Case 2: Deleting an Employee", () => {
         expect(employeeExistsInDb).to.be.false;
     });
     it("should do nothing when the userId does not exist", async () => {
-        const employee = await seedHourlyEmployee();
+        const employee = await dbModelSeeders.seedHourlyEmployee();
 
         await executePayrollCommand(`DelEmp ${employee.id + 1}`);
 

@@ -18,6 +18,8 @@ describe("action updateEmployee", () => {
 
         await updateEmployee(employeeId, { name: "James Bond" });
 
-        expect(stubbedEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, { name: "James Bond" });
+        expect(stubbedEmployeeRepository.updateById).to.have.been.calledOnceWith(employeeId, {
+            name: "James Bond"
+        });
     });
 });

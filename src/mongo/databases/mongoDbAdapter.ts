@@ -1,5 +1,5 @@
 import { Collection, FilterQuery, ObjectID, UpdateQuery } from "mongodb";
-import { NotFoundError } from "../domain";
+import { NotFoundError } from "../../domain";
 
 type DbModel<T> = T & { _id?: ObjectID };
 

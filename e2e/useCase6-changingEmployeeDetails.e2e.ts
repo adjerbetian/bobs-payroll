@@ -4,15 +4,13 @@ import {
     expect,
     generateIndex,
     seedDirectPaymentMethod,
-    seedHoldPaymentMethod,
-    seedHourlyEmployee,
-    seedSalariedEmployee
+    seedHoldPaymentMethod
 } from "@test/e2e";
 import {
     dbEmployees,
     dbPaymentMethods,
     dbUnionMembers,
-    Employee,
+    EmployeeDBModel,
     EmployeeType,
     NotFoundError,
     PaymentMethod,
@@ -21,10 +19,10 @@ import {
 } from "../src";
 
 describe("Use Case 6: Changing Employee Details", () => {
-    let employee: Employee;
+    let employee: EmployeeDBModel;
 
     beforeEach(async () => {
-        employee = await seedHourlyEmployee();
+        employee = await dbModelSeeders.seedHourlyEmployee();
     });
 
     describe("basic infos", () => {
@@ -51,38 +49,32 @@ describe("Use Case 6: Changing Employee Details", () => {
     });
     describe("type", () => {
         it("should change the employee to hourly", async () => {
-            employee = await seedSalariedEmployee();
+            employee = await dbModelSeeders.seedSalariedEmployee();
 
             await executePayrollCommand(`ChgEmp ${employee.id} Hourly 10`);
 
             const dbEmployee = await fetchEmployeeById(employee.id);
-            expect(dbEmployee.work).to.deep.equal({
-                type: EmployeeType.HOURLY,
-                hourlyRate: 10
-            });
+            expect(dbEmployee.type).to.equal(EmployeeType.HOURLY);
+            expect(dbEmployee).to.have.property("hourlyRate", 10);
         });
         it("should change the employee to monthly salary", async () => {
-            employee = await seedHourlyEmployee();
+            employee = await dbModelSeeders.seedHourlyEmployee();
 
             await executePayrollCommand(`ChgEmp ${employee.id} Salaried 10`);
 
             const dbEmployee = await fetchEmployeeById(employee.id);
-            expect(dbEmployee.work).to.deep.equal({
-                type: EmployeeType.SALARIED,
-                monthlySalary: 10
-            });
+            expect(dbEmployee.type).to.equal(EmployeeType.SALARIED);
+            expect(dbEmployee).to.have.property("salary", 10);
         });
         it("should change the employee to commissioned", async () => {
-            employee = await seedHourlyEmployee();
+            employee = await dbModelSeeders.seedHourlyEmployee();
 
             await executePayrollCommand(`ChgEmp ${employee.id} Commissioned 10 30`);
 
             const dbEmployee = await fetchEmployeeById(employee.id);
-            expect(dbEmployee.work).to.deep.equal({
-                type: EmployeeType.COMMISSIONED,
-                monthlySalary: 10,
-                commissionRate: 30
-            });
+            expect(dbEmployee.type).to.equal(EmployeeType.COMMISSIONED);
+            expect(dbEmployee).to.have.property("salary", 10);
+            expect(dbEmployee).to.have.property("commissionRate", 30);
         });
     });
     describe("payment method", () => {
@@ -195,7 +187,7 @@ describe("Use Case 6: Changing Employee Details", () => {
     });
 });
 
-async function fetchEmployeeById(employeeId: number): Promise<Employee> {
+async function fetchEmployeeById(employeeId: number): Promise<EmployeeDBModel> {
     return dbEmployees.fetch({ id: employeeId });
 }
 async function fetchPaymentMethodByEmployeeId(employeeId: number): Promise<PaymentMethod> {

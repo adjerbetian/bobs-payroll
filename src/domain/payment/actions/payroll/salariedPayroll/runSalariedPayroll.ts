@@ -20,9 +20,9 @@ export function makeRunSalariedPayroll({
 
     async function payEmployee(date: string, employee: SalariedEmployee): Promise<void> {
         await createPaymentForEmployee({
-            employeeId: employee.id,
+            employeeId: employee.getId(),
             date: date,
-            amount: employee.work.monthlySalary
+            amount: employee.getSalary()
         });
     }
 }

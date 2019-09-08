@@ -4,12 +4,11 @@ import {
     entityGenerators,
     expect,
     friday,
-    generateHourlyEmployee,
     lastFriday,
     never,
     Stub
 } from "@test/unit";
-import { buildEmployeeEntity, CoreActions } from "../../../../core";
+import { CoreActions } from "../../../../core";
 import { PaymentRepository } from "../../../repositories";
 import { buildStubbedPaymentRepository } from "../../../test";
 import { CreatePaymentForEmployee } from "../../payment";
@@ -39,7 +38,7 @@ describe("action runHourlyPayroll", () => {
     });
 
     it("should insert payments for each employee", async () => {
-        const employees = [generateHourlyEmployee(), generateHourlyEmployee()];
+        const employees = [entityGenerators.generateHourlyEmployee(), entityGenerators.generateHourlyEmployee()];
         stubbedCoreActions.fetchAllHourlyEmployees.resolves(employees);
 
         await runHourlyPayroll(friday);
@@ -48,18 +47,18 @@ describe("action runHourlyPayroll", () => {
     });
 
     it("should insert the right payment the employee", async () => {
-        const employee = generateHourlyEmployee();
+        const employee = entityGenerators.generateHourlyEmployee();
         const timeCards = [entityGenerators.generateTimeCard(), entityGenerators.generateTimeCard()];
         stubbedPaymentRepository.fetchEmployeeLastPaymentDate.resolves(lastFriday);
-        stubbedCoreActions.fetchEmployeeTimeCardsSince.withArgs(employee.id, lastFriday).resolves(timeCards);
+        stubbedCoreActions.fetchEmployeeTimeCardsSince.withArgs(employee.getId(), lastFriday).resolves(timeCards);
         stubbedCoreActions.fetchAllHourlyEmployees.resolves([employee]);
 
         await runHourlyPayroll(friday);
 
         expect(stubbedCreatePaymentForEmployee).to.have.been.calledOnceWith({
-            employeeId: employee.id,
+            employeeId: employee.getId(),
             date: friday,
-            amount: buildEmployeeEntity(employee).computePayAmount(timeCards)
+            amount: employee.computePayAmount(timeCards)
         });
     });
 });

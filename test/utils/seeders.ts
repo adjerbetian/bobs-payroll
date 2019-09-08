@@ -1,45 +1,18 @@
 import {
-    CommissionedEmployee,
-    dbEmployees,
     dbPaymentMethods,
     dbPayments,
     dbSalesReceipts,
     DirectPaymentMethod,
     HoldPaymentMethod,
-    HourlyEmployee,
     Payment,
-    SalariedEmployee,
     SalesReceipt
 } from "../../src";
 import {
-    generateCommissionedEmployee,
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
-    generateHourlyEmployee,
     generatePayment,
-    generateSalariedEmployee,
     generateSalesReceipt
 } from "./generators";
-
-export async function seedHourlyEmployee(args: Partial<HourlyEmployee> = {}): Promise<HourlyEmployee> {
-    const employee = generateHourlyEmployee(args);
-    await dbEmployees.insert(employee);
-    return employee;
-}
-
-export async function seedSalariedEmployee(args: Partial<SalariedEmployee> = {}): Promise<SalariedEmployee> {
-    const employee = generateSalariedEmployee(args);
-    await dbEmployees.insert(employee);
-    return employee;
-}
-
-export async function seedCommissionedEmployee(
-    args: Partial<CommissionedEmployee> = {}
-): Promise<CommissionedEmployee> {
-    const employee = generateCommissionedEmployee(args);
-    await dbEmployees.insert(employee);
-    return employee;
-}
 
 export async function seedHoldPaymentMethod(args: Partial<HoldPaymentMethod> = {}): Promise<HoldPaymentMethod> {
     const paymentMethod = generateHoldPaymentMethod(args);

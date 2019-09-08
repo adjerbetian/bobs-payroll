@@ -1,4 +1,4 @@
-import { expect, generateCommissionedEmployee, generateSalariedEmployee, generateSalesReceipt, Stub } from "@test/unit";
+import { entityGenerators, expect, generateSalesReceipt, Stub } from "@test/unit";
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedSalesReceiptRepository } from "../../test";
@@ -22,7 +22,9 @@ describe("action createSalesReceipt", () => {
 
     it("should create a sales receipt for the employee", async () => {
         const salesReceipt = generateSalesReceipt();
-        stubbedEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateCommissionedEmployee());
+        stubbedEmployeeRepository.fetchById
+            .withArgs(salesReceipt.employeeId)
+            .resolves(entityGenerators.generateCommissionedEmployee());
 
         await createSalesReceipt(salesReceipt);
 
@@ -30,7 +32,9 @@ describe("action createSalesReceipt", () => {
     });
     it("should throw a EmployeeTypeError if the employee is not a commissioned employee", async () => {
         const salesReceipt = generateSalesReceipt();
-        stubbedEmployeeRepository.fetchById.withArgs(salesReceipt.employeeId).resolves(generateSalariedEmployee());
+        stubbedEmployeeRepository.fetchById
+            .withArgs(salesReceipt.employeeId)
+            .resolves(entityGenerators.generateSalariedEmployee());
 
         const promise = createSalesReceipt(salesReceipt);
 

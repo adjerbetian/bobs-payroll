@@ -1,14 +1,16 @@
 import {
+    buildCommissionedEmployee,
+    buildHourlyEmployee,
+    buildSalariedEmployee,
     CommissionedEmployee,
     CoreActions,
     Employee,
-    EmployeeType,
     HourlyEmployee,
     SalariedEmployee
 } from "../../../core";
 import { TransactionFormatError } from "../../errors";
-import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 import { Transactions } from "../processTransaction";
+import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
 
@@ -49,49 +51,38 @@ export function makeAddEmployeeTransaction(actions: CoreActions): Transactions["
     }
 
     function buildEmployee(args: AddEmployeeArgs): Employee {
-        if (isAddHourlyEmployee(args)) return buildHourlyEmployee(args);
-        if (isAddSalariedEmployee(args)) return buildSalariedEmployee(args);
-        if (isAddCommissionedEmployee(args)) return buildCommissionedEmployee(args);
+        if (isAddHourlyEmployee(args)) return buildHourlyEmployeeFromArgs(args);
+        if (isAddSalariedEmployee(args)) return buildSalariedEmployeeFromArgs(args);
+        if (isAddCommissionedEmployee(args)) return buildCommissionedEmployeeFromArgs(args);
         throw new TransactionFormatError("AddEmp");
     }
 
-    function buildHourlyEmployee(args: AddHourlyEmployeeArgs): HourlyEmployee {
-        return {
-            ...buildPartialEmployee(args),
-            work: {
-                type: EmployeeType.HOURLY,
-                hourlyRate: args.rate
-            }
-        };
-    }
-
-    function buildSalariedEmployee(args: AddSalariedEmployeeArgs): SalariedEmployee {
-        return {
-            ...buildPartialEmployee(args),
-            work: {
-                type: EmployeeType.SALARIED,
-                monthlySalary: args.rate
-            }
-        };
-    }
-
-    function buildCommissionedEmployee(args: AddCommissionedEmployeeArgs): CommissionedEmployee {
-        return {
-            ...buildPartialEmployee(args),
-            work: {
-                type: EmployeeType.COMMISSIONED,
-                monthlySalary: args.rate,
-                commissionRate: args.commissionRate
-            }
-        };
-    }
-
-    function buildPartialEmployee(args: AddEmployeeArgs): Omit<Employee, "work"> {
-        return {
+    function buildHourlyEmployeeFromArgs(args: AddHourlyEmployeeArgs): HourlyEmployee {
+        return buildHourlyEmployee({
             id: args.id,
             name: args.name,
-            address: args.address
-        };
+            address: args.address,
+            hourlyRate: args.rate
+        });
+    }
+
+    function buildSalariedEmployeeFromArgs(args: AddSalariedEmployeeArgs): SalariedEmployee {
+        return buildSalariedEmployee({
+            id: args.id,
+            name: args.name,
+            address: args.address,
+            salary: args.rate
+        });
+    }
+
+    function buildCommissionedEmployeeFromArgs(args: AddCommissionedEmployeeArgs): CommissionedEmployee {
+        return buildCommissionedEmployee({
+            id: args.id,
+            name: args.name,
+            address: args.address,
+            salary: args.rate,
+            commissionRate: args.commissionRate
+        });
     }
 
     function isAddHourlyEmployee(args: AddEmployeeArgs): args is AddHourlyEmployeeArgs {

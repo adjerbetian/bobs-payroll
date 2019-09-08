@@ -2,7 +2,6 @@ import {
     buildStubFor,
     entityGenerators,
     expect,
-    generateHourlyEmployee,
     generateIndex,
     generateSalesReceipt,
     generateServiceCharge,
@@ -23,23 +22,23 @@ describe("processTransaction", () => {
     describe("AddEmp", () => {
         it("should call the addEmployee transaction", async () => {
             stubbedTransactions.addEmployee.resolves();
-            const employee = generateHourlyEmployee();
+            const employee = entityGenerators.generateHourlyEmployee();
 
             await processTransaction([
                 "AddEmp",
-                `${employee.id}`,
-                `"${employee.name}"`,
-                `"${employee.address}"`,
+                `${employee.getId()}`,
+                `"${employee.getName()}"`,
+                `"${employee.getAddress()}"`,
                 "H",
-                `${employee.work.hourlyRate}`
+                `${employee.getHourlyRate()}`
             ]);
 
             expect(stubbedTransactions.addEmployee).to.have.been.calledOnceWith(
-                `${employee.id}`,
-                `"${employee.name}"`,
-                `"${employee.address}"`,
+                `${employee.getId()}`,
+                `"${employee.getName()}"`,
+                `"${employee.getAddress()}"`,
                 "H",
-                `${employee.work.hourlyRate}`
+                `${employee.getHourlyRate()}`
             );
         });
     });
@@ -107,12 +106,12 @@ describe("processTransaction", () => {
     describe("ChgEmp", () => {
         it("should call the changeEmployee transaction", async () => {
             stubbedTransactions.changeEmployee.resolves();
-            const employee = generateHourlyEmployee();
+            const employeeId = generateIndex();
 
-            await processTransaction(["ChgEmp", `${employee.id}`, "Name", "James Bond"]);
+            await processTransaction(["ChgEmp", `${employeeId}`, "Name", "James Bond"]);
 
             expect(stubbedTransactions.changeEmployee).to.have.been.calledOnceWith(
-                `${employee.id}`,
+                `${employeeId}`,
                 "Name",
                 "James Bond"
             );

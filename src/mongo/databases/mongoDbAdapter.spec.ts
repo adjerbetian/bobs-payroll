@@ -1,7 +1,7 @@
 import { expect, generateIndex } from "@test/integration";
 import { cloneDeep } from "lodash";
 import { Collection } from "mongodb";
-import { NotFoundError } from "../domain";
+import { NotFoundError } from "../../domain";
 import { getDb } from "./db";
 import { makeMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 

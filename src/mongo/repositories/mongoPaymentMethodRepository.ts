@@ -1,17 +1,17 @@
 import { CoreDependencies, PaymentMethod } from "../../domain";
-import { MongoDbAdapter } from "../mongoDbAdapter";
+import { MongoDbAdapter } from "../databases";
 
 export function makeMongoPaymentMethodRepository(
     db: MongoDbAdapter<PaymentMethod>
 ): CoreDependencies["paymentMethodRepository"] {
     return {
-        async fetchByEmployeeId(employeeId: number): Promise<PaymentMethod> {
+        async fetchByEmployeeId(employeeId) {
             return db.fetch({ employeeId });
         },
-        async deleteByEmployeeId(employeeId: number): Promise<void> {
+        async deleteByEmployeeId(employeeId) {
             await db.removeAll({ employeeId });
         },
-        async insert(paymentMethod: PaymentMethod): Promise<void> {
+        async insert(paymentMethod) {
             await db.insert(paymentMethod);
         }
     };
