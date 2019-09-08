@@ -1,6 +1,11 @@
-# Agile Software Development - Principles, Pattern, and Practices
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-## Explanation
+<h1> 
+    Agile Software Development <br/>
+    Principles, Pattern, and Practices
+</h1>
+
+## Case Study 1 - The Payroll System 
 
 This is an attempt to apply Clean Architecture / DDD to 
 the The Payroll System case study while using typescript.
@@ -9,9 +14,7 @@ Notes :
 
 - Use cases in Clean Architecture are here called actions
 
-# Case Study 1 - The Payroll System *[From the book]* 
-
-## Rudimentary Specification of the Payroll System
+## Rudimentary Specification of the Payroll System *[From the book]*
 
 The following are some of the notes we took while conversing with our customer.
 
