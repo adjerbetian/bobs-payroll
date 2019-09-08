@@ -1,8 +1,7 @@
+import { generateIndex } from "@test/generators";
 import * as _ from "lodash";
 import * as moment from "moment";
 import {
-    buildTimeCard,
-    buildUnionMember,
     CommissionedEmployee,
     DirectPaymentMethod,
     Employee,
@@ -15,17 +14,8 @@ import {
     PaymentMethodType,
     SalariedEmployee,
     SalesReceipt,
-    ServiceCharge,
-    TimeCard,
-    TimeCardDBModel,
-    UnionMember,
-    UnionMemberDBModel
+    ServiceCharge
 } from "../../src";
-
-export const generateIndex = (() => {
-    let index = _.random(1, 100);
-    return () => index++;
-})();
 
 export function generateHourlyEmployee(args: Partial<HourlyEmployee> = {}): HourlyEmployee {
     const hourlyRate = generateFloatBetween(0, 10);
@@ -70,16 +60,6 @@ function generateEmployee(): Omit<Employee, "work"> {
         name: `name of employee ${index}`,
         address: `address of employee ${index}`
     };
-}
-
-export function generateTimeCard(args: Partial<TimeCardDBModel> = {}): TimeCard {
-    const index = generateIndex();
-    return buildTimeCard({
-        employeeId: index,
-        date: moment().format("YYYY-MM-DD"),
-        hours: generateFloatBetween(2, 8),
-        ...args
-    });
 }
 
 export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesReceipt {
@@ -133,15 +113,6 @@ export function generateMailPaymentMethod(args: Partial<MailPaymentMethod> = {})
         address: `address-${index}`,
         ...args
     };
-}
-
-export function generateUnionMember(args: Partial<UnionMemberDBModel> = {}): UnionMember {
-    return buildUnionMember({
-        employeeId: generateIndex(),
-        memberId: `member-${generateIndex()}`,
-        rate: generateFloatBetween(0, 0.1),
-        ...args
-    });
 }
 
 export function generatePayment(args: Partial<Payment> = {}): Payment {

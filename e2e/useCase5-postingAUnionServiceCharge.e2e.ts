@@ -1,10 +1,10 @@
-import { executePayrollCommand, expect, generateServiceCharge, seedUnionMember } from "@test/e2e";
+import { dbModelSeeders, executePayrollCommand, expect, generateServiceCharge } from "@test/e2e";
 import { dbServiceCharges, ServiceCharge } from "../src";
 
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
-        const unionMember = await seedUnionMember();
-        const serviceCharge = generateServiceCharge({ memberId: unionMember.getMemberId() });
+        const unionMember = await dbModelSeeders.seedUnionMember();
+        const serviceCharge = generateServiceCharge({ memberId: unionMember.memberId });
 
         await executePostServiceCharge(serviceCharge);
 
@@ -18,8 +18,8 @@ describe("Use Case 5: Posting a Union Service Charge", () => {
         await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const unionMember = await seedUnionMember();
-        const serviceCharge = generateServiceCharge({ memberId: unionMember.getMemberId() });
+        const unionMember = await dbModelSeeders.seedUnionMember();
+        const serviceCharge = generateServiceCharge({ memberId: unionMember.memberId });
 
         await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId}`);
 

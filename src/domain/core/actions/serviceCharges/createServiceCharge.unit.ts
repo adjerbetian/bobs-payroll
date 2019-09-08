@@ -1,4 +1,4 @@
-import { expect, generateServiceCharge, generateUnionMember, Stub } from "@test/unit";
+import { entityGenerators, expect, generateServiceCharge, Stub } from "@test/unit";
 import { NotFoundError } from "../../errors";
 import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
 import { buildStubbedServiceChargeRepository, buildStubbedUnionMemberRepository } from "../../test";
@@ -22,7 +22,9 @@ describe("action createServiceCharge", () => {
 
     it("should create a service charge for the employee", async () => {
         const serviceCharge = generateServiceCharge();
-        stubbedUnionMemberRepository.fetchByMemberId.withArgs(serviceCharge.memberId).resolves(generateUnionMember());
+        stubbedUnionMemberRepository.fetchByMemberId
+            .withArgs(serviceCharge.memberId)
+            .resolves(entityGenerators.generateUnionMember());
 
         await createServiceCharge(serviceCharge);
 

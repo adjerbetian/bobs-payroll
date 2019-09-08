@@ -1,4 +1,4 @@
-import { expect, generateIndex, generateUnionMember, Stub } from "@test/unit";
+import { entityGenerators, expect, generateIndex, Stub } from "@test/unit";
 import { UnionMember } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
@@ -16,7 +16,7 @@ describe("mongoUnionMemberRepository", () => {
     describe("fetchByMemberId", () => {
         it("return the union member", async () => {
             const memberId = `member-${generateIndex()}`;
-            const unionMember = generateUnionMember({ memberId });
+            const unionMember = entityGenerators.generateUnionMember({ memberId });
             stubbedDb.fetch.withArgs({ memberId }).resolves(toDBModel(unionMember));
 
             const result = await repository.fetchByMemberId(memberId);
@@ -27,7 +27,7 @@ describe("mongoUnionMemberRepository", () => {
     describe("fetchByEmployeeId", () => {
         it("return the union member", async () => {
             const employeeId = generateIndex();
-            const unionMember = generateUnionMember({ employeeId });
+            const unionMember = entityGenerators.generateUnionMember({ employeeId });
             stubbedDb.fetch.withArgs({ employeeId }).resolves(toDBModel(unionMember));
 
             const result = await repository.fetchByEmployeeId(employeeId);
@@ -37,7 +37,7 @@ describe("mongoUnionMemberRepository", () => {
     });
     describe("insert", () => {
         it("insert the given time card", async () => {
-            const unionMember = generateUnionMember();
+            const unionMember = entityGenerators.generateUnionMember();
             stubbedDb.insert.resolves();
 
             await repository.insert(unionMember);

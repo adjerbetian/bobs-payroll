@@ -4,18 +4,12 @@ import {
     dbPaymentMethods,
     dbPayments,
     dbSalesReceipts,
-    dbTimeCards,
-    dbUnionMembers,
     DirectPaymentMethod,
     HoldPaymentMethod,
     HourlyEmployee,
     Payment,
     SalariedEmployee,
-    SalesReceipt,
-    TimeCard,
-    TimeCardDBModel,
-    UnionMember,
-    UnionMemberDBModel
+    SalesReceipt
 } from "../../src";
 import {
     generateCommissionedEmployee,
@@ -24,9 +18,7 @@ import {
     generateHourlyEmployee,
     generatePayment,
     generateSalariedEmployee,
-    generateSalesReceipt,
-    generateTimeCard,
-    generateUnionMember
+    generateSalesReceipt
 } from "./generators";
 
 export async function seedHourlyEmployee(args: Partial<HourlyEmployee> = {}): Promise<HourlyEmployee> {
@@ -59,26 +51,6 @@ export async function seedDirectPaymentMethod(args: Partial<DirectPaymentMethod>
     const paymentMethod = generateDirectPaymentMethod(args);
     await dbPaymentMethods.insert(paymentMethod);
     return paymentMethod;
-}
-
-export async function seedUnionMember(args: Partial<UnionMemberDBModel> = {}): Promise<UnionMember> {
-    const unionMember = generateUnionMember(args);
-    await dbUnionMembers.insert({
-        rate: unionMember.getRate(),
-        memberId: unionMember.getMemberId(),
-        employeeId: unionMember.getEmployeeId()
-    });
-    return unionMember;
-}
-
-export async function seedTimeCard(args: Partial<TimeCardDBModel> = {}): Promise<TimeCard> {
-    const timeCard = generateTimeCard(args);
-    await dbTimeCards.insert({
-        employeeId: timeCard.getEmployeeId(),
-        date: timeCard.getDate(),
-        hours: timeCard.getHours()
-    });
-    return timeCard;
 }
 
 export async function seedSalesReceipt(args: Partial<SalesReceipt> = {}): Promise<SalesReceipt> {

@@ -1,12 +1,12 @@
 import {
+    dbModelSeeders,
     executePayrollCommand,
     expect,
     generateIndex,
     seedDirectPaymentMethod,
     seedHoldPaymentMethod,
     seedHourlyEmployee,
-    seedSalariedEmployee,
-    seedUnionMember
+    seedSalariedEmployee
 } from "@test/e2e";
 import {
     dbEmployees,
@@ -174,11 +174,9 @@ describe("Use Case 6: Changing Employee Details", () => {
                 await expect(promise).to.be.rejectedWith(NotFoundError);
             });
             it("should do nothing when the member id is already used", async () => {
-                const alreadyUsedUnionMember = await seedUnionMember();
+                const alreadyUsedUnionMember = await dbModelSeeders.seedUnionMember();
 
-                await executePayrollCommand(
-                    `ChgEmp ${employee.id} Member ${alreadyUsedUnionMember.getMemberId()} Dues 20`
-                );
+                await executePayrollCommand(`ChgEmp ${employee.id} Member ${alreadyUsedUnionMember.memberId} Dues 20`);
 
                 const promise = fetchUnionMemberByEmployeeId(employee.id);
                 await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -186,7 +184,7 @@ describe("Use Case 6: Changing Employee Details", () => {
         });
         describe("NoMember", () => {
             it("should remove the employee from Union", async () => {
-                await seedUnionMember({ employeeId: employee.id });
+                await dbModelSeeders.seedUnionMember({ employeeId: employee.id });
 
                 await executePayrollCommand(`ChgEmp ${employee.id} NoMember`);
 

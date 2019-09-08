@@ -1,5 +1,4 @@
-import { expect, generateHourlyEmployee } from "@test/unit";
-import { generateTimeCard } from "@test/utils";
+import { entityGenerators, expect, generateHourlyEmployee } from "@test/unit";
 import { HourlyEmployee } from "./HourlyEmployee";
 import { buildHourlyEmployeeEntity, HourlyEmployeeEntity } from "./HourlyEmployeeEntity";
 
@@ -14,15 +13,15 @@ describe("entity HourlyEmployeeEntity", () => {
         });
 
         it("should sum the given time cards hours", () => {
-            const timeCard1 = generateTimeCard();
-            const timeCard2 = generateTimeCard();
+            const timeCard1 = entityGenerators.generateTimeCard();
+            const timeCard2 = entityGenerators.generateTimeCard();
 
             const amount = employeeEntity.computePayAmount([timeCard1, timeCard2]);
 
             expect(amount).to.equal((timeCard1.getHours() + timeCard2.getHours()) * employee.work.hourlyRate);
         });
         it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
-            const timeCard = generateTimeCard({ hours: 8 + 2 });
+            const timeCard = entityGenerators.generateTimeCard({ hours: 8 + 2 });
 
             const amount = employeeEntity.computePayAmount([timeCard]);
 

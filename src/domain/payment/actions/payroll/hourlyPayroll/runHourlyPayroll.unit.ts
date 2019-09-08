@@ -1,10 +1,10 @@
 import {
     buildStubbedCoreActions,
     buildStubFor,
+    entityGenerators,
     expect,
     friday,
     generateHourlyEmployee,
-    generateTimeCard,
     lastFriday,
     never,
     Stub
@@ -49,7 +49,7 @@ describe("action runHourlyPayroll", () => {
 
     it("should insert the right payment the employee", async () => {
         const employee = generateHourlyEmployee();
-        const timeCards = [generateTimeCard(), generateTimeCard()];
+        const timeCards = [entityGenerators.generateTimeCard(), entityGenerators.generateTimeCard()];
         stubbedPaymentRepository.fetchEmployeeLastPaymentDate.resolves(lastFriday);
         stubbedCoreActions.fetchEmployeeTimeCardsSince.withArgs(employee.id, lastFriday).resolves(timeCards);
         stubbedCoreActions.fetchAllHourlyEmployees.resolves([employee]);

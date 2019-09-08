@@ -2,6 +2,8 @@ import { execute } from "./utils";
 
 export * from "./integration";
 export * from "./utils/execute";
+export { dbModelSeeders } from "./generators";
+export * from "./utils/seeders";
 
 before(async () => {
     await execute(`IF EXIST dist\\ RMDIR dist /S /Q`);

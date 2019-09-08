@@ -1,11 +1,11 @@
 import {
     buildStubFor,
+    entityGenerators,
     expect,
     generateHourlyEmployee,
     generateIndex,
     generateSalesReceipt,
     generateServiceCharge,
-    generateTimeCard,
     Stub
 } from "@test/unit";
 import { isoDate } from "../../../utils";
@@ -56,7 +56,7 @@ describe("processTransaction", () => {
     describe("TimeCard", () => {
         it("should call the postTimeCard transaction", async () => {
             stubbedTransactions.postTimeCard.resolves();
-            const timeCard = generateTimeCard();
+            const timeCard = entityGenerators.generateTimeCard();
 
             await processTransaction([
                 "TimeCard",

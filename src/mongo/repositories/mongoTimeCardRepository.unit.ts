@@ -1,4 +1,4 @@
-import { expect, generateIndex, generateTimeCard, monday, Stub } from "@test/unit";
+import { entityGenerators, expect, generateIndex, monday, Stub } from "@test/unit";
 import { TimeCard } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
@@ -16,7 +16,7 @@ describe("mongoTimeCardRepository", () => {
     describe("fetchAllOfEmployee", () => {
         it("should return all the employee's time cards", async () => {
             const employeeId = generateIndex();
-            const timeCards = [generateTimeCard(), generateTimeCard()];
+            const timeCards = [entityGenerators.generateTimeCard(), entityGenerators.generateTimeCard()];
             stubbedDb.fetchAll.withArgs({ employeeId }).resolves(timeCards.map(toDBModel));
 
             const result = await repository.fetchAllOfEmployee(employeeId);
@@ -27,7 +27,7 @@ describe("mongoTimeCardRepository", () => {
     describe("fetchAllOfEmployeeSince", () => {
         it("should return all the employee's made after the given date", async () => {
             const employeeId = generateIndex();
-            const timeCards = [generateTimeCard(), generateTimeCard()];
+            const timeCards = [entityGenerators.generateTimeCard(), entityGenerators.generateTimeCard()];
             stubbedDb.fetchAll
                 .withArgs({
                     employeeId,
@@ -42,7 +42,7 @@ describe("mongoTimeCardRepository", () => {
     });
     describe("insert", () => {
         it("insert the given time card", async () => {
-            const timeCard = generateTimeCard();
+            const timeCard = entityGenerators.generateTimeCard();
             stubbedDb.insert.resolves();
 
             await repository.insert(timeCard);

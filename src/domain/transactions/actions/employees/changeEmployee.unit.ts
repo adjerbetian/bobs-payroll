@@ -1,11 +1,11 @@
 import {
     buildStubbedCoreActions,
+    entityGenerators,
     expect,
     generateDirectPaymentMethod,
     generateHoldPaymentMethod,
     generateIndex,
     generateMailPaymentMethod,
-    generateUnionMember,
     Stub
 } from "@test/unit";
 import { CoreActions, EmployeeType } from "../../../core";
@@ -177,7 +177,7 @@ describe("changeEmployee", () => {
             it("should add the union member", async () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
-                const expectedUnionMember = generateUnionMember({ memberId, employeeId, rate: 10.5 });
+                const expectedUnionMember = entityGenerators.generateUnionMember({ memberId, employeeId, rate: 10.5 });
                 expect(stubbedActions.createUnionMember).to.have.been.calledOnceWithEntity(expectedUnionMember);
             });
             it("should throw a TransactionFormatError when the dues rate is not specified", async () => {

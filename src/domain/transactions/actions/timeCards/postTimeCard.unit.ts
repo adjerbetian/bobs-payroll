@@ -1,4 +1,4 @@
-import { buildStubbedCoreActions, expect, generateTimeCard, Stub } from "@test/unit";
+import { buildStubbedCoreActions, entityGenerators, expect, Stub } from "@test/unit";
 import * as moment from "moment";
 import { CoreActions, TimeCard } from "../../../core";
 import { TransactionFormatError } from "../../errors";
@@ -14,7 +14,7 @@ describe("postTimeCard", () => {
     });
 
     it("should create a time card for the employee", async () => {
-        const timeCard = generateTimeCard();
+        const timeCard = entityGenerators.generateTimeCard();
         stubbedActions.createTimeCard.resolves();
 
         await postTimeCardEntity(timeCard);
@@ -22,7 +22,7 @@ describe("postTimeCard", () => {
         expect(stubbedActions.createTimeCard).to.have.been.calledOnceWithEntity(timeCard);
     });
     it("should throw a TransactionFormatError if the date is not in good format", async () => {
-        const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
+        const timeCard = entityGenerators.generateTimeCard({ date: moment().format("DD-MM-YYYY") });
         stubbedActions.createTimeCard.resolves();
 
         const promise = postTimeCardEntity(timeCard);

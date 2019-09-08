@@ -1,4 +1,5 @@
 import {
+    dbModelSeeders,
     endOfLastMonth,
     executePayrollCommand,
     expect,
@@ -19,8 +20,6 @@ import {
     seedPayment,
     seedSalariedEmployee,
     seedSalesReceipt,
-    seedTimeCard,
-    seedUnionMember,
     thursday,
     tuesday,
     wednesday
@@ -38,28 +37,28 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
         it("should pay the hours made in the employee's time cards", async () => {
             const timeCards = [
-                await seedTimeCard({ date: monday, hours: 5, employeeId: employee.id }),
-                await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id })
+                await dbModelSeeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.id }),
+                await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id })
             ];
 
             await executePayrollCommand(`Payroll ${friday}`);
 
             await expectEmployeePaymentAmountToEqual(
                 employee.id,
-                (timeCards[0].getHours() + timeCards[1].getHours()) * employee.work.hourlyRate
+                (timeCards[0].hours + timeCards[1].hours) * employee.work.hourlyRate
             );
         });
         it("should not include the time cards already paid", async () => {
-            await seedTimeCard({ date: lastMonday, hours: 5, employeeId: employee.id });
+            await dbModelSeeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId: employee.id });
             await seedPayment({ employeeId: employee.id, date: lastFriday, amount: 666 });
-            const newTimeCard = await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
+            const newTimeCard = await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${friday}`);
 
-            await expectEmployeePaymentAmountToEqual(employee.id, newTimeCard.getHours() * employee.work.hourlyRate);
+            await expectEmployeePaymentAmountToEqual(employee.id, newTimeCard.hours * employee.work.hourlyRate);
         });
         it("should not pay if it's not Friday", async () => {
-            await seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
+            await dbModelSeeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${monday}`);
 
@@ -68,7 +67,11 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
             const regularHours = 8;
             const extraHour = 4;
-            await seedTimeCard({ date: monday, hours: regularHours + extraHour, employeeId: employee.id });
+            await dbModelSeeders.seedTimeCard({
+                date: monday,
+                hours: regularHours + extraHour,
+                employeeId: employee.id
+            });
 
             await executePayrollCommand(`Payroll ${friday}`);
 
@@ -89,11 +92,11 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             async function seedComplexHourlyEmployee1(): Promise<{ employee: HourlyEmployee; amount: number }> {
                 employee = await seedHourlyEmployee();
                 await seedPreviousPayment(employee.id);
-                await seedTimeCard({ date: monday, hours: 8 + 2, employeeId: employee.id });
-                await seedTimeCard({ date: tuesday, hours: 4, employeeId: employee.id });
-                await seedTimeCard({ date: wednesday, hours: 5, employeeId: employee.id });
-                await seedTimeCard({ date: thursday, hours: 8 + 4, employeeId: employee.id });
-                await seedTimeCard({ date: friday, hours: 1, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: monday, hours: 8 + 2, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 4, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: wednesday, hours: 5, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: thursday, hours: 8 + 4, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: friday, hours: 1, employeeId: employee.id });
 
                 const regularHours = 8 + 4 + 5 + 8 + 1;
                 const extraHours = 2 + 4;
@@ -103,11 +106,11 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             async function seedComplexHourlyEmployee2(): Promise<{ employee: HourlyEmployee; amount: number }> {
                 employee = await seedHourlyEmployee();
                 await seedPreviousPayment(employee.id);
-                await seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
-                await seedTimeCard({ date: tuesday, hours: 8, employeeId: employee.id });
-                await seedTimeCard({ date: wednesday, hours: 8 + 4, employeeId: employee.id });
-                await seedTimeCard({ date: thursday, hours: 8 + 3, employeeId: employee.id });
-                await seedTimeCard({ date: friday, hours: 0.5, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 8, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: wednesday, hours: 8 + 4, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: thursday, hours: 8 + 3, employeeId: employee.id });
+                await dbModelSeeders.seedTimeCard({ date: friday, hours: 0.5, employeeId: employee.id });
 
                 const regularHours = 5 + 8 + 8 + 8 + 0.5;
                 const extraHours = 4 + 3;
@@ -115,8 +118,8 @@ describe("Use Case 7: Run the Payroll for Today", () => {
                 return { employee, amount };
             }
             async function seedPreviousPayment(employeeId: number): Promise<void> {
-                await seedTimeCard({ date: lastMonday, hours: 5, employeeId });
-                await seedTimeCard({ date: lastTuesday, hours: 12, employeeId });
+                await dbModelSeeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId });
+                await dbModelSeeders.seedTimeCard({ date: lastTuesday, hours: 12, employeeId });
                 await seedPayment({ date: lastFriday, employeeId });
             }
         });
@@ -201,24 +204,24 @@ describe("Use Case 7: Run the Payroll for Today", () => {
     describe("union", () => {
         it.skip("should deduce the weekly dues rate from the salary", async () => {
             const employee = await seedSalariedEmployee();
-            const unionMember = await seedUnionMember({ employeeId: employee.id });
+            const unionMember = await dbModelSeeders.seedUnionMember({ employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            const unionDues = employee.work.monthlySalary * unionMember.getRate() * nFridaysInMonth(firstDayOfMonth);
+            const unionDues = employee.work.monthlySalary * unionMember.rate * nFridaysInMonth(firstDayOfMonth);
             expect(payment.amount).to.equal(employee.work.monthlySalary - unionDues);
         });
         it.skip("should deduce the weekly dues rate from the hourly payment", async () => {
             const employee = await seedHourlyEmployee();
-            const timeCard = await seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
-            const unionMember = await seedUnionMember({ employeeId: employee.id });
+            const timeCard = await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
+            const unionMember = await dbModelSeeders.seedUnionMember({ employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${friday}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            const fullPaymentAmount = employee.work.hourlyRate * timeCard.getHours();
-            const unionDues = fullPaymentAmount * unionMember.getRate();
+            const fullPaymentAmount = employee.work.hourlyRate * timeCard.hours;
+            const unionDues = fullPaymentAmount * unionMember.rate;
             expect(payment.amount).to.equal(fullPaymentAmount - unionDues);
         });
         it.skip("should deduce the service charges", async () => {});
