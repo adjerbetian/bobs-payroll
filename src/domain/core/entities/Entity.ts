@@ -1,4 +1,3 @@
-export interface Entity<T> {
+export interface Entity {
     toJSON(): any;
-    equals(entity: T): boolean;
 }
