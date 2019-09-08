@@ -13,6 +13,7 @@ import {
     SalariedEmployee,
     SalesReceipt,
     TimeCard,
+    TimeCardDBModel,
     UnionMember,
     UnionMemberDBModel
 } from "../../src";
@@ -70,9 +71,13 @@ export async function seedUnionMember(args: Partial<UnionMemberDBModel> = {}): P
     return unionMember;
 }
 
-export async function seedTimeCard(args: Partial<TimeCard> = {}): Promise<TimeCard> {
+export async function seedTimeCard(args: Partial<TimeCardDBModel> = {}): Promise<TimeCard> {
     const timeCard = generateTimeCard(args);
-    await dbTimeCards.insert(timeCard);
+    await dbTimeCards.insert({
+        employeeId: timeCard.getEmployeeId(),
+        date: timeCard.getDate(),
+        hours: timeCard.getHours()
+    });
     return timeCard;
 }
 

@@ -13,7 +13,7 @@ export function makeCreateTimeCard({
     timeCardRepository
 }: Dependencies): CoreTimeCardActions["createTimeCard"] {
     return async function(timeCard: TimeCard): Promise<void> {
-        await assertEmployeeIsHourly(timeCard.employeeId);
+        await assertEmployeeIsHourly(timeCard.getEmployeeId());
         await timeCardRepository.insert(timeCard);
     };
 

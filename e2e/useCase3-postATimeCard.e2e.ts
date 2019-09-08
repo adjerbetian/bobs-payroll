@@ -23,25 +23,27 @@ describe("Use Case 3: Post a Time Card", () => {
 
         await executePostTimeCard(timeCard);
 
-        await expectEmployeeToHaveNoTimeCards(timeCard.employeeId);
+        await expectEmployeeToHaveNoTimeCards(timeCard.getEmployeeId());
     });
     it("should do nothing when the transaction is not of the right format", async () => {
         const employee = await seedHourlyEmployee();
         const timeCard = generateTimeCard({ employeeId: employee.id });
 
-        await executePayrollCommand(`TimeCard ${timeCard.employeeId} ${timeCard.hours} ${timeCard.date}`);
+        await executePayrollCommand(
+            `TimeCard ${timeCard.getEmployeeId()} ${timeCard.getHours()} ${timeCard.getDate()}`
+        );
 
-        await expectEmployeeToHaveNoTimeCards(timeCard.employeeId);
+        await expectEmployeeToHaveNoTimeCards(timeCard.getEmployeeId());
     });
 });
 
 async function executePostTimeCard(timeCard: TimeCard): Promise<void> {
-    await executePayrollCommand(`TimeCard ${timeCard.employeeId} ${timeCard.date} ${timeCard.hours}`);
+    await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()} ${timeCard.getHours()}`);
 }
 
 async function expectEmployeeToHaveTimeCard(employeeId: number, timeCard: TimeCard): Promise<void> {
     const timeCards = await dbTimeCards.fetchAll({ employeeId });
-    expect(timeCards).to.deep.include(timeCard);
+    expect(timeCards).to.deep.include(timeCard.toJSON());
 }
 
 async function expectEmployeeToHaveNoTimeCards(employeeId: number): Promise<void> {

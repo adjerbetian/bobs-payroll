@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 import * as moment from "moment";
 import {
+    buildTimeCard,
     buildUnionMember,
     CommissionedEmployee,
     DirectPaymentMethod,
@@ -16,6 +17,7 @@ import {
     SalesReceipt,
     ServiceCharge,
     TimeCard,
+    TimeCardDBModel,
     UnionMember,
     UnionMemberDBModel
 } from "../../src";
@@ -70,14 +72,14 @@ function generateEmployee(): Omit<Employee, "work"> {
     };
 }
 
-export function generateTimeCard(args: Partial<TimeCard> = {}): TimeCard {
+export function generateTimeCard(args: Partial<TimeCardDBModel> = {}): TimeCard {
     const index = generateIndex();
-    return {
+    return buildTimeCard({
         employeeId: index,
         date: moment().format("YYYY-MM-DD"),
         hours: generateFloatBetween(2, 8),
         ...args
-    };
+    });
 }
 
 export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesReceipt {

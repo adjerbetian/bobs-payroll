@@ -2,7 +2,7 @@ import { expect, generateIndex, generateTimeCard, monday, Stub } from "@test/uni
 import { TimeCard } from "../../domain";
 import { MongoDbAdapter } from "../mongoDbAdapter";
 import { buildStubbedMongoDbAdapter } from "../test";
-import { makeMongoTimeCardRepository } from "./mongoTimeCardRepository";
+import { makeMongoTimeCardRepository, toDBModel } from "./mongoTimeCardRepository";
 
 describe("mongoTimeCardRepository", () => {
     let stubbedDb: Stub<MongoDbAdapter<TimeCard>>;
@@ -17,11 +17,11 @@ describe("mongoTimeCardRepository", () => {
         it("should return all the employee's time cards", async () => {
             const employeeId = generateIndex();
             const timeCards = [generateTimeCard(), generateTimeCard()];
-            stubbedDb.fetchAll.withArgs({ employeeId }).resolves(timeCards);
+            stubbedDb.fetchAll.withArgs({ employeeId }).resolves(timeCards.map(toDBModel));
 
             const result = await repository.fetchAllOfEmployee(employeeId);
 
-            expect(result).to.deep.equal(timeCards);
+            expect(result).entities.to.equal(timeCards);
         });
     });
     describe("fetchAllOfEmployeeSince", () => {
@@ -33,11 +33,11 @@ describe("mongoTimeCardRepository", () => {
                     employeeId,
                     date: { $gt: monday }
                 })
-                .resolves(timeCards);
+                .resolves(timeCards.map(toDBModel));
 
             const result = await repository.fetchAllOfEmployeeSince(employeeId, monday);
 
-            expect(result).to.deep.equal(timeCards);
+            expect(result).entities.to.equal(timeCards);
         });
     });
     describe("insert", () => {
@@ -47,7 +47,7 @@ describe("mongoTimeCardRepository", () => {
 
             await repository.insert(timeCard);
 
-            expect(stubbedDb.insert).to.have.been.calledOnceWith(timeCard);
+            expect(stubbedDb.insert).to.have.been.calledOnceWith(toDBModel(timeCard));
         });
     });
 });

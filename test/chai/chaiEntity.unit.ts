@@ -24,6 +24,42 @@ describe("chaiEntity", () => {
             return () => expect(object1).entity.to.equal(object2);
         }
     });
+    describe("entities", function() {
+        it("should work when both array have same entities", () => {
+            const assertion = buildAssertion(
+                [buildEntity({ a: "a" }), buildEntity({ b: "b" })],
+                [buildEntity({ a: "a" }), buildEntity({ b: "b" })]
+            );
+            expect(assertion).not.to.throw();
+        });
+        it("should throw when the first array is not made of entities", () => {
+            const assertion = buildAssertion(
+                [buildEntity({ a: "a" }), { b: "b" }],
+                [buildEntity({ a: "a" }), buildEntity({ b: "b" })]
+            );
+            expect(assertion).to.throw(`expected [ Array(2) ] to be an array of entities`);
+        });
+        it("should throw when the second array is not made of entities", () => {
+            const assertion = buildAssertion(
+                [buildEntity({ a: "a" }), buildEntity({ b: "b" })],
+                [buildEntity({ a: "a" }), { b: "b" }]
+            );
+            expect(assertion).to.throw(`expected [ Array(2) ] to be an array of entities`);
+        });
+        it("should throw when the objects don't match", () => {
+            const assertion = buildAssertion(
+                [buildEntity({ a: "a" }), buildEntity({ b: "b" })],
+                [buildEntity({ a: "a" }), buildEntity({ b: "a" })]
+            );
+            expect(assertion).to.throw(
+                `expected [ { a: 'a' }, { b: 'b' } ] to deeply equal [ { a: 'a' }, { b: 'a' } ]`
+            );
+        });
+
+        function buildAssertion(objects1: any[], objects2: any[]): () => void {
+            return () => expect(objects1).entities.to.equal(objects2);
+        }
+    });
     describe("calledOnceWithEntity", function() {
         let stub: SinonStub;
 

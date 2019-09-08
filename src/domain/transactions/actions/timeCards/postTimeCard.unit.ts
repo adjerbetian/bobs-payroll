@@ -19,7 +19,7 @@ describe("postTimeCard", () => {
 
         await postTimeCardEntity(timeCard);
 
-        expect(stubbedActions.createTimeCard).to.have.been.calledOnceWith(timeCard);
+        expect(stubbedActions.createTimeCard).to.have.been.calledOnceWithEntity(timeCard);
     });
     it("should throw a TransactionFormatError if the date is not in good format", async () => {
         const timeCard = generateTimeCard({ date: moment().format("DD-MM-YYYY") });
@@ -31,6 +31,6 @@ describe("postTimeCard", () => {
     });
 
     async function postTimeCardEntity(timeCard: TimeCard): Promise<void> {
-        return postTimeCard(`${timeCard.employeeId}`, `${timeCard.date}`, `${timeCard.hours}`);
+        return postTimeCard(`${timeCard.getEmployeeId()}`, `${timeCard.getDate()}`, `${timeCard.getHours()}`);
     }
 });

@@ -13,11 +13,11 @@ export function buildHourlyEmployeeEntity(employee: HourlyEmployee): HourlyEmplo
             return employee.work.hourlyRate * (regularHours + 1.5 * extraHours);
 
             function computeTimeCardsRegularHours(): number {
-                return timeCards.reduce((total, timeCard) => total + Math.min(timeCard.hours, 8), 0);
+                return timeCards.reduce((total, timeCard) => total + timeCard.getRegularHours(), 0);
             }
 
             function computeTimeCardsExtraHours(): number {
-                return timeCards.reduce((total, timeCard) => total + Math.max(timeCard.hours - 8, 0), 0);
+                return timeCards.reduce((total, timeCard) => total + timeCard.getExtraHours(), 0);
             }
         }
     };

@@ -46,7 +46,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await expectEmployeePaymentAmountToEqual(
                 employee.id,
-                (timeCards[0].hours + timeCards[1].hours) * employee.work.hourlyRate
+                (timeCards[0].getHours() + timeCards[1].getHours()) * employee.work.hourlyRate
             );
         });
         it("should not include the time cards already paid", async () => {
@@ -56,7 +56,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await executePayrollCommand(`Payroll ${friday}`);
 
-            await expectEmployeePaymentAmountToEqual(employee.id, newTimeCard.hours * employee.work.hourlyRate);
+            await expectEmployeePaymentAmountToEqual(employee.id, newTimeCard.getHours() * employee.work.hourlyRate);
         });
         it("should not pay if it's not Friday", async () => {
             await seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
@@ -217,7 +217,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             await executePayrollCommand(`Payroll ${friday}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            const fullPaymentAmount = employee.work.hourlyRate * timeCard.hours;
+            const fullPaymentAmount = employee.work.hourlyRate * timeCard.getHours();
             const unionDues = fullPaymentAmount * unionMember.getRate();
             expect(payment.amount).to.equal(fullPaymentAmount - unionDues);
         });

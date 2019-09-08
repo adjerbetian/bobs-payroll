@@ -9,6 +9,7 @@ export {
     dbTimeCards,
     dbEmployees,
     UnionMemberDBModel,
+    TimeCardDBModel,
     initConnection,
     closeConnection,
     cleanCollections

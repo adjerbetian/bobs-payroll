@@ -22,7 +22,7 @@ describe("action createTimeCard", () => {
 
     it("should create a time card for the employee", async () => {
         const timeCard = generateTimeCard();
-        stubbedEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateHourlyEmployee());
+        stubbedEmployeeRepository.fetchById.withArgs(timeCard.getEmployeeId()).resolves(generateHourlyEmployee());
 
         await createTimeCard(timeCard);
 
@@ -30,7 +30,7 @@ describe("action createTimeCard", () => {
     });
     it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
         const timeCard = generateTimeCard();
-        stubbedEmployeeRepository.fetchById.withArgs(timeCard.employeeId).resolves(generateSalariedEmployee());
+        stubbedEmployeeRepository.fetchById.withArgs(timeCard.getEmployeeId()).resolves(generateSalariedEmployee());
 
         const promise = createTimeCard(timeCard);
 

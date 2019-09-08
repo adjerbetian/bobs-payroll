@@ -30,6 +30,7 @@ export function makeRunHourlyPayroll({
 
         async function computePayAmount(): Promise<number> {
             const dueTimeCards = await fetchEmployeeDueTimeCards(employee.id);
+            console.log(dueTimeCards.map(tc => tc.getHours()));
             const entity = buildEmployeeEntity(employee);
             return entity.computePayAmount(dueTimeCards);
         }

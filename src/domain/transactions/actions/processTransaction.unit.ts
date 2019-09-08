@@ -58,12 +58,17 @@ describe("processTransaction", () => {
             stubbedTransactions.postTimeCard.resolves();
             const timeCard = generateTimeCard();
 
-            await processTransaction(["TimeCard", `${timeCard.employeeId}`, `${timeCard.date}`, `${timeCard.hours}`]);
+            await processTransaction([
+                "TimeCard",
+                `${timeCard.getEmployeeId()}`,
+                `${timeCard.getDate()}`,
+                `${timeCard.getHours()}`
+            ]);
 
             expect(stubbedTransactions.postTimeCard).to.have.been.calledOnceWith(
-                `${timeCard.employeeId}`,
-                `${timeCard.date}`,
-                `${timeCard.hours}`
+                `${timeCard.getEmployeeId()}`,
+                `${timeCard.getDate()}`,
+                `${timeCard.getHours()}`
             );
         });
     });
