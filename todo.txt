@@ -1,4 +1,6 @@
 Todo: create DBModelGenerators & EntityGenerators
+Todo: remove types for implementations of interfaces
+Todo: try to create a unitDescribe and integrationDescribe in order to run all the tests with the same command runner
 Todo: use entity objects instead of interfaces
 Todo: look for a dependency injection framework
 Todo: try to use ts-node without compiling
