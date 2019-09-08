@@ -44,7 +44,7 @@ export function chaiEntity(chai: Chai.ChaiStatic, utils: Chai.ChaiUtils): void {
     function assertIsEntity(object: any): void {
         (new chai.Assertion(object) as any).assert(
             object.toJSON && typeof object.toJSON === "function",
-            "expected #{this} be an entity"
+            "expected #{this} to be an entity"
         );
     }
     function areObjectsDeepEqual(object1: any, object2: any): boolean {
