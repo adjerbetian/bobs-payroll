@@ -13,7 +13,7 @@ export function makeCreateSalesReceipt({
     employeeRepository
 }: Dependencies): CoreSalesReceiptActions["createSalesReceipt"] {
     return async function(salesReceipt: SalesReceipt): Promise<void> {
-        await assertEmployeeIsCommissioned(salesReceipt.employeeId);
+        await assertEmployeeIsCommissioned(salesReceipt.getEmployeeId());
         return salesReceiptRepository.insert(salesReceipt);
     };
 

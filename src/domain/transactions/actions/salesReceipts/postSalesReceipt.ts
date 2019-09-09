@@ -1,6 +1,6 @@
-import { CoreActions, SalesReceipt } from "../../../core";
-import { buildTransactionValidator } from "../utils";
+import { buildSalesReceipt, CoreActions } from "../../../core";
 import { Transactions } from "../processTransaction";
+import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("SalesReceipt");
 
@@ -8,7 +8,11 @@ export function makePostSalesReceiptTransaction(actions: CoreActions): Transacti
     return async function(employeeId: string, date: string, amount: string): Promise<void> {
         assertTransactionIsValid();
 
-        const salesReceipt = buildSalesReceipt(employeeId, date, amount);
+        const salesReceipt = buildSalesReceipt({
+            employeeId: parseInt(employeeId),
+            date,
+            amount: parseFloat(amount)
+        });
         return actions.createSalesReceipt(salesReceipt);
 
         function assertTransactionIsValid(): void {
@@ -18,12 +22,4 @@ export function makePostSalesReceiptTransaction(actions: CoreActions): Transacti
             transactionValidator.assertIsISODate(date);
         }
     };
-
-    function buildSalesReceipt(employeeId: string, date: string, amount: string): SalesReceipt {
-        return {
-            employeeId: parseInt(employeeId),
-            date: date,
-            amount: parseFloat(amount)
-        };
-    }
 }

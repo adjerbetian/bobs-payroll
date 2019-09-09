@@ -60,7 +60,7 @@ module.exports = {
         "@typescript-eslint/prefer-readonly": "error",
         "@typescript-eslint/prefer-string-starts-ends-with": "error",
         "@typescript-eslint/promise-function-async": "error",
-        "@typescript-eslint/unbound-method": "error",
+        "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/no-explicit-any": "off"
     },
     overrides: [

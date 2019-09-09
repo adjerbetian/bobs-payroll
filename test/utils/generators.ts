@@ -1,6 +1,5 @@
 import { generateIndex } from "@test/generators";
 import * as _ from "lodash";
-import * as moment from "moment";
 import {
     DirectPaymentMethod,
     HoldPaymentMethod,
@@ -8,19 +7,8 @@ import {
     MailPaymentMethod,
     Payment,
     PaymentMethodType,
-    SalesReceipt,
     ServiceCharge
 } from "../../src";
-
-export function generateSalesReceipt(args: Partial<SalesReceipt> = {}): SalesReceipt {
-    const index = generateIndex();
-    return {
-        employeeId: index,
-        date: moment().format("YYYY-MM-DD"),
-        amount: generateFloatBetween(10000, 50000),
-        ...args
-    };
-}
 
 export function generateServiceCharge(args: Partial<ServiceCharge> = {}): ServiceCharge {
     const index = generateIndex();

@@ -1,4 +1,4 @@
-import { expect, generateIndex, generateSalesReceipt, monday, Stub } from "@test/unit";
+import { entityGenerators, expect, generateIndex, monday, Stub } from "@test/unit";
 import { SalesReceiptRepository } from "../../repositories";
 import { buildStubbedSalesReceiptRepository } from "../../test";
 import { makeFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceiptsSince";
@@ -16,7 +16,7 @@ describe("action fetchAllEmployeeSalesReceipts", () => {
 
     it("should return all employee's sales receipts", async () => {
         const employeeId = generateIndex();
-        const salesReceipts = [generateSalesReceipt(), generateSalesReceipt()];
+        const salesReceipts = [entityGenerators.generateSalesReceipt(), entityGenerators.generateSalesReceipt()];
         stubbedSalesReceiptRepository.fetchAllOfEmployeeSince.withArgs(employeeId, monday).resolves(salesReceipts);
 
         const result = await fetchAllEmployeeSalesReceipts(employeeId, monday);

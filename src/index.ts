@@ -1,6 +1,7 @@
 export * from "./domain";
 export * from "./utils";
 export {
+    MongoDbAdapter,
     dbUnionMembers,
     dbServiceCharges,
     dbSalesReceipts,
@@ -14,6 +15,7 @@ export {
     HourlyEmployeeDBModel,
     SalariedEmployeeDBModel,
     CommissionedEmployeeDBModel,
+    SalesReceiptDBModel,
     initConnection,
     closeConnection,
     cleanCollections

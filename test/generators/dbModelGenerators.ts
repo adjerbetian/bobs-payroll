@@ -4,6 +4,7 @@ import {
     EmployeeType,
     HourlyEmployeeDBModel,
     SalariedEmployeeDBModel,
+    SalesReceiptDBModel,
     TimeCardDBModel,
     UnionMemberDBModel
 } from "../../src";
@@ -58,6 +59,15 @@ export const dbModelGenerators = {
             salary: generateFloatBetween(1500, 5000),
             commissionRate: generateFloatBetween(0, 0.1),
             type: EmployeeType.COMMISSIONED,
+            ...args
+        };
+    },
+    generateSalesReceipt(args: Partial<SalesReceiptDBModel> = {}): SalesReceiptDBModel {
+        const index = generateIndex();
+        return {
+            employeeId: index,
+            date: moment().format("YYYY-MM-DD"),
+            amount: generateFloatBetween(10000, 50000),
             ...args
         };
     }

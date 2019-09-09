@@ -2,35 +2,27 @@ import {
     buildCommissionedEmployee,
     buildHourlyEmployee,
     buildSalariedEmployee,
+    buildSalesReceipt,
     buildTimeCard,
-    buildUnionMember,
-    CommissionedEmployee,
-    CommissionedEmployeeDBModel,
-    HourlyEmployee,
-    HourlyEmployeeDBModel,
-    SalariedEmployee,
-    SalariedEmployeeDBModel,
-    TimeCard,
-    TimeCardDBModel,
-    UnionMember,
-    UnionMemberDBModel
+    buildUnionMember
 } from "../../src";
-import { dbModelGenerators } from "./dbModelGenerators";
+import { dbModelGenerators as g } from "./dbModelGenerators";
 
 export const entityGenerators = {
-    generateHourlyEmployee(args: Partial<HourlyEmployeeDBModel> = {}): HourlyEmployee {
-        return buildHourlyEmployee(dbModelGenerators.generateHourlyEmployee(args));
-    },
-    generateSalariedEmployee(args: Partial<SalariedEmployeeDBModel> = {}): SalariedEmployee {
-        return buildSalariedEmployee(dbModelGenerators.generateSalariedEmployee(args));
-    },
-    generateCommissionedEmployee(args: Partial<CommissionedEmployeeDBModel> = {}): CommissionedEmployee {
-        return buildCommissionedEmployee(dbModelGenerators.generateCommissionedEmployee(args));
-    },
-    generateTimeCard(args: Partial<TimeCardDBModel> = {}): TimeCard {
-        return buildTimeCard(dbModelGenerators.generateTimeCard(args));
-    },
-    generateUnionMember(args: Partial<UnionMemberDBModel> = {}): UnionMember {
-        return buildUnionMember(dbModelGenerators.generateUnionMember(args));
-    }
+    generateHourlyEmployee: buildEntityGenerator(g.generateHourlyEmployee, buildHourlyEmployee),
+    generateSalariedEmployee: buildEntityGenerator(g.generateSalariedEmployee, buildSalariedEmployee),
+    generateCommissionedEmployee: buildEntityGenerator(g.generateCommissionedEmployee, buildCommissionedEmployee),
+    generateTimeCard: buildEntityGenerator(g.generateTimeCard, buildTimeCard),
+    generateUnionMember: buildEntityGenerator(g.generateUnionMember, buildUnionMember),
+    generateSalesReceipt: buildEntityGenerator(g.generateSalesReceipt, buildSalesReceipt)
 };
+
+function buildEntityGenerator<DBModel, Entity>(
+    generator: (args: Partial<DBModel>) => DBModel,
+    entityBuilder: (args: DBModel) => Entity
+): (args?: Partial<DBModel>) => Entity {
+    return function(args = {}) {
+        const dbModel = generator(args);
+        return entityBuilder(dbModel);
+    };
+}

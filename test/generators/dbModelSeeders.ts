@@ -1,41 +1,22 @@
-import {
-    CommissionedEmployeeDBModel,
-    dbEmployees,
-    dbTimeCards,
-    dbUnionMembers,
-    HourlyEmployeeDBModel,
-    SalariedEmployeeDBModel,
-    TimeCardDBModel,
-    UnionMemberDBModel
-} from "../../src";
-import { dbModelGenerators } from "./dbModelGenerators";
+import { dbEmployees, dbSalesReceipts, dbTimeCards, dbUnionMembers, MongoDbAdapter } from "../../src";
+import { dbModelGenerators as gen } from "./dbModelGenerators";
 
 export const dbModelSeeders = {
-    async seedHourlyEmployee(args: Partial<HourlyEmployeeDBModel> = {}): Promise<HourlyEmployeeDBModel> {
-        const employee = dbModelGenerators.generateHourlyEmployee(args);
-        await dbEmployees.insert(employee);
-        return employee;
-    },
-    async seedSalariedEmployee(args: Partial<SalariedEmployeeDBModel> = {}): Promise<SalariedEmployeeDBModel> {
-        const employee = dbModelGenerators.generateSalariedEmployee(args);
-        await dbEmployees.insert(employee);
-        return employee;
-    },
-    async seedCommissionedEmployee(
-        args: Partial<CommissionedEmployeeDBModel> = {}
-    ): Promise<CommissionedEmployeeDBModel> {
-        const employee = dbModelGenerators.generateCommissionedEmployee(args);
-        await dbEmployees.insert(employee);
-        return employee;
-    },
-    async seedUnionMember(args: Partial<UnionMemberDBModel> = {}): Promise<UnionMemberDBModel> {
-        const unionMember = dbModelGenerators.generateUnionMember(args);
-        await dbUnionMembers.insert(unionMember);
-        return unionMember;
-    },
-    async seedTimeCard(args: Partial<TimeCardDBModel> = {}): Promise<TimeCardDBModel> {
-        const timeCard = dbModelGenerators.generateTimeCard(args);
-        await dbTimeCards.insert(timeCard);
-        return timeCard;
-    }
+    seedHourlyEmployee: buildDBModelSeeder(gen.generateHourlyEmployee, dbEmployees),
+    seedSalariedEmployee: buildDBModelSeeder(gen.generateSalariedEmployee, dbEmployees),
+    seedCommissionedEmployee: buildDBModelSeeder(gen.generateCommissionedEmployee, dbEmployees),
+    seedUnionMember: buildDBModelSeeder(gen.generateUnionMember, dbUnionMembers),
+    seedTimeCard: buildDBModelSeeder(gen.generateTimeCard, dbTimeCards),
+    seedSalesReceipt: buildDBModelSeeder(gen.generateSalesReceipt, dbSalesReceipts)
 };
+
+function buildDBModelSeeder<DBModel extends DBModelSubType, DBModelSubType>(
+    generator: (args: Partial<DBModel>) => DBModel,
+    db: MongoDbAdapter<DBModelSubType>
+): (args?: Partial<DBModel>) => Promise<DBModel> {
+    return async function(args = {}) {
+        const dbModel = generator(args);
+        await db.insert(dbModel);
+        return dbModel;
+    };
+}

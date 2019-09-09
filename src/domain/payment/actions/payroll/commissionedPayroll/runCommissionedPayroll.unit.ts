@@ -4,7 +4,6 @@ import {
     entityGenerators,
     expect,
     firstDayOfMonth,
-    generateSalesReceipt,
     lastDayOfMonth,
     Stub
 } from "@test/unit";
@@ -33,7 +32,7 @@ describe("action runCommissionedPayroll", () => {
 
     it("should insert the right payment the employee", async () => {
         const employee = entityGenerators.generateCommissionedEmployee();
-        const salesReceipts = [generateSalesReceipt(), generateSalesReceipt()];
+        const salesReceipts = [entityGenerators.generateSalesReceipt(), entityGenerators.generateSalesReceipt()];
         stubbedCoreActions.fetchAllCommissionedEmployees.resolves([employee]);
         stubbedCoreActions.fetchAllEmployeeSalesReceiptsSince
             .withArgs(employee.getId(), firstDayOfMonth)

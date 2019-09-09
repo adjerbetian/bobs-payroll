@@ -16,7 +16,6 @@ import {
     secondDayOfMonth,
     seedDirectPaymentMethod,
     seedPayment,
-    seedSalesReceipt,
     thursday,
     tuesday,
     wednesday
@@ -153,8 +152,8 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
         it("should include the commissions of all the sales receipts", async () => {
             const salesReceipts = [
-                await seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth }),
-                await seedSalesReceipt({ employeeId: employee.id, date: secondDayOfMonth })
+                await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth }),
+                await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: secondDayOfMonth })
             ];
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
@@ -163,7 +162,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             await expectEmployeePaymentAmountToEqual(employee.id, employee.salary + commission);
         });
         it("should not include the commissions of the sales receipts of the previous month", async () => {
-            await seedSalesReceipt({ employeeId: employee.id, date: firstDayOfLastMonth });
+            await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: firstDayOfLastMonth });
             await seedPayment({ date: endOfLastMonth, employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
@@ -171,7 +170,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             await expectEmployeePaymentAmountToEqual(employee.id, employee.salary);
         });
         it("should not pay if it's not the last day of the month", async () => {
-            await seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth });
+            await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth });
 
             await executePayrollCommand(`Payroll ${secondDayOfMonth}`);
 

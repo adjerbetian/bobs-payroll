@@ -37,7 +37,7 @@ export function buildCommissionedEmployee({
             return commissionRate;
         },
         computeCommissionedSalary(salesReceipts: SalesReceipt[]): number {
-            const totalSold = salesReceipts.reduce((total, salesReceipt) => total + salesReceipt.amount, 0);
+            const totalSold = salesReceipts.reduce((total, salesReceipt) => total + salesReceipt.getAmount(), 0);
             const commission = commissionRate * totalSold;
             return commission + salary;
         },

@@ -1,12 +1,4 @@
-import {
-    buildStubFor,
-    entityGenerators,
-    expect,
-    generateIndex,
-    generateSalesReceipt,
-    generateServiceCharge,
-    Stub
-} from "@test/unit";
+import { buildStubFor, entityGenerators, expect, generateIndex, generateServiceCharge, Stub } from "@test/unit";
 import { isoDate } from "../../../utils";
 import { makeProcessTransaction, Transactions } from "./processTransaction";
 
@@ -74,19 +66,19 @@ describe("processTransaction", () => {
     describe("SalesReceipt", () => {
         it("should call the postSalesReceipt transaction", async () => {
             stubbedTransactions.postSalesReceipt.resolves();
-            const salesReceipt = generateSalesReceipt();
+            const salesReceipt = entityGenerators.generateSalesReceipt();
 
             await processTransaction([
                 "SalesReceipt",
-                `${salesReceipt.employeeId}`,
-                `${salesReceipt.date}`,
-                `${salesReceipt.amount}`
+                `${salesReceipt.getEmployeeId()}`,
+                `${salesReceipt.getDate()}`,
+                `${salesReceipt.getAmount()}`
             ]);
 
             expect(stubbedTransactions.postSalesReceipt).to.have.been.calledOnceWith(
-                `${salesReceipt.employeeId}`,
-                `${salesReceipt.date}`,
-                `${salesReceipt.amount}`
+                `${salesReceipt.getEmployeeId()}`,
+                `${salesReceipt.getDate()}`,
+                `${salesReceipt.getAmount()}`
             );
         });
     });
