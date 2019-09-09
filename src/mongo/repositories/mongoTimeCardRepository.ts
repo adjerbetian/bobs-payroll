@@ -20,16 +20,16 @@ export function makeMongoTimeCardRepository(
     };
 }
 
-export function toDBModel(timeCard: TimeCard): TimeCardDBModel {
+function toDBModel(timeCard: TimeCard): TimeCardDBModel {
     return {
         employeeId: timeCard.getEmployeeId(),
         date: timeCard.getDate(),
         hours: timeCard.getHours()
     };
 }
-export function toEntities(timeCardDBModels: TimeCardDBModel[]): TimeCard[] {
+function toEntities(timeCardDBModels: TimeCardDBModel[]): TimeCard[] {
     return timeCardDBModels.map(model => toEntity(model));
 }
-export function toEntity(timeCardDBModel: TimeCardDBModel): TimeCard {
+function toEntity(timeCardDBModel: TimeCardDBModel): TimeCard {
     return buildTimeCard(timeCardDBModel);
 }

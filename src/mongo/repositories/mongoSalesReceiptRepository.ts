@@ -16,16 +16,16 @@ export function makeMongoSalesReceiptRepository(
     };
 }
 
-export function toDBModel(salesReceipt: SalesReceipt): SalesReceiptDBModel {
+function toDBModel(salesReceipt: SalesReceipt): SalesReceiptDBModel {
     return {
         employeeId: salesReceipt.getEmployeeId(),
         date: salesReceipt.getDate(),
         amount: salesReceipt.getAmount()
     };
 }
-export function toEntities(salesReceiptDBModels: SalesReceiptDBModel[]): SalesReceipt[] {
+function toEntities(salesReceiptDBModels: SalesReceiptDBModel[]): SalesReceipt[] {
     return salesReceiptDBModels.map(model => toEntity(model));
 }
-export function toEntity(salesReceiptDBModel: SalesReceiptDBModel): SalesReceipt {
+function toEntity(salesReceiptDBModel: SalesReceiptDBModel): SalesReceipt {
     return buildSalesReceipt(salesReceiptDBModel);
 }

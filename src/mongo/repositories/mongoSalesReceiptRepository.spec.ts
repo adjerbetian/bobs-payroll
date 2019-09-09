@@ -32,17 +32,25 @@ describe("mongoSalesReceiptRepository", () => {
 
             expect(result).entities.to.deep.equal(salesReceipts);
         });
+        it("should not return the other employees sales receipts", async () => {
+            await entitySeeders.seedSalesReceipt();
+
+            const result = await repository.fetchAllOfEmployeeSince(employeeId, never);
+
+            expect(result).to.be.empty;
+        });
         it("should return the sales receipts which are after the given date", async () => {
-            const salesReceipt = await entitySeeders.seedSalesReceipt({ employeeId, date: tuesday });
+            await entitySeeders.seedSalesReceipt({ employeeId, date: tuesday });
             await entitySeeders.seedSalesReceipt({ employeeId, date: lastTuesday });
 
             const result = await repository.fetchAllOfEmployeeSince(employeeId, monday);
 
-            expect(result).entities.to.deep.equal([salesReceipt]);
+            expect(result).to.have.lengthOf(1);
+            expect(result[0].getDate()).to.equal(tuesday);
         });
     });
     describe("insert", () => {
-        it("insert the given sales receipt", async () => {
+        it("should insert the given sales receipt", async () => {
             const salesReceipt = entityGenerators.generateSalesReceipt({ employeeId });
 
             await repository.insert(salesReceipt);

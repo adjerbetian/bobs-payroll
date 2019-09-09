@@ -26,13 +26,13 @@ export function makeMongoUnionMemberRepository(
     };
 }
 
-export function toDBModel(unionMember: UnionMember): UnionMemberDBModel {
+function toDBModel(unionMember: UnionMember): UnionMemberDBModel {
     return {
         employeeId: unionMember.getEmployeeId(),
         memberId: unionMember.getMemberId(),
         rate: unionMember.getRate()
     };
 }
-export function toEntity(unionMemberDBModel: UnionMemberDBModel): UnionMember {
+function toEntity(unionMemberDBModel: UnionMemberDBModel): UnionMember {
     return buildUnionMember(unionMemberDBModel);
 }
