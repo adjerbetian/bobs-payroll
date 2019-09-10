@@ -16,6 +16,7 @@ export {
     SalariedEmployeeDBModel,
     CommissionedEmployeeDBModel,
     SalesReceiptDBModel,
+    ServiceChargeDBModel,
     initConnection,
     closeConnection,
     cleanCollections

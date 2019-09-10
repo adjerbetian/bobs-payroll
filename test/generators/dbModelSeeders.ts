@@ -1,4 +1,4 @@
-import { dbEmployees, dbSalesReceipts, dbTimeCards, dbUnionMembers, MongoDbAdapter } from "../../src";
+import { dbEmployees, dbSalesReceipts, dbServiceCharges, dbTimeCards, dbUnionMembers, MongoDbAdapter } from "../../src";
 import { dbModelGenerators as gen } from "./dbModelGenerators";
 
 export const dbModelSeeders = {
@@ -7,7 +7,8 @@ export const dbModelSeeders = {
     seedCommissionedEmployee: buildDBModelSeeder(gen.generateCommissionedEmployee, dbEmployees),
     seedUnionMember: buildDBModelSeeder(gen.generateUnionMember, dbUnionMembers),
     seedTimeCard: buildDBModelSeeder(gen.generateTimeCard, dbTimeCards),
-    seedSalesReceipt: buildDBModelSeeder(gen.generateSalesReceipt, dbSalesReceipts)
+    seedSalesReceipt: buildDBModelSeeder(gen.generateSalesReceipt, dbSalesReceipts),
+    seedServiceCharge: buildDBModelSeeder(gen.generateServiceCharge, dbServiceCharges)
 };
 
 function buildDBModelSeeder<DBModel extends DBModelSubType, DBModelSubType>(

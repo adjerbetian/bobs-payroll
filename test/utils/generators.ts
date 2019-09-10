@@ -6,18 +6,8 @@ import {
     isoDate,
     MailPaymentMethod,
     Payment,
-    PaymentMethodType,
-    ServiceCharge
+    PaymentMethodType
 } from "../../src";
-
-export function generateServiceCharge(args: Partial<ServiceCharge> = {}): ServiceCharge {
-    const index = generateIndex();
-    return {
-        memberId: `member-${index}`,
-        amount: generateFloatBetween(2, 10),
-        ...args
-    };
-}
 
 export function generateFloatBetween(min: number, max: number): number {
     return _.round(_.random(min, max, true), 2);

@@ -5,6 +5,7 @@ import {
     HourlyEmployeeDBModel,
     SalariedEmployeeDBModel,
     SalesReceiptDBModel,
+    ServiceChargeDBModel,
     TimeCardDBModel,
     UnionMemberDBModel
 } from "../../src";
@@ -68,6 +69,14 @@ export const dbModelGenerators = {
             employeeId: index,
             date: moment().format("YYYY-MM-DD"),
             amount: generateFloatBetween(10000, 50000),
+            ...args
+        };
+    },
+    generateServiceCharge(args: Partial<ServiceChargeDBModel> = {}): ServiceChargeDBModel {
+        const index = generateIndex();
+        return {
+            memberId: `member-${index}`,
+            amount: generateFloatBetween(2, 10),
             ...args
         };
     }

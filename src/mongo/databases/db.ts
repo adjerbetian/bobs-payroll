@@ -1,13 +1,19 @@
 import { Db, MongoClient } from "mongodb";
 import * as config from "../../config.json";
-import { Payment, PaymentMethod, ServiceCharge } from "../../domain";
-import { EmployeeDBModel, SalesReceiptDBModel, TimeCardDBModel, UnionMemberDBModel } from "../DBModels";
+import { Payment, PaymentMethod } from "../../domain";
+import {
+    EmployeeDBModel,
+    SalesReceiptDBModel,
+    ServiceChargeDBModel,
+    TimeCardDBModel,
+    UnionMemberDBModel
+} from "../DBModels";
 import { makeMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 
 export const dbEmployees: MongoDbAdapter<EmployeeDBModel> = buildEmptyObject();
 export const dbTimeCards: MongoDbAdapter<TimeCardDBModel> = buildEmptyObject();
 export const dbSalesReceipts: MongoDbAdapter<SalesReceiptDBModel> = buildEmptyObject();
-export const dbServiceCharges: MongoDbAdapter<ServiceCharge> = buildEmptyObject();
+export const dbServiceCharges: MongoDbAdapter<ServiceChargeDBModel> = buildEmptyObject();
 export const dbPaymentMethods: MongoDbAdapter<PaymentMethod> = buildEmptyObject();
 export const dbUnionMembers: MongoDbAdapter<UnionMemberDBModel> = buildEmptyObject();
 export const dbPayments: MongoDbAdapter<Payment> = buildEmptyObject();

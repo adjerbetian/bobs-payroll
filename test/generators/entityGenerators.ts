@@ -3,6 +3,7 @@ import {
     buildHourlyEmployee,
     buildSalariedEmployee,
     buildSalesReceipt,
+    buildServiceCharge,
     buildTimeCard,
     buildUnionMember
 } from "../../src";
@@ -14,7 +15,8 @@ export const entityGenerators = {
     generateCommissionedEmployee: buildEntityGenerator(g.generateCommissionedEmployee, buildCommissionedEmployee),
     generateTimeCard: buildEntityGenerator(g.generateTimeCard, buildTimeCard),
     generateUnionMember: buildEntityGenerator(g.generateUnionMember, buildUnionMember),
-    generateSalesReceipt: buildEntityGenerator(g.generateSalesReceipt, buildSalesReceipt)
+    generateSalesReceipt: buildEntityGenerator(g.generateSalesReceipt, buildSalesReceipt),
+    generateServiceCharge: buildEntityGenerator(g.generateServiceCharge, buildServiceCharge)
 };
 
 function buildEntityGenerator<DBModel, Entity>(

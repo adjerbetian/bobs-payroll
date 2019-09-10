@@ -1,4 +1,4 @@
-import { buildStubbedCoreActions, expect, generateServiceCharge, Stub } from "@test/unit";
+import { buildStubbedCoreActions, entityGenerators, expect, Stub } from "@test/unit";
 import { CoreActions, ServiceCharge } from "../../../core";
 import { TransactionFormatError } from "../../errors";
 import { makePostServiceChargeTransaction } from "./postServiceCharge";
@@ -15,21 +15,21 @@ describe("postServiceCharge", () => {
     });
 
     it("should create a service charge for the employee", async () => {
-        const serviceCharge = generateServiceCharge();
+        const serviceCharge = entityGenerators.generateServiceCharge();
 
         await postServiceChargeEntity(serviceCharge);
 
-        expect(stubbedActions.createServiceCharge).to.have.been.calledOnceWith(serviceCharge);
+        expect(stubbedActions.createServiceCharge).to.have.been.calledOnceWithEntity(serviceCharge);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
-        const serviceCharge = generateServiceCharge();
+        const serviceCharge = entityGenerators.generateServiceCharge();
 
-        const promise = postServiceCharge(`${serviceCharge.memberId}`, ``);
+        const promise = postServiceCharge(`${serviceCharge.getMemberId()}`, ``);
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "ServiceCharge");
     });
 
     async function postServiceChargeEntity(serviceCharge: ServiceCharge): Promise<void> {
-        return postServiceCharge(`${serviceCharge.memberId}`, `${serviceCharge.amount}`);
+        return postServiceCharge(`${serviceCharge.getMemberId()}`, `${serviceCharge.getAmount()}`);
     }
 });

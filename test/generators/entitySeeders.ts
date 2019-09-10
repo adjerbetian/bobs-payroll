@@ -3,6 +3,7 @@ import {
     buildHourlyEmployee,
     buildSalariedEmployee,
     buildSalesReceipt,
+    buildServiceCharge,
     buildTimeCard,
     buildUnionMember
 } from "../../src";
@@ -14,7 +15,8 @@ export const entitySeeders = {
     seedCommissionedEmployee: buildEntitySeeder(seeders.seedCommissionedEmployee, buildCommissionedEmployee),
     seedUnionMember: buildEntitySeeder(seeders.seedUnionMember, buildUnionMember),
     seedTimeCard: buildEntitySeeder(seeders.seedTimeCard, buildTimeCard),
-    seedSalesReceipt: buildEntitySeeder(seeders.seedSalesReceipt, buildSalesReceipt)
+    seedSalesReceipt: buildEntitySeeder(seeders.seedSalesReceipt, buildSalesReceipt),
+    seedServiceCharge: buildEntitySeeder(seeders.seedServiceCharge, buildServiceCharge)
 };
 
 function buildEntitySeeder<DBModel, Entity>(

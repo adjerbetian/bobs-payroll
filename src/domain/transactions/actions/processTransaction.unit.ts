@@ -1,4 +1,4 @@
-import { buildStubFor, entityGenerators, expect, generateIndex, generateServiceCharge, Stub } from "@test/unit";
+import { buildStubFor, entityGenerators, expect, generateIndex, Stub } from "@test/unit";
 import { isoDate } from "../../../utils";
 import { makeProcessTransaction, Transactions } from "./processTransaction";
 
@@ -85,13 +85,17 @@ describe("processTransaction", () => {
     describe("ServiceCharge", () => {
         it("should call the postServiceCharge transaction", async () => {
             stubbedTransactions.postServiceCharge.resolves();
-            const serviceCharge = generateServiceCharge();
+            const serviceCharge = entityGenerators.generateServiceCharge();
 
-            await processTransaction(["ServiceCharge", `${serviceCharge.memberId}`, `${serviceCharge.amount}`]);
+            await processTransaction([
+                "ServiceCharge",
+                `${serviceCharge.getMemberId()}`,
+                `${serviceCharge.getAmount()}`
+            ]);
 
             expect(stubbedTransactions.postServiceCharge).to.have.been.calledOnceWith(
-                `${serviceCharge.memberId}`,
-                `${serviceCharge.amount}`
+                `${serviceCharge.getMemberId()}`,
+                `${serviceCharge.getAmount()}`
             );
         });
     });

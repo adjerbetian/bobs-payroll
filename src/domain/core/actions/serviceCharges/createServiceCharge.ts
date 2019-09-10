@@ -12,7 +12,7 @@ export function makeCreateServiceCharge({
     unionMemberRepository
 }: Dependencies): CoreServiceChargeActions["createServiceCharge"] {
     return async function(serviceCharge: ServiceCharge): Promise<void> {
-        await assertUnionMemberExists(serviceCharge.memberId);
+        await assertUnionMemberExists(serviceCharge.getMemberId());
         await serviceChargeRepository.insert(serviceCharge);
     };
 
