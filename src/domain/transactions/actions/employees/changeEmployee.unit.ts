@@ -1,13 +1,4 @@
-import {
-    buildStubbedCoreActions,
-    entityGenerators,
-    expect,
-    generateDirectPaymentMethod,
-    generateHoldPaymentMethod,
-    generateIndex,
-    generateMailPaymentMethod,
-    Stub
-} from "@test/unit";
+import { buildStubbedCoreActions, entityGenerators, expect, generateIndex, Stub } from "@test/unit";
 import { CoreActions, EmployeeType } from "../../../core";
 import { TransactionFormatError } from "../../errors";
 import { makeChangeEmployeeTransaction } from "./changeEmployee";
@@ -115,20 +106,20 @@ describe("changeEmployee", () => {
             it("should add the hold paycheck payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Hold");
 
-                const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId });
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                const expectedPaymentMethod = entityGenerators.generateHoldPaymentMethod({ employeeId });
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
             });
         });
         describe("Direct", () => {
             it("should add the direct deposit payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Direct", "bank-id", "account-id");
 
-                const expectedPaymentMethod = generateDirectPaymentMethod({
+                const expectedPaymentMethod = entityGenerators.generateDirectPaymentMethod({
                     employeeId,
                     bank: "bank-id",
                     account: "account-id"
                 });
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the bank-id is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Direct");
@@ -145,11 +136,11 @@ describe("changeEmployee", () => {
             it("should add the direct deposit payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Mail", "my paycheck address");
 
-                const expectedPaymentMethod = generateMailPaymentMethod({
+                const expectedPaymentMethod = entityGenerators.generateMailPaymentMethod({
                     employeeId,
                     address: "my paycheck address"
                 });
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(expectedPaymentMethod);
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the address is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Mail");

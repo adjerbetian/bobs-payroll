@@ -15,5 +15,4 @@ afterEach((): void => sandbox.restore());
 
 export * from "./utils/dates";
 export * from "./utils/stubBuilder";
-export * from "./utils/generators";
-export { entityGenerators, dbModelGenerators, generateIndex } from "./generators";
+export { entityGenerators, dbModelGenerators, generateIndex, generateFloatBetween } from "./generators";

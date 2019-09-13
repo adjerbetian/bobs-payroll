@@ -1,8 +1,14 @@
 import * as moment from "moment";
 import {
     CommissionedEmployeeDBModel,
+    DirectPaymentMethodDBModel,
     EmployeeType,
+    HoldPaymentMethodDBModel,
     HourlyEmployeeDBModel,
+    isoDate,
+    MailPaymentMethodDBModel,
+    PaymentDBModel,
+    PaymentMethodType,
     SalariedEmployeeDBModel,
     SalesReceiptDBModel,
     ServiceChargeDBModel,
@@ -77,6 +83,43 @@ export const dbModelGenerators = {
         return {
             memberId: `member-${index}`,
             amount: generateFloatBetween(2, 10),
+            ...args
+        };
+    },
+    generateHoldPaymentMethod(args: Partial<HoldPaymentMethodDBModel> = {}): HoldPaymentMethodDBModel {
+        const index = generateIndex();
+        return {
+            employeeId: index,
+            type: PaymentMethodType.HOLD,
+            ...args
+        };
+    },
+    generateDirectPaymentMethod(args: Partial<DirectPaymentMethodDBModel> = {}): DirectPaymentMethodDBModel {
+        const index = generateIndex();
+        return {
+            employeeId: index,
+            bank: `bank-${index}`,
+            account: `bank-${index}`,
+            type: PaymentMethodType.DIRECT,
+            ...args
+        };
+    },
+    generateMailPaymentMethod(args: Partial<MailPaymentMethodDBModel> = {}): MailPaymentMethodDBModel {
+        const index = generateIndex();
+        return {
+            employeeId: index,
+            address: `address-${index}`,
+            type: PaymentMethodType.MAIL,
+            ...args
+        };
+    },
+    generatePayment(args: Partial<PaymentDBModel> = {}): PaymentDBModel {
+        const index = generateIndex();
+        return {
+            amount: generateFloatBetween(1000, 2000),
+            employeeId: index,
+            date: isoDate(),
+            method: dbModelGenerators.generateHoldPaymentMethod({ employeeId: index }),
             ...args
         };
     }

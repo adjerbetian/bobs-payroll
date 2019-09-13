@@ -2,7 +2,6 @@ import { execute } from "./utils";
 
 export * from "./integration";
 export * from "./utils/execute";
-export * from "./utils/seeders"; // todo: to remove
 
 before(async () => {
     await execute(`IF EXIST dist\\ RMDIR dist /S /Q`);

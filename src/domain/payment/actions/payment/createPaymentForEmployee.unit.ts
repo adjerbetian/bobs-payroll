@@ -1,14 +1,14 @@
 import {
     buildStubbedCoreActions,
+    entityGenerators,
     expect,
     generateFloatBetween,
-    generateHoldPaymentMethod,
     generateIndex,
     lastDayOfMonth,
     Stub
 } from "@test/unit";
 import { CoreActions } from "../../../core";
-import { Payment } from "../../entities";
+import { buildPayment, Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
 import { buildStubbedPaymentRepository } from "../../test";
 import { makeCreatePaymentForEmployee } from "./createPaymentForEmployee";
@@ -34,22 +34,20 @@ describe("createPaymentForEmployee", () => {
     const amount = generateFloatBetween(1000, 2000);
 
     it("should insert a payment with the given info", async () => {
-        const method = generateHoldPaymentMethod({ employeeId });
+        const method = entityGenerators.generateHoldPaymentMethod({ employeeId });
         stubbedCoreActions.fetchEmployeePaymentMethod.withArgs(employeeId).resolves(method);
 
         await createPaymentForEmployee({ employeeId, date, amount });
 
         expect(stubbedPaymentRepository.insert).to.have.been.calledOnce;
-        expect(getInsertedPayment()).to.deep.include({ employeeId, date, amount });
-    });
-
-    it("should insert a payment with the existing employee payment method", async () => {
-        const method = generateHoldPaymentMethod({ employeeId });
-        stubbedCoreActions.fetchEmployeePaymentMethod.withArgs(employeeId).resolves(method);
-
-        await createPaymentForEmployee({ employeeId, date, amount });
-
-        expect(getInsertedPayment().method).to.deep.equal(method);
+        expect(getInsertedPayment()).entity.to.equal(
+            buildPayment({
+                employeeId,
+                amount,
+                date,
+                method
+            })
+        );
     });
 
     function getInsertedPayment(): Payment {

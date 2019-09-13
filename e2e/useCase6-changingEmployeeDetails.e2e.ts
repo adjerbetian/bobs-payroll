@@ -1,11 +1,4 @@
-import {
-    dbModelSeeders,
-    executePayrollCommand,
-    expect,
-    generateIndex,
-    seedDirectPaymentMethod,
-    seedHoldPaymentMethod
-} from "@test/e2e";
+import { dbModelSeeders, executePayrollCommand, expect, generateIndex } from "@test/e2e";
 import {
     dbEmployees,
     dbPaymentMethods,
@@ -13,7 +6,7 @@ import {
     EmployeeDBModel,
     EmployeeType,
     NotFoundError,
-    PaymentMethod,
+    PaymentMethodDBModel,
     PaymentMethodType,
     UnionMemberDBModel
 } from "../src";
@@ -86,7 +79,7 @@ describe("Use Case 6: Changing Employee Details", () => {
                 expect(dbPaymentMethod).to.have.property("type", PaymentMethodType.HOLD);
             });
             it("should change the employee's payment method if one existed", async () => {
-                await seedDirectPaymentMethod({ employeeId: employee.id });
+                await dbModelSeeders.seedDirectPaymentMethod({ employeeId: employee.id });
 
                 await executePayrollCommand(`ChgEmp ${employee.id} Hold`);
 
@@ -105,7 +98,7 @@ describe("Use Case 6: Changing Employee Details", () => {
                 expect(dbPaymentMethod).to.have.property("account", "account-id");
             });
             it("should change the employee's payment method if one existed", async () => {
-                await seedHoldPaymentMethod({ employeeId: employee.id });
+                await dbModelSeeders.seedHoldPaymentMethod({ employeeId: employee.id });
 
                 await executePayrollCommand(`ChgEmp ${employee.id} Direct "bank-id" "account-id"`);
 
@@ -128,7 +121,7 @@ describe("Use Case 6: Changing Employee Details", () => {
                 expect(dbPaymentMethod).to.have.property("address", "my address");
             });
             it("should change the employee's payment method if one existed", async () => {
-                await seedHoldPaymentMethod({ employeeId: employee.id });
+                await dbModelSeeders.seedHoldPaymentMethod({ employeeId: employee.id });
 
                 await executePayrollCommand(`ChgEmp ${employee.id} Mail "my address"`);
 
@@ -190,7 +183,7 @@ describe("Use Case 6: Changing Employee Details", () => {
 async function fetchEmployeeById(employeeId: number): Promise<EmployeeDBModel> {
     return dbEmployees.fetch({ id: employeeId });
 }
-async function fetchPaymentMethodByEmployeeId(employeeId: number): Promise<PaymentMethod> {
+async function fetchPaymentMethodByEmployeeId(employeeId: number): Promise<PaymentMethodDBModel> {
     return dbPaymentMethods.fetch({ employeeId });
 }
 async function fetchUnionMemberByEmployeeId(employeeId: number): Promise<UnionMemberDBModel> {

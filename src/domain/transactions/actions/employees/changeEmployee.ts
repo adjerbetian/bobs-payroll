@@ -1,6 +1,13 @@
-import { buildUnionMember, CoreActions, EmployeeType, PaymentMethodType } from "../../../core";
-import { buildTransactionValidator } from "../utils";
+import {
+    buildDirectPaymentMethod,
+    buildHoldPaymentMethod,
+    buildMailPaymentMethod,
+    buildUnionMember,
+    CoreActions,
+    EmployeeType
+} from "../../../core";
 import { Transactions } from "../processTransaction";
+import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
@@ -66,10 +73,11 @@ export function makeChangeEmployeeTransaction(actions: CoreActions): Transaction
         }
 
         async function changeEmployeePaymentMethodToHold(): Promise<void> {
-            await actions.createPaymentMethod({
-                type: PaymentMethodType.HOLD,
-                employeeId: employeeId
-            });
+            await actions.createPaymentMethod(
+                buildHoldPaymentMethod({
+                    employeeId: employeeId
+                })
+            );
         }
 
         async function changeEmployeePaymentMethodToDirect(): Promise<void> {
@@ -77,23 +85,25 @@ export function makeChangeEmployeeTransaction(actions: CoreActions): Transaction
             transactionValidator.assertIsNotEmpty(bank);
             transactionValidator.assertIsNotEmpty(account);
 
-            await actions.createPaymentMethod({
-                type: PaymentMethodType.DIRECT,
-                employeeId: employeeId,
-                account,
-                bank
-            });
+            await actions.createPaymentMethod(
+                buildDirectPaymentMethod({
+                    employeeId: employeeId,
+                    account,
+                    bank
+                })
+            );
         }
 
         async function changeEmployeePaymentMethodToMail(): Promise<void> {
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
 
-            await actions.createPaymentMethod({
-                type: PaymentMethodType.MAIL,
-                employeeId: employeeId,
-                address
-            });
+            await actions.createPaymentMethod(
+                buildMailPaymentMethod({
+                    employeeId: employeeId,
+                    address
+                })
+            );
         }
 
         async function changeEmployeeToJoinUnion(): Promise<void> {

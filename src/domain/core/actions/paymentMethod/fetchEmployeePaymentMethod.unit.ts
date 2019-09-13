@@ -1,4 +1,4 @@
-import { expect, generateHoldPaymentMethod, generateIndex, Stub } from "@test/unit";
+import { entityGenerators, expect, generateIndex, Stub } from "@test/unit";
 import { NotFoundError } from "../../errors";
 import { PaymentMethodRepository } from "../../repositories";
 import { buildStubbedPaymentMethodRepository } from "../../test";
@@ -17,7 +17,7 @@ describe("action fetchEmployeePaymentMethod", () => {
 
     it("should return the employee payment method", async () => {
         const employeeId = generateIndex();
-        const paymentMethod = generateHoldPaymentMethod({ employeeId });
+        const paymentMethod = entityGenerators.generateHoldPaymentMethod({ employeeId });
         stubbedPaymentMethodRepository.fetchByEmployeeId.withArgs(employeeId).resolves(paymentMethod);
 
         const result = await fetchEmployeePaymentMethod(employeeId);
@@ -33,6 +33,6 @@ describe("action fetchEmployeePaymentMethod", () => {
 
         const result = await fetchEmployeePaymentMethod(employeeId);
 
-        expect(result).to.deep.equal(generateHoldPaymentMethod({ employeeId }));
+        expect(result).entity.to.equal(entityGenerators.generateHoldPaymentMethod({ employeeId }));
     });
 });

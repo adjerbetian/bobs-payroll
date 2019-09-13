@@ -1,4 +1,5 @@
 import {
+    dbModelGenerators,
     dbModelSeeders,
     endOfLastMonth,
     executePayrollCommand,
@@ -6,7 +7,6 @@ import {
     firstDayOfLastMonth,
     firstDayOfMonth,
     friday,
-    generateHoldPaymentMethod,
     lastDayOfMonth,
     lastFriday,
     lastMonday,
@@ -14,8 +14,6 @@ import {
     monday,
     never,
     secondDayOfMonth,
-    seedDirectPaymentMethod,
-    seedPayment,
     thursday,
     tuesday,
     wednesday
@@ -46,7 +44,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
         it("should not include the time cards already paid", async () => {
             await dbModelSeeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId: employee.id });
-            await seedPayment({ employeeId: employee.id, date: lastFriday, amount: 666 });
+            await dbModelSeeders.seedPayment({ employeeId: employee.id, date: lastFriday, amount: 666 });
             const newTimeCard = await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${friday}`);
@@ -116,7 +114,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             async function seedPreviousPayment(employeeId: number): Promise<void> {
                 await dbModelSeeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId });
                 await dbModelSeeders.seedTimeCard({ date: lastTuesday, hours: 12, employeeId });
-                await seedPayment({ date: lastFriday, employeeId });
+                await dbModelSeeders.seedPayment({ date: lastFriday, employeeId });
             }
         });
     });
@@ -163,7 +161,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
         it("should not include the commissions of the sales receipts of the previous month", async () => {
             await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: firstDayOfLastMonth });
-            await seedPayment({ date: endOfLastMonth, employeeId: employee.id });
+            await dbModelSeeders.seedPayment({ date: endOfLastMonth, employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
@@ -180,7 +178,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
     describe("payment method", () => {
         it("should include the employee payment method", async () => {
             const employee = await dbModelSeeders.seedSalariedEmployee();
-            const paymentMethod = await seedDirectPaymentMethod({ employeeId: employee.id });
+            const paymentMethod = await dbModelSeeders.seedDirectPaymentMethod({ employeeId: employee.id });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
@@ -192,7 +190,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            const expectedPaymentMethod = generateHoldPaymentMethod({ employeeId: employee.id });
+            const expectedPaymentMethod = dbModelGenerators.generateHoldPaymentMethod({ employeeId: employee.id });
             const payment = await dbPayments.fetchLast({ employeeId: employee.id });
             expect(payment.method).to.deep.equal(expectedPaymentMethod);
         });

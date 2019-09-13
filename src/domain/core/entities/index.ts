@@ -1,3 +1,4 @@
+export * from "./Entity";
 export * from "./Employee";
 export * from "./employees";
 export * from "./TimeCard";

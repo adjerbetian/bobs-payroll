@@ -1,4 +1,4 @@
-import { expect, generateHoldPaymentMethod, Stub } from "@test/unit";
+import { entityGenerators, expect, Stub } from "@test/unit";
 import { PaymentMethodRepository } from "../../repositories";
 import { buildStubbedPaymentMethodRepository } from "../../test";
 import { makeCreatePaymentMethod } from "./createPaymentMethod";
@@ -18,18 +18,20 @@ describe("action setEmployeePaymentMethod", () => {
     });
 
     it("should add the hold paycheck payment method to the employee", async () => {
-        const paymentMethod = generateHoldPaymentMethod();
+        const paymentMethod = entityGenerators.generateHoldPaymentMethod();
 
         await createPaymentMethod(paymentMethod);
 
         expect(stubbedPaymentMethodRepository.insert).to.have.been.calledOnceWith(paymentMethod);
     });
     it("should delete the previous payment method of the employee", async () => {
-        const paymentMethod = generateHoldPaymentMethod();
+        const paymentMethod = entityGenerators.generateHoldPaymentMethod();
 
         await createPaymentMethod(paymentMethod);
 
-        expect(stubbedPaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(paymentMethod.employeeId);
+        expect(stubbedPaymentMethodRepository.deleteByEmployeeId).to.have.been.calledOnceWith(
+            paymentMethod.getEmployeeId()
+        );
         expect(stubbedPaymentMethodRepository.deleteByEmployeeId).to.have.been.calledBefore(
             stubbedPaymentMethodRepository.insert
         );

@@ -55,8 +55,8 @@ describe("mongoSalesReceiptRepository", () => {
 
             await repository.insert(salesReceipt);
 
-            const dbSalesReceipt = await repository.fetchAllOfEmployeeSince(employeeId, never);
-            expect(dbSalesReceipt).entities.to.equal([salesReceipt]);
+            const employeeReceipts = await repository.fetchAllOfEmployeeSince(employeeId, never);
+            expect(employeeReceipts).entities.to.equal([salesReceipt]);
         });
     });
 });

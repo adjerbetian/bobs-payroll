@@ -10,7 +10,7 @@ export function makeCreatePaymentMethod({
     paymentMethodRepository
 }: Dependencies): CorePaymentMethodActions["createPaymentMethod"] {
     return async function(paymentMethod: PaymentMethod): Promise<void> {
-        await paymentMethodRepository.deleteByEmployeeId(paymentMethod.employeeId);
+        await paymentMethodRepository.deleteByEmployeeId(paymentMethod.getEmployeeId());
         return paymentMethodRepository.insert(paymentMethod);
     };
 }

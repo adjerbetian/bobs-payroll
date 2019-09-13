@@ -30,15 +30,15 @@ describe("mongoEmployeeRepository", () => {
         }
     });
     describe("insert", () => {
-        it("insert the hourly employee", async () => {
+        it("should insert the hourly employee", async () => {
             const employee = entityGenerators.generateHourlyEmployee();
             await assertEmployeeCanBeInserted(employee);
         });
-        it("insert the salaried employee", async () => {
+        it("should insert the salaried employee", async () => {
             const employee = entityGenerators.generateSalariedEmployee();
             await assertEmployeeCanBeInserted(employee);
         });
-        it("insert the salaried employee", async () => {
+        it("should insert the salaried employee", async () => {
             const employee = entityGenerators.generateCommissionedEmployee();
             await assertEmployeeCanBeInserted(employee);
         });
@@ -51,14 +51,14 @@ describe("mongoEmployeeRepository", () => {
         }
     });
     describe("exists", () => {
-        it("return true when the employee exists", async () => {
+        it("should return true when the employee exists", async () => {
             const employee = await entitySeeders.seedHourlyEmployee();
 
             const result = await repository.exists(employee.getId());
 
             expect(result).to.be.true;
         });
-        it("return false when the employee exists", async () => {
+        it("should return false when the employee exists", async () => {
             await entitySeeders.seedHourlyEmployee();
 
             const result = await repository.exists(generateIndex());
@@ -67,7 +67,7 @@ describe("mongoEmployeeRepository", () => {
         });
     });
     describe("deleteById", () => {
-        it("delete the employee", async () => {
+        it("should delete the employee", async () => {
             const employee = await entitySeeders.seedHourlyEmployee();
 
             await repository.deleteById(employee.getId());
