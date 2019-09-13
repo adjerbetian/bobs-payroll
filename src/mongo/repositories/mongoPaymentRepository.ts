@@ -2,7 +2,8 @@ import * as moment from "moment";
 import { PaymentDependencies } from "../../domain";
 import { isoDate } from "../../utils";
 import { MongoDbAdapter } from "../databases";
-import { PaymentDBModel, paymentMapper } from "../DBModels";
+import { PaymentDBModel } from "../DBModels";
+import { paymentMapper } from "../mappers";
 
 const NEVER = isoDate(moment(0));
 

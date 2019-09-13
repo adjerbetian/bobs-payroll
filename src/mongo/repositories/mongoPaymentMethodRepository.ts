@@ -1,6 +1,7 @@
 import { CoreDependencies } from "../../domain";
 import { MongoDbAdapter } from "../databases";
-import { PaymentMethodDBModel, paymentMethodMapper } from "../DBModels";
+import { PaymentMethodDBModel } from "../DBModels";
+import { paymentMethodMapper } from "../mappers";
 
 export function makeMongoPaymentMethodRepository(
     db: MongoDbAdapter<PaymentMethodDBModel>

@@ -1,51 +1,65 @@
 import {
-    buildCommissionedEmployee,
-    buildHourlyEmployee,
-    buildSalariedEmployee,
-    buildSalesReceipt,
-    buildServiceCharge,
-    buildTimeCard,
-    buildUnionMember,
+    CommissionedEmployee,
+    CommissionedEmployeeDBModel,
     DirectPaymentMethod,
     DirectPaymentMethodDBModel,
+    employeeMapper,
     HoldPaymentMethod,
     HoldPaymentMethodDBModel,
+    HourlyEmployee,
+    HourlyEmployeeDBModel,
     MailPaymentMethod,
     MailPaymentMethodDBModel,
+    Mapper,
     paymentMapper,
-    paymentMethodMapper
+    paymentMethodMapper,
+    SalariedEmployee,
+    SalariedEmployeeDBModel,
+    salesReceiptMapper,
+    serviceChargeMapper,
+    timeCardMapper,
+    unionMemberMapper
 } from "../../src";
 import { dbModelGenerators as g } from "./dbModelGenerators";
 
 export const entityGenerators = {
-    generateHourlyEmployee: buildEntityGenerator(g.generateHourlyEmployee, buildHourlyEmployee),
-    generateSalariedEmployee: buildEntityGenerator(g.generateSalariedEmployee, buildSalariedEmployee),
-    generateCommissionedEmployee: buildEntityGenerator(g.generateCommissionedEmployee, buildCommissionedEmployee),
-    generateTimeCard: buildEntityGenerator(g.generateTimeCard, buildTimeCard),
-    generateUnionMember: buildEntityGenerator(g.generateUnionMember, buildUnionMember),
-    generateSalesReceipt: buildEntityGenerator(g.generateSalesReceipt, buildSalesReceipt),
-    generateServiceCharge: buildEntityGenerator(g.generateServiceCharge, buildServiceCharge),
-    generateHoldPaymentMethod: buildEntityGenerator<HoldPaymentMethodDBModel, HoldPaymentMethod>(
-        g.generateHoldPaymentMethod,
-        paymentMethodMapper.toEntity
-    ),
+    generateHourlyEmployee: buildEntityGenerator(g.generateHourlyEmployee, employeeMapper as Mapper<
+        HourlyEmployeeDBModel,
+        HourlyEmployee
+    >),
+    generateSalariedEmployee: buildEntityGenerator(g.generateSalariedEmployee, employeeMapper as Mapper<
+        SalariedEmployeeDBModel,
+        SalariedEmployee
+    >),
+    generateCommissionedEmployee: buildEntityGenerator(g.generateCommissionedEmployee, employeeMapper as Mapper<
+        CommissionedEmployeeDBModel,
+        CommissionedEmployee
+    >),
+    generateTimeCard: buildEntityGenerator(g.generateTimeCard, timeCardMapper),
+    generateUnionMember: buildEntityGenerator(g.generateUnionMember, unionMemberMapper),
+    generateSalesReceipt: buildEntityGenerator(g.generateSalesReceipt, salesReceiptMapper),
+    generateServiceCharge: buildEntityGenerator(g.generateServiceCharge, serviceChargeMapper),
+    generateHoldPaymentMethod: buildEntityGenerator(g.generateHoldPaymentMethod, paymentMethodMapper as Mapper<
+        HoldPaymentMethodDBModel,
+        HoldPaymentMethod
+    >),
     generateDirectPaymentMethod: buildEntityGenerator<DirectPaymentMethodDBModel, DirectPaymentMethod>(
         g.generateDirectPaymentMethod,
-        paymentMethodMapper.toEntity
+        paymentMethodMapper as Mapper<DirectPaymentMethodDBModel, DirectPaymentMethod>
     ),
     generateMailPaymentMethod: buildEntityGenerator<MailPaymentMethodDBModel, MailPaymentMethod>(
         g.generateMailPaymentMethod,
-        paymentMethodMapper.toEntity
+        paymentMethodMapper as Mapper<MailPaymentMethodDBModel, MailPaymentMethod>
     ),
-    generatePayment: buildEntityGenerator(g.generatePayment, paymentMapper.toEntity)
+    generatePayment: buildEntityGenerator(g.generatePayment, paymentMapper)
 };
 
 function buildEntityGenerator<DBModel, Entity>(
     generator: (args: Partial<DBModel>) => DBModel,
-    dbModelToEntityMapper: (args: DBModel) => Entity
+    entityMapper: Mapper<DBModel, Entity>
 ): (args?: Partial<DBModel>) => Entity {
     return function(args = {}) {
         const dbModel = generator(args);
-        return dbModelToEntityMapper(dbModel);
+        return entityMapper.toEntity(dbModel);
     };
 }

@@ -1,6 +1,7 @@
-import { buildServiceCharge, CoreDependencies, ServiceCharge } from "../../domain";
+import { CoreDependencies } from "../../domain";
 import { MongoDbAdapter } from "../databases";
 import { ServiceChargeDBModel } from "../DBModels";
+import { serviceChargeMapper } from "../mappers";
 
 export function makeMongoServiceChargeRepository(
     db: MongoDbAdapter<ServiceChargeDBModel>
@@ -8,27 +9,14 @@ export function makeMongoServiceChargeRepository(
     return {
         async fetchAll() {
             const dbModels = await db.fetchAll({});
-            return toEntities(dbModels);
+            return serviceChargeMapper.toEntities(dbModels);
         },
         async fetchAllOfMember(memberId) {
             const dbModels = await db.fetchAll({ memberId });
-            return toEntities(dbModels);
+            return serviceChargeMapper.toEntities(dbModels);
         },
         async insert(serviceCharge) {
-            await db.insert(toDBModel(serviceCharge));
+            await db.insert(serviceChargeMapper.toDBModel(serviceCharge));
         }
     };
-}
-
-function toDBModel(serviceCharge: ServiceCharge): ServiceChargeDBModel {
-    return {
-        memberId: serviceCharge.getMemberId(),
-        amount: serviceCharge.getAmount()
-    };
-}
-function toEntities(serviceChargeDBModels: ServiceChargeDBModel[]): ServiceCharge[] {
-    return serviceChargeDBModels.map(model => toEntity(model));
-}
-function toEntity(serviceChargeDBModel: ServiceChargeDBModel): ServiceCharge {
-    return buildServiceCharge(serviceChargeDBModel);
 }

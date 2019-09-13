@@ -1,6 +1,7 @@
-import { buildUnionMember, CoreDependencies, UnionMember } from "../../domain";
-import { UnionMemberDBModel } from "../DBModels";
+import { CoreDependencies } from "../../domain";
 import { MongoDbAdapter } from "../databases";
+import { UnionMemberDBModel } from "../DBModels";
+import { unionMemberMapper } from "../mappers";
 
 export function makeMongoUnionMemberRepository(
     db: MongoDbAdapter<UnionMemberDBModel>
@@ -8,14 +9,14 @@ export function makeMongoUnionMemberRepository(
     return {
         async fetchByEmployeeId(employeeId) {
             const dbModel = await db.fetch({ employeeId });
-            return toEntity(dbModel);
+            return unionMemberMapper.toEntity(dbModel);
         },
         async fetchByMemberId(memberId) {
             const dbModel = await db.fetch({ memberId });
-            return toEntity(dbModel);
+            return unionMemberMapper.toEntity(dbModel);
         },
         async insert(unionMember) {
-            await db.insert(toDBModel(unionMember));
+            await db.insert(unionMemberMapper.toDBModel(unionMember));
         },
         async doesMemberIdExist(memberId) {
             return db.exists({ memberId: memberId });
@@ -24,15 +25,4 @@ export function makeMongoUnionMemberRepository(
             return db.remove({ employeeId });
         }
     };
-}
-
-function toDBModel(unionMember: UnionMember): UnionMemberDBModel {
-    return {
-        employeeId: unionMember.getEmployeeId(),
-        memberId: unionMember.getMemberId(),
-        rate: unionMember.getRate()
-    };
-}
-function toEntity(unionMemberDBModel: UnionMemberDBModel): UnionMember {
-    return buildUnionMember(unionMemberDBModel);
 }

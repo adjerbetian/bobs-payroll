@@ -1,5 +1,4 @@
 # Simple
-Todo: use mappers in test generators
 Todo: include buildEntity and buildDBModel in MongoDBAdapter
 Todo: remove types for implementations of interfaces
 Todo: try to create a unitDescribe and integrationDescribe in order to run all the tests with the same command runner
