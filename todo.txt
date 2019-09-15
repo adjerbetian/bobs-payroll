@@ -1,6 +1,5 @@
 # Simple
 Todo: check for type assertion in TransactionValidator
-Todo: try to create a unitDescribe and integrationDescribe in order to run all the tests with the same command runner
 
 # Complex
 Todo: look for a dependency injection framework

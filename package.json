@@ -10,7 +10,8 @@
         "start": "ts-node src/main.ts",
         "prestart:prod": "npm run build",
         "start:prod": "node dist/main.js",
-        "test": "mocha ./src/**/*.unit.ts",
+        "test": "npm run test:unit & npm run test:integration & npm run test:e2e",
+        "test:unit": "mocha ./src/**/*.unit.ts",
         "test:integration": "mocha ./**/*.spec.ts",
         "test:e2e": "mocha ./**/*.e2e.ts --timeout 10000",
         "test:watch": "mocha ./**/*.unit.ts --watch"
