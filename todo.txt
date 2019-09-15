@@ -1,6 +1,4 @@
 # Simple
-Todo: remove Partial<DBModel> from generators => use the Argument of build entity
-Todo: dont export dbModels from mongo (even for e2e)
 Todo: remove types for implementations of interfaces
 Todo: try to create a unitDescribe and integrationDescribe in order to run all the tests with the same command runner
 

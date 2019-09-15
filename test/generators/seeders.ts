@@ -1,40 +1,32 @@
 import {
-    CommissionedEmployee,
     dbEmployees,
     dbPaymentMethods,
     dbPayments,
     dbSalesReceipts,
     dbServiceCharges,
     dbTimeCards,
-    dbUnionMembers,
-    DirectPaymentMethod,
-    EntityModel,
-    HoldPaymentMethod,
-    HourlyEmployee,
-    MailPaymentMethod,
-    SalariedEmployee
+    dbUnionMembers
 } from "../../src";
 import { generators } from "./generators";
 
-// prettier-ignore
 export const seeders = {
-    seedHourlyEmployee: buildEntitySeeder<HourlyEmployee>(generators.generateHourlyEmployee, dbEmployees),
-    seedSalariedEmployee: buildEntitySeeder<SalariedEmployee>(generators.generateSalariedEmployee, dbEmployees),
-    seedCommissionedEmployee: buildEntitySeeder<CommissionedEmployee>(generators.generateCommissionedEmployee, dbEmployees),
-    seedUnionMember: buildEntitySeeder(generators.generateUnionMember, dbUnionMembers),
-    seedTimeCard: buildEntitySeeder(generators.generateTimeCard, dbTimeCards),
-    seedSalesReceipt: buildEntitySeeder(generators.generateSalesReceipt, dbSalesReceipts),
-    seedServiceCharge: buildEntitySeeder(generators.generateServiceCharge, dbServiceCharges),
-    seedHoldPaymentMethod: buildEntitySeeder<HoldPaymentMethod>(generators.generateHoldPaymentMethod, dbPaymentMethods),
-    seedDirectPaymentMethod: buildEntitySeeder<DirectPaymentMethod>(generators.generateDirectPaymentMethod, dbPaymentMethods),
-    seedMailPaymentMethod: buildEntitySeeder<MailPaymentMethod>(generators.generateMailPaymentMethod, dbPaymentMethods),
-    seedPayment: buildEntitySeeder(generators.generatePayment, dbPayments)
+    seedHourlyEmployee: buildSeeder(generators.generateHourlyEmployee, dbEmployees),
+    seedSalariedEmployee: buildSeeder(generators.generateSalariedEmployee, dbEmployees),
+    seedCommissionedEmployee: buildSeeder(generators.generateCommissionedEmployee, dbEmployees),
+    seedUnionMember: buildSeeder(generators.generateUnionMember, dbUnionMembers),
+    seedTimeCard: buildSeeder(generators.generateTimeCard, dbTimeCards),
+    seedSalesReceipt: buildSeeder(generators.generateSalesReceipt, dbSalesReceipts),
+    seedServiceCharge: buildSeeder(generators.generateServiceCharge, dbServiceCharges),
+    seedHoldPaymentMethod: buildSeeder(generators.generateHoldPaymentMethod, dbPaymentMethods),
+    seedDirectPaymentMethod: buildSeeder(generators.generateDirectPaymentMethod, dbPaymentMethods),
+    seedMailPaymentMethod: buildSeeder(generators.generateMailPaymentMethod, dbPaymentMethods),
+    seedPayment: buildSeeder(generators.generatePayment, dbPayments)
 };
 
-function buildEntitySeeder<Entity>(
-    generator: (args: Partial<EntityModel<Entity>>) => Entity,
-    inserter: { insert: (entity: Entity) => Promise<void> }
-): (args?: Partial<EntityModel<Entity>>) => Promise<Entity> {
+function buildSeeder<Generator extends (args: any) => any>(
+    generator: Generator,
+    inserter: { insert: (entity: ReturnType<Generator>) => Promise<void> }
+): (args?: Parameters<Generator>[0]) => Promise<ReturnType<Generator>> {
     return async function(args = {}) {
         const entity = generator(args);
         await inserter.insert(entity);

@@ -11,24 +11,30 @@ import {
     buildServiceCharge,
     buildTimeCard,
     buildUnionMember,
-    CommissionedEmployee,
-    DirectPaymentMethod,
-    EntityModel,
-    HoldPaymentMethod,
-    HourlyEmployee,
-    isoDate,
-    MailPaymentMethod,
-    Payment,
-    SalariedEmployee,
-    SalesReceipt,
-    ServiceCharge,
-    TimeCard,
-    UnionMember
+    isoDate
 } from "../../src";
 import { generateFloatBetween, generateIndex } from "./common";
 
-export const generators = {
-    generateTimeCard(args: PartialEntity<TimeCard> = {}): TimeCard {
+interface Generators {
+    generateTimeCard: Generator<typeof buildTimeCard>;
+    generateUnionMember: Generator<typeof buildUnionMember>;
+    generateHourlyEmployee: Generator<typeof buildHourlyEmployee>;
+    generateSalariedEmployee: Generator<typeof buildSalariedEmployee>;
+    generateCommissionedEmployee: Generator<typeof buildCommissionedEmployee>;
+    generateSalesReceipt: Generator<typeof buildSalesReceipt>;
+    generateServiceCharge: Generator<typeof buildServiceCharge>;
+    generateHoldPaymentMethod: Generator<typeof buildHoldPaymentMethod>;
+    generateDirectPaymentMethod: Generator<typeof buildDirectPaymentMethod>;
+    generateMailPaymentMethod: Generator<typeof buildMailPaymentMethod>;
+    generatePayment: Generator<typeof buildPayment>;
+}
+
+type Generator<EntityFactory extends (args: any) => any> = (
+    args?: Partial<Parameters<EntityFactory>[0]>
+) => ReturnType<EntityFactory>;
+
+export const generators: Generators = {
+    generateTimeCard(args = {}) {
         const index = generateIndex();
         return buildTimeCard({
             employeeId: index,
@@ -37,7 +43,7 @@ export const generators = {
             ...args
         });
     },
-    generateUnionMember(args: PartialEntity<UnionMember> = {}): UnionMember {
+    generateUnionMember(args = {}) {
         return buildUnionMember({
             employeeId: generateIndex(),
             memberId: `member-${generateIndex()}`,
@@ -45,7 +51,7 @@ export const generators = {
             ...args
         });
     },
-    generateHourlyEmployee(args: PartialEntity<HourlyEmployee> = {}): HourlyEmployee {
+    generateHourlyEmployee(args = {}) {
         const index = generateIndex();
         return buildHourlyEmployee({
             id: index,
@@ -55,7 +61,7 @@ export const generators = {
             ...args
         });
     },
-    generateSalariedEmployee(args: PartialEntity<SalariedEmployee> = {}): SalariedEmployee {
+    generateSalariedEmployee(args = {}) {
         const index = generateIndex();
         return buildSalariedEmployee({
             id: index,
@@ -65,7 +71,7 @@ export const generators = {
             ...args
         });
     },
-    generateCommissionedEmployee(args: PartialEntity<CommissionedEmployee> = {}): CommissionedEmployee {
+    generateCommissionedEmployee(args = {}) {
         const index = generateIndex();
         return buildCommissionedEmployee({
             id: index,
@@ -76,7 +82,7 @@ export const generators = {
             ...args
         });
     },
-    generateSalesReceipt(args: PartialEntity<SalesReceipt> = {}): SalesReceipt {
+    generateSalesReceipt(args = {}) {
         const index = generateIndex();
         return buildSalesReceipt({
             employeeId: index,
@@ -85,7 +91,7 @@ export const generators = {
             ...args
         });
     },
-    generateServiceCharge(args: PartialEntity<ServiceCharge> = {}): ServiceCharge {
+    generateServiceCharge(args = {}) {
         const index = generateIndex();
         return buildServiceCharge({
             memberId: `member-${index}`,
@@ -93,14 +99,14 @@ export const generators = {
             ...args
         });
     },
-    generateHoldPaymentMethod(args: PartialEntity<HoldPaymentMethod> = {}): HoldPaymentMethod {
+    generateHoldPaymentMethod(args = {}) {
         const index = generateIndex();
         return buildHoldPaymentMethod({
             employeeId: index,
             ...args
         });
     },
-    generateDirectPaymentMethod(args: PartialEntity<DirectPaymentMethod> = {}): DirectPaymentMethod {
+    generateDirectPaymentMethod(args = {}) {
         const index = generateIndex();
         return buildDirectPaymentMethod({
             employeeId: index,
@@ -109,7 +115,7 @@ export const generators = {
             ...args
         });
     },
-    generateMailPaymentMethod(args: PartialEntity<MailPaymentMethod> = {}): MailPaymentMethod {
+    generateMailPaymentMethod(args = {}) {
         const index = generateIndex();
         return buildMailPaymentMethod({
             employeeId: index,
@@ -117,8 +123,7 @@ export const generators = {
             ...args
         });
     },
-    //todo: clean the omit
-    generatePayment(args: Omit<PartialEntity<Payment>, "method"> = {}): Payment {
+    generatePayment(args = {}) {
         const index = generateIndex();
         return buildPayment({
             amount: generateFloatBetween(1000, 2000),
@@ -129,5 +134,3 @@ export const generators = {
         });
     }
 };
-
-type PartialEntity<Entity> = Partial<EntityModel<Entity>>;
