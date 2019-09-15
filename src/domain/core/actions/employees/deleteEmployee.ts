@@ -6,7 +6,7 @@ interface Dependencies {
 }
 
 export function makeDeleteEmployee({ employeeRepository }: Dependencies): CoreEmployeeActions["deleteEmployee"] {
-    return async function deleteEmployee(employeeId: number): Promise<void> {
+    return async function deleteEmployee(employeeId) {
         await employeeRepository.deleteById(employeeId);
     };
 }

@@ -1,4 +1,4 @@
-import { EmployeeType, SalesReceipt } from "../../entities";
+import { EmployeeType } from "../../entities";
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
 import { CoreSalesReceiptActions } from "../CoreActions";
@@ -12,7 +12,7 @@ export function makeCreateSalesReceipt({
     salesReceiptRepository,
     employeeRepository
 }: Dependencies): CoreSalesReceiptActions["createSalesReceipt"] {
-    return async function(salesReceipt: SalesReceipt): Promise<void> {
+    return async function(salesReceipt) {
         await assertEmployeeIsCommissioned(salesReceipt.getEmployeeId());
         return salesReceiptRepository.insert(salesReceipt);
     };

@@ -1,4 +1,3 @@
-import { ServiceCharge } from "../../entities";
 import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
 import { CoreServiceChargeActions } from "../CoreActions";
 
@@ -11,7 +10,7 @@ export function makeCreateServiceCharge({
     serviceChargeRepository,
     unionMemberRepository
 }: Dependencies): CoreServiceChargeActions["createServiceCharge"] {
-    return async function(serviceCharge: ServiceCharge): Promise<void> {
+    return async function(serviceCharge) {
         await assertUnionMemberExists(serviceCharge.getMemberId());
         await serviceChargeRepository.insert(serviceCharge);
     };

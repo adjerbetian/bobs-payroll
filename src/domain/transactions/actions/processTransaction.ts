@@ -13,7 +13,7 @@ export interface Transactions {
 }
 
 export function makeProcessTransaction(transactions: Transactions): ProcessTransaction {
-    return async ([transactionName, ...args]: string[]) => {
+    return async ([transactionName, ...args]) => {
         try {
             if (transactionName === "AddEmp") await transactions.addEmployee(...args);
             if (transactionName === "DelEmp") await transactions.deleteEmployee(...args);

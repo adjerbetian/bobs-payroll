@@ -5,7 +5,7 @@ import { buildTransactionValidator } from "../utils";
 const transactionValidator = buildTransactionValidator("ServiceCharge");
 
 export function makePostServiceChargeTransaction(actions: CoreActions): Transactions["postServiceCharge"] {
-    return async function(memberId: string, amount: string): Promise<void> {
+    return async function(memberId, amount) {
         assertTransactionValid(memberId, amount);
 
         const serviceCharge = buildServiceCharge({

@@ -1,4 +1,3 @@
-import { TimeCard } from "../../entities";
 import { TimeCardRepository } from "../../repositories";
 import { CoreTimeCardActions } from "../CoreActions";
 
@@ -9,7 +8,7 @@ interface Dependencies {
 export function makeFetchEmployeeTimeCardsSince({
     timeCardRepository
 }: Dependencies): CoreTimeCardActions["fetchEmployeeTimeCardsSince"] {
-    return async function(employeeId: number, date: string): Promise<TimeCard[]> {
+    return async function(employeeId, date) {
         return timeCardRepository.fetchAllOfEmployeeSince(employeeId, date);
     };
 }

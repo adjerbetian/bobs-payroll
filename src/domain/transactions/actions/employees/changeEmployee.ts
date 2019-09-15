@@ -12,7 +12,7 @@ import { buildTransactionValidator } from "../utils";
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
 export function makeChangeEmployeeTransaction(actions: CoreActions): Transactions["changeEmployee"] {
-    return async function(id: string, updateType: string, ...params: string[]): Promise<void> {
+    return async function(id, updateType, ...params) {
         const employeeId = parseInt(id);
 
         if (updateType === "Name") return changeEmployeeName();

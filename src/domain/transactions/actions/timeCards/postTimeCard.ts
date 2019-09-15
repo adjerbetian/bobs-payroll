@@ -5,7 +5,7 @@ import { buildTransactionValidator } from "../utils";
 const transactionValidator = buildTransactionValidator("TimeCard");
 
 export function makePostTimeCardTransaction(actions: CoreActions): Transactions["postTimeCard"] {
-    return async function(employeeId: string, date: string, hours: string): Promise<void> {
+    return async function(employeeId, date, hours) {
         assertTransactionValid(employeeId, date, hours);
 
         const timeCard = buildTimeCard({

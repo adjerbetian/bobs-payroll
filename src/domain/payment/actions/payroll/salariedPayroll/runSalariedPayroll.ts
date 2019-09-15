@@ -11,7 +11,7 @@ export function makeRunSalariedPayroll({
     coreActions,
     createPaymentForEmployee
 }: Dependencies): RunPayrollActions["runSalariedPayroll"] {
-    return async function(date: string): Promise<void> {
+    return async function(date) {
         const employees = await coreActions.fetchAllSalariedEmployees();
         for (const employee of employees) {
             await payEmployee(date, employee);

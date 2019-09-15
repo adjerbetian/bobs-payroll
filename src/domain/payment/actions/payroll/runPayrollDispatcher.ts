@@ -14,7 +14,7 @@ export function makeRunPayrollDispatcher({
     runHourlyPayroll,
     runSalariedPayroll
 }: RunPayrollActions): PaymentActions["runPayroll"] {
-    return async function(date: string): Promise<void> {
+    return async function(date) {
         if (isFriday(date)) {
             await runHourlyPayroll(date);
         }

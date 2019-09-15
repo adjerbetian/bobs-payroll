@@ -8,7 +8,7 @@ interface Dependencies {
 export function makeRemoveEmployeeFromUnion({
     unionMemberRepository
 }: Dependencies): CoreUnionActions["removeEmployeeFromUnion"] {
-    return async function(employeeId: number): Promise<void> {
+    return async function(employeeId) {
         await unionMemberRepository.deleteByEmployeeId(employeeId);
     };
 }

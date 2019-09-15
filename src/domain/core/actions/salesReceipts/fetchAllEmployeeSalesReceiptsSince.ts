@@ -1,4 +1,3 @@
-import { SalesReceipt } from "../../entities";
 import { SalesReceiptRepository } from "../../repositories";
 import { CoreSalesReceiptActions } from "../CoreActions";
 
@@ -9,7 +8,7 @@ interface Dependencies {
 export function makeFetchAllEmployeeSalesReceipts({
     salesReceiptRepository
 }: Dependencies): CoreSalesReceiptActions["fetchAllEmployeeSalesReceiptsSince"] {
-    return async function(employeeId: number, date: string): Promise<SalesReceipt[]> {
+    return async function(employeeId, date) {
         return salesReceiptRepository.fetchAllOfEmployeeSince(employeeId, date);
     };
 }

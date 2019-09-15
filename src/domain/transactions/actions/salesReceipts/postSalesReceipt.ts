@@ -5,7 +5,7 @@ import { buildTransactionValidator } from "../utils";
 const transactionValidator = buildTransactionValidator("SalesReceipt");
 
 export function makePostSalesReceiptTransaction(actions: CoreActions): Transactions["postSalesReceipt"] {
-    return async function(employeeId: string, date: string, amount: string): Promise<void> {
+    return async function(employeeId, date, amount) {
         assertTransactionIsValid();
 
         const salesReceipt = buildSalesReceipt({

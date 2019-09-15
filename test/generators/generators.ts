@@ -29,10 +29,6 @@ interface Generators {
     generatePayment: Generator<typeof buildPayment>;
 }
 
-type Generator<EntityFactory extends (args: any) => any> = (
-    args?: Partial<Parameters<EntityFactory>[0]>
-) => ReturnType<EntityFactory>;
-
 export const generators: Generators = {
     generateTimeCard(args = {}) {
         const index = generateIndex();
@@ -134,3 +130,7 @@ export const generators: Generators = {
         });
     }
 };
+
+type Generator<EntityFactory extends (args: any) => any> = (
+    args?: Partial<Parameters<EntityFactory>[0]>
+) => ReturnType<EntityFactory>;

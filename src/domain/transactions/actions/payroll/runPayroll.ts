@@ -5,7 +5,7 @@ import { Transactions } from "../processTransaction";
 const transactionValidator = buildTransactionValidator("Payroll");
 
 export function makeRunPayrollTransaction(actions: PaymentActions): Transactions["runPayroll"] {
-    return async function(date: string): Promise<void> {
+    return async function(date) {
         transactionValidator.assertIsISODate(date);
 
         await actions.runPayroll(date);

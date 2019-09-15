@@ -13,7 +13,7 @@ export function makeRunCommissionedPayroll({
     coreActions,
     createPaymentForEmployee
 }: Dependencies): RunPayrollActions["runCommissionedPayroll"] {
-    return async function(date: string): Promise<void> {
+    return async function(date) {
         const employees = await coreActions.fetchAllCommissionedEmployees();
         for (const employee of employees) {
             await payEmployee(date, employee);

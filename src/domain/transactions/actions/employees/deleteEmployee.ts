@@ -5,7 +5,7 @@ import { Transactions } from "../processTransaction";
 const transactionValidator = buildTransactionValidator("DelEmp");
 
 export function makeDeleteEmployeeTransaction(actions: CoreActions): Transactions["deleteEmployee"] {
-    return async function(employeeId: string): Promise<void> {
+    return async function(employeeId) {
         assertTransactionIsValid();
         await actions.deleteEmployee(parseInt(employeeId));
 

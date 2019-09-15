@@ -21,17 +21,17 @@ export function buildTransactionValidator(transactionName: string): TransactionV
             });
         },
 
-        assertIsISODate(date?: string): date is string {
+        assertIsISODate(date?): date is string {
             return wrap(() => assert(moment(date || "", "YYYY-MM-DD", true).isValid()));
         },
 
-        assertIsIncludedIn<T>(value: T, array: T[]): boolean {
+        assertIsIncludedIn(value, array): boolean {
             return wrap(() => assert(array.includes(value)));
         },
-        assertIsTrue(condition: boolean): condition is true {
+        assertIsTrue(condition): condition is true {
             return wrap(() => assert(condition));
         },
-        assertEquals<T>(a: T, b: T): boolean {
+        assertEquals(a, b): boolean {
             return wrap(() => {
                 assert(!isUndefined(a));
                 assert(!isUndefined(b));

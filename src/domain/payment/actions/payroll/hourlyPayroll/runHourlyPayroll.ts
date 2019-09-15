@@ -14,7 +14,7 @@ export function makeRunHourlyPayroll({
     paymentRepository,
     createPaymentForEmployee
 }: Dependencies): RunPayrollActions["runHourlyPayroll"] {
-    return async function(date: string): Promise<void> {
+    return async function(date) {
         const employees = await coreActions.fetchAllHourlyEmployees();
         for (const employee of employees) {
             await payEmployee(date, employee);

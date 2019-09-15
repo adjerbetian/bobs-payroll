@@ -15,14 +15,7 @@ import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 const transactionValidator = buildTransactionValidator("AddEmp");
 
 export function makeAddEmployeeTransaction(actions: CoreActions): Transactions["addEmployee"] {
-    return async function(
-        id: string,
-        name: string,
-        address: string,
-        type: string,
-        rate: string,
-        commissionRate?: string
-    ): Promise<void> {
+    return async function(id, name, address, type, rate, commissionRate?) {
         assertTransactionIsValid();
 
         await addEmployee({

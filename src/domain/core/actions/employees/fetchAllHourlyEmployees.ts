@@ -1,4 +1,3 @@
-import { HourlyEmployee } from "../../entities";
 import { EmployeeRepository } from "../../repositories";
 import { CoreEmployeeActions } from "../CoreActions";
 
@@ -9,7 +8,7 @@ interface Dependencies {
 export function makeFetchAllHourlyEmployees({
     employeeRepository
 }: Dependencies): CoreEmployeeActions["fetchAllHourlyEmployees"] {
-    return async function(): Promise<HourlyEmployee[]> {
+    return async function() {
         return employeeRepository.fetchAllHourly();
     };
 }

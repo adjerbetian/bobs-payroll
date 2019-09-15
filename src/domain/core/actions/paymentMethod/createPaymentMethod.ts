@@ -1,4 +1,3 @@
-import { PaymentMethod } from "../../entities";
 import { PaymentMethodRepository } from "../../repositories";
 import { CorePaymentMethodActions } from "../CoreActions";
 
@@ -9,7 +8,7 @@ interface Dependencies {
 export function makeCreatePaymentMethod({
     paymentMethodRepository
 }: Dependencies): CorePaymentMethodActions["createPaymentMethod"] {
-    return async function(paymentMethod: PaymentMethod): Promise<void> {
+    return async function(paymentMethod) {
         await paymentMethodRepository.deleteByEmployeeId(paymentMethod.getEmployeeId());
         return paymentMethodRepository.insert(paymentMethod);
     };

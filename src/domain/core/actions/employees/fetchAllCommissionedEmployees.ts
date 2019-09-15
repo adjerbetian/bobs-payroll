@@ -1,4 +1,3 @@
-import { CommissionedEmployee } from "../../entities";
 import { EmployeeRepository } from "../../repositories";
 import { CoreEmployeeActions } from "../CoreActions";
 
@@ -9,7 +8,7 @@ interface Dependencies {
 export function makeFetchAllCommissionedEmployees({
     employeeRepository
 }: Dependencies): CoreEmployeeActions["fetchAllCommissionedEmployees"] {
-    return async function(): Promise<CommissionedEmployee[]> {
+    return async function() {
         return employeeRepository.fetchAllCommissioned();
     };
 }
