@@ -1,7 +1,7 @@
 import {
     buildStubbedCoreActions,
     buildStubFor,
-    entityGenerators,
+    generators,
     expect,
     firstDayOfMonth,
     lastDayOfMonth,
@@ -31,8 +31,8 @@ describe("action runCommissionedPayroll", () => {
     });
 
     it("should insert the right payment the employee", async () => {
-        const employee = entityGenerators.generateCommissionedEmployee();
-        const salesReceipts = [entityGenerators.generateSalesReceipt(), entityGenerators.generateSalesReceipt()];
+        const employee = generators.generateCommissionedEmployee();
+        const salesReceipts = [generators.generateSalesReceipt(), generators.generateSalesReceipt()];
         stubbedCoreActions.fetchAllCommissionedEmployees.resolves([employee]);
         stubbedCoreActions.fetchAllEmployeeSalesReceiptsSince
             .withArgs(employee.getId(), firstDayOfMonth)
@@ -48,10 +48,7 @@ describe("action runCommissionedPayroll", () => {
     });
 
     it("should insert payments for each employee", async () => {
-        const employees = [
-            entityGenerators.generateCommissionedEmployee(),
-            entityGenerators.generateCommissionedEmployee()
-        ];
+        const employees = [generators.generateCommissionedEmployee(), generators.generateCommissionedEmployee()];
         stubbedCoreActions.fetchAllCommissionedEmployees.resolves(employees);
 
         await runCommissionedPayroll(lastDayOfMonth);

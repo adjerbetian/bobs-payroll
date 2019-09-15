@@ -1,22 +1,16 @@
-import { CoreDependencies } from "../../domain";
-import { MongoDbAdapter } from "../databases";
-import { TimeCardDBModel } from "../DBModels";
-import { timeCardMapper } from "../mappers";
+import { CoreDependencies, TimeCard } from "../../domain";
+import { MongoEntity } from "../databases";
 
-export function makeMongoTimeCardRepository(
-    db: MongoDbAdapter<TimeCardDBModel>
-): CoreDependencies["timeCardRepository"] {
+export function makeMongoTimeCardRepository(db: MongoEntity<TimeCard>): CoreDependencies["timeCardRepository"] {
     return {
         async fetchAllOfEmployee(employeeId) {
-            const dbModels = await db.fetchAll({ employeeId });
-            return timeCardMapper.toEntities(dbModels);
+            return db.fetchAll({ employeeId });
         },
         async fetchAllOfEmployeeSince(employeeId, date) {
-            const dbModels = await db.fetchAll({ employeeId, date: { $gt: date } });
-            return timeCardMapper.toEntities(dbModels);
+            return db.fetchAll({ employeeId, date: { $gt: date } });
         },
         async insert(timeCard) {
-            await db.insert(timeCardMapper.toDBModel(timeCard));
+            await db.insert(timeCard);
         }
     };
 }

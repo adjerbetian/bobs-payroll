@@ -1,5 +1,3 @@
-export { dbModelGenerators } from "./dbModelGenerators";
-export { entityGenerators } from "./entityGenerators";
-export { dbModelSeeders } from "./dbModelSeeders";
-export { entitySeeders } from "./entitySeeders";
+export { generators } from "./generators";
+export { seeders } from "./seeders";
 export * from "./common";

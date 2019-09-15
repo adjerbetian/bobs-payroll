@@ -1,22 +1,18 @@
-import { CoreDependencies } from "../../domain";
-import { MongoDbAdapter } from "../databases";
-import { UnionMemberDBModel } from "../DBModels";
-import { unionMemberMapper } from "../mappers";
+import { CoreDependencies, UnionMember } from "../../domain";
+import { MongoEntity } from "../databases";
 
 export function makeMongoUnionMemberRepository(
-    db: MongoDbAdapter<UnionMemberDBModel>
+    db: MongoEntity<UnionMember>
 ): CoreDependencies["unionMemberRepository"] {
     return {
         async fetchByEmployeeId(employeeId) {
-            const dbModel = await db.fetch({ employeeId });
-            return unionMemberMapper.toEntity(dbModel);
+            return db.fetch({ employeeId });
         },
         async fetchByMemberId(memberId) {
-            const dbModel = await db.fetch({ memberId });
-            return unionMemberMapper.toEntity(dbModel);
+            return db.fetch({ memberId });
         },
         async insert(unionMember) {
-            await db.insert(unionMemberMapper.toDBModel(unionMember));
+            await db.insert(unionMember);
         },
         async doesMemberIdExist(memberId) {
             return db.exists({ memberId: memberId });

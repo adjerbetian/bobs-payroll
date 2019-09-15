@@ -1,36 +1,51 @@
 import { Db, MongoClient } from "mongodb";
 import * as config from "../../config.json";
+import { Employee, Payment, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../../domain";
 import {
-    EmployeeDBModel,
-    PaymentDBModel,
-    PaymentMethodDBModel,
-    SalesReceiptDBModel,
-    ServiceChargeDBModel,
-    TimeCardDBModel,
-    UnionMemberDBModel
-} from "../DBModels";
-import { makeMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
+    employeeMapper,
+    EntityModel,
+    Mapper,
+    paymentMapper,
+    paymentMethodMapper,
+    salesReceiptMapper,
+    serviceChargeMapper,
+    timeCardMapper,
+    unionMemberMapper
+} from "../mappers";
+import { makeMongoDbAdapter } from "./mongoDbAdapter";
+import { makeMongoEntity, MongoEntity } from "./mongoEntity";
 
-export const dbEmployees: MongoDbAdapter<EmployeeDBModel> = buildEmptyObject();
-export const dbTimeCards: MongoDbAdapter<TimeCardDBModel> = buildEmptyObject();
-export const dbSalesReceipts: MongoDbAdapter<SalesReceiptDBModel> = buildEmptyObject();
-export const dbServiceCharges: MongoDbAdapter<ServiceChargeDBModel> = buildEmptyObject();
-export const dbPaymentMethods: MongoDbAdapter<PaymentMethodDBModel> = buildEmptyObject();
-export const dbUnionMembers: MongoDbAdapter<UnionMemberDBModel> = buildEmptyObject();
-export const dbPayments: MongoDbAdapter<PaymentDBModel> = buildEmptyObject();
+export const dbEmployees: MongoEntity<Employee> = buildEmptyObject();
+export const dbTimeCards: MongoEntity<TimeCard> = buildEmptyObject();
+export const dbSalesReceipts: MongoEntity<SalesReceipt> = buildEmptyObject();
+export const dbServiceCharges: MongoEntity<ServiceCharge> = buildEmptyObject();
+export const dbPaymentMethods: MongoEntity<PaymentMethod> = buildEmptyObject();
+export const dbUnionMembers: MongoEntity<UnionMember> = buildEmptyObject();
+export const dbPayments: MongoEntity<Payment> = buildEmptyObject();
 
 let client: MongoClient;
 
 export async function initConnection(): Promise<void> {
     client = await MongoClient.connect(config.db.url, { useUnifiedTopology: true, useNewUrlParser: true });
     const db = getDb();
-    Object.assign(dbEmployees, makeMongoDbAdapter(db.collection("employees")));
-    Object.assign(dbTimeCards, makeMongoDbAdapter(db.collection("time-cards")));
-    Object.assign(dbSalesReceipts, makeMongoDbAdapter(db.collection("sales-receipts")));
-    Object.assign(dbServiceCharges, makeMongoDbAdapter(db.collection("service-charges")));
-    Object.assign(dbPaymentMethods, makeMongoDbAdapter(db.collection("payment-methods")));
-    Object.assign(dbUnionMembers, makeMongoDbAdapter(db.collection("union-members")));
-    Object.assign(dbPayments, makeMongoDbAdapter(db.collection("payments")));
+    assignCollectionToDB(dbEmployees, "employees", employeeMapper);
+    assignCollectionToDB(dbTimeCards, "time-cards", timeCardMapper);
+    assignCollectionToDB(dbSalesReceipts, "sales-receipts", salesReceiptMapper);
+    assignCollectionToDB(dbServiceCharges, "service-charges", serviceChargeMapper);
+    assignCollectionToDB(dbPaymentMethods, "payment-methods", paymentMethodMapper);
+    assignCollectionToDB(dbUnionMembers, "union-members", unionMemberMapper);
+    assignCollectionToDB(dbPayments, "payments", paymentMapper);
+
+    function assignCollectionToDB<Entity>(
+        collection: MongoEntity<Entity>,
+        collectionName: string,
+        mapper: Mapper<Entity>
+    ): void {
+        const dbCollection = db.collection<EntityModel<Entity>>(collectionName);
+        const adapter = makeMongoDbAdapter(dbCollection);
+        const mongoEntity = makeMongoEntity(adapter, mapper);
+        Object.assign(collection, mongoEntity);
+    }
 }
 
 export async function closeConnection(): Promise<void> {

@@ -1,4 +1,4 @@
-import { entityGenerators, expect, Stub } from "@test/unit";
+import { generators, expect, Stub } from "@test/unit";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
 import { makeCreateEmployee } from "./createEmployee";
@@ -13,7 +13,7 @@ describe("action createEmployee", () => {
     });
 
     it("should insert the given employee", async () => {
-        const employee = entityGenerators.generateHourlyEmployee();
+        const employee = generators.generateHourlyEmployee();
         stubbedEmployeeRepository.insert.resolves();
 
         await createEmployee(employee);

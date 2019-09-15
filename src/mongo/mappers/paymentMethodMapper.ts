@@ -8,18 +8,13 @@ import {
     PaymentMethod,
     PaymentMethodType
 } from "../../domain";
-import {
-    DirectPaymentMethodDBModel,
-    HoldPaymentMethodDBModel,
-    MailPaymentMethodDBModel,
-    PaymentMethodDBModel
-} from "../DBModels";
+import { PaymentMethodDBModel } from "../DBModels";
 import { buildMapper, Mapper } from "./mapper";
 
-type PaymentMethodMapper = Mapper<HoldPaymentMethodDBModel, HoldPaymentMethod> &
-    Mapper<DirectPaymentMethodDBModel, DirectPaymentMethod> &
-    Mapper<MailPaymentMethodDBModel, MailPaymentMethod> &
-    Mapper<PaymentMethodDBModel, PaymentMethod>;
+type PaymentMethodMapper = Mapper<HoldPaymentMethod> &
+    Mapper<DirectPaymentMethod> &
+    Mapper<MailPaymentMethod> &
+    Mapper<PaymentMethod>;
 
 export const paymentMethodMapper: PaymentMethodMapper = buildMapper({
     toEntity(model: PaymentMethodDBModel): any {

@@ -1,7 +1,7 @@
 import {
-    dbModelGenerators,
-    dbModelSeeders,
     endOfLastMonth,
+    generators,
+    seeders,
     executePayrollCommand,
     expect,
     firstDayOfLastMonth,
@@ -19,59 +19,66 @@ import {
     wednesday
 } from "@test/e2e";
 import * as moment from "moment";
-import { CommissionedEmployeeDBModel, dbPayments, HourlyEmployeeDBModel, SalariedEmployeeDBModel } from "../src";
+import { CommissionedEmployee, dbPayments, HourlyEmployee, SalariedEmployee } from "../src";
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {
-        let employee: HourlyEmployeeDBModel;
+        let employee: HourlyEmployee;
 
         beforeEach(async () => {
-            employee = await dbModelSeeders.seedHourlyEmployee();
+            employee = await seeders.seedHourlyEmployee();
         });
 
         it("should pay the hours made in the employee's time cards", async () => {
             const timeCards = [
-                await dbModelSeeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.id }),
-                await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id })
+                await seeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.getId() }),
+                await seeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.getId() })
             ];
 
             await executePayrollCommand(`Payroll ${friday}`);
 
             await expectEmployeePaymentAmountToEqual(
-                employee.id,
-                (timeCards[0].hours + timeCards[1].hours) * employee.hourlyRate
+                employee.getId(),
+                (timeCards[0].getHours() + timeCards[1].getHours()) * employee.getHourlyRate()
             );
         });
         it("should not include the time cards already paid", async () => {
-            await dbModelSeeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId: employee.id });
-            await dbModelSeeders.seedPayment({ employeeId: employee.id, date: lastFriday, amount: 666 });
-            const newTimeCard = await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
-
-            await executePayrollCommand(`Payroll ${friday}`);
-
-            await expectEmployeePaymentAmountToEqual(employee.id, newTimeCard.hours * employee.hourlyRate);
-        });
-        it("should not pay if it's not Friday", async () => {
-            await dbModelSeeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
-
-            await executePayrollCommand(`Payroll ${monday}`);
-
-            await expectEmployeeNotToHaveBeenPaid(employee.id);
-        });
-        it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
-            const regularHours = 8;
-            const extraHour = 4;
-            await dbModelSeeders.seedTimeCard({
-                date: monday,
-                hours: regularHours + extraHour,
-                employeeId: employee.id
+            await seeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId: employee.getId() });
+            await seeders.seedPayment({ employeeId: employee.getId(), date: lastFriday, amount: 666 });
+            const newTimeCard = await seeders.seedTimeCard({
+                date: tuesday,
+                hours: 6,
+                employeeId: employee.getId()
             });
 
             await executePayrollCommand(`Payroll ${friday}`);
 
             await expectEmployeePaymentAmountToEqual(
-                employee.id,
-                (regularHours + 1.5 * extraHour) * employee.hourlyRate
+                employee.getId(),
+                newTimeCard.getHours() * employee.getHourlyRate()
+            );
+        });
+        it("should not pay if it's not Friday", async () => {
+            await seeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.getId() });
+
+            await executePayrollCommand(`Payroll ${monday}`);
+
+            await expectEmployeeNotToHaveBeenPaid(employee.getId());
+        });
+        it("should pay 1.5 time the normal rate for extra hours (>8h a day)", async () => {
+            const regularHours = 8;
+            const extraHour = 4;
+            await seeders.seedTimeCard({
+                date: monday,
+                hours: regularHours + extraHour,
+                employeeId: employee.getId()
+            });
+
+            await executePayrollCommand(`Payroll ${friday}`);
+
+            await expectEmployeePaymentAmountToEqual(
+                employee.getId(),
+                (regularHours + 1.5 * extraHour) * employee.getHourlyRate()
             );
         });
         it("work on a complex example", async () => {
@@ -80,143 +87,148 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
             await executePayrollCommand(`Payroll ${friday}`);
 
-            await expectEmployeePaymentAmountToEqual(seed1.employee.id, seed1.amount);
-            await expectEmployeePaymentAmountToEqual(seed2.employee.id, seed2.amount);
+            await expectEmployeePaymentAmountToEqual(seed1.employee.getId(), seed1.amount);
+            await expectEmployeePaymentAmountToEqual(seed2.employee.getId(), seed2.amount);
 
-            async function seedComplexHourlyEmployee1(): Promise<{ employee: HourlyEmployeeDBModel; amount: number }> {
-                employee = await dbModelSeeders.seedHourlyEmployee();
-                await seedPreviousPayment(employee.id);
-                await dbModelSeeders.seedTimeCard({ date: monday, hours: 8 + 2, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 4, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: wednesday, hours: 5, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: thursday, hours: 8 + 4, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: friday, hours: 1, employeeId: employee.id });
+            async function seedComplexHourlyEmployee1(): Promise<{ employee: HourlyEmployee; amount: number }> {
+                employee = await seeders.seedHourlyEmployee();
+                await seedPreviousPayment(employee.getId());
+                await seeders.seedTimeCard({ date: monday, hours: 8 + 2, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: tuesday, hours: 4, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: wednesday, hours: 5, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: thursday, hours: 8 + 4, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: friday, hours: 1, employeeId: employee.getId() });
 
                 const regularHours = 8 + 4 + 5 + 8 + 1;
                 const extraHours = 2 + 4;
-                const amount = employee.hourlyRate * (regularHours + 1.5 * extraHours);
+                const amount = employee.getHourlyRate() * (regularHours + 1.5 * extraHours);
                 return { employee, amount };
             }
-            async function seedComplexHourlyEmployee2(): Promise<{ employee: HourlyEmployeeDBModel; amount: number }> {
-                employee = await dbModelSeeders.seedHourlyEmployee();
-                await seedPreviousPayment(employee.id);
-                await dbModelSeeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 8, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: wednesday, hours: 8 + 4, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: thursday, hours: 8 + 3, employeeId: employee.id });
-                await dbModelSeeders.seedTimeCard({ date: friday, hours: 0.5, employeeId: employee.id });
+            async function seedComplexHourlyEmployee2(): Promise<{ employee: HourlyEmployee; amount: number }> {
+                employee = await seeders.seedHourlyEmployee();
+                await seedPreviousPayment(employee.getId());
+                await seeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: tuesday, hours: 8, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: wednesday, hours: 8 + 4, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: thursday, hours: 8 + 3, employeeId: employee.getId() });
+                await seeders.seedTimeCard({ date: friday, hours: 0.5, employeeId: employee.getId() });
 
                 const regularHours = 5 + 8 + 8 + 8 + 0.5;
                 const extraHours = 4 + 3;
-                const amount = employee.hourlyRate * (regularHours + 1.5 * extraHours);
+                const amount = employee.getHourlyRate() * (regularHours + 1.5 * extraHours);
                 return { employee, amount };
             }
             async function seedPreviousPayment(employeeId: number): Promise<void> {
-                await dbModelSeeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId });
-                await dbModelSeeders.seedTimeCard({ date: lastTuesday, hours: 12, employeeId });
-                await dbModelSeeders.seedPayment({ date: lastFriday, employeeId });
+                await seeders.seedTimeCard({ date: lastMonday, hours: 5, employeeId });
+                await seeders.seedTimeCard({ date: lastTuesday, hours: 12, employeeId });
+                await seeders.seedPayment({ date: lastFriday, employeeId });
             }
         });
     });
     describe("salaried employees", () => {
-        let employee: SalariedEmployeeDBModel;
+        let employee: SalariedEmployee;
 
         beforeEach(async () => {
-            employee = await dbModelSeeders.seedSalariedEmployee();
+            employee = await seeders.seedSalariedEmployee();
         });
 
         it("should pay the monthly salary", async () => {
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            await expectEmployeePaymentAmountToEqual(employee.id, employee.salary);
+            await expectEmployeePaymentAmountToEqual(employee.getId(), employee.getSalary());
         });
         it("should not pay if it's not the last day of the month", async () => {
             await executePayrollCommand(`Payroll ${firstDayOfMonth}`);
 
-            await expectEmployeeNotToHaveBeenPaid(employee.id);
+            await expectEmployeeNotToHaveBeenPaid(employee.getId());
         });
     });
     describe("commissioned employees", () => {
-        let employee: CommissionedEmployeeDBModel;
+        let employee: CommissionedEmployee;
 
         beforeEach(async () => {
-            employee = await dbModelSeeders.seedCommissionedEmployee();
+            employee = await seeders.seedCommissionedEmployee();
         });
 
         it("should pay only the monthly salary when there are no sales receipt", async () => {
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            await expectEmployeePaymentAmountToEqual(employee.id, employee.salary);
+            await expectEmployeePaymentAmountToEqual(employee.getId(), employee.getSalary());
         });
         it("should include the commissions of all the sales receipts", async () => {
             const salesReceipts = [
-                await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth }),
-                await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: secondDayOfMonth })
+                await seeders.seedSalesReceipt({ employeeId: employee.getId(), date: firstDayOfMonth }),
+                await seeders.seedSalesReceipt({ employeeId: employee.getId(), date: secondDayOfMonth })
             ];
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            const commission = (salesReceipts[0].amount + salesReceipts[1].amount) * employee.commissionRate;
-            await expectEmployeePaymentAmountToEqual(employee.id, employee.salary + commission);
+            const commission =
+                (salesReceipts[0].getAmount() + salesReceipts[1].getAmount()) * employee.getCommissionRate();
+            await expectEmployeePaymentAmountToEqual(employee.getId(), employee.getSalary() + commission);
         });
         it("should not include the commissions of the sales receipts of the previous month", async () => {
-            await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: firstDayOfLastMonth });
-            await dbModelSeeders.seedPayment({ date: endOfLastMonth, employeeId: employee.id });
+            await seeders.seedSalesReceipt({ employeeId: employee.getId(), date: firstDayOfLastMonth });
+            await seeders.seedPayment({ date: endOfLastMonth, employeeId: employee.getId() });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            await expectEmployeePaymentAmountToEqual(employee.id, employee.salary);
+            await expectEmployeePaymentAmountToEqual(employee.getId(), employee.getSalary());
         });
         it("should not pay if it's not the last day of the month", async () => {
-            await dbModelSeeders.seedSalesReceipt({ employeeId: employee.id, date: firstDayOfMonth });
+            await seeders.seedSalesReceipt({ employeeId: employee.getId(), date: firstDayOfMonth });
 
             await executePayrollCommand(`Payroll ${secondDayOfMonth}`);
 
-            await expectEmployeeNotToHaveBeenPaid(employee.id);
+            await expectEmployeeNotToHaveBeenPaid(employee.getId());
         });
     });
     describe("payment method", () => {
         it("should include the employee payment method", async () => {
-            const employee = await dbModelSeeders.seedSalariedEmployee();
-            const paymentMethod = await dbModelSeeders.seedDirectPaymentMethod({ employeeId: employee.id });
+            const employee = await seeders.seedSalariedEmployee();
+            const paymentMethod = await seeders.seedDirectPaymentMethod({ employeeId: employee.getId() });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            expect(payment.method).to.deep.equal(paymentMethod);
+            const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
+            expect(payment.getMethod()).entity.to.equal(paymentMethod);
         });
         it("should include the hold payment method if not specified", async () => {
-            const employee = await dbModelSeeders.seedSalariedEmployee();
+            const employee = await seeders.seedSalariedEmployee();
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            const expectedPaymentMethod = dbModelGenerators.generateHoldPaymentMethod({ employeeId: employee.id });
-            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            expect(payment.method).to.deep.equal(expectedPaymentMethod);
+            const expectedPaymentMethod = generators.generateHoldPaymentMethod({ employeeId: employee.getId() });
+            const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
+            expect(payment.getMethod()).entity.to.equal(expectedPaymentMethod);
         });
     });
     describe("union", () => {
         it.skip("should deduce the weekly dues rate from the salary", async () => {
-            const employee = await dbModelSeeders.seedSalariedEmployee();
-            const unionMember = await dbModelSeeders.seedUnionMember({ employeeId: employee.id });
+            const employee = await seeders.seedSalariedEmployee();
+            const unionMember = await seeders.seedUnionMember({ employeeId: employee.getId() });
 
             await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
 
-            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            const unionDues = employee.salary * unionMember.rate * nFridaysInMonth(firstDayOfMonth);
-            expect(payment.amount).to.equal(employee.salary - unionDues);
+            const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
+            const unionDues = employee.getSalary() * unionMember.getRate() * nFridaysInMonth(firstDayOfMonth);
+            expect(payment.getAmount()).to.equal(employee.getSalary() - unionDues);
         });
         it.skip("should deduce the weekly dues rate from the hourly payment", async () => {
-            const employee = await dbModelSeeders.seedHourlyEmployee();
-            const timeCard = await dbModelSeeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.id });
-            const unionMember = await dbModelSeeders.seedUnionMember({ employeeId: employee.id });
+            const employee = await seeders.seedHourlyEmployee();
+            const timeCard = await seeders.seedTimeCard({
+                date: tuesday,
+                hours: 6,
+                employeeId: employee.getId()
+            });
+            const unionMember = await seeders.seedUnionMember({ employeeId: employee.getId() });
 
             await executePayrollCommand(`Payroll ${friday}`);
 
-            const payment = await dbPayments.fetchLast({ employeeId: employee.id });
-            const fullPaymentAmount = employee.hourlyRate * timeCard.hours;
-            const unionDues = fullPaymentAmount * unionMember.rate;
-            expect(payment.amount).to.equal(fullPaymentAmount - unionDues);
+            const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
+            const fullPaymentAmount = employee.getHourlyRate() * timeCard.getHours();
+            const unionDues = fullPaymentAmount * unionMember.getRate();
+            expect(payment.getAmount()).to.equal(fullPaymentAmount - unionDues);
         });
         it.skip("should deduce the service charges", async () => {});
         it.skip("should not deduce the already paid service charges", async () => {});
@@ -225,7 +237,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
 
 async function expectEmployeePaymentAmountToEqual(employeeId: number, amount: number): Promise<void> {
     const employeeLastPayment = await dbPayments.fetchLast({ employeeId });
-    expect(employeeLastPayment.amount).to.equal(amount);
+    expect(employeeLastPayment.getAmount()).to.equal(amount);
 }
 async function expectEmployeeNotToHaveBeenPaid(employeeId: number): Promise<void> {
     const paymentDate = await fetchEmployeeLastPaymentDate(employeeId);
@@ -234,7 +246,7 @@ async function expectEmployeeNotToHaveBeenPaid(employeeId: number): Promise<void
 async function fetchEmployeeLastPaymentDate(employeeId: number): Promise<string> {
     if (await dbPayments.exists({ employeeId })) {
         const payment = await dbPayments.fetchLast({ employeeId });
-        return payment.date;
+        return payment.getDate();
     } else {
         return never;
     }

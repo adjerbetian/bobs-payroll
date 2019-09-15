@@ -1,10 +1,7 @@
 import { buildSalesReceipt, SalesReceipt } from "../../domain";
-import { SalesReceiptDBModel } from "../DBModels";
-import { buildMapper, Mapper } from "./mapper";
+import { buildMapper } from "./mapper";
 
-type SalesReceiptMapper = Mapper<SalesReceiptDBModel, SalesReceipt>;
-
-export const salesReceiptMapper: SalesReceiptMapper = buildMapper({
+export const salesReceiptMapper = buildMapper<SalesReceipt>({
     toEntity(model) {
         return buildSalesReceipt({
             employeeId: model.employeeId,

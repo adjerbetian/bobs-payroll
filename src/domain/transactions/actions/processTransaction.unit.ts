@@ -1,4 +1,4 @@
-import { buildStubFor, entityGenerators, expect, generateIndex, Stub } from "@test/unit";
+import { buildStubFor, generators, expect, generateIndex, Stub } from "@test/unit";
 import { isoDate } from "../../../utils";
 import { makeProcessTransaction, Transactions } from "./processTransaction";
 
@@ -14,7 +14,7 @@ describe("processTransaction", () => {
     describe("AddEmp", () => {
         it("should call the addEmployee transaction", async () => {
             stubbedTransactions.addEmployee.resolves();
-            const employee = entityGenerators.generateHourlyEmployee();
+            const employee = generators.generateHourlyEmployee();
 
             await processTransaction([
                 "AddEmp",
@@ -47,7 +47,7 @@ describe("processTransaction", () => {
     describe("TimeCard", () => {
         it("should call the postTimeCard transaction", async () => {
             stubbedTransactions.postTimeCard.resolves();
-            const timeCard = entityGenerators.generateTimeCard();
+            const timeCard = generators.generateTimeCard();
 
             await processTransaction([
                 "TimeCard",
@@ -66,7 +66,7 @@ describe("processTransaction", () => {
     describe("SalesReceipt", () => {
         it("should call the postSalesReceipt transaction", async () => {
             stubbedTransactions.postSalesReceipt.resolves();
-            const salesReceipt = entityGenerators.generateSalesReceipt();
+            const salesReceipt = generators.generateSalesReceipt();
 
             await processTransaction([
                 "SalesReceipt",
@@ -85,7 +85,7 @@ describe("processTransaction", () => {
     describe("ServiceCharge", () => {
         it("should call the postServiceCharge transaction", async () => {
             stubbedTransactions.postServiceCharge.resolves();
-            const serviceCharge = entityGenerators.generateServiceCharge();
+            const serviceCharge = generators.generateServiceCharge();
 
             await processTransaction([
                 "ServiceCharge",

@@ -1,4 +1,4 @@
-import { buildStubbedCoreActions, entityGenerators, expect, Stub } from "@test/unit";
+import { buildStubbedCoreActions, generators, expect, Stub } from "@test/unit";
 import * as moment from "moment";
 import { CoreActions, SalesReceipt } from "../../../core";
 import { TransactionFormatError } from "../../errors";
@@ -16,21 +16,21 @@ describe("postTimeCard", () => {
     });
 
     it("should create a sales receipt for the employee", async () => {
-        const salesReceipt = entityGenerators.generateSalesReceipt();
+        const salesReceipt = generators.generateSalesReceipt();
 
         await postSalesReceiptEntity(salesReceipt);
 
         expect(stubbedActions.createSalesReceipt).to.have.been.calledOnceWithEntity(salesReceipt);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
-        const salesReceipt = entityGenerators.generateSalesReceipt();
+        const salesReceipt = generators.generateSalesReceipt();
 
         const promise = postSalesReceipt(`${salesReceipt.getEmployeeId()}`, `${salesReceipt.getDate()}`, ``);
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "SalesReceipt");
     });
     it("should throw a TransactionFormatError if the date is not in the right format", async () => {
-        const salesReceipt = entityGenerators.generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
+        const salesReceipt = generators.generateSalesReceipt({ date: moment().format("DD-MM-YYYY") });
 
         const promise = postSalesReceipt(
             `${salesReceipt.getEmployeeId()}`,

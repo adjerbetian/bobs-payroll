@@ -1,4 +1,4 @@
-import { entityGenerators, expect } from "@test/unit";
+import { generators, expect } from "@test/unit";
 import { CommissionedEmployee } from "../Employee";
 
 describe("entity CommissionedEmployee", () => {
@@ -6,7 +6,7 @@ describe("entity CommissionedEmployee", () => {
 
     describe("computePayAmount", () => {
         beforeEach(() => {
-            employee = entityGenerators.generateCommissionedEmployee();
+            employee = generators.generateCommissionedEmployee();
         });
 
         it("should return the salary when there is no salesReceipt", async () => {
@@ -15,7 +15,7 @@ describe("entity CommissionedEmployee", () => {
             expect(amount).to.equal(employee.getSalary());
         });
         it("should take into account the sales receipts", async () => {
-            const salesReceipts = [entityGenerators.generateSalesReceipt(), entityGenerators.generateSalesReceipt()];
+            const salesReceipts = [generators.generateSalesReceipt(), generators.generateSalesReceipt()];
 
             const amount = await employee.computeCommissionedSalary(salesReceipts);
 

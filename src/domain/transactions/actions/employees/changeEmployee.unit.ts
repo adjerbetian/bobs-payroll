@@ -1,4 +1,4 @@
-import { buildStubbedCoreActions, entityGenerators, expect, generateIndex, Stub } from "@test/unit";
+import { buildStubbedCoreActions, generators, expect, generateIndex, Stub } from "@test/unit";
 import { CoreActions, EmployeeType } from "../../../core";
 import { TransactionFormatError } from "../../errors";
 import { makeChangeEmployeeTransaction } from "./changeEmployee";
@@ -106,7 +106,7 @@ describe("changeEmployee", () => {
             it("should add the hold paycheck payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Hold");
 
-                const expectedPaymentMethod = entityGenerators.generateHoldPaymentMethod({ employeeId });
+                const expectedPaymentMethod = generators.generateHoldPaymentMethod({ employeeId });
                 expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
             });
         });
@@ -114,7 +114,7 @@ describe("changeEmployee", () => {
             it("should add the direct deposit payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Direct", "bank-id", "account-id");
 
-                const expectedPaymentMethod = entityGenerators.generateDirectPaymentMethod({
+                const expectedPaymentMethod = generators.generateDirectPaymentMethod({
                     employeeId,
                     bank: "bank-id",
                     account: "account-id"
@@ -136,7 +136,7 @@ describe("changeEmployee", () => {
             it("should add the direct deposit payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Mail", "my paycheck address");
 
-                const expectedPaymentMethod = entityGenerators.generateMailPaymentMethod({
+                const expectedPaymentMethod = generators.generateMailPaymentMethod({
                     employeeId,
                     address: "my paycheck address"
                 });
@@ -161,7 +161,7 @@ describe("changeEmployee", () => {
             it("should add the union member", async () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
-                const expectedUnionMember = entityGenerators.generateUnionMember({ memberId, employeeId, rate: 10.5 });
+                const expectedUnionMember = generators.generateUnionMember({ memberId, employeeId, rate: 10.5 });
                 expect(stubbedActions.createUnionMember).to.have.been.calledOnceWithEntity(expectedUnionMember);
             });
             it("should throw a TransactionFormatError when the dues rate is not specified", async () => {

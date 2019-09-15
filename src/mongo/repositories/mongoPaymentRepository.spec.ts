@@ -1,4 +1,4 @@
-import { entityGenerators, entitySeeders, expect, generateIndex, never } from "@test/integration";
+import { generators, seeders, expect, generateIndex, never } from "@test/integration";
 import { NotFoundError } from "../../domain";
 import { dbPayments } from "../databases";
 import { makeMongoPaymentRepository } from "./mongoPaymentRepository";
@@ -14,9 +14,9 @@ describe("mongoPaymentRepository", () => {
 
     describe("fetchLastOfEmployee", () => {
         it("should return last the payment of the employee", async () => {
-            await entitySeeders.seedPayment({ employeeId });
-            await entitySeeders.seedPayment({ employeeId });
-            const payment = await entitySeeders.seedPayment({ employeeId });
+            await seeders.seedPayment({ employeeId });
+            await seeders.seedPayment({ employeeId });
+            const payment = await seeders.seedPayment({ employeeId });
 
             const dbPayment = await repository.fetchLastOfEmployee(employeeId);
 
@@ -30,7 +30,7 @@ describe("mongoPaymentRepository", () => {
     });
     describe("fetchEmployeeLastPaymentDate", () => {
         it("should return the date of the employee's last payment", async () => {
-            const payment = await entitySeeders.seedPayment({ employeeId });
+            const payment = await seeders.seedPayment({ employeeId });
 
             const date = await repository.fetchEmployeeLastPaymentDate(employeeId);
 
@@ -44,7 +44,7 @@ describe("mongoPaymentRepository", () => {
     });
     describe("insert", () => {
         it("should insert the payment", async () => {
-            const payment = entityGenerators.generatePayment({ employeeId });
+            const payment = generators.generatePayment({ employeeId });
 
             await repository.insert(payment);
 

@@ -1,75 +1,58 @@
-import { Collection, FilterQuery, ObjectID, UpdateQuery } from "mongodb";
+import { Collection, FilterQuery, UpdateQuery } from "mongodb";
 import { NotFoundError } from "../../domain";
 
-type DbModel<T> = T & { _id?: ObjectID };
+export interface MongoDbAdapter<DBModel> {
+    fetch(query: FilterQuery<DBModel>): Promise<DBModel>;
+    fetchLast(query: FilterQuery<DBModel>): Promise<DBModel>;
+    insert(dbModel: DBModel): Promise<void>;
+    exists(query: FilterQuery<DBModel>): Promise<boolean>;
+    remove(query: FilterQuery<DBModel>): Promise<void>;
+    update(query: FilterQuery<DBModel>, update: UpdateQuery<DBModel>): Promise<void>;
 
-export interface MongoDbAdapter<T> {
-    fetch(query: FilterQuery<T>): Promise<T>;
-    fetchLast(query: FilterQuery<T>): Promise<T>;
-    insert(entity: T): Promise<void>;
-    exists(query: FilterQuery<T>): Promise<boolean>;
-    remove(query: FilterQuery<T>): Promise<void>;
-    update(query: FilterQuery<T>, update: UpdateQuery<T>): Promise<void>;
-
-    fetchAll(query: FilterQuery<T>): Promise<T[]>;
-    removeAll(query: FilterQuery<T>): Promise<void>;
+    fetchAll(query: FilterQuery<DBModel>): Promise<DBModel[]>;
+    removeAll(query: FilterQuery<DBModel>): Promise<void>;
 }
 
-export function makeMongoDbAdapter<T>(db: Collection<DbModel<T>>): MongoDbAdapter<T> {
+export function makeMongoDbAdapter<DBModel>(db: Collection<DBModel>): MongoDbAdapter<DBModel> {
     return {
-        async fetch(query: FilterQuery<T>): Promise<T> {
-            const entity = await db.findOne(query);
-            if (!entity) throw buildNotFoundError(query);
-
-            return cleanMongoEntity(entity);
+        async fetch(query) {
+            const dbModel = await db.findOne(query);
+            if (!dbModel) throw buildNotFoundError(query);
+            return dbModel;
         },
-
-        async fetchLast(query: FilterQuery<T>): Promise<T> {
-            const [entity] = await db
+        async fetchLast(query) {
+            const [dbModel] = await db
                 .find(query)
                 .limit(1)
                 .sort({ $natural: -1 })
                 .toArray();
-            if (!entity) throw buildNotFoundError(query);
+            if (!dbModel) throw buildNotFoundError(query);
 
-            return cleanMongoEntity(entity);
+            return dbModel;
         },
-
-        async insert(entity: T): Promise<void> {
-            await db.insertOne(entity);
-            cleanMongoEntity(entity);
+        async insert(dbModel) {
+            await db.insertOne(dbModel);
         },
-
-        async exists(query: FilterQuery<T>): Promise<boolean> {
+        async exists(query) {
             return !!(await db.findOne(query, { projection: { _id: 1 } }));
         },
-
-        async remove(query: FilterQuery<T>): Promise<void> {
+        async remove(query) {
             const { deletedCount } = await db.deleteOne(query);
             if (deletedCount === 0) throw buildNotFoundError(query);
         },
-
-        async update(query: FilterQuery<T>, update: UpdateQuery<T>): Promise<void> {
+        async update(query, update) {
             const { matchedCount } = await db.updateOne(query, update);
             if (matchedCount === 0) throw buildNotFoundError(query);
         },
-
-        async fetchAll(query: FilterQuery<T>): Promise<T[]> {
-            const entities = await db.find(query).toArray();
-            return entities.map(entity => cleanMongoEntity(entity));
+        async fetchAll(query) {
+            return await db.find(query).toArray();
         },
-
-        async removeAll(query: FilterQuery<T>): Promise<void> {
+        async removeAll(query) {
             await db.deleteMany(query);
         }
     };
 
-    function buildNotFoundError(query: FilterQuery<T>): NotFoundError {
+    function buildNotFoundError(query: FilterQuery<DBModel>): NotFoundError {
         return new NotFoundError(`nothing in ${db.collectionName} matched ${JSON.stringify(query)}`);
-    }
-
-    function cleanMongoEntity<T>(entity: DbModel<T>): T {
-        delete entity._id;
-        return entity;
     }
 }

@@ -1,4 +1,4 @@
-import { entityGenerators, expect, Stub } from "@test/unit";
+import { generators, expect, Stub } from "@test/unit";
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, TimeCardRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedTimeCardRepository } from "../../test";
@@ -21,20 +21,20 @@ describe("action createTimeCard", () => {
     });
 
     it("should create a time card for the employee", async () => {
-        const timeCard = entityGenerators.generateTimeCard();
+        const timeCard = generators.generateTimeCard();
         stubbedEmployeeRepository.fetchById
             .withArgs(timeCard.getEmployeeId())
-            .resolves(entityGenerators.generateHourlyEmployee());
+            .resolves(generators.generateHourlyEmployee());
 
         await createTimeCard(timeCard);
 
         expect(stubbedTimeCardRepository.insert).to.have.been.calledOnceWith(timeCard);
     });
     it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
-        const timeCard = entityGenerators.generateTimeCard();
+        const timeCard = generators.generateTimeCard();
         stubbedEmployeeRepository.fetchById
             .withArgs(timeCard.getEmployeeId())
-            .resolves(entityGenerators.generateSalariedEmployee());
+            .resolves(generators.generateSalariedEmployee());
 
         const promise = createTimeCard(timeCard);
 

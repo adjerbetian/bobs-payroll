@@ -1,18 +1,15 @@
-import { CoreDependencies } from "../../domain";
-import { MongoDbAdapter } from "../databases";
-import { SalesReceiptDBModel } from "../DBModels";
-import { salesReceiptMapper } from "../mappers";
+import { CoreDependencies, SalesReceipt } from "../../domain";
+import { MongoEntity } from "../databases";
 
 export function makeMongoSalesReceiptRepository(
-    db: MongoDbAdapter<SalesReceiptDBModel>
+    db: MongoEntity<SalesReceipt>
 ): CoreDependencies["salesReceiptRepository"] {
     return {
         async fetchAllOfEmployeeSince(employeeId, date) {
-            const models = await db.fetchAll({ employeeId, date: { $gte: date } });
-            return salesReceiptMapper.toEntities(models);
+            return db.fetchAll({ employeeId, date: { $gte: date } });
         },
         async insert(salesReceipt) {
-            await db.insert(salesReceiptMapper.toDBModel(salesReceipt));
+            await db.insert(salesReceipt);
         }
     };
 }

@@ -1,8 +1,9 @@
 import { PaymentMethodType } from "../../domain";
+import { MongoModel } from "./MongoModel";
 
 export type PaymentMethodDBModel = HoldPaymentMethodDBModel | DirectPaymentMethodDBModel | MailPaymentMethodDBModel;
 
-interface CommonPaymentMethodDBModel {
+interface CommonPaymentMethodDBModel extends MongoModel {
     employeeId: number;
     type: PaymentMethodType;
 }

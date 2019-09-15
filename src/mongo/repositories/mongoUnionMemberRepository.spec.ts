@@ -1,4 +1,4 @@
-import { entityGenerators, entitySeeders, expect, generateIndex } from "@test/integration";
+import { generators, seeders, expect, generateIndex } from "@test/integration";
 import { NotFoundError } from "../../domain";
 import { dbUnionMembers } from "../databases";
 import { makeMongoUnionMemberRepository } from "./mongoUnionMemberRepository";
@@ -12,7 +12,7 @@ describe("mongoUnionMemberRepository", () => {
 
     describe("fetchByMemberId", () => {
         it("return the union member", async () => {
-            const unionMember = await entitySeeders.seedUnionMember();
+            const unionMember = await seeders.seedUnionMember();
 
             const result = await repository.fetchByMemberId(unionMember.getMemberId());
 
@@ -26,7 +26,7 @@ describe("mongoUnionMemberRepository", () => {
     });
     describe("fetchByEmployeeId", () => {
         it("return the union member", async () => {
-            const unionMember = await entitySeeders.seedUnionMember();
+            const unionMember = await seeders.seedUnionMember();
 
             const result = await repository.fetchByEmployeeId(unionMember.getEmployeeId());
 
@@ -40,7 +40,7 @@ describe("mongoUnionMemberRepository", () => {
     });
     describe("insert", () => {
         it("should insert the given union member", async () => {
-            const unionMember = entityGenerators.generateUnionMember();
+            const unionMember = generators.generateUnionMember();
 
             await repository.insert(unionMember);
 
@@ -50,14 +50,14 @@ describe("mongoUnionMemberRepository", () => {
     });
     describe("doesMemberIdExist", () => {
         it("should return true when the memberId", async () => {
-            const unionMember = await entitySeeders.seedUnionMember();
+            const unionMember = await seeders.seedUnionMember();
 
             const result = await repository.doesMemberIdExist(unionMember.getMemberId());
 
             expect(result).to.be.true;
         });
         it("should return false when the union member does not exists", async () => {
-            await entitySeeders.seedUnionMember();
+            await seeders.seedUnionMember();
 
             const result = await repository.doesMemberIdExist(`non-existent-id`);
 
@@ -66,7 +66,7 @@ describe("mongoUnionMemberRepository", () => {
     });
     describe("deleteByEmployeeId", () => {
         it("should delete the employee's union members", async () => {
-            const unionMember = await entitySeeders.seedUnionMember();
+            const unionMember = await seeders.seedUnionMember();
 
             await repository.deleteByEmployeeId(unionMember.getEmployeeId());
 

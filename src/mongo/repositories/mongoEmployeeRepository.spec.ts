@@ -1,4 +1,4 @@
-import { entityGenerators, entitySeeders, expect, generateIndex } from "@test/integration";
+import { generators, seeders, expect, generateIndex } from "@test/integration";
 import { CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../../domain";
 import { dbEmployees } from "../databases";
 import { makeMongoEmployeeRepository } from "./mongoEmployeeRepository";
@@ -12,15 +12,15 @@ describe("mongoEmployeeRepository", () => {
 
     describe("fetchById", () => {
         it("should return the hourly employee", async () => {
-            const employee = await entitySeeders.seedHourlyEmployee();
+            const employee = await seeders.seedHourlyEmployee();
             await assertEmployeeCanBeFetched(employee);
         });
         it("should return the salaried employee", async () => {
-            const employee = await entitySeeders.seedSalariedEmployee();
+            const employee = await seeders.seedSalariedEmployee();
             await assertEmployeeCanBeFetched(employee);
         });
         it("should return the commissioned employee", async () => {
-            const employee = await entitySeeders.seedCommissionedEmployee();
+            const employee = await seeders.seedCommissionedEmployee();
             await assertEmployeeCanBeFetched(employee);
         });
 
@@ -31,15 +31,15 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("insert", () => {
         it("should insert the hourly employee", async () => {
-            const employee = entityGenerators.generateHourlyEmployee();
+            const employee = generators.generateHourlyEmployee();
             await assertEmployeeCanBeInserted(employee);
         });
         it("should insert the salaried employee", async () => {
-            const employee = entityGenerators.generateSalariedEmployee();
+            const employee = generators.generateSalariedEmployee();
             await assertEmployeeCanBeInserted(employee);
         });
         it("should insert the salaried employee", async () => {
-            const employee = entityGenerators.generateCommissionedEmployee();
+            const employee = generators.generateCommissionedEmployee();
             await assertEmployeeCanBeInserted(employee);
         });
 
@@ -52,14 +52,14 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("exists", () => {
         it("should return true when the employee exists", async () => {
-            const employee = await entitySeeders.seedHourlyEmployee();
+            const employee = await seeders.seedHourlyEmployee();
 
             const result = await repository.exists(employee.getId());
 
             expect(result).to.be.true;
         });
         it("should return false when the employee exists", async () => {
-            await entitySeeders.seedHourlyEmployee();
+            await seeders.seedHourlyEmployee();
 
             const result = await repository.exists(generateIndex());
 
@@ -68,7 +68,7 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("deleteById", () => {
         it("should delete the employee", async () => {
-            const employee = await entitySeeders.seedHourlyEmployee();
+            const employee = await seeders.seedHourlyEmployee();
 
             await repository.deleteById(employee.getId());
 
@@ -78,7 +78,7 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("updateById", () => {
         it("should update the employee name", async () => {
-            const employee = await entitySeeders.seedHourlyEmployee();
+            const employee = await seeders.seedHourlyEmployee();
 
             await repository.updateById(employee.getId(), { name: "James Bond" });
 
@@ -86,7 +86,7 @@ describe("mongoEmployeeRepository", () => {
             expect(dbEmployee.getName()).to.equal("James Bond");
         });
         it("should update the employee address", async () => {
-            const employee = await entitySeeders.seedHourlyEmployee();
+            const employee = await seeders.seedHourlyEmployee();
 
             await repository.updateById(employee.getId(), { address: "my new address" });
 
@@ -94,7 +94,7 @@ describe("mongoEmployeeRepository", () => {
             expect(dbEmployee.getAddress()).to.equal("my new address");
         });
         it("should update the employee type to hourly", async () => {
-            const employee = await entitySeeders.seedSalariedEmployee();
+            const employee = await seeders.seedSalariedEmployee();
 
             await repository.updateById(employee.getId(), { type: EmployeeType.HOURLY, hourlyRate: 10 });
 
@@ -103,7 +103,7 @@ describe("mongoEmployeeRepository", () => {
             expect((dbEmployee as HourlyEmployee).getHourlyRate()).to.equal(10);
         });
         it("should update the employee type to salaried", async () => {
-            const employee = await entitySeeders.seedHourlyEmployee();
+            const employee = await seeders.seedHourlyEmployee();
 
             await repository.updateById(employee.getId(), { type: EmployeeType.SALARIED, salary: 1000 });
 
@@ -112,7 +112,7 @@ describe("mongoEmployeeRepository", () => {
             expect((dbEmployee as SalariedEmployee).getSalary()).to.equal(1000);
         });
         it("should update the employee type to commissioned", async () => {
-            const employee = await entitySeeders.seedHourlyEmployee();
+            const employee = await seeders.seedHourlyEmployee();
 
             await repository.updateById(employee.getId(), {
                 type: EmployeeType.COMMISSIONED,
@@ -128,12 +128,9 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("fetchAllHourly", () => {
         it("should only fetch hourly employees", async () => {
-            const hourlyEmployees = [
-                await entitySeeders.seedHourlyEmployee(),
-                await entitySeeders.seedHourlyEmployee()
-            ];
-            await entitySeeders.seedSalariedEmployee();
-            await entitySeeders.seedCommissionedEmployee();
+            const hourlyEmployees = [await seeders.seedHourlyEmployee(), await seeders.seedHourlyEmployee()];
+            await seeders.seedSalariedEmployee();
+            await seeders.seedCommissionedEmployee();
 
             const result = await repository.fetchAllHourly();
 
@@ -142,12 +139,9 @@ describe("mongoEmployeeRepository", () => {
     });
     describe("fetchAllSalaried", () => {
         it("should only fetch hourly employees", async () => {
-            const salariedEmployees = [
-                await entitySeeders.seedSalariedEmployee(),
-                await entitySeeders.seedSalariedEmployee()
-            ];
-            await entitySeeders.seedHourlyEmployee();
-            await entitySeeders.seedCommissionedEmployee();
+            const salariedEmployees = [await seeders.seedSalariedEmployee(), await seeders.seedSalariedEmployee()];
+            await seeders.seedHourlyEmployee();
+            await seeders.seedCommissionedEmployee();
 
             const result = await repository.fetchAllSalaried();
 
@@ -157,11 +151,11 @@ describe("mongoEmployeeRepository", () => {
     describe("fetchAllCommissioned", () => {
         it("should only fetch hourly employees", async () => {
             const commissionedEmployees = [
-                await entitySeeders.seedCommissionedEmployee(),
-                await entitySeeders.seedCommissionedEmployee()
+                await seeders.seedCommissionedEmployee(),
+                await seeders.seedCommissionedEmployee()
             ];
-            await entitySeeders.seedHourlyEmployee();
-            await entitySeeders.seedSalariedEmployee();
+            await seeders.seedHourlyEmployee();
+            await seeders.seedSalariedEmployee();
 
             const result = await repository.fetchAllCommissioned();
 

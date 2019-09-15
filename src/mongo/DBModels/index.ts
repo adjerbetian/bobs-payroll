@@ -5,3 +5,4 @@ export * from "./SalesReceiptDBModel";
 export * from "./ServiceChargeDBModel";
 export * from "./PaymentMethodDBModel";
 export * from "./PaymentDBModel";
+export * from "./MongoModel";

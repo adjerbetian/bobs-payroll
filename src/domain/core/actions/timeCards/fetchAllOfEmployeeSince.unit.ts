@@ -1,4 +1,4 @@
-import { entityGenerators, expect, generateIndex, monday, Stub } from "@test/unit";
+import { generators, expect, generateIndex, monday, Stub } from "@test/unit";
 import { TimeCardRepository } from "../../repositories";
 import { buildStubbedTimeCardRepository } from "../../test";
 import { makeFetchEmployeeTimeCardsSince } from "./fetchAllOfEmployeeSince";
@@ -15,7 +15,7 @@ describe("action fetchAllOfEmployeeSince", () => {
     });
 
     it("should return the time cards", async () => {
-        const timeCards = [entityGenerators.generateTimeCard(), entityGenerators.generateTimeCard()];
+        const timeCards = [generators.generateTimeCard(), generators.generateTimeCard()];
         const employeeId = generateIndex();
         stubbedTimeCardRepository.fetchAllOfEmployeeSince.withArgs(employeeId, monday).resolves(timeCards);
 

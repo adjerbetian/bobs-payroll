@@ -8,18 +8,13 @@ import {
     HourlyEmployee,
     SalariedEmployee
 } from "../../domain";
-import {
-    CommissionedEmployeeDBModel,
-    EmployeeDBModel,
-    HourlyEmployeeDBModel,
-    SalariedEmployeeDBModel
-} from "../DBModels";
+import { EmployeeDBModel } from "../DBModels";
 import { buildMapper, Mapper } from "./mapper";
 
-type EmployeeMapper = Mapper<HourlyEmployeeDBModel, HourlyEmployee> &
-    Mapper<SalariedEmployeeDBModel, SalariedEmployee> &
-    Mapper<CommissionedEmployeeDBModel, CommissionedEmployee> &
-    Mapper<EmployeeDBModel, Employee>;
+type EmployeeMapper = Mapper<HourlyEmployee> &
+    Mapper<SalariedEmployee> &
+    Mapper<CommissionedEmployee> &
+    Mapper<Employee>;
 
 export const employeeMapper: EmployeeMapper = buildMapper({
     toEntity(model: EmployeeDBModel): any {

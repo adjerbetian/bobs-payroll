@@ -1,47 +1,49 @@
-import { dbModelGenerators, dbModelSeeders, executePayrollCommand, expect } from "@test/e2e";
-import { dbTimeCards, TimeCardDBModel } from "../src";
+import { generators, seeders, executePayrollCommand, expect } from "@test/e2e";
+import { dbTimeCards, TimeCard } from "../src";
 
 describe("Use Case 3: Post a Time Card", () => {
     it("should insert the time card in the db", async () => {
-        const employee = await dbModelSeeders.seedHourlyEmployee();
-        const timeCard = dbModelGenerators.generateTimeCard({ employeeId: employee.id });
+        const employee = await seeders.seedHourlyEmployee();
+        const timeCard = generators.generateTimeCard({ employeeId: employee.getId() });
 
         await executePostTimeCard(timeCard);
 
-        await expectEmployeeToHaveTimeCard(employee.id, timeCard);
+        await expectEmployeeToHaveTimeCard(employee.getId(), timeCard);
     });
     it("should do nothing when the employee is an hourly employee", async () => {
-        const employee = await dbModelSeeders.seedSalariedEmployee();
-        const timeCard = dbModelGenerators.generateTimeCard({ employeeId: employee.id });
+        const employee = await seeders.seedSalariedEmployee();
+        const timeCard = generators.generateTimeCard({ employeeId: employee.getId() });
 
         await executePostTimeCard(timeCard);
 
-        await expectEmployeeToHaveNoTimeCards(employee.id);
+        await expectEmployeeToHaveNoTimeCards(employee.getId());
     });
     it("should do nothing when the employee does not exist", async () => {
-        const timeCard = dbModelGenerators.generateTimeCard();
+        const timeCard = generators.generateTimeCard();
 
         await executePostTimeCard(timeCard);
 
-        await expectEmployeeToHaveNoTimeCards(timeCard.employeeId);
+        await expectEmployeeToHaveNoTimeCards(timeCard.getEmployeeId());
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const employee = await dbModelSeeders.seedHourlyEmployee();
-        const timeCard = dbModelGenerators.generateTimeCard({ employeeId: employee.id });
+        const employee = await seeders.seedHourlyEmployee();
+        const timeCard = generators.generateTimeCard({ employeeId: employee.getId() });
 
-        await executePayrollCommand(`TimeCard ${timeCard.employeeId} ${timeCard.hours} ${timeCard.date}`);
+        await executePayrollCommand(
+            `TimeCard ${timeCard.getEmployeeId()} ${timeCard.getHours()} ${timeCard.getDate()}`
+        );
 
-        await expectEmployeeToHaveNoTimeCards(timeCard.employeeId);
+        await expectEmployeeToHaveNoTimeCards(timeCard.getEmployeeId());
     });
 });
 
-async function executePostTimeCard(timeCard: TimeCardDBModel): Promise<void> {
-    await executePayrollCommand(`TimeCard ${timeCard.employeeId} ${timeCard.date} ${timeCard.hours}`);
+async function executePostTimeCard(timeCard: TimeCard): Promise<void> {
+    await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()} ${timeCard.getHours()}`);
 }
 
-async function expectEmployeeToHaveTimeCard(employeeId: number, timeCard: TimeCardDBModel): Promise<void> {
+async function expectEmployeeToHaveTimeCard(employeeId: number, timeCard: TimeCard): Promise<void> {
     const timeCards = await dbTimeCards.fetchAll({ employeeId });
-    expect(timeCards).to.deep.include(timeCard);
+    expect(timeCards).entities.to.include(timeCard);
 }
 
 async function expectEmployeeToHaveNoTimeCards(employeeId: number): Promise<void> {

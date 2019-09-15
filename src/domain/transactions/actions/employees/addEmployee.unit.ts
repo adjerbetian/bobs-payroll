@@ -1,4 +1,4 @@
-import { buildStubbedCoreActions, entityGenerators, expect, Stub } from "@test/unit";
+import { buildStubbedCoreActions, generators, expect, Stub } from "@test/unit";
 import { CoreActions } from "../../../core";
 import { TransactionFormatError } from "../../errors";
 import { makeAddEmployeeTransaction } from "./addEmployee";
@@ -15,7 +15,7 @@ describe("addEmployee", () => {
     });
 
     it("should insert an hourly employee", async () => {
-        const employee = entityGenerators.generateHourlyEmployee();
+        const employee = generators.generateHourlyEmployee();
 
         await addEmployee(
             `${employee.getId()}`,
@@ -28,7 +28,7 @@ describe("addEmployee", () => {
         expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
     });
     it("should insert a salaried employee", async () => {
-        const employee = entityGenerators.generateSalariedEmployee();
+        const employee = generators.generateSalariedEmployee();
 
         await addEmployee(
             `${employee.getId()}`,
@@ -41,7 +41,7 @@ describe("addEmployee", () => {
         expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
     });
     it("should insert an salaried with commission employee", async () => {
-        const employee = entityGenerators.generateCommissionedEmployee();
+        const employee = generators.generateCommissionedEmployee();
 
         await addEmployee(
             `${employee.getId()}`,
@@ -55,7 +55,7 @@ describe("addEmployee", () => {
         expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
     });
     it("should throw when the transaction is malformed", async () => {
-        const employee = entityGenerators.generateCommissionedEmployee();
+        const employee = generators.generateCommissionedEmployee();
 
         const promise = addEmployee(
             `${employee.getId()}`,

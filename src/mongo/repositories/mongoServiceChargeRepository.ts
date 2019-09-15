@@ -1,22 +1,18 @@
-import { CoreDependencies } from "../../domain";
-import { MongoDbAdapter } from "../databases";
-import { ServiceChargeDBModel } from "../DBModels";
-import { serviceChargeMapper } from "../mappers";
+import { CoreDependencies, ServiceCharge } from "../../domain";
+import { MongoEntity } from "../databases";
 
 export function makeMongoServiceChargeRepository(
-    db: MongoDbAdapter<ServiceChargeDBModel>
+    db: MongoEntity<ServiceCharge>
 ): CoreDependencies["serviceChargeRepository"] {
     return {
         async fetchAll() {
-            const dbModels = await db.fetchAll({});
-            return serviceChargeMapper.toEntities(dbModels);
+            return db.fetchAll({});
         },
         async fetchAllOfMember(memberId) {
-            const dbModels = await db.fetchAll({ memberId });
-            return serviceChargeMapper.toEntities(dbModels);
+            return db.fetchAll({ memberId });
         },
         async insert(serviceCharge) {
-            await db.insert(serviceChargeMapper.toDBModel(serviceCharge));
+            await db.insert(serviceCharge);
         }
     };
 }

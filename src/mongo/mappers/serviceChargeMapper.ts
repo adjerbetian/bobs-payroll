@@ -1,10 +1,7 @@
 import { buildServiceCharge, ServiceCharge } from "../../domain";
-import { ServiceChargeDBModel } from "../DBModels";
-import { buildMapper, Mapper } from "./mapper";
+import { buildMapper } from "./mapper";
 
-type ServiceChargeMapper = Mapper<ServiceChargeDBModel, ServiceCharge>;
-
-export const serviceChargeMapper: ServiceChargeMapper = buildMapper({
+export const serviceChargeMapper = buildMapper<ServiceCharge>({
     toEntity(model) {
         return buildServiceCharge({
             memberId: model.memberId,

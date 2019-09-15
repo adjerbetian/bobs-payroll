@@ -1,13 +1,4 @@
-import {
-    buildStubbedCoreActions,
-    buildStubFor,
-    entityGenerators,
-    expect,
-    friday,
-    lastFriday,
-    never,
-    Stub
-} from "@test/unit";
+import { buildStubbedCoreActions, buildStubFor, generators, expect, friday, lastFriday, never, Stub } from "@test/unit";
 import { CoreActions } from "../../../../core";
 import { PaymentRepository } from "../../../repositories";
 import { buildStubbedPaymentRepository } from "../../../test";
@@ -38,7 +29,7 @@ describe("action runHourlyPayroll", () => {
     });
 
     it("should insert payments for each employee", async () => {
-        const employees = [entityGenerators.generateHourlyEmployee(), entityGenerators.generateHourlyEmployee()];
+        const employees = [generators.generateHourlyEmployee(), generators.generateHourlyEmployee()];
         stubbedCoreActions.fetchAllHourlyEmployees.resolves(employees);
 
         await runHourlyPayroll(friday);
@@ -47,8 +38,8 @@ describe("action runHourlyPayroll", () => {
     });
 
     it("should insert the right payment the employee", async () => {
-        const employee = entityGenerators.generateHourlyEmployee();
-        const timeCards = [entityGenerators.generateTimeCard(), entityGenerators.generateTimeCard()];
+        const employee = generators.generateHourlyEmployee();
+        const timeCards = [generators.generateTimeCard(), generators.generateTimeCard()];
         stubbedPaymentRepository.fetchEmployeeLastPaymentDate.resolves(lastFriday);
         stubbedCoreActions.fetchEmployeeTimeCardsSince.withArgs(employee.getId(), lastFriday).resolves(timeCards);
         stubbedCoreActions.fetchAllHourlyEmployees.resolves([employee]);

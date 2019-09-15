@@ -1,23 +1,20 @@
-import { CoreDependencies, EmployeeType } from "../../domain";
-import { MongoDbAdapter } from "../databases";
 import {
-    CommissionedEmployeeDBModel,
-    EmployeeDBModel,
-    HourlyEmployeeDBModel,
-    SalariedEmployeeDBModel
-} from "../DBModels";
-import { employeeMapper } from "../mappers";
+    CommissionedEmployee,
+    CoreDependencies,
+    Employee,
+    EmployeeType,
+    HourlyEmployee,
+    SalariedEmployee
+} from "../../domain";
+import { MongoEntity } from "../databases";
 
-export function makeMongoEmployeeRepository(
-    db: MongoDbAdapter<EmployeeDBModel>
-): CoreDependencies["employeeRepository"] {
+export function makeMongoEmployeeRepository(db: MongoEntity<Employee>): CoreDependencies["employeeRepository"] {
     return {
         async fetchById(id) {
-            const model = await db.fetch({ id });
-            return employeeMapper.toEntity(model);
+            return db.fetch({ id });
         },
         async insert(employee) {
-            return db.insert(employeeMapper.toDBModel(employee));
+            return db.insert(employee);
         },
         async exists(id) {
             return db.exists({ id });
@@ -30,16 +27,13 @@ export function makeMongoEmployeeRepository(
         },
 
         async fetchAllHourly() {
-            const employees = (await db.fetchAll({ type: EmployeeType.HOURLY })) as HourlyEmployeeDBModel[];
-            return employees.map(employee => employeeMapper.toEntity(employee));
+            return (await db.fetchAll({ type: EmployeeType.HOURLY })) as HourlyEmployee[];
         },
         async fetchAllSalaried() {
-            const employees = (await db.fetchAll({ type: EmployeeType.SALARIED })) as SalariedEmployeeDBModel[];
-            return employees.map(employee => employeeMapper.toEntity(employee));
+            return (await db.fetchAll({ type: EmployeeType.SALARIED })) as SalariedEmployee[];
         },
         async fetchAllCommissioned() {
-            const employees = (await db.fetchAll({ type: EmployeeType.COMMISSIONED })) as CommissionedEmployeeDBModel[];
-            return employees.map(employee => employeeMapper.toEntity(employee));
+            return (await db.fetchAll({ type: EmployeeType.COMMISSIONED })) as CommissionedEmployee[];
         }
     };
 }

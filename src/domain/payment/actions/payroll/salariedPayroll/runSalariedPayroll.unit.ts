@@ -1,4 +1,4 @@
-import { buildStubbedCoreActions, buildStubFor, entityGenerators, expect, lastDayOfMonth, Stub } from "@test/unit";
+import { buildStubbedCoreActions, buildStubFor, generators, expect, lastDayOfMonth, Stub } from "@test/unit";
 import { CoreActions } from "../../../../core";
 import { CreatePaymentForEmployee } from "../../payment";
 import { makeRunSalariedPayroll } from "./runSalariedPayroll";
@@ -22,7 +22,7 @@ describe("action runSalariedPayroll", () => {
     });
 
     it("should insert the right payment the employee", async () => {
-        const employee = entityGenerators.generateSalariedEmployee();
+        const employee = generators.generateSalariedEmployee();
         stubbedCoreActions.fetchAllSalariedEmployees.resolves([employee]);
 
         await runSalariedPayroll(lastDayOfMonth);
@@ -35,7 +35,7 @@ describe("action runSalariedPayroll", () => {
     });
 
     it("should insert payments for each employee", async () => {
-        const employees = [entityGenerators.generateSalariedEmployee(), entityGenerators.generateSalariedEmployee()];
+        const employees = [generators.generateSalariedEmployee(), generators.generateSalariedEmployee()];
         stubbedCoreActions.fetchAllSalariedEmployees.resolves(employees);
 
         await runSalariedPayroll(lastDayOfMonth);

@@ -1,42 +1,31 @@
 import { expect, generateIndex } from "@test/integration";
-import { cloneDeep } from "lodash";
+import { ObjectID } from "bson";
 import { Collection } from "mongodb";
 import { NotFoundError } from "../../domain";
+import { MongoModel } from "../DBModels";
 import { getDb } from "./db";
 import { makeMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 
-interface Entity {
-    id: number;
-    field: string;
-}
-
-let mongo: Collection<Entity>;
-let adapter: MongoDbAdapter<Entity>;
+let mongo: Collection<TestDBModel>;
+let adapter: MongoDbAdapter<TestDBModel>;
 
 describe("mongoDbAdapter", () => {
     beforeEach(() => {
-        mongo = getDb().collection<Entity>("test-collection");
+        mongo = getDb().collection<TestDBModel>("test-collection");
         adapter = makeMongoDbAdapter(mongo);
     });
 
     describe("fetch", () => {
         it("should return the requested stored object", async () => {
-            await seedEntity();
-            const entity = await seedEntity();
-            await seedEntity();
+            await seedDBModel();
+            const model = await seedDBModel();
+            await seedDBModel();
 
-            const dbEntity = await adapter.fetch({ id: entity.id });
+            const result = await adapter.fetch({ id: model.id });
 
-            expect(dbEntity).to.deep.include(entity);
+            expect(result).to.deep.equal(model);
         });
-        it("should not return the mongo _id", async () => {
-            const entity = await seedEntity();
-
-            const dbEntity = await adapter.fetch({ id: entity.id });
-
-            expect(dbEntity).not.to.have.property("_id");
-        });
-        it("should throw a NotFoundError when the entity was not found", async () => {
+        it("should throw a NotFoundError when the model was not found", async () => {
             const promise = adapter.fetch({ id: generateIndex() });
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -44,49 +33,42 @@ describe("mongoDbAdapter", () => {
     });
     describe("fetchLast", () => {
         it("should return the last stored object", async () => {
-            await seedEntity();
-            const lastEntity = await seedEntity();
+            await seedDBModel();
+            const lastModel = await seedDBModel();
 
-            const dbEntity = await adapter.fetchLast({});
+            const result = await adapter.fetchLast({});
 
-            expect(dbEntity).to.deep.include(lastEntity);
+            expect(result).to.deep.equal(lastModel);
         });
-        it("should not return the mongo _id", async () => {
-            const entity = await seedEntity();
-
-            const dbEntity = await adapter.fetchLast({ id: entity.id });
-
-            expect(dbEntity).not.to.have.property("_id");
-        });
-        it("should throw a NotFoundError when the entity was not found", async () => {
+        it("should throw a NotFoundError when the model was not found", async () => {
             const promise = adapter.fetchLast({ id: generateIndex() });
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });
     });
     describe("insert", () => {
-        it("should insert the entity", async () => {
-            const entity = generateEntity();
+        it("should insert the model", async () => {
+            const model = generateDBModel();
 
-            await adapter.insert(entity);
+            await adapter.insert(model);
 
-            const dbEntity = await mongo.findOne({ id: entity.id });
-            expect(dbEntity).to.deep.include(entity);
+            const dbModel = await mongo.findOne({ id: model.id });
+            expect(dbModel).to.deep.equal(model);
         });
-        it("should not modify the entity", async () => {
-            const entity = generateEntity();
-            const entityCopy = cloneDeep(entity);
+        it("should add the object id to the model", async () => {
+            const model = generateDBModel();
 
-            await adapter.insert(entity);
+            await adapter.insert(model);
 
-            expect(entity).to.deep.equal(entityCopy);
+            const dbModel = await mongo.findOne({ id: model.id });
+            expect(dbModel!._id).to.be.an.instanceOf(ObjectID);
         });
     });
     describe("exists", () => {
         it("should return true when the object exists", async () => {
-            const entity = await seedEntity();
+            const model = await seedDBModel();
 
-            const result = await adapter.exists({ id: entity.id });
+            const result = await adapter.exists({ id: model.id });
 
             expect(result).to.be.true;
         });
@@ -97,30 +79,30 @@ describe("mongoDbAdapter", () => {
         });
     });
     describe("remove", () => {
-        it("should delete the entity", async () => {
-            const entity = await seedEntity();
+        it("should delete the model", async () => {
+            const model = await seedDBModel();
 
-            await adapter.remove({ id: entity.id });
+            await adapter.remove({ id: model.id });
 
-            const dbEntity = await mongo.findOne({ id: entity.id });
-            expect(dbEntity).to.be.null;
+            const modelExists = await adapter.exists({ id: generateIndex() });
+            await expect(modelExists).to.be.false;
         });
-        it("should throw a NotFoundError when the entity doesn't exist", async () => {
+        it("should throw a NotFoundError when the model doesn't exist", async () => {
             const promise = adapter.remove({ id: generateIndex() });
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
         });
     });
     describe("update", () => {
-        it("should update the entity", async () => {
-            const entity = await seedEntity();
+        it("should update the model", async () => {
+            const model = await seedDBModel();
 
-            await adapter.update({ id: entity.id }, { $set: { field: "new value" } });
+            await adapter.update({ id: model.id }, { $set: { field: "new value" } });
 
-            const dbEntity = await mongo.findOne({ id: entity.id });
-            expect(dbEntity).to.have.property("field", "new value");
+            const dbModel = await mongo.findOne({ id: model.id });
+            expect(dbModel).to.have.property("field", "new value");
         });
-        it("should throw a NotFoundError when the entity doesn't exist", async () => {
+        it("should throw a NotFoundError when the model doesn't exist", async () => {
             const promise = adapter.update({ id: generateIndex() }, { $set: { field: "new value" } });
 
             await expect(promise).to.be.rejectedWith(NotFoundError);
@@ -128,62 +110,59 @@ describe("mongoDbAdapter", () => {
     });
     describe("fetchAll", () => {
         it("should return all the stored objects", async () => {
-            const entity1 = await seedEntity();
-            const entity2 = await seedEntity();
+            const model1 = await seedDBModel();
+            const model2 = await seedDBModel();
 
-            const dbEntities = await adapter.fetchAll({});
+            const result = await adapter.fetchAll({});
 
-            expect(dbEntities).to.have.lengthOf(2);
-            expect(dbEntities[0]).to.deep.include(entity1);
-            expect(dbEntities[1]).to.deep.include(entity2);
+            expect(result).to.deep.equal([model1, model2]);
         });
         it("should return only the matching stored objects", async () => {
-            await seedEntity({ field: "group-1" });
-            await seedEntity({ field: "group-2" });
+            await seedDBModel({ field: "group-1" });
+            await seedDBModel({ field: "group-2" });
 
-            const dbEntities = await adapter.fetchAll({ field: "group-1" });
+            const result = await adapter.fetchAll({ field: "group-1" });
 
-            expect(dbEntities).to.have.lengthOf(1);
-        });
-        it("should not return the mongo _id", async () => {
-            await seedEntity();
-
-            const dbEntities = await adapter.fetchAll({});
-
-            expect(dbEntities[0]).not.to.have.property("_id");
+            expect(result).to.have.lengthOf(1);
         });
     });
     describe("removeAll", () => {
-        it("should delete all the entities", async () => {
-            await seedEntity({ field: "group-1" });
-            await seedEntity({ field: "group-1" });
+        it("should delete all the models", async () => {
+            await seedDBModel({ field: "group-1" });
+            await seedDBModel({ field: "group-1" });
 
             await adapter.removeAll({ field: "group-1" });
 
-            const dbEntities = await mongo.find({}).toArray();
-            expect(dbEntities).to.be.empty;
+            const dbModels = await mongo.find({}).toArray();
+            expect(dbModels).to.be.empty;
         });
-        it("should not delete the non matching entities", async () => {
-            await seedEntity({ field: "group-2" });
+        it("should not delete the non matching models", async () => {
+            await seedDBModel({ field: "group-2" });
 
             await adapter.removeAll({ field: "group-1" });
 
-            const dbEntities = await mongo.find({}).toArray();
-            expect(dbEntities).to.have.lengthOf(1);
+            const dbModels = await mongo.find({}).toArray();
+            expect(dbModels).to.have.lengthOf(1);
         });
     });
 });
 
-async function seedEntity(args: Partial<Entity> = {}): Promise<Entity> {
-    const entity = generateEntity(args);
-    await mongo.insertOne(cloneDeep(entity));
-    return entity;
+async function seedDBModel(args: Partial<TestDBModel> = {}): Promise<TestDBModel> {
+    const dbModel = generateDBModel(args);
+    await mongo.insertOne(dbModel);
+    return dbModel;
 }
 
-function generateEntity(args: Partial<Entity> = {}): Entity {
+function generateDBModel(args: Partial<TestDBModel> = {}): TestDBModel {
+    const index = generateIndex();
     return {
-        id: generateIndex(),
-        field: `value-${generateIndex()}`,
+        id: index,
+        field: `value-of-${index}`,
         ...args
     };
+}
+
+interface TestDBModel extends MongoModel {
+    id: number;
+    field: string;
 }

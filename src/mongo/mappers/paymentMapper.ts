@@ -1,12 +1,9 @@
 import { buildPayment, Payment } from "../../domain";
-import { PaymentDBModel } from "../DBModels";
-import { buildMapper, Mapper } from "./mapper";
+import { buildMapper } from "./mapper";
 import { paymentMethodMapper } from "./paymentMethodMapper";
 
-type PaymentMapper = Mapper<PaymentDBModel, Payment>;
-
-export const paymentMapper: PaymentMapper = buildMapper({
-    toEntity({ employeeId, amount, date, method }: PaymentDBModel): Payment {
+export const paymentMapper = buildMapper<Payment>({
+    toEntity({ employeeId, amount, date, method }) {
         return buildPayment({
             employeeId,
             date,
@@ -14,7 +11,7 @@ export const paymentMapper: PaymentMapper = buildMapper({
             method: paymentMethodMapper.toEntity(method)
         });
     },
-    toDBModel(payment: Payment): PaymentDBModel {
+    toDBModel(payment) {
         return {
             employeeId: payment.getEmployeeId(),
             amount: payment.getAmount(),

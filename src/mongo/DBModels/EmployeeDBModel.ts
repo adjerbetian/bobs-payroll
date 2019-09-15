@@ -1,8 +1,9 @@
 import { EmployeeType } from "../../domain";
+import { MongoModel } from "./MongoModel";
 
 export type EmployeeDBModel = HourlyEmployeeDBModel | SalariedEmployeeDBModel | CommissionedEmployeeDBModel;
 
-interface CommonEmployeeDBModel {
+interface CommonEmployeeDBModel extends MongoModel {
     id: number;
     name: string;
     address: string;

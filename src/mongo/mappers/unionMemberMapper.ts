@@ -1,10 +1,7 @@
 import { buildUnionMember, UnionMember } from "../../domain";
-import { UnionMemberDBModel } from "../DBModels";
-import { buildMapper, Mapper } from "./mapper";
+import { buildMapper } from "./mapper";
 
-type UnionMemberMapper = Mapper<UnionMemberDBModel, UnionMember>;
-
-export const unionMemberMapper: UnionMemberMapper = buildMapper({
+export const unionMemberMapper = buildMapper<UnionMember>({
     toEntity(model) {
         return buildUnionMember({
             employeeId: model.employeeId,

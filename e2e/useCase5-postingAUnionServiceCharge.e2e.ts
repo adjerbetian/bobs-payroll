@@ -1,42 +1,42 @@
-import { dbModelGenerators, dbModelSeeders, executePayrollCommand, expect } from "@test/e2e";
-import { dbServiceCharges, ServiceChargeDBModel } from "../src";
+import { generators, seeders, executePayrollCommand, expect } from "@test/e2e";
+import { dbServiceCharges, ServiceCharge } from "../src";
 
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {
-        const unionMember = await dbModelSeeders.seedUnionMember();
-        const serviceCharge = dbModelGenerators.generateServiceCharge({ memberId: unionMember.memberId });
+        const unionMember = await seeders.seedUnionMember();
+        const serviceCharge = generators.generateServiceCharge({ memberId: unionMember.getMemberId() });
 
         await executePostServiceCharge(serviceCharge);
 
         await expectServiceChargeToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the employee is not a union member", async () => {
-        const serviceCharge = dbModelGenerators.generateServiceCharge({ memberId: "non-existing" });
+        const serviceCharge = generators.generateServiceCharge({ memberId: "non-existing" });
 
         await executePostServiceCharge(serviceCharge);
 
         await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
     it("should do nothing when the transaction is not of the right format", async () => {
-        const unionMember = await dbModelSeeders.seedUnionMember();
-        const serviceCharge = dbModelGenerators.generateServiceCharge({ memberId: unionMember.memberId });
+        const unionMember = await seeders.seedUnionMember();
+        const serviceCharge = generators.generateServiceCharge({ memberId: unionMember.getMemberId() });
 
-        await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId}`);
+        await executePayrollCommand(`ServiceCharge ${serviceCharge.getMemberId()}`);
 
         await expectServiceChargeNotToHaveBeenInserted(serviceCharge);
     });
 });
 
-async function executePostServiceCharge(serviceCharge: ServiceChargeDBModel): Promise<void> {
-    await executePayrollCommand(`ServiceCharge ${serviceCharge.memberId} ${serviceCharge.amount}`);
+async function executePostServiceCharge(serviceCharge: ServiceCharge): Promise<void> {
+    await executePayrollCommand(`ServiceCharge ${serviceCharge.getMemberId()} ${serviceCharge.getAmount()}`);
 }
 
-async function expectServiceChargeToHaveBeenInserted(serviceCharge: ServiceChargeDBModel): Promise<void> {
+async function expectServiceChargeToHaveBeenInserted(serviceCharge: ServiceCharge): Promise<void> {
     const serviceCharges = await dbServiceCharges.fetchAll({});
-    expect(serviceCharges).to.deep.include(serviceCharge);
+    expect(serviceCharges).entities.to.include(serviceCharge);
 }
 
-async function expectServiceChargeNotToHaveBeenInserted(serviceCharge: ServiceChargeDBModel): Promise<void> {
+async function expectServiceChargeNotToHaveBeenInserted(serviceCharge: ServiceCharge): Promise<void> {
     const serviceCharges = await dbServiceCharges.fetchAll({});
-    expect(serviceCharges).not.to.deep.include(serviceCharge);
+    expect(serviceCharges).entities.not.to.include(serviceCharge);
 }

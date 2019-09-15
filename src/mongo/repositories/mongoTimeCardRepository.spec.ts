@@ -1,13 +1,4 @@
-import {
-    entityGenerators,
-    entitySeeders,
-    expect,
-    generateIndex,
-    lastTuesday,
-    monday,
-    never,
-    tuesday
-} from "@test/integration";
+import { generators, seeders, expect, generateIndex, lastTuesday, monday, never, tuesday } from "@test/integration";
 import { dbTimeCards } from "../databases";
 import { makeMongoTimeCardRepository } from "./mongoTimeCardRepository";
 
@@ -22,17 +13,14 @@ describe("mongoTimeCardRepository", () => {
 
     describe("fetchAllOfEmployee", () => {
         it("should return all the employee's time cards", async () => {
-            const timeCards = [
-                await entitySeeders.seedTimeCard({ employeeId }),
-                await entitySeeders.seedTimeCard({ employeeId })
-            ];
+            const timeCards = [await seeders.seedTimeCard({ employeeId }), await seeders.seedTimeCard({ employeeId })];
 
             const result = await repository.fetchAllOfEmployee(employeeId);
 
             expect(result).entities.to.equal(timeCards);
         });
         it("should not return the time cards from the other employees", async () => {
-            await entitySeeders.seedTimeCard();
+            await seeders.seedTimeCard();
 
             const result = await repository.fetchAllOfEmployee(employeeId);
 
@@ -41,25 +29,22 @@ describe("mongoTimeCardRepository", () => {
     });
     describe("fetchAllOfEmployeeSince", () => {
         it("should return all the employee's made after the given date", async () => {
-            const timeCards = [
-                await entitySeeders.seedTimeCard({ employeeId }),
-                await entitySeeders.seedTimeCard({ employeeId })
-            ];
+            const timeCards = [await seeders.seedTimeCard({ employeeId }), await seeders.seedTimeCard({ employeeId })];
 
             const result = await repository.fetchAllOfEmployeeSince(employeeId, never);
 
             expect(result).entities.to.equal(timeCards);
         });
         it("should not return the time cards from the other employees", async () => {
-            await entitySeeders.seedTimeCard();
+            await seeders.seedTimeCard();
 
             const result = await repository.fetchAllOfEmployeeSince(employeeId, never);
 
             expect(result).to.be.empty;
         });
         it("should return the time cards made after the given date", async () => {
-            await entitySeeders.seedTimeCard({ employeeId, date: tuesday });
-            await entitySeeders.seedTimeCard({ employeeId, date: lastTuesday });
+            await seeders.seedTimeCard({ employeeId, date: tuesday });
+            await seeders.seedTimeCard({ employeeId, date: lastTuesday });
 
             const result = await repository.fetchAllOfEmployeeSince(employeeId, monday);
 
@@ -69,7 +54,7 @@ describe("mongoTimeCardRepository", () => {
     });
     describe("insert", () => {
         it("should insert the given time card", async () => {
-            const timeCard = entityGenerators.generateTimeCard({ employeeId });
+            const timeCard = generators.generateTimeCard({ employeeId });
 
             await repository.insert(timeCard);
 

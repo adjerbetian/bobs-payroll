@@ -2,7 +2,7 @@ import "./unit";
 import { closeConnection, initConnection, cleanCollections } from "../src";
 
 export * from "./unit";
-export { dbModelSeeders, entitySeeders } from "./generators";
+export { seeders } from "./generators";
 
 before(async function() {
     this.timeout(5000);

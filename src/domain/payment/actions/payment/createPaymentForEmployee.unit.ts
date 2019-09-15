@@ -1,6 +1,6 @@
 import {
     buildStubbedCoreActions,
-    entityGenerators,
+    generators,
     expect,
     generateFloatBetween,
     generateIndex,
@@ -34,7 +34,7 @@ describe("createPaymentForEmployee", () => {
     const amount = generateFloatBetween(1000, 2000);
 
     it("should insert a payment with the given info", async () => {
-        const method = entityGenerators.generateHoldPaymentMethod({ employeeId });
+        const method = generators.generateHoldPaymentMethod({ employeeId });
         stubbedCoreActions.fetchEmployeePaymentMethod.withArgs(employeeId).resolves(method);
 
         await createPaymentForEmployee({ employeeId, date, amount });
