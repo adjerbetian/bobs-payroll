@@ -1,13 +1,10 @@
-import { Stub } from "@test/utils";
-import { buildStubFor } from "@test/utils/stubBuilder";
+import { buildStubFor, Stub } from "@test/utils";
 import { CoreActions } from "../../core";
-import { PaymentRepository } from "../repositories";
+import { PaymentActions } from "../../payment";
 
-export function buildStubbedPaymentRepository(): Stub<PaymentRepository> {
+export function buildStubbedPaymentActions(): Stub<PaymentActions> {
     return buildStubFor({
-        fetchLastOfEmployee: true,
-        fetchEmployeeLastPaymentDate: true,
-        insert: true
+        runPayroll: true
     });
 }
 

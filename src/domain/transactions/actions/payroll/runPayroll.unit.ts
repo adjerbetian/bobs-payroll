@@ -1,8 +1,9 @@
-import { buildStubbedPaymentActions, expect, Stub } from "@test/unit";
+import { expect, Stub } from "@test/unit";
 import * as moment from "moment";
 import { isoDate } from "../../../../utils";
 import { PaymentActions } from "../../../payment";
 import { TransactionFormatError } from "../../errors";
+import { buildStubbedPaymentActions } from "../../test";
 import { makeRunPayrollTransaction } from "./runPayroll";
 
 describe("runPayroll", () => {

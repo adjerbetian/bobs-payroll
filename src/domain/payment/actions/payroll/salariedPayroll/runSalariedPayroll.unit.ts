@@ -1,5 +1,6 @@
-import { buildStubbedCoreActions, buildStubFor, generators, expect, lastDayOfMonth, Stub } from "@test/unit";
+import { buildStubFor, generators, expect, lastDayOfMonth, Stub } from "@test/unit";
 import { CoreActions } from "../../../../core";
+import { buildStubbedCoreActions } from "../../../test";
 import { CreatePaymentForEmployee } from "../../payment";
 import { makeRunSalariedPayroll } from "./runSalariedPayroll";
 

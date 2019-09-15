@@ -1,7 +1,8 @@
-import { buildStubbedCoreActions, generators, expect, Stub } from "@test/unit";
+import { generators, expect, Stub } from "@test/unit";
 import * as moment from "moment";
 import { CoreActions, SalesReceipt } from "../../../core";
 import { TransactionFormatError } from "../../errors";
+import { buildStubbedCoreActions } from "../../test";
 import { makePostSalesReceiptTransaction } from "./postSalesReceipt";
 
 describe("postTimeCard", () => {

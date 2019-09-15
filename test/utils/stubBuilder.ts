@@ -1,37 +1,5 @@
 import { sandbox } from "@test/unit";
 import { SinonStub } from "sinon";
-import { CoreActions, PaymentActions } from "../../src";
-
-export function buildStubbedCoreActions(): Stub<CoreActions> {
-    return buildStubFor<CoreActions>({
-        createEmployee: true,
-        deleteEmployee: true,
-        updateEmployee: true,
-        fetchAllHourlyEmployees: true,
-        fetchAllSalariedEmployees: true,
-        fetchAllCommissionedEmployees: true,
-
-        createTimeCard: true,
-        fetchEmployeeTimeCardsSince: true,
-
-        createServiceCharge: true,
-
-        createSalesReceipt: true,
-        fetchAllEmployeeSalesReceiptsSince: true,
-
-        createPaymentMethod: true,
-        fetchEmployeePaymentMethod: true,
-
-        createUnionMember: true,
-        removeEmployeeFromUnion: true
-    });
-}
-
-export function buildStubbedPaymentActions(): Stub<PaymentActions> {
-    return buildStubFor({
-        runPayroll: true
-    });
-}
 
 export type Stub<T> = T extends Function ? StubbedFunction : StubbedObject<T>;
 type StubbedFunction = SinonStub;
@@ -42,9 +10,7 @@ type StubbedObject<T> = {
 type BooleansOf<T> = { [K in keyof T]: true };
 export function buildStubFor<T>(object: BooleansOf<T>): StubbedObject<T>;
 export function buildStubFor(name: string): StubbedFunction;
-export function buildStubFor<T extends Record<string, boolean>>(
-    object: T | string
-): StubbedObject<T> | StubbedFunction {
+export function buildStubFor<T extends Record<string, true>>(object: T | string): StubbedObject<T> | StubbedFunction {
     if (typeof object === "string") {
         return buildStubForFunction(object);
     } else {

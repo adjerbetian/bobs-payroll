@@ -1,16 +1,8 @@
-import {
-    buildStubbedCoreActions,
-    generators,
-    expect,
-    generateFloatBetween,
-    generateIndex,
-    lastDayOfMonth,
-    Stub
-} from "@test/unit";
+import { generators, expect, generateFloatBetween, generateIndex, lastDayOfMonth, Stub } from "@test/unit";
 import { CoreActions } from "../../../core";
 import { buildPayment, Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
-import { buildStubbedPaymentRepository } from "../../test";
+import { buildStubbedCoreActions, buildStubbedPaymentRepository } from "../../test";
 import { makeCreatePaymentForEmployee } from "./createPaymentForEmployee";
 
 describe("createPaymentForEmployee", () => {

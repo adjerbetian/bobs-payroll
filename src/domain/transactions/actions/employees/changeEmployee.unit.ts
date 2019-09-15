@@ -1,6 +1,7 @@
-import { buildStubbedCoreActions, generators, expect, generateIndex, Stub } from "@test/unit";
+import { generators, expect, generateIndex, Stub } from "@test/unit";
 import { CoreActions, EmployeeType } from "../../../core";
 import { TransactionFormatError } from "../../errors";
+import { buildStubbedCoreActions } from "../../test";
 import { makeChangeEmployeeTransaction } from "./changeEmployee";
 
 describe("changeEmployee", () => {
