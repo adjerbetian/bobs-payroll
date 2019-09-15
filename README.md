@@ -1,4 +1,5 @@
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4)](https://github.com/prettier/prettier)
+[![language: TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)](https://www.typescriptlang.org/)
 
 <h1> 
     Agile Software Development <br/>
@@ -10,9 +11,7 @@
 This is an attempt to apply Clean Architecture / DDD to 
 the The Payroll System case study while using typescript.
 
-Notes : 
-
-- Use cases in Clean Architecture are here called actions
+(*note:* Use cases *in* Clean Architecture *are here called actions*)
 
 ## Rudimentary Specification of the Payroll System *[From the book]*
 
