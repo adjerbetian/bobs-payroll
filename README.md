@@ -1,5 +1,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4)](https://github.com/prettier/prettier)
 [![language: TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)](https://www.typescriptlang.org/)
+![e2e-coverage: > 95%](https://img.shields.io/badge/e2e%20coverage-%3E%2095%25-green)
+![coverage: > 95%](https://img.shields.io/badge/coverage-%3E%2095%25-green)
 
 <h1> 
     Agile Software Development <br/>

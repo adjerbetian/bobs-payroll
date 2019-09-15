@@ -10,14 +10,17 @@ import { TransactionsActions } from "./TransactionsActions";
 
 export function makeTransactionsActions(coreActions: CoreActions, paymentActions: PaymentActions): TransactionsActions {
     return {
-        processTransaction: makeProcessTransaction({
-            addEmployee: makeAddEmployeeTransaction(coreActions),
-            deleteEmployee: makeDeleteEmployeeTransaction(coreActions),
-            postTimeCard: makePostTimeCardTransaction(coreActions),
-            postSalesReceipt: makePostSalesReceiptTransaction(coreActions),
-            postServiceCharge: makePostServiceChargeTransaction(coreActions),
-            changeEmployee: makeChangeEmployeeTransaction(coreActions),
-            runPayroll: makeRunPayrollTransaction(paymentActions)
-        })
+        processTransaction: makeProcessTransaction(
+            {
+                addEmployee: makeAddEmployeeTransaction(coreActions),
+                deleteEmployee: makeDeleteEmployeeTransaction(coreActions),
+                postTimeCard: makePostTimeCardTransaction(coreActions),
+                postSalesReceipt: makePostSalesReceiptTransaction(coreActions),
+                postServiceCharge: makePostServiceChargeTransaction(coreActions),
+                changeEmployee: makeChangeEmployeeTransaction(coreActions),
+                runPayroll: makeRunPayrollTransaction(paymentActions)
+            },
+            console
+        )
     };
 }

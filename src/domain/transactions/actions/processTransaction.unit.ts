@@ -1,14 +1,16 @@
-import { buildStubFor, generators, expect, generateIndex, Stub } from "@test/unit";
+import { buildStubFor, generators, expect, generateIndex, Stub, monday } from "@test/unit";
 import { isoDate } from "../../../utils";
 import { makeProcessTransaction, Transactions } from "./processTransaction";
 
 describe("processTransaction", () => {
     let processTransaction: ReturnType<typeof makeProcessTransaction>;
     let stubbedTransactions: Stub<Transactions>;
+    let stubbedLog: Stub<Parameters<typeof makeProcessTransaction>[1]>;
 
     beforeEach(() => {
         stubbedTransactions = buildStubTransactions();
-        processTransaction = makeProcessTransaction(stubbedTransactions);
+        stubbedLog = buildStubFor({ log: true });
+        processTransaction = makeProcessTransaction(stubbedTransactions, stubbedLog);
     });
 
     describe("AddEmp", () => {
@@ -122,6 +124,15 @@ describe("processTransaction", () => {
 
             expect(stubbedTransactions.runPayroll).to.have.been.calledOnceWith(`${date}`);
         });
+    });
+    it("should call the log function when it fails", async () => {
+        stubbedLog.log.resolves();
+        const error = new Error("my error");
+        stubbedTransactions.runPayroll.rejects(error);
+
+        await processTransaction(["Payroll", monday]);
+
+        expect(stubbedLog.log).to.have.been.calledOnceWith(`AN ERROR HAS OCCURRED`, error);
     });
 });
 

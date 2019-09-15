@@ -12,7 +12,11 @@ export interface Transactions {
     runPayroll: Transaction;
 }
 
-export function makeProcessTransaction(transactions: Transactions): ProcessTransaction {
+interface Logger {
+    log: (...args: any) => Promise<void> | void;
+}
+
+export function makeProcessTransaction(transactions: Transactions, logger: Logger): ProcessTransaction {
     return async ([transactionName, ...args]) => {
         try {
             if (transactionName === "AddEmp") await transactions.addEmployee(...args);
@@ -23,8 +27,7 @@ export function makeProcessTransaction(transactions: Transactions): ProcessTrans
             if (transactionName === "ChgEmp") await transactions.changeEmployee(...args);
             if (transactionName === "Payroll") await transactions.runPayroll(...args);
         } catch (err) {
-            console.log("AN ERROR HAS OCCURRED");
-            console.log({ err });
+            await logger.log("AN ERROR HAS OCCURRED", err);
         }
     };
 }
