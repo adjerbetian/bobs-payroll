@@ -15,7 +15,7 @@ export function buildSalesReceipt({
     date: string;
     amount: number;
 }): SalesReceipt {
-    return {
+    return Object.freeze({
         getEmployeeId() {
             return employeeId;
         },
@@ -32,5 +32,5 @@ export function buildSalesReceipt({
                 amount
             };
         }
-    };
+    });
 }

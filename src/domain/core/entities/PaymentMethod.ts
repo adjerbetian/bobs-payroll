@@ -32,7 +32,7 @@ export enum PaymentMethodType {
 }
 
 export function buildHoldPaymentMethod({ employeeId }: { employeeId: number }): HoldPaymentMethod {
-    return {
+    return Object.freeze({
         getEmployeeId() {
             return employeeId;
         },
@@ -48,7 +48,7 @@ export function buildHoldPaymentMethod({ employeeId }: { employeeId: number }): 
                 employeeId
             };
         }
-    };
+    });
 }
 export function buildDirectPaymentMethod({
     employeeId,
@@ -59,7 +59,7 @@ export function buildDirectPaymentMethod({
     bank: string;
     account: string;
 }): DirectPaymentMethod {
-    return {
+    return Object.freeze({
         getEmployeeId() {
             return employeeId;
         },
@@ -83,7 +83,7 @@ export function buildDirectPaymentMethod({
                 account
             };
         }
-    };
+    });
 }
 export function buildMailPaymentMethod({
     employeeId,
@@ -92,7 +92,7 @@ export function buildMailPaymentMethod({
     employeeId: number;
     address: string;
 }): MailPaymentMethod {
-    return {
+    return Object.freeze({
         getEmployeeId() {
             return employeeId;
         },
@@ -112,5 +112,5 @@ export function buildMailPaymentMethod({
                 address
             };
         }
-    };
+    });
 }

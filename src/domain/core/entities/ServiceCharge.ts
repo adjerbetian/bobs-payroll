@@ -6,7 +6,7 @@ export interface ServiceCharge extends Entity {
 }
 
 export function buildServiceCharge({ memberId, amount }: { memberId: string; amount: number }): ServiceCharge {
-    return {
+    return Object.freeze({
         getMemberId() {
             return memberId;
         },
@@ -19,5 +19,5 @@ export function buildServiceCharge({ memberId, amount }: { memberId: string; amo
                 amount
             };
         }
-    };
+    });
 }

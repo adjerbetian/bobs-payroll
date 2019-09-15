@@ -18,7 +18,7 @@ export function buildPayment({
     date: string;
     method: PaymentMethod;
 }): Payment {
-    return {
+    return Object.freeze({
         getEmployeeId() {
             return employeeId;
         },
@@ -39,5 +39,5 @@ export function buildPayment({
                 method: method.toJSON()
             };
         }
-    };
+    });
 }
