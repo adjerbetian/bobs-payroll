@@ -35,7 +35,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
                 await seeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.getId() })
             ];
 
-            await executePayrollCommand(`Payroll ${friday}`);
+            await executePayrollCommand(`Payday ${friday}`);
 
             await expectEmployeePaymentAmountToEqual(
                 employee.getId(),
@@ -51,7 +51,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
                 employeeId: employee.getId()
             });
 
-            await executePayrollCommand(`Payroll ${friday}`);
+            await executePayrollCommand(`Payday ${friday}`);
 
             await expectEmployeePaymentAmountToEqual(
                 employee.getId(),
@@ -61,7 +61,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         it("should not pay if it's not Friday", async () => {
             await seeders.seedTimeCard({ date: monday, hours: 5, employeeId: employee.getId() });
 
-            await executePayrollCommand(`Payroll ${monday}`);
+            await executePayrollCommand(`Payday ${monday}`);
 
             await expectEmployeeNotToHaveBeenPaid(employee.getId());
         });
@@ -74,7 +74,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
                 employeeId: employee.getId()
             });
 
-            await executePayrollCommand(`Payroll ${friday}`);
+            await executePayrollCommand(`Payday ${friday}`);
 
             await expectEmployeePaymentAmountToEqual(
                 employee.getId(),
@@ -85,7 +85,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const seed1 = await seedComplexHourlyEmployee1();
             const seed2 = await seedComplexHourlyEmployee2();
 
-            await executePayrollCommand(`Payroll ${friday}`);
+            await executePayrollCommand(`Payday ${friday}`);
 
             await expectEmployeePaymentAmountToEqual(seed1.employee.getId(), seed1.amount);
             await expectEmployeePaymentAmountToEqual(seed2.employee.getId(), seed2.amount);
@@ -133,12 +133,12 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
 
         it("should pay the monthly salary", async () => {
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+            await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             await expectEmployeePaymentAmountToEqual(employee.getId(), employee.getSalary());
         });
         it("should not pay if it's not the last day of the month", async () => {
-            await executePayrollCommand(`Payroll ${firstDayOfMonth}`);
+            await executePayrollCommand(`Payday ${firstDayOfMonth}`);
 
             await expectEmployeeNotToHaveBeenPaid(employee.getId());
         });
@@ -151,7 +151,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
 
         it("should pay only the monthly salary when there are no sales receipt", async () => {
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+            await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             await expectEmployeePaymentAmountToEqual(employee.getId(), employee.getSalary());
         });
@@ -161,7 +161,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
                 await seeders.seedSalesReceipt({ employeeId: employee.getId(), date: secondDayOfMonth })
             ];
 
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+            await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             const commission =
                 (salesReceipts[0].getAmount() + salesReceipts[1].getAmount()) * employee.getCommissionRate();
@@ -171,14 +171,14 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             await seeders.seedSalesReceipt({ employeeId: employee.getId(), date: firstDayOfLastMonth });
             await seeders.seedPayment({ date: endOfLastMonth, employeeId: employee.getId() });
 
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+            await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             await expectEmployeePaymentAmountToEqual(employee.getId(), employee.getSalary());
         });
         it("should not pay if it's not the last day of the month", async () => {
             await seeders.seedSalesReceipt({ employeeId: employee.getId(), date: firstDayOfMonth });
 
-            await executePayrollCommand(`Payroll ${secondDayOfMonth}`);
+            await executePayrollCommand(`Payday ${secondDayOfMonth}`);
 
             await expectEmployeeNotToHaveBeenPaid(employee.getId());
         });
@@ -188,7 +188,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const employee = await seeders.seedSalariedEmployee();
             const paymentMethod = await seeders.seedDirectPaymentMethod({ employeeId: employee.getId() });
 
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+            await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
             expect(payment.getMethod()).entity.to.equal(paymentMethod);
@@ -196,7 +196,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         it("should include the hold payment method if not specified", async () => {
             const employee = await seeders.seedSalariedEmployee();
 
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+            await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             const expectedPaymentMethod = generators.generateHoldPaymentMethod({ employeeId: employee.getId() });
             const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
@@ -213,7 +213,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             });
             const unionMember = await seeders.seedUnionMember({ employeeId: employee.getId(), rate: 0.1 });
 
-            await executePayrollCommand(`Payroll ${friday}`);
+            await executePayrollCommand(`Payday ${friday}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
             const fullPaymentAmount = employee.getHourlyRate() * timeCard.getHours();
@@ -224,7 +224,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const employee = await seeders.seedSalariedEmployee();
             const unionMember = await seeders.seedUnionMember({ employeeId: employee.getId() });
 
-            await executePayrollCommand(`Payroll ${lastDayOfMonth}`);
+            await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
             const unionDues = employee.getSalary() * unionMember.getRate() * nFridaysInMonth(firstDayOfMonth);

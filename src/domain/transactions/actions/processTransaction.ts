@@ -1,4 +1,4 @@
-export type ProcessTransaction = (args: string[]) => Promise<void>;
+import { TransactionsActions } from "./TransactionsActions";
 
 type Transaction = (...args: string[]) => Promise<void>;
 
@@ -16,8 +16,11 @@ interface Logger {
     log: (...args: any) => Promise<void> | void;
 }
 
-export function makeProcessTransaction(transactions: Transactions, logger: Logger): ProcessTransaction {
-    return async ([transactionName, ...args]) => {
+export function makeProcessTransaction(
+    transactions: Transactions,
+    logger: Logger
+): TransactionsActions["processTransaction"] {
+    return async (transactionName: string, ...args: string[]) => {
         try {
             if (transactionName === "AddEmp") await transactions.addEmployee(...args);
             if (transactionName === "DelEmp") await transactions.deleteEmployee(...args);
@@ -25,7 +28,7 @@ export function makeProcessTransaction(transactions: Transactions, logger: Logge
             if (transactionName === "SalesReceipt") await transactions.postSalesReceipt(...args);
             if (transactionName === "ServiceCharge") await transactions.postServiceCharge(...args);
             if (transactionName === "ChgEmp") await transactions.changeEmployee(...args);
-            if (transactionName === "Payroll") await transactions.runPayroll(...args);
+            if (transactionName === "Payday") await transactions.runPayroll(...args);
         } catch (err) {
             await logger.log("AN ERROR HAS OCCURRED", err);
         }

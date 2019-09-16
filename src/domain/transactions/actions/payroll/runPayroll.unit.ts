@@ -29,6 +29,6 @@ describe("runPayroll", () => {
 
         const promise = runPayroll(date);
 
-        await expect(promise).to.be.rejectedWith(TransactionFormatError, "Payroll");
+        await expect(promise).to.be.rejectedWith(TransactionFormatError, "Payday");
     });
 });

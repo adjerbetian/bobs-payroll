@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { buildApp } from "./domain";
 import {
     closeConnection,
@@ -21,10 +22,10 @@ const app = buildApp({
     paymentRepository: mongoPaymentRepository
 });
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 Promise.resolve().then(async () => {
     await initConnection();
-    await app.processTransaction(process.argv.slice(2));
+    // @ts-ignore
+    await app.processTransaction(...process.argv.slice(2));
     await closeConnection();
     console.log("done");
 });

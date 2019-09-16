@@ -18,14 +18,14 @@ describe("processTransaction", () => {
             stubbedTransactions.addEmployee.resolves();
             const employee = generators.generateHourlyEmployee();
 
-            await processTransaction([
+            await processTransaction(
                 "AddEmp",
                 `${employee.getId()}`,
                 `"${employee.getName()}"`,
                 `"${employee.getAddress()}"`,
                 "H",
                 `${employee.getHourlyRate()}`
-            ]);
+            );
 
             expect(stubbedTransactions.addEmployee).to.have.been.calledOnceWith(
                 `${employee.getId()}`,
@@ -41,7 +41,7 @@ describe("processTransaction", () => {
             stubbedTransactions.deleteEmployee.resolves();
             const employeeId = generateIndex();
 
-            await processTransaction(["DelEmp", `${employeeId}`]);
+            await processTransaction("DelEmp", `${employeeId}`);
 
             expect(stubbedTransactions.deleteEmployee).to.have.been.calledOnceWith(`${employeeId}`);
         });
@@ -51,12 +51,12 @@ describe("processTransaction", () => {
             stubbedTransactions.postTimeCard.resolves();
             const timeCard = generators.generateTimeCard();
 
-            await processTransaction([
+            await processTransaction(
                 "TimeCard",
                 `${timeCard.getEmployeeId()}`,
                 `${timeCard.getDate()}`,
                 `${timeCard.getHours()}`
-            ]);
+            );
 
             expect(stubbedTransactions.postTimeCard).to.have.been.calledOnceWith(
                 `${timeCard.getEmployeeId()}`,
@@ -70,12 +70,12 @@ describe("processTransaction", () => {
             stubbedTransactions.postSalesReceipt.resolves();
             const salesReceipt = generators.generateSalesReceipt();
 
-            await processTransaction([
+            await processTransaction(
                 "SalesReceipt",
                 `${salesReceipt.getEmployeeId()}`,
                 `${salesReceipt.getDate()}`,
                 `${salesReceipt.getAmount()}`
-            ]);
+            );
 
             expect(stubbedTransactions.postSalesReceipt).to.have.been.calledOnceWith(
                 `${salesReceipt.getEmployeeId()}`,
@@ -89,11 +89,7 @@ describe("processTransaction", () => {
             stubbedTransactions.postServiceCharge.resolves();
             const serviceCharge = generators.generateServiceCharge();
 
-            await processTransaction([
-                "ServiceCharge",
-                `${serviceCharge.getMemberId()}`,
-                `${serviceCharge.getAmount()}`
-            ]);
+            await processTransaction("ServiceCharge", `${serviceCharge.getMemberId()}`, `${serviceCharge.getAmount()}`);
 
             expect(stubbedTransactions.postServiceCharge).to.have.been.calledOnceWith(
                 `${serviceCharge.getMemberId()}`,
@@ -106,7 +102,7 @@ describe("processTransaction", () => {
             stubbedTransactions.changeEmployee.resolves();
             const employeeId = generateIndex();
 
-            await processTransaction(["ChgEmp", `${employeeId}`, "Name", "James Bond"]);
+            await processTransaction("ChgEmp", `${employeeId}`, "Name", "James Bond");
 
             expect(stubbedTransactions.changeEmployee).to.have.been.calledOnceWith(
                 `${employeeId}`,
@@ -115,12 +111,12 @@ describe("processTransaction", () => {
             );
         });
     });
-    describe("Payroll", () => {
+    describe("Payday", () => {
         it("should call the runPayroll transaction", async () => {
             stubbedTransactions.runPayroll.resolves();
             const date = isoDate();
 
-            await processTransaction(["Payroll", `${date}`]);
+            await processTransaction("Payday", `${date}`);
 
             expect(stubbedTransactions.runPayroll).to.have.been.calledOnceWith(`${date}`);
         });
@@ -130,7 +126,7 @@ describe("processTransaction", () => {
         const error = new Error("my error");
         stubbedTransactions.runPayroll.rejects(error);
 
-        await processTransaction(["Payroll", monday]);
+        await processTransaction("Payday", monday);
 
         expect(stubbedLog.log).to.have.been.calledOnceWith(`AN ERROR HAS OCCURRED`, error);
     });

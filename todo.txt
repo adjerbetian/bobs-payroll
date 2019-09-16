@@ -1,5 +1,4 @@
 # Simple
-Todo: extract transactions from the domain
 Todo: check for type assertion in TransactionValidator (coming soon, see here: https://github.com/microsoft/TypeScript/pull/32695)
 
 # Complex

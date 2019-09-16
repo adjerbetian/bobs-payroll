@@ -8,6 +8,8 @@ import { makePostServiceChargeTransaction } from "./serviceCharges";
 import { makePostTimeCardTransaction } from "./timeCards";
 import { TransactionsActions } from "./TransactionsActions";
 
+export { TransactionsActions } from "./TransactionsActions";
+
 export function makeTransactionsActions(coreActions: CoreActions, paymentActions: PaymentActions): TransactionsActions {
     return {
         processTransaction: makeProcessTransaction(

@@ -1,1 +1,1 @@
-export { makeTransactionsActions } from "./actions";
+export { makeTransactionsActions, TransactionsActions } from "./actions";

@@ -1,9 +1,9 @@
-import { makeCoreActions, CoreDependencies } from "./core";
+import { CoreDependencies, makeCoreActions } from "./core";
 import { makePaymentActions, PaymentDependencies } from "./payment";
-import { makeTransactionsActions } from "./transactions";
+import { makeTransactionsActions, TransactionsActions } from "./transactions";
 
 export interface App {
-    processTransaction(args: string[]): Promise<void>;
+    processTransaction: TransactionsActions["processTransaction"];
 }
 
 interface AppDependencies {
