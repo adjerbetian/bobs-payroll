@@ -153,16 +153,16 @@ the transaction is printed with an appropriate error message.
 Upon receipt of this transaction, the system will alter one of the details of the appropriate employee record.
 There are several possible variations to this transaction.
 
-    ChgEmp <EmpID> Name <name> Change Employee Name
-    ChgEmp <EmpID> Address <address> Change Employee Address
-    ChgEmp <EmpID> Hourly <hourlyRate> Change to Hourly
-    ChgEmp <EmpID> Salaried <salary> Change to Salaried
-    ChgEmp <EmpID> Commissioned <salary> <rate> Change to Commissioned
-    ChgEmp <EmpID> Hold Hold Paycheck
-    ChgEmp <EmpID> Direct <bank> <account> Direct Deposit
-    ChgEmp <EmpID> Mail <address> Mail Paycheck
-    ChgEmp <EmpID> Member <memberID> Dues <rate> Put Employee in Union
-    ChgEmp <EmpID> NoMember Remove Employee from Union
+    ChgEmp <EmpID> Name <name>                         Change Employee Name
+    ChgEmp <EmpID> Address <address>                   Change Employee Address
+    ChgEmp <EmpID> Hourly <hourlyRate>                 Change to Hourly
+    ChgEmp <EmpID> Salaried <salary>                   Change to Salaried
+    ChgEmp <EmpID> Commissioned <salary> <rate>        Change to Commissioned
+    ChgEmp <EmpID> Hold                                Hold Paycheck
+    ChgEmp <EmpID> Direct <bank> <account>             Direct Deposit
+    ChgEmp <EmpID> Mail <address>                      Mail Paycheck
+    ChgEmp <EmpID> Member <memberID> Dues <rate>       Put Employee in Union
+    ChgEmp <EmpID> NoMember                            Remove Employee from Union
 
 **Alternative:**
 
