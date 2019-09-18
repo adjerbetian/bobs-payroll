@@ -11,7 +11,9 @@ import {
     makeRunPayrollTransaction
 } from "./transactions";
 
-export { Router } from "./router";
+export { Router, Routes } from "./router";
+export { buildTransactionValidator, TransactionValidator } from "./utils";
+export * from "./errors";
 
 export function makeTransactionsRouter(coreActions: CoreActions, paymentActions: PaymentActions): Router {
     const routes = makeRoutes({
@@ -23,5 +25,7 @@ export function makeTransactionsRouter(coreActions: CoreActions, paymentActions:
         changeEmployee: makeChangeEmployeeTransaction(coreActions),
         runPayroll: makeRunPayrollTransaction(paymentActions)
     });
-    return makeRouter(routes, console);
+    const router = makeRouter(console);
+    router.addRoutes(routes);
+    return router;
 }

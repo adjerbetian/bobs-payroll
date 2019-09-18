@@ -8,7 +8,7 @@ import {
 } from "../../../domain";
 import { Controllers } from "../../Controllers";
 import { TransactionFormatError } from "../../errors";
-import { buildTransactionValidator, stripQuotationMarks } from "../utils";
+import { buildTransactionValidator, stripQuotationMarks } from "../../utils";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
 

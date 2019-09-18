@@ -1,6 +1,6 @@
 import { CoreActions, EmployeeType, PaymentMethodType } from "../../../domain";
 import { Controllers } from "../../Controllers";
-import { buildTransactionValidator } from "../utils";
+import { buildTransactionValidator } from "../../utils";
 
 const transactionValidator = buildTransactionValidator("ChgEmp");
 

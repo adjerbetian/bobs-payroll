@@ -2,6 +2,7 @@ import * as _ from "lodash";
 import { RoutingError } from "./errors";
 
 export interface Router {
+    addRoutes(routes: Routes): void;
     processCommand(...args: string[]): Promise<void>;
 }
 
@@ -13,8 +14,13 @@ export interface Logger {
     log: (...args: any) => Promise<void> | void;
 }
 
-export function makeRouter(routes: Routes, logger: Logger): Router {
+export function makeRouter(logger: Logger): Router {
+    const routes: Routes = {};
+
     return {
+        addRoutes(newRoutes) {
+            Object.assign(routes, newRoutes);
+        },
         async processCommand(routeName: string, ...routeParams: string[]) {
             try {
                 assertRouteExists(routeName);
