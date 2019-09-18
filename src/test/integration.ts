@@ -1,5 +1,5 @@
 import "./unit";
-import { closeConnection, initConnection, cleanCollections } from "../src";
+import { closeConnection, initConnection, cleanCollections } from "../app";
 
 export * from "./unit";
 export { seeders } from "./generators";

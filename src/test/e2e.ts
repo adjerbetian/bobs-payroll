@@ -1,7 +1,6 @@
 import { execute } from "./utils";
 
 export * from "./integration";
-export * from "./utils/execute";
 
 before(async () => {
     if (process.platform == "win32") {

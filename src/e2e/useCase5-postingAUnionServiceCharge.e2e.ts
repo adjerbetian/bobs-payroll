@@ -1,5 +1,5 @@
 import { generators, seeders, executePayrollCommand, expect } from "@test/e2e";
-import { dbServiceCharges, ServiceCharge } from "../src";
+import { dbServiceCharges, ServiceCharge } from "../app";
 
 describe("Use Case 5: Posting a Union Service Charge", () => {
     it("should insert the service charge in the db", async () => {

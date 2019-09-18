@@ -1,4 +1,4 @@
-import { sandbox } from "@test/unit";
+import { sandbox } from "./sandbox";
 import { SinonStub } from "sinon";
 
 export type Stub<T> = T extends Function ? StubbedFunction : StubbedObject<T>;

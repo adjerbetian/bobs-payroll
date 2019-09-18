@@ -1,5 +1,5 @@
 import { generators, seeders, executePayrollCommand, expect } from "@test/e2e";
-import { dbSalesReceipts, SalesReceipt } from "../src";
+import { dbSalesReceipts, SalesReceipt } from "../app";
 
 describe("Use Case 4: Post a Sales Receipt", () => {
     it("should insert the time card in the db", async () => {

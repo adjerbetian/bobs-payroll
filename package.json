@@ -12,18 +12,18 @@
         "start:prod": "node dist/main.js",
         "test": "npm run test:unit & npm run test:integration & npm run test:e2e",
         "test:unit": "mocha ./src/**/*.unit.ts",
+        "test:unit:watch": "npm run test:unit -- --watch",
         "test:integration": "mocha ./**/*.spec.ts",
-        "test:e2e": "mocha ./**/*.e2e.ts --timeout 10000",
-        "test:watch": "mocha ./**/*.unit.ts --watch"
+        "test:e2e": "mocha ./src/**/*.e2e.ts --timeout 10000"
+    },
+    "_moduleAliases": {
+        "@test": "src/test"
     },
     "dependencies": {
         "lodash": "^4.17.15",
         "module-alias": "^2.2.1",
         "moment": "^2.24.0",
         "mongodb": "^3.3.2"
-    },
-    "_moduleAliases": {
-        "@test": "test"
     },
     "devDependencies": {
         "@types/chai": "^4.2.2",

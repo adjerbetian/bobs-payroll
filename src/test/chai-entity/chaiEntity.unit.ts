@@ -1,6 +1,6 @@
-import { expect, sandbox } from "@test/unit";
+import { expect, sandbox } from "../unit";
 import { SinonStub } from "sinon";
-import { Entity } from "../../src";
+import { Entity } from "../../app";
 
 describe("chaiEntity", () => {
     describe("entity.to.equal", function() {

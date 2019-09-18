@@ -14,7 +14,7 @@ import {
     PaymentMethodType,
     SalariedEmployee,
     UnionMember
-} from "../src";
+} from "../app";
 
 describe("Use Case 6: Changing Employee Details", () => {
     let employee: Employee;

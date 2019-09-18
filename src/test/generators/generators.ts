@@ -10,9 +10,9 @@ import {
     buildSalesReceipt,
     buildServiceCharge,
     buildTimeCard,
-    buildUnionMember,
-    isoDate
-} from "../../src";
+    buildUnionMember
+} from "../../app";
+import { isoDate } from "../../utils";
 import { generateFloatBetween, generateIndex } from "./common";
 
 interface Generators {

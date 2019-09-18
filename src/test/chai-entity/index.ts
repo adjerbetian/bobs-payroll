@@ -1,0 +1,1 @@
+export { chaiEntity } from "./chaiEntity";

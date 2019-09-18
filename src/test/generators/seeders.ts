@@ -6,7 +6,7 @@ import {
     dbServiceCharges,
     dbTimeCards,
     dbUnionMembers
-} from "../../src";
+} from "../../app";
 import { generators } from "./generators";
 
 export const seeders = {

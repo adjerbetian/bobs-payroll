@@ -1,5 +1,5 @@
 import { generators, executePayrollCommand, expect } from "@test/e2e";
-import { dbEmployees, Employee } from "../src";
+import { dbEmployees, Employee } from "../app";
 
 describe("Use Case 1: Add New Employee", () => {
     it("should add an hourly employee", async () => {

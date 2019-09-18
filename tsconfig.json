@@ -13,7 +13,7 @@
         "outDir": "dist/",
         "noEmit": true,
         "paths": {
-            "@test/*": ["../test/*"]
+            "@test/*": ["./test/*"]
         }
     },
     "exclude": ["node_modules"]
