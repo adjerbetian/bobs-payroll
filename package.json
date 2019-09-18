@@ -7,9 +7,6 @@
     "main": "src\\index.ts",
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
-        "start": "ts-node src/main.ts",
-        "prestart:prod": "npm run build",
-        "start:prod": "node dist/main.js",
         "test": "npm run test:unit & npm run test:integration & npm run test:e2e",
         "test:unit": "mocha ./src/**/*.unit.ts",
         "test:unit:watch": "npm run test:unit -- --watch",
