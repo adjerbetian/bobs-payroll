@@ -22,6 +22,4 @@ export interface Controllers {
     changeEmployee(empId: string, updateType: "Mail", address: string): Promise<void>;
     changeEmployee(empId: string, updateType: "Member", memberId: string, dues: "Dues", rate: string): Promise<void>;
     changeEmployee(empId: string, updateType: "NoMember"): Promise<void>;
-
-    runPayroll(date: string): Promise<void>;
 }

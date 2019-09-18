@@ -1,0 +1,1 @@
+export { makeRunPayrollController } from "./runPayroll";

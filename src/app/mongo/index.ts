@@ -1,7 +1,6 @@
 import {
     dbEmployees,
     dbPaymentMethods,
-    dbPayments,
     dbSalesReceipts,
     dbServiceCharges,
     dbTimeCards,
@@ -10,7 +9,6 @@ import {
 import {
     makeMongoEmployeeRepository,
     makeMongoPaymentMethodRepository,
-    makeMongoPaymentRepository,
     makeMongoSalesReceiptRepository,
     makeMongoServiceChargeRepository,
     makeMongoTimeCardRepository,
@@ -19,6 +17,7 @@ import {
 
 export * from "./databases";
 export { MongoModel } from "./DBModels";
+export { Mapper, buildMapper } from "./mappers";
 
 export const mongoEmployeeRepository = makeMongoEmployeeRepository(dbEmployees);
 export const mongoPaymentMethodRepository = makeMongoPaymentMethodRepository(dbPaymentMethods);
@@ -26,4 +25,3 @@ export const mongoSalesReceiptRepository = makeMongoSalesReceiptRepository(dbSal
 export const mongoServiceChargeRepository = makeMongoServiceChargeRepository(dbServiceCharges);
 export const mongoTimeCardRepository = makeMongoTimeCardRepository(dbTimeCards);
 export const mongoUnionMemberRepository = makeMongoUnionMemberRepository(dbUnionMembers);
-export const mongoPaymentRepository = makeMongoPaymentRepository(dbPayments);

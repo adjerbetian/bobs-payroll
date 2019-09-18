@@ -35,7 +35,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
                 await seeders.seedTimeCard({ date: tuesday, hours: 6, employeeId: employee.getId() })
             ];
 
-            await executePayrollCommand(`Payday ${friday}`);
+            console.log(await executePayrollCommand(`Payday ${friday}`));
 
             await expectEmployeePaymentAmountToEqual(
                 employee.getId(),

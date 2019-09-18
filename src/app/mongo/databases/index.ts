@@ -1,5 +1,4 @@
 export {
-    dbPayments,
     dbPaymentMethods,
     dbServiceCharges,
     dbSalesReceipts,
@@ -8,6 +7,7 @@ export {
     dbEmployees,
     cleanCollections,
     closeConnection,
-    initConnection
+    initConnection,
+    buildDatabase
 } from "./db";
 export { MongoEntity } from "./mongoEntity";

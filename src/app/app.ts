@@ -1,11 +1,11 @@
 import { makeTransactionsRouter } from "./controllers";
-import { makeCoreActions, makePaymentActions } from "./domain";
+import { makeCoreActions } from "./domain";
+import { makePaymentModule } from "./modules";
 import {
     closeConnection,
     initConnection,
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
-    mongoPaymentRepository,
     mongoSalesReceiptRepository,
     mongoServiceChargeRepository,
     mongoTimeCardRepository,
@@ -27,11 +27,8 @@ export function buildApp(): App {
         timeCardRepository: mongoTimeCardRepository,
         unionMemberRepository: mongoUnionMemberRepository
     });
-    const paymentActions = makePaymentActions({
-        coreActions,
-        paymentRepository: mongoPaymentRepository
-    });
-    const router = makeTransactionsRouter(coreActions, paymentActions);
+    const router = makeTransactionsRouter(coreActions);
+    router.addRoutes(makePaymentModule(coreActions));
 
     return {
         async start() {

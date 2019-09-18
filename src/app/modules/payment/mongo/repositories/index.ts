@@ -1,0 +1,1 @@
+export { makeMongoPaymentRepository } from "./mongoPaymentRepository";

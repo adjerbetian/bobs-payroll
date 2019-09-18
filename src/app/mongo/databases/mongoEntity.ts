@@ -14,7 +14,7 @@ export interface MongoEntity<Entity, DBModel> {
     removeAll(query: FilterQuery<DBModel>): Promise<void>;
 }
 
-export function makeMongoEntity<Entity, DBModel>(
+export function buildMongoEntity<Entity, DBModel>(
     adapter: MongoDbAdapter<DBModel>,
     mapper: Mapper<Entity, DBModel>
 ): MongoEntity<Entity, DBModel> {

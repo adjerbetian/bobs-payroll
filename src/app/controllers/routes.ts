@@ -6,7 +6,6 @@ export function makeRoutes(controllers: Controllers): Routes {
         AddEmp: controllers.addEmployee,
         DelEmp: controllers.deleteEmployee,
         ChgEmp: controllers.changeEmployee,
-        Payday: controllers.runPayroll,
         SalesReceipt: controllers.postSalesReceipt,
         ServiceCharge: controllers.postServiceCharge,
         TimeCard: controllers.postTimeCard

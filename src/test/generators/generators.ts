@@ -125,7 +125,7 @@ export const generators: Generators = {
             amount: generateFloatBetween(1000, 2000),
             employeeId: index,
             date: isoDate(),
-            method: generators.generateHoldPaymentMethod({ employeeId: index }),
+            method: generators.generateHoldPaymentMethod({ employeeId: args.employeeId || index }),
             ...args
         });
     }

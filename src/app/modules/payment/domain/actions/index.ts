@@ -5,12 +5,12 @@ import { makeRunPayroll } from "./payroll";
 
 export { PaymentActions } from "./PaymentActions";
 
-export interface PaymentActionsDependencies {
+interface Dependencies {
     coreActions: CoreActions;
     paymentRepository: PaymentRepository;
 }
 
-export function makePaymentActions({ coreActions, paymentRepository }: PaymentActionsDependencies): PaymentActions {
+export function makePaymentActions({ coreActions, paymentRepository }: Dependencies): PaymentActions {
     return {
         runPayroll: makeRunPayroll({ coreActions, paymentRepository })
     };
