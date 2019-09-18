@@ -1,6 +1,6 @@
 {
     "db": {
         "url": "mongodb://127.0.0.1:27017",
-        "dbName": "asdppp-1-payroll"
+        "dbName": "bobs-payroll"
     }
 }
