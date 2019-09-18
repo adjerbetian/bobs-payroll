@@ -18,6 +18,7 @@ import {
 } from "./repositories";
 
 export * from "./databases";
+export { MongoModel } from "./DBModels";
 
 export const mongoEmployeeRepository = makeMongoEmployeeRepository(dbEmployees);
 export const mongoPaymentMethodRepository = makeMongoPaymentMethodRepository(dbPaymentMethods);

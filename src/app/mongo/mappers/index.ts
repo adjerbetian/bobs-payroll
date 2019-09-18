@@ -5,4 +5,4 @@ export * from "./salesReceiptMapper";
 export * from "./serviceChargeMapper";
 export * from "./timeCardMapper";
 export * from "./unionMemberMapper";
-export { Mapper, EntityModel } from "./mapper";
+export { Mapper } from "./mapper";

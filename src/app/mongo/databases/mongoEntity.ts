@@ -1,26 +1,23 @@
 import { FilterQuery, UpdateQuery } from "mongodb";
-import { EntityModel, Mapper } from "../mappers";
+import { Mapper } from "../mappers";
 import { MongoDbAdapter } from "./mongoDbAdapter";
 
-type EntityFilterQuery<Entity> = FilterQuery<EntityModel<Entity>>;
-type EntityUpdateQuery<Entity> = UpdateQuery<EntityModel<Entity>>;
-
-export interface MongoEntity<Entity> {
-    fetch(query: EntityFilterQuery<Entity>): Promise<Entity>;
-    fetchLast(query: EntityFilterQuery<Entity>): Promise<Entity>;
+export interface MongoEntity<Entity, DBModel> {
+    fetch(query: FilterQuery<DBModel>): Promise<Entity>;
+    fetchLast(query: FilterQuery<DBModel>): Promise<Entity>;
     insert(entity: Entity): Promise<void>;
-    exists(query: EntityFilterQuery<Entity>): Promise<boolean>;
-    remove(query: EntityFilterQuery<Entity>): Promise<void>;
-    update(query: EntityFilterQuery<Entity>, update: EntityUpdateQuery<Entity>): Promise<void>;
+    exists(query: FilterQuery<DBModel>): Promise<boolean>;
+    remove(query: FilterQuery<DBModel>): Promise<void>;
+    update(query: FilterQuery<DBModel>, update: UpdateQuery<DBModel>): Promise<void>;
 
-    fetchAll(query: EntityFilterQuery<Entity>): Promise<Entity[]>;
-    removeAll(query: EntityFilterQuery<Entity>): Promise<void>;
+    fetchAll(query: FilterQuery<DBModel>): Promise<Entity[]>;
+    removeAll(query: FilterQuery<DBModel>): Promise<void>;
 }
 
-export function makeMongoEntity<Entity>(
-    adapter: MongoDbAdapter<EntityModel<Entity>>,
-    mapper: Mapper<Entity>
-): MongoEntity<Entity> {
+export function makeMongoEntity<Entity, DBModel>(
+    adapter: MongoDbAdapter<DBModel>,
+    mapper: Mapper<Entity, DBModel>
+): MongoEntity<Entity, DBModel> {
     return {
         fetch: pipe(
             adapter.fetch,

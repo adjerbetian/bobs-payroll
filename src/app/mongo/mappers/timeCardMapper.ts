@@ -1,7 +1,8 @@
 import { buildTimeCard, TimeCard } from "../../domain";
+import { TimeCardDBModel } from "../DBModels";
 import { buildMapper } from "./mapper";
 
-export const timeCardMapper = buildMapper<TimeCard>({
+export const timeCardMapper = buildMapper<TimeCard, TimeCardDBModel>({
     toEntity(model) {
         return buildTimeCard({
             employeeId: model.employeeId,

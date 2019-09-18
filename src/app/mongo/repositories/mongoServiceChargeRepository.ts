@@ -1,8 +1,9 @@
 import { CoreDependencies, ServiceCharge } from "../../domain";
 import { MongoEntity } from "../databases";
+import { ServiceChargeDBModel } from "../DBModels";
 
 export function makeMongoServiceChargeRepository(
-    db: MongoEntity<ServiceCharge>
+    db: MongoEntity<ServiceCharge, ServiceChargeDBModel>
 ): CoreDependencies["serviceChargeRepository"] {
     return {
         async fetchAll() {

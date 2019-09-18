@@ -2,10 +2,13 @@ import * as moment from "moment";
 import { Payment, PaymentDependencies } from "../../domain";
 import { isoDate } from "../../../utils";
 import { MongoEntity } from "../databases";
+import { PaymentDBModel } from "../DBModels";
 
 const NEVER = isoDate(moment(0));
 
-export function makeMongoPaymentRepository(db: MongoEntity<Payment>): PaymentDependencies["paymentRepository"] {
+export function makeMongoPaymentRepository(
+    db: MongoEntity<Payment, PaymentDBModel>
+): PaymentDependencies["paymentRepository"] {
     return {
         async fetchLastOfEmployee(employeeId) {
             return db.fetchLast({ employeeId });

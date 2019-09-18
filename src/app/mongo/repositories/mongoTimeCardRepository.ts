@@ -1,7 +1,10 @@
 import { CoreDependencies, TimeCard } from "../../domain";
 import { MongoEntity } from "../databases";
+import { TimeCardDBModel } from "../DBModels";
 
-export function makeMongoTimeCardRepository(db: MongoEntity<TimeCard>): CoreDependencies["timeCardRepository"] {
+export function makeMongoTimeCardRepository(
+    db: MongoEntity<TimeCard, TimeCardDBModel>
+): CoreDependencies["timeCardRepository"] {
     return {
         async fetchAllOfEmployee(employeeId) {
             return db.fetchAll({ employeeId });

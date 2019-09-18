@@ -1,8 +1,9 @@
 import { CoreDependencies, UnionMember } from "../../domain";
 import { MongoEntity } from "../databases";
+import { UnionMemberDBModel } from "../DBModels";
 
 export function makeMongoUnionMemberRepository(
-    db: MongoEntity<UnionMember>
+    db: MongoEntity<UnionMember, UnionMemberDBModel>
 ): CoreDependencies["unionMemberRepository"] {
     return {
         async fetchByEmployeeId(employeeId) {

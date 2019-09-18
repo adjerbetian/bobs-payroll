@@ -7,8 +7,11 @@ import {
     SalariedEmployee
 } from "../../domain";
 import { MongoEntity } from "../databases";
+import { EmployeeDBModel } from "../DBModels";
 
-export function makeMongoEmployeeRepository(db: MongoEntity<Employee>): CoreDependencies["employeeRepository"] {
+export function makeMongoEmployeeRepository(
+    db: MongoEntity<Employee, EmployeeDBModel>
+): CoreDependencies["employeeRepository"] {
     return {
         async fetchById(id) {
             return db.fetch({ id });
