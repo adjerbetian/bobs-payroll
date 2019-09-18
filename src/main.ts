@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { buildApp } from "./domain";
+import { buildApp } from "./app";
 import {
     closeConnection,
     initConnection,
@@ -10,7 +10,7 @@ import {
     mongoServiceChargeRepository,
     mongoTimeCardRepository,
     mongoUnionMemberRepository
-} from "./mongo";
+} from "./app/mongo";
 
 const app = buildApp({
     salesReceiptRepository: mongoSalesReceiptRepository,

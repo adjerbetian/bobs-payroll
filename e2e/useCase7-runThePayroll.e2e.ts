@@ -204,7 +204,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
     });
     describe("union", () => {
-        it("should deduce the weekly dues rate from the hourly payment", async () => {
+        it.skip("should deduce the weekly dues rate from the hourly payment", async () => {
             const employee = await seeders.seedHourlyEmployee();
             const timeCard = await seeders.seedTimeCard({
                 date: tuesday,
