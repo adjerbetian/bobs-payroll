@@ -1,5 +1,10 @@
 import { generators, expect, Stub } from "@test/unit";
-import { CoreActions } from "../../../domain";
+import {
+    CommissionedEmployeeCreationModel,
+    CoreActions,
+    HourlyEmployeeCreationModel,
+    SalariedEmployeeCreationModel
+} from "../../../domain";
 import { TransactionFormatError } from "../../errors";
 import { buildStubbedCoreActions } from "../../test";
 import { makeAddEmployeeTransaction } from "./addEmployee";
@@ -26,7 +31,14 @@ describe("addEmployee", () => {
             `${employee.getHourlyRate()}`
         );
 
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
+        const requestModel: HourlyEmployeeCreationModel = {
+            id: employee.getId(),
+            address: employee.getAddress(),
+            name: employee.getName(),
+            type: employee.getType(),
+            hourlyRate: employee.getHourlyRate()
+        };
+        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(requestModel);
     });
     it("should insert a salaried employee", async () => {
         const employee = generators.generateSalariedEmployee();
@@ -39,7 +51,14 @@ describe("addEmployee", () => {
             `${employee.getSalary()}`
         );
 
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
+        const requestModel: SalariedEmployeeCreationModel = {
+            id: employee.getId(),
+            address: employee.getAddress(),
+            name: employee.getName(),
+            type: employee.getType(),
+            salary: employee.getSalary()
+        };
+        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(requestModel);
     });
     it("should insert an salaried with commission employee", async () => {
         const employee = generators.generateCommissionedEmployee();
@@ -53,7 +72,15 @@ describe("addEmployee", () => {
             `${employee.getCommissionRate()}`
         );
 
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWithEntity(employee);
+        const requestModel: CommissionedEmployeeCreationModel = {
+            id: employee.getId(),
+            address: employee.getAddress(),
+            name: employee.getName(),
+            type: employee.getType(),
+            salary: employee.getSalary(),
+            commissionRate: employee.getCommissionRate()
+        };
+        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(requestModel);
     });
     it("should throw when the transaction is malformed", async () => {
         const employee = generators.generateCommissionedEmployee();

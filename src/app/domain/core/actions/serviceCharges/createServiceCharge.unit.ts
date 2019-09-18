@@ -26,7 +26,10 @@ describe("action createServiceCharge", () => {
             .withArgs(serviceCharge.getMemberId())
             .resolves(generators.generateUnionMember());
 
-        await createServiceCharge(serviceCharge);
+        await createServiceCharge({
+            memberId: serviceCharge.getMemberId(),
+            amount: serviceCharge.getAmount()
+        });
 
         expect(stubbedServiceChargeRepository.insert).to.have.been.calledOnceWithEntity(serviceCharge);
     });
@@ -36,7 +39,10 @@ describe("action createServiceCharge", () => {
             .withArgs(serviceCharge.getMemberId())
             .rejects(new NotFoundError("no union member found"));
 
-        const promise = createServiceCharge(serviceCharge);
+        const promise = createServiceCharge({
+            memberId: serviceCharge.getMemberId(),
+            amount: serviceCharge.getAmount()
+        });
 
         await expect(promise).to.be.rejectedWith(NotFoundError);
     });

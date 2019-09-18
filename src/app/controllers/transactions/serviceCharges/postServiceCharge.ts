@@ -1,4 +1,4 @@
-import { buildServiceCharge, CoreActions } from "../../../domain";
+import { CoreActions } from "../../../domain";
 import { Controllers } from "../../Controllers";
 import { buildTransactionValidator } from "../utils";
 
@@ -8,11 +8,10 @@ export function makePostServiceChargeTransaction(actions: CoreActions): Controll
     return async function(memberId, amount) {
         assertTransactionValid(memberId, amount);
 
-        const serviceCharge = buildServiceCharge({
+        await actions.createServiceCharge({
             memberId,
             amount: parseFloat(amount)
         });
-        await actions.createServiceCharge(serviceCharge);
     };
 
     function assertTransactionValid(memberId: string, amount: string): void {

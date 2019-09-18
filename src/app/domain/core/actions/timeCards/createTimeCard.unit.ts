@@ -26,9 +26,13 @@ describe("action createTimeCard", () => {
             .withArgs(timeCard.getEmployeeId())
             .resolves(generators.generateHourlyEmployee());
 
-        await createTimeCard(timeCard);
+        await createTimeCard({
+            employeeId: timeCard.getEmployeeId(),
+            date: timeCard.getDate(),
+            hours: timeCard.getHours()
+        });
 
-        expect(stubbedTimeCardRepository.insert).to.have.been.calledOnceWith(timeCard);
+        expect(stubbedTimeCardRepository.insert).to.have.been.calledOnceWithEntity(timeCard);
     });
     it("should throw a EmployeeTypeError if the employee is not hourly", async () => {
         const timeCard = generators.generateTimeCard();
@@ -36,7 +40,11 @@ describe("action createTimeCard", () => {
             .withArgs(timeCard.getEmployeeId())
             .resolves(generators.generateSalariedEmployee());
 
-        const promise = createTimeCard(timeCard);
+        const promise = createTimeCard({
+            employeeId: timeCard.getEmployeeId(),
+            date: timeCard.getDate(),
+            hours: timeCard.getHours()
+        });
 
         await expect(promise).to.be.rejectedWith(EmployeeTypeError);
     });

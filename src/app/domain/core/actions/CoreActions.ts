@@ -1,15 +1,20 @@
-import { EmployeeUpdate } from "../common";
 import {
     CommissionedEmployee,
-    Employee,
     HourlyEmployee,
     PaymentMethod,
     SalariedEmployee,
     SalesReceipt,
-    ServiceCharge,
-    TimeCard,
-    UnionMember
+    TimeCard
 } from "../entities";
+import {
+    EmployeeCreationModel,
+    EmployeeUpdateModel,
+    PaymentMethodCreationModel,
+    SalesReceiptCreationModel,
+    ServiceChargeCreationModel,
+    TimeCardCreationModel,
+    UnionMemberCreationModel
+} from "../requestModels";
 
 export type CoreActions = CoreEmployeeActions &
     CorePaymentMethodActions &
@@ -19,34 +24,34 @@ export type CoreActions = CoreEmployeeActions &
     CoreUnionActions;
 
 export interface CoreEmployeeActions {
-    createEmployee(employee: Employee): Promise<void>;
+    createEmployee(creationModel: EmployeeCreationModel): Promise<void>;
     fetchAllHourlyEmployees(): Promise<HourlyEmployee[]>;
     fetchAllSalariedEmployees(): Promise<SalariedEmployee[]>;
     fetchAllCommissionedEmployees(): Promise<CommissionedEmployee[]>;
-    updateEmployee(employeeId: number, update: EmployeeUpdate): Promise<void>;
+    updateEmployee(employeeId: number, update: EmployeeUpdateModel): Promise<void>;
     deleteEmployee(employeeId: number): Promise<void>;
 }
 
 export interface CorePaymentMethodActions {
     fetchEmployeePaymentMethod(employeeId: number): Promise<PaymentMethod>;
-    createPaymentMethod(paymentMethod: PaymentMethod): Promise<void>;
+    createPaymentMethod(creationModel: PaymentMethodCreationModel): Promise<void>;
 }
 
 export interface CoreSalesReceiptActions {
-    createSalesReceipt(salesReceipt: SalesReceipt): Promise<void>;
+    createSalesReceipt(creationModel: SalesReceiptCreationModel): Promise<void>;
     fetchAllEmployeeSalesReceiptsSince(employeeId: number, date: string): Promise<SalesReceipt[]>;
 }
 
 export interface CoreServiceChargeActions {
-    createServiceCharge(serviceCharge: ServiceCharge): Promise<void>;
+    createServiceCharge(creationModel: ServiceChargeCreationModel): Promise<void>;
 }
 
 export interface CoreTimeCardActions {
-    createTimeCard(timeCard: TimeCard): Promise<void>;
+    createTimeCard(creationModel: TimeCardCreationModel): Promise<void>;
     fetchEmployeeTimeCardsSince(employeeId: number, date: string): Promise<TimeCard[]>;
 }
 
 export interface CoreUnionActions {
-    createUnionMember(unionMember: UnionMember): Promise<void>;
+    createUnionMember(creationModel: UnionMemberCreationModel): Promise<void>;
     removeEmployeeFromUnion(employeeId: number): Promise<void>;
 }

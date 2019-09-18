@@ -1,4 +1,4 @@
-import { buildSalesReceipt, CoreActions } from "../../../domain";
+import { CoreActions } from "../../../domain";
 import { Controllers } from "../../Controllers";
 import { buildTransactionValidator } from "../utils";
 
@@ -8,12 +8,11 @@ export function makePostSalesReceiptTransaction(actions: CoreActions): Controlle
     return async function(employeeId, date, amount) {
         assertTransactionIsValid();
 
-        const salesReceipt = buildSalesReceipt({
+        return actions.createSalesReceipt({
             employeeId: parseInt(employeeId),
             date,
             amount: parseFloat(amount)
         });
-        return actions.createSalesReceipt(salesReceipt);
 
         function assertTransactionIsValid(): void {
             transactionValidator.assertIsNotEmpty(employeeId);

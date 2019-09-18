@@ -1,6 +1,6 @@
 import { generators, expect, Stub } from "@test/unit";
 import * as moment from "moment";
-import { CoreActions, SalesReceipt } from "../../../domain";
+import { CoreActions, SalesReceipt, SalesReceiptCreationModel } from "../../../domain";
 import { TransactionFormatError } from "../../errors";
 import { buildStubbedCoreActions } from "../../test";
 import { makePostSalesReceiptTransaction } from "./postSalesReceipt";
@@ -21,7 +21,12 @@ describe("postTimeCard", () => {
 
         await postSalesReceiptEntity(salesReceipt);
 
-        expect(stubbedActions.createSalesReceipt).to.have.been.calledOnceWithEntity(salesReceipt);
+        const requestModel: SalesReceiptCreationModel = {
+            employeeId: salesReceipt.getEmployeeId(),
+            date: salesReceipt.getDate(),
+            amount: salesReceipt.getAmount()
+        };
+        expect(stubbedActions.createSalesReceipt).to.have.been.calledOnceWith(requestModel);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const salesReceipt = generators.generateSalesReceipt();

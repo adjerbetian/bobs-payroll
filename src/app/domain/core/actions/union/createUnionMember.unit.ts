@@ -32,24 +32,32 @@ describe("action createUnionMember", () => {
     });
 
     it("should create a union member", async () => {
-        await createUnionMember(unionMember);
+        await createUnionMemberFromEntity(unionMember);
 
-        expect(stubbedUnionMemberRepository.insert).to.have.been.calledOnceWith(unionMember);
+        expect(stubbedUnionMemberRepository.insert).to.have.been.calledOnceWithEntity(unionMember);
     });
     it("should not create a union member if the employee does not exist", async () => {
         stubbedEmployeeRepository.fetchById
             .withArgs(unionMember.getEmployeeId())
             .rejects(new NotFoundError("not found"));
 
-        const promise = createUnionMember(unionMember);
+        const promise = createUnionMemberFromEntity(unionMember);
 
         await expect(promise).to.be.rejectedWith(NotFoundError);
     });
     it("should throw a UnionMemberIdAlreadyUsedError if the member id already exists", async () => {
         stubbedUnionMemberRepository.doesMemberIdExist.withArgs(unionMember.getMemberId()).resolves(true);
 
-        const promise = createUnionMember(unionMember);
+        const promise = createUnionMemberFromEntity(unionMember);
 
         await expect(promise).to.be.rejectedWith(UnionMemberIdAlreadyUsedError);
     });
+
+    async function createUnionMemberFromEntity(entity: UnionMember): Promise<void> {
+        await createUnionMember({
+            employeeId: entity.getEmployeeId(),
+            memberId: entity.getMemberId(),
+            rate: entity.getRate()
+        });
+    }
 });

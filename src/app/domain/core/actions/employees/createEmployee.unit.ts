@@ -10,13 +10,47 @@ describe("action createEmployee", () => {
     beforeEach(() => {
         stubbedEmployeeRepository = buildStubbedEmployeeRepository();
         createEmployee = makeCreateEmployee({ employeeRepository: stubbedEmployeeRepository });
+
+        stubbedEmployeeRepository.insert.resolves();
     });
 
-    it("should insert the given employee", async () => {
+    it("should insert the given hourly employee", async () => {
         const employee = generators.generateHourlyEmployee();
-        stubbedEmployeeRepository.insert.resolves();
 
-        await createEmployee(employee);
+        await createEmployee({
+            id: employee.getId(),
+            name: employee.getName(),
+            address: employee.getAddress(),
+            type: employee.getType(),
+            hourlyRate: employee.getHourlyRate()
+        });
+
+        expect(stubbedEmployeeRepository.insert).to.have.been.calledOnceWithEntity(employee);
+    });
+    it("should insert the given salaried employee", async () => {
+        const employee = generators.generateSalariedEmployee();
+
+        await createEmployee({
+            id: employee.getId(),
+            name: employee.getName(),
+            address: employee.getAddress(),
+            type: employee.getType(),
+            salary: employee.getSalary()
+        });
+
+        expect(stubbedEmployeeRepository.insert).to.have.been.calledOnceWithEntity(employee);
+    });
+    it("should insert the given commissioned employee", async () => {
+        const employee = generators.generateCommissionedEmployee();
+
+        await createEmployee({
+            id: employee.getId(),
+            name: employee.getName(),
+            address: employee.getAddress(),
+            type: employee.getType(),
+            salary: employee.getSalary(),
+            commissionRate: employee.getCommissionRate()
+        });
 
         expect(stubbedEmployeeRepository.insert).to.have.been.calledOnceWithEntity(employee);
     });

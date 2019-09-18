@@ -1,5 +1,5 @@
 import { generators, expect, Stub } from "@test/unit";
-import { CoreActions, ServiceCharge } from "../../../domain";
+import { CoreActions, ServiceCharge, ServiceChargeCreationModel } from "../../../domain";
 import { TransactionFormatError } from "../../errors";
 import { buildStubbedCoreActions } from "../../test";
 import { makePostServiceChargeTransaction } from "./postServiceCharge";
@@ -20,7 +20,11 @@ describe("postServiceCharge", () => {
 
         await postServiceChargeEntity(serviceCharge);
 
-        expect(stubbedActions.createServiceCharge).to.have.been.calledOnceWithEntity(serviceCharge);
+        const requestModel: ServiceChargeCreationModel = {
+            memberId: serviceCharge.getMemberId(),
+            amount: serviceCharge.getAmount()
+        };
+        expect(stubbedActions.createServiceCharge).to.have.been.calledOnceWith(requestModel);
     });
     it("should throw a TransactionFormatError if the amount is missing", async () => {
         const serviceCharge = generators.generateServiceCharge();

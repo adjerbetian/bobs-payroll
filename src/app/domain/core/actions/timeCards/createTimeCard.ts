@@ -1,4 +1,4 @@
-import { EmployeeType } from "../../entities";
+import { buildTimeCard, EmployeeType } from "../../entities";
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, TimeCardRepository } from "../../repositories";
 import { CoreTimeCardActions } from "../CoreActions";
@@ -12,8 +12,10 @@ export function makeCreateTimeCard({
     employeeRepository,
     timeCardRepository
 }: Dependencies): CoreTimeCardActions["createTimeCard"] {
-    return async function(timeCard) {
-        await assertEmployeeIsHourly(timeCard.getEmployeeId());
+    return async function(creationModel) {
+        await assertEmployeeIsHourly(creationModel.employeeId);
+
+        const timeCard = buildTimeCard(creationModel);
         await timeCardRepository.insert(timeCard);
     };
 

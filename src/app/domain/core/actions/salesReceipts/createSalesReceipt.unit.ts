@@ -26,9 +26,13 @@ describe("action createSalesReceipt", () => {
             .withArgs(salesReceipt.getEmployeeId())
             .resolves(generators.generateCommissionedEmployee());
 
-        await createSalesReceipt(salesReceipt);
+        await createSalesReceipt({
+            employeeId: salesReceipt.getEmployeeId(),
+            amount: salesReceipt.getAmount(),
+            date: salesReceipt.getDate()
+        });
 
-        expect(stubbedSalesReceiptRepository.insert).to.have.been.calledOnceWith(salesReceipt);
+        expect(stubbedSalesReceiptRepository.insert).to.have.been.calledOnceWithEntity(salesReceipt);
     });
     it("should throw a EmployeeTypeError if the employee is not a commissioned employee", async () => {
         const salesReceipt = generators.generateSalesReceipt();
@@ -36,7 +40,11 @@ describe("action createSalesReceipt", () => {
             .withArgs(salesReceipt.getEmployeeId())
             .resolves(generators.generateSalariedEmployee());
 
-        const promise = createSalesReceipt(salesReceipt);
+        const promise = createSalesReceipt({
+            employeeId: salesReceipt.getEmployeeId(),
+            amount: salesReceipt.getAmount(),
+            date: salesReceipt.getDate()
+        });
 
         await expect(promise).to.be.rejectedWith(EmployeeTypeError);
     });

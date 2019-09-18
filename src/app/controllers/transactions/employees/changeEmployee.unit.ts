@@ -1,5 +1,13 @@
-import { generators, expect, generateIndex, Stub } from "@test/unit";
-import { CoreActions, EmployeeType } from "../../../domain";
+import { expect, generateIndex, Stub } from "@test/unit";
+import {
+    CoreActions,
+    DirectPaymentMethodCreationModel,
+    EmployeeType,
+    HoldPaymentMethodCreationModel,
+    MailPaymentMethodCreationModel,
+    PaymentMethodType,
+    UnionMemberCreationModel
+} from "../../../domain";
 import { TransactionFormatError } from "../../errors";
 import { buildStubbedCoreActions } from "../../test";
 import { makeChangeEmployeeTransaction } from "./changeEmployee";
@@ -107,20 +115,24 @@ describe("changeEmployee", () => {
             it("should add the hold paycheck payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Hold");
 
-                const expectedPaymentMethod = generators.generateHoldPaymentMethod({ employeeId });
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
+                const requestModel: HoldPaymentMethodCreationModel = {
+                    employeeId,
+                    type: PaymentMethodType.HOLD
+                };
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
             });
         });
         describe("Direct", () => {
             it("should add the direct deposit payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Direct", "bank-id", "account-id");
 
-                const expectedPaymentMethod = generators.generateDirectPaymentMethod({
+                const requestModel: DirectPaymentMethodCreationModel = {
                     employeeId,
+                    type: PaymentMethodType.DIRECT,
                     bank: "bank-id",
                     account: "account-id"
-                });
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
+                };
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
             });
             it("should throw a transaction format error when the bank-id is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Direct", "", "");
@@ -137,11 +149,12 @@ describe("changeEmployee", () => {
             it("should add the direct deposit payment method to the employee", async () => {
                 await changeEmployee(`${employeeId}`, "Mail", "my paycheck address");
 
-                const expectedPaymentMethod = generators.generateMailPaymentMethod({
+                const requestModel: MailPaymentMethodCreationModel = {
                     employeeId,
+                    type: PaymentMethodType.MAIL,
                     address: "my paycheck address"
-                });
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
+                };
+                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
             });
             it("should throw a transaction format error when the address is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Mail", "");
@@ -162,8 +175,8 @@ describe("changeEmployee", () => {
             it("should add the union member", async () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
-                const expectedUnionMember = generators.generateUnionMember({ memberId, employeeId, rate: 10.5 });
-                expect(stubbedActions.createUnionMember).to.have.been.calledOnceWithEntity(expectedUnionMember);
+                const requestModel: UnionMemberCreationModel = { memberId, employeeId, rate: 10.5 };
+                expect(stubbedActions.createUnionMember).to.have.been.calledOnceWith(requestModel);
             });
             it("should throw a TransactionFormatError when the dues rate is not specified", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "");

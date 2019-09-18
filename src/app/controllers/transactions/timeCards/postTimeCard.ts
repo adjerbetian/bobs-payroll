@@ -1,4 +1,4 @@
-import { buildTimeCard, CoreActions } from "../../../domain";
+import { CoreActions } from "../../../domain";
 import { Controllers } from "../../Controllers";
 import { buildTransactionValidator } from "../utils";
 
@@ -8,12 +8,11 @@ export function makePostTimeCardTransaction(actions: CoreActions): Controllers["
     return async function(employeeId, date, hours) {
         assertTransactionValid(employeeId, date, hours);
 
-        const timeCard = buildTimeCard({
+        await actions.createTimeCard({
             employeeId: parseInt(employeeId),
             date: date,
             hours: parseFloat(hours)
         });
-        await actions.createTimeCard(timeCard);
     };
 
     function assertTransactionValid(employeeId: string, date: string, hours: string): void {
