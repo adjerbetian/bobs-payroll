@@ -4,7 +4,11 @@ export * from "./integration";
 export * from "./utils/execute";
 
 before(async () => {
-    await execute(`IF EXIST dist\\ RMDIR dist /S /Q`);
+    if (process.platform == "win32") {
+        await execute(`IF EXIST dist\\ RMDIR dist /S /Q`);
+    } else {
+        await execute(`rm -rf dist`);
+    }
     await execute("npm run build");
 });
 

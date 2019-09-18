@@ -1,10 +1,4 @@
 # Simple
-Todo: faire fonctionner sous unix:
-    if (process.platform == "win32") {
-        await execute(`IF EXIST dist\\ RMDIR dist /S /Q`);
-    } else {
-        await execute(`rm -rf dist S Q`);
-    }
 Todo: essayer d'enlever getType
 Todo: Dans les transactions: ne pas construire d'entités mais appeler coreActions.createEmployee({id, name, ...})
 Todo: sortir les transaction de domain
