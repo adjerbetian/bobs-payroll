@@ -1,4 +1,4 @@
-import { buildTransactionValidator } from "../../../../controllers";
+import { buildTransactionValidator } from "../../../../router";
 import { PaymentActions } from "../../domain";
 import { Controllers } from "../Controllers";
 

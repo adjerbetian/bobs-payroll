@@ -1,7 +1,7 @@
 import { sandbox } from "./sandbox";
 import { SinonStub } from "sinon";
 
-export type Stub<T> = T extends Function ? StubbedFunction : StubbedObject<T>;
+export type Stub<T = () => {}> = T extends Function ? StubbedFunction : StubbedObject<T>;
 type StubbedFunction = SinonStub;
 type StubbedObject<T> = {
     [K in keyof T]: SinonStub;

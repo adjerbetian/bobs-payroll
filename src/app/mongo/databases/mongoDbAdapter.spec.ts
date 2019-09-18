@@ -1,7 +1,6 @@
 import { expect, generateIndex } from "@test/integration";
 import { ObjectID } from "bson";
 import { Collection } from "mongodb";
-import { NotFoundError } from "../../domain";
 import { MongoModel } from "../DBModels";
 import { getDb } from "./db";
 import { makeMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
@@ -9,10 +8,12 @@ import { makeMongoDbAdapter, MongoDbAdapter } from "./mongoDbAdapter";
 let mongo: Collection<TestDBModel>;
 let adapter: MongoDbAdapter<TestDBModel>;
 
+class CustomNotFoundError extends Error {}
+
 describe("mongoDbAdapter", () => {
     beforeEach(() => {
         mongo = getDb().collection<TestDBModel>("test-collection");
-        adapter = makeMongoDbAdapter(mongo);
+        adapter = makeMongoDbAdapter(mongo, CustomNotFoundError);
     });
 
     describe("fetch", () => {
@@ -25,10 +26,10 @@ describe("mongoDbAdapter", () => {
 
             expect(result).to.deep.equal(model);
         });
-        it("should throw a NotFoundError when the model was not found", async () => {
+        it("should throw a CustomNotFoundError when the model was not found", async () => {
             const promise = adapter.fetch({ id: generateIndex() });
 
-            await expect(promise).to.be.rejectedWith(NotFoundError);
+            await expect(promise).to.be.rejectedWith(CustomNotFoundError);
         });
     });
     describe("fetchLast", () => {
@@ -40,10 +41,10 @@ describe("mongoDbAdapter", () => {
 
             expect(result).to.deep.equal(lastModel);
         });
-        it("should throw a NotFoundError when the model was not found", async () => {
+        it("should throw a CustomNotFoundError when the model was not found", async () => {
             const promise = adapter.fetchLast({ id: generateIndex() });
 
-            await expect(promise).to.be.rejectedWith(NotFoundError);
+            await expect(promise).to.be.rejectedWith(CustomNotFoundError);
         });
     });
     describe("insert", () => {
@@ -87,10 +88,10 @@ describe("mongoDbAdapter", () => {
             const modelExists = await adapter.exists({ id: generateIndex() });
             await expect(modelExists).to.be.false;
         });
-        it("should throw a NotFoundError when the model doesn't exist", async () => {
+        it("should throw a CustomNotFoundError when the model doesn't exist", async () => {
             const promise = adapter.remove({ id: generateIndex() });
 
-            await expect(promise).to.be.rejectedWith(NotFoundError);
+            await expect(promise).to.be.rejectedWith(CustomNotFoundError);
         });
     });
     describe("update", () => {
@@ -102,10 +103,10 @@ describe("mongoDbAdapter", () => {
             const dbModel = await mongo.findOne({ id: model.id });
             expect(dbModel).to.have.property("field", "new value");
         });
-        it("should throw a NotFoundError when the model doesn't exist", async () => {
+        it("should throw a CustomNotFoundError when the model doesn't exist", async () => {
             const promise = adapter.update({ id: generateIndex() }, { $set: { field: "new value" } });
 
-            await expect(promise).to.be.rejectedWith(NotFoundError);
+            await expect(promise).to.be.rejectedWith(CustomNotFoundError);
         });
     });
     describe("fetchAll", () => {

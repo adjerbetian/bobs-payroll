@@ -1,5 +1,4 @@
 import { Collection, FilterQuery, UpdateQuery } from "mongodb";
-import { NotFoundError } from "../../domain";
 
 export interface MongoDbAdapter<DBModel> {
     fetch(query: FilterQuery<DBModel>): Promise<DBModel>;
@@ -13,7 +12,10 @@ export interface MongoDbAdapter<DBModel> {
     removeAll(query: FilterQuery<DBModel>): Promise<void>;
 }
 
-export function makeMongoDbAdapter<DBModel>(db: Collection<DBModel>): MongoDbAdapter<DBModel> {
+export function makeMongoDbAdapter<DBModel>(
+    db: Collection<DBModel>,
+    NotFoundErrorClass: new (message: string) => Error
+): MongoDbAdapter<DBModel> {
     return {
         async fetch(query) {
             const dbModel = await db.findOne(query);
@@ -52,7 +54,7 @@ export function makeMongoDbAdapter<DBModel>(db: Collection<DBModel>): MongoDbAda
         }
     };
 
-    function buildNotFoundError(query: FilterQuery<DBModel>): NotFoundError {
-        return new NotFoundError(`nothing in ${db.collectionName} matched ${JSON.stringify(query)}`);
+    function buildNotFoundError(query: FilterQuery<DBModel>): never {
+        throw new NotFoundErrorClass(`nothing in ${db.collectionName} matched ${JSON.stringify(query)}`);
     }
 }

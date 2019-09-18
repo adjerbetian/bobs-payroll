@@ -1,1 +1,0 @@
-export { makePostSalesReceiptTransaction } from "./postSalesReceipt";

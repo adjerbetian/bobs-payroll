@@ -1,5 +1,6 @@
 # Simple
-Todo: create a modules folder, and in each module, a domain / repository / mongo etc
+Todo: move stripQuotationMarks to core/controllers/utils
+Todo: add a @mongo alias (and maybe router too)
 Todo: use dynamic before each for test type (e2e, integration, unit)
 Todo: check for type assertion in TransactionValidator (coming soon, see here: https://github.com/microsoft/TypeScript/pull/32695)
 

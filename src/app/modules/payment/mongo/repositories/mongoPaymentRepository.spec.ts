@@ -1,5 +1,5 @@
 import { expect, generateIndex, generators, never, seeders } from "@test/integration";
-import { NotFoundError, PaymentMethod } from "../../../../domain";
+import { NotFoundError, PaymentMethod } from "../../../core";
 import { Payment } from "../../domain";
 import { dbPayments } from "../databases";
 import { makeMongoPaymentRepository } from "./mongoPaymentRepository";

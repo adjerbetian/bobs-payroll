@@ -1,16 +1,6 @@
-import { makeTransactionsRouter } from "./controllers";
-import { makeCoreActions } from "./domain";
-import { makePaymentModule } from "./modules";
-import {
-    closeConnection,
-    initConnection,
-    mongoEmployeeRepository,
-    mongoPaymentMethodRepository,
-    mongoSalesReceiptRepository,
-    mongoServiceChargeRepository,
-    mongoTimeCardRepository,
-    mongoUnionMemberRepository
-} from "./mongo";
+import { buildRouter } from "./router";
+import { makeCoreModule, makePaymentModule } from "./modules";
+import { closeConnection, initConnection } from "./mongo";
 
 interface App {
     start: () => Promise<void>;
@@ -19,16 +9,13 @@ interface App {
 }
 
 export function buildApp(): App {
-    const coreActions = makeCoreActions({
-        employeeRepository: mongoEmployeeRepository,
-        paymentMethodRepository: mongoPaymentMethodRepository,
-        salesReceiptRepository: mongoSalesReceiptRepository,
-        serviceChargeRepository: mongoServiceChargeRepository,
-        timeCardRepository: mongoTimeCardRepository,
-        unionMemberRepository: mongoUnionMemberRepository
-    });
-    const router = makeTransactionsRouter(coreActions);
-    router.addRoutes(makePaymentModule(coreActions));
+    const router = buildRouter(console);
+
+    const coreModule = makeCoreModule();
+    const paymentModule = makePaymentModule(coreModule.actions);
+
+    router.addRoutes(coreModule.routes);
+    router.addRoutes(paymentModule.routes);
 
     return {
         async start() {

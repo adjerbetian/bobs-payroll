@@ -1,5 +1,5 @@
-import { PaymentMethodType } from "../../../../domain";
 import { MongoModel } from "../../../../mongo";
+import { PaymentMethodType } from "../../../core";
 
 export interface PaymentDBModel extends MongoModel {
     employeeId: number;

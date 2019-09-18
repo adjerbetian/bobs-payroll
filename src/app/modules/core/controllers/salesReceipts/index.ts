@@ -1,0 +1,1 @@
+export { makePostSalesReceiptController } from "./postSalesReceipt";
