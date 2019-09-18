@@ -1,7 +1,7 @@
 # Simple
-Todo: essayer d'enlever getType
+Todo: get transactions out of domain
+Todo: create a modules folder, and in each module, a domain / repository / mongo etc
 Todo: Dans les transactions: ne pas construire d'entités mais appeler coreActions.createEmployee({id, name, ...})
-Todo: sortir les transaction de domain
 Todo: check for type assertion in TransactionValidator (coming soon, see here: https://github.com/microsoft/TypeScript/pull/32695)
 
 # Complex
