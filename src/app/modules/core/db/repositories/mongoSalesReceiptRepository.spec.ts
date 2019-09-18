@@ -1,5 +1,5 @@
 import { expect, generateIndex, monday, seeders, never, tuesday, lastTuesday, generators } from "@test/integration";
-import { dbSalesReceipts } from "../databases";
+import { dbSalesReceipts } from "../collections";
 import { makeMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 
 describe("mongoSalesReceiptRepository", () => {

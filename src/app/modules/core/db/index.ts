@@ -5,7 +5,7 @@ import {
     dbServiceCharges,
     dbTimeCards,
     dbUnionMembers
-} from "./databases";
+} from "./collections";
 import {
     makeMongoEmployeeRepository,
     makeMongoPaymentMethodRepository,
@@ -15,7 +15,7 @@ import {
     makeMongoUnionMemberRepository
 } from "./repositories";
 
-export * from "./databases";
+export * from "./collections";
 
 export const mongoEmployeeRepository = makeMongoEmployeeRepository(dbEmployees);
 export const mongoPaymentMethodRepository = makeMongoPaymentMethodRepository(dbPaymentMethods);

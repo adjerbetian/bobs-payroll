@@ -1,5 +1,5 @@
 import { generators, seeders, expect, generateIndex } from "@test/integration";
-import { dbServiceCharges } from "../databases";
+import { dbServiceCharges } from "../collections";
 import { makeMongoServiceChargeRepository } from "./mongoServiceChargeRepository";
 
 describe("mongoServiceChargeRepository", () => {

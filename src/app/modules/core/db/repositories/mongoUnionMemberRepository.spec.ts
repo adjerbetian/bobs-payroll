@@ -1,6 +1,6 @@
 import { generators, seeders, expect, generateIndex } from "@test/integration";
 import { NotFoundError } from "../../domain";
-import { dbUnionMembers } from "../databases";
+import { dbUnionMembers } from "../collections";
 import { makeMongoUnionMemberRepository } from "./mongoUnionMemberRepository";
 
 describe("mongoUnionMemberRepository", () => {

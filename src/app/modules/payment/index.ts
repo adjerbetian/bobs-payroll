@@ -2,11 +2,11 @@ import { Routes } from "../../router";
 import { CoreActions } from "../core";
 import { makeControllers } from "./controllers";
 import { makePaymentActions, PaymentActions } from "./domain";
-import { mongoPaymentRepository } from "./mongo";
+import { mongoPaymentRepository } from "./db";
 import { makeRoutes } from "./routes";
 
 export { buildPayment } from "./domain";
-export { dbPayments } from "./mongo";
+export { dbPayments } from "./db";
 
 interface PaymentModule {
     routes: Routes;

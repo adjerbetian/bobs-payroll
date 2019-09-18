@@ -8,11 +8,11 @@ import {
     mongoServiceChargeRepository,
     mongoTimeCardRepository,
     mongoUnionMemberRepository
-} from "./mongo";
+} from "./db";
 import { makeRoutes } from "./routes";
 
 export * from "./domain";
-export * from "./mongo";
+export * from "./db";
 
 interface CoreModule {
     routes: Routes;

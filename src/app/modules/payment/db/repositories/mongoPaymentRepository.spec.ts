@@ -1,7 +1,7 @@
 import { expect, generateIndex, generators, never, seeders } from "@test/integration";
 import { NotFoundError, PaymentMethod } from "../../../core";
 import { Payment } from "../../domain";
-import { dbPayments } from "../databases";
+import { dbPayments } from "../collections";
 import { makeMongoPaymentRepository } from "./mongoPaymentRepository";
 
 describe("mongoPaymentRepository", () => {

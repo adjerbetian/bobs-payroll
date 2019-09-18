@@ -1,6 +1,6 @@
 import { generators, seeders, expect, generateIndex } from "@test/integration";
 import { CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../../domain";
-import { dbEmployees } from "../databases";
+import { dbEmployees } from "../collections";
 import { makeMongoEmployeeRepository } from "./mongoEmployeeRepository";
 
 describe("mongoEmployeeRepository", () => {

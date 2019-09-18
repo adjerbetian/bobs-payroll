@@ -1,6 +1,6 @@
 import { expect, generateIndex, generators, seeders } from "@test/integration";
 import { NotFoundError, PaymentMethod } from "../../domain";
-import { dbPaymentMethods } from "../databases";
+import { dbPaymentMethods } from "../collections";
 import { makeMongoPaymentMethodRepository } from "./mongoPaymentMethodRepository";
 
 describe("mongoPaymentMethodRepository", () => {

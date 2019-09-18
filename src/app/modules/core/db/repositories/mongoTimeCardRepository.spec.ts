@@ -1,5 +1,5 @@
 import { generators, seeders, expect, generateIndex, lastTuesday, monday, never, tuesday } from "@test/integration";
-import { dbTimeCards } from "../databases";
+import { dbTimeCards } from "../collections";
 import { makeMongoTimeCardRepository } from "./mongoTimeCardRepository";
 
 describe("mongoTimeCardRepository", () => {
