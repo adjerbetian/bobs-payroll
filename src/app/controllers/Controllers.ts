@@ -1,5 +1,5 @@
 //prettier-ignore
-export interface TransactionsActions {
+export interface Controllers {
     processTransaction(transaction: "AddEmp", empId: string, name: string, address: string, type: "H", hourlyRate: string): Promise<void>;
     processTransaction(transaction: "AddEmp", empId: string, name: string, address: string, type: "S", monthlySalary: string): Promise<void>;
     processTransaction(transaction: "AddEmp", empId: string, name: string, address: string, type: "C", monthlySalary: string, commissionRate: string): Promise<void>;

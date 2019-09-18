@@ -1,8 +1,8 @@
 import { CoreDependencies, makeCoreActions, makePaymentActions, PaymentDependencies } from "./domain";
-import { makeTransactionsActions, TransactionsActions } from "./controllers";
+import { makeTransactionsActions, Controllers } from "./controllers";
 
 export interface App {
-    processTransaction: TransactionsActions["processTransaction"];
+    processTransaction: Controllers["processTransaction"];
 }
 
 interface AppDependencies {

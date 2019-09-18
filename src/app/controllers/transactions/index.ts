@@ -1,27 +1,6 @@
-import { CoreActions, PaymentActions } from "../../domain";
-import { makeAddEmployeeTransaction, makeChangeEmployeeTransaction, makeDeleteEmployeeTransaction } from "./employees";
-import { makeRunPayrollTransaction } from "./payroll";
-import { makeProcessTransaction } from "./processTransaction";
-import { makePostSalesReceiptTransaction } from "./salesReceipts";
-import { makePostServiceChargeTransaction } from "./serviceCharges";
-import { makePostTimeCardTransaction } from "./timeCards";
-import { TransactionsActions } from "./TransactionsActions";
-
-export { TransactionsActions } from "./TransactionsActions";
-
-export function makeTransactionsActions(coreActions: CoreActions, paymentActions: PaymentActions): TransactionsActions {
-    return {
-        processTransaction: makeProcessTransaction(
-            {
-                addEmployee: makeAddEmployeeTransaction(coreActions),
-                deleteEmployee: makeDeleteEmployeeTransaction(coreActions),
-                postTimeCard: makePostTimeCardTransaction(coreActions),
-                postSalesReceipt: makePostSalesReceiptTransaction(coreActions),
-                postServiceCharge: makePostServiceChargeTransaction(coreActions),
-                changeEmployee: makeChangeEmployeeTransaction(coreActions),
-                runPayroll: makeRunPayrollTransaction(paymentActions)
-            },
-            console
-        )
-    };
-}
+export { CoreActions, PaymentActions } from "../../domain";
+export { makeAddEmployeeTransaction, makeChangeEmployeeTransaction, makeDeleteEmployeeTransaction } from "./employees";
+export { makeRunPayrollTransaction } from "./payroll";
+export { makePostSalesReceiptTransaction } from "./salesReceipts";
+export { makePostServiceChargeTransaction } from "./serviceCharges";
+export { makePostTimeCardTransaction } from "./timeCards";

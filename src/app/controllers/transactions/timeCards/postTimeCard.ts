@@ -1,5 +1,5 @@
 import { buildTimeCard, CoreActions } from "../../../domain";
-import { Transactions } from "../processTransaction";
+import { Transactions } from "../../processTransaction";
 import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("TimeCard");

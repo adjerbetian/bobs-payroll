@@ -1,6 +1,6 @@
 import { CoreActions } from "../../../domain";
+import { Transactions } from "../../processTransaction";
 import { buildTransactionValidator } from "../utils";
-import { Transactions } from "../processTransaction";
 
 const transactionValidator = buildTransactionValidator("DelEmp");
 

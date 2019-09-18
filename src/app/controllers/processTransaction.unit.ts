@@ -1,5 +1,5 @@
-import { buildStubFor, generators, expect, generateIndex, Stub, monday } from "@test/unit";
-import { isoDate } from "../../../utils";
+import { buildStubFor, expect, generateIndex, generators, monday, Stub } from "@test/unit";
+import { isoDate } from "../../utils";
 import { makeProcessTransaction, Transactions } from "./processTransaction";
 
 describe("processTransaction", () => {

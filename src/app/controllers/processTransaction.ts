@@ -1,4 +1,4 @@
-import { TransactionsActions } from "./TransactionsActions";
+import { Controllers } from "./Controllers";
 
 type Transaction = (...args: string[]) => Promise<void>;
 
@@ -16,10 +16,7 @@ interface Logger {
     log: (...args: any) => Promise<void> | void;
 }
 
-export function makeProcessTransaction(
-    transactions: Transactions,
-    logger: Logger
-): TransactionsActions["processTransaction"] {
+export function makeProcessTransaction(transactions: Transactions, logger: Logger): Controllers["processTransaction"] {
     return async (transactionName: string, ...args: string[]) => {
         try {
             if (transactionName === "AddEmp") await transactions.addEmployee(...args);

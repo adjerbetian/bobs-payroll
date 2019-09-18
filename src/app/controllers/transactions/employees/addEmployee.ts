@@ -9,7 +9,7 @@ import {
     SalariedEmployee
 } from "../../../domain";
 import { TransactionFormatError } from "../../errors";
-import { Transactions } from "../processTransaction";
+import { Transactions } from "../../processTransaction";
 import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
