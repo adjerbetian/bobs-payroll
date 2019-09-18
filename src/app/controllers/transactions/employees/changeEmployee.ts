@@ -6,13 +6,13 @@ import {
     CoreActions,
     EmployeeType
 } from "../../../domain";
-import { Transactions } from "../../processTransaction";
+import { Controllers } from "../../Controllers";
 import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
-export function makeChangeEmployeeTransaction(actions: CoreActions): Transactions["changeEmployee"] {
-    return async function(id, updateType, ...params) {
+export function makeChangeEmployeeTransaction(actions: CoreActions): Controllers["changeEmployee"] {
+    return async function(id: string, updateType: string, ...params: string[]) {
         const employeeId = parseInt(id);
 
         if (updateType === "Name") return changeEmployeeName();

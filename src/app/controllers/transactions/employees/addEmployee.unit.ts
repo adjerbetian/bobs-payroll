@@ -63,7 +63,8 @@ describe("addEmployee", () => {
             `"${employee.getName()}"`,
             `"${employee.getAddress()}"`,
             "C",
-            `${employee.getSalary()}`
+            `${employee.getSalary()}`,
+            ""
         );
 
         await expect(promise).to.be.rejectedWith(TransactionFormatError, "AddEmp");

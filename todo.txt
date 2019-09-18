@@ -1,5 +1,5 @@
 # Simple
-Todo: get transactions out of domain
+Todo: move tests to src
 Todo: create a modules folder, and in each module, a domain / repository / mongo etc
 Todo: don't build entities in transaction but in domain --> call with a request object coreActions.createEmployee({id, name, ...})
 Todo: check for type assertion in TransactionValidator (coming soon, see here: https://github.com/microsoft/TypeScript/pull/32695)

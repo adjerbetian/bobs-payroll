@@ -1,3 +1,6 @@
 export * from "./domain";
 export * from "./mongo";
-export { buildApp } from "./app";
+
+import { buildApp } from "./app";
+
+export const app = buildApp();

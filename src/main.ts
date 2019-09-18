@@ -1,31 +1,9 @@
-/* eslint-disable */
-import { buildApp } from "./app";
-import {
-    closeConnection,
-    initConnection,
-    mongoEmployeeRepository,
-    mongoPaymentMethodRepository,
-    mongoPaymentRepository,
-    mongoSalesReceiptRepository,
-    mongoServiceChargeRepository,
-    mongoTimeCardRepository,
-    mongoUnionMemberRepository
-} from "./app/mongo";
+import { app } from "./app";
 
-const app = buildApp({
-    salesReceiptRepository: mongoSalesReceiptRepository,
-    employeeRepository: mongoEmployeeRepository,
-    serviceChargeRepository: mongoServiceChargeRepository,
-    timeCardRepository: mongoTimeCardRepository,
-    paymentMethodRepository: mongoPaymentMethodRepository,
-    unionMemberRepository: mongoUnionMemberRepository,
-    paymentRepository: mongoPaymentRepository
-});
-
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 Promise.resolve().then(async () => {
-    await initConnection();
-    // @ts-ignore
-    await app.processTransaction(...process.argv.slice(2));
-    await closeConnection();
+    await app.start();
+    await app.processCommand(...process.argv.slice(2));
+    await app.stop();
     console.log("done");
 });

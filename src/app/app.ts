@@ -1,45 +1,47 @@
-import { CoreDependencies, makeCoreActions, makePaymentActions, PaymentDependencies } from "./domain";
-import { makeTransactionsActions, Controllers } from "./controllers";
+import { makeTransactionsRouter } from "./controllers";
+import { makeCoreActions, makePaymentActions } from "./domain";
+import {
+    closeConnection,
+    initConnection,
+    mongoEmployeeRepository,
+    mongoPaymentMethodRepository,
+    mongoPaymentRepository,
+    mongoSalesReceiptRepository,
+    mongoServiceChargeRepository,
+    mongoTimeCardRepository,
+    mongoUnionMemberRepository
+} from "./mongo";
 
-export interface App {
-    processTransaction: Controllers["processTransaction"];
+interface App {
+    start: () => Promise<void>;
+    stop: () => Promise<void>;
+    processCommand: (...args: string[]) => Promise<void>;
 }
 
-interface AppDependencies {
-    employeeRepository: CoreDependencies["employeeRepository"];
-    paymentMethodRepository: CoreDependencies["paymentMethodRepository"];
-    salesReceiptRepository: CoreDependencies["salesReceiptRepository"];
-    serviceChargeRepository: CoreDependencies["serviceChargeRepository"];
-    timeCardRepository: CoreDependencies["timeCardRepository"];
-    unionMemberRepository: CoreDependencies["unionMemberRepository"];
-
-    paymentRepository: PaymentDependencies["paymentRepository"];
-}
-
-export function buildApp({
-    employeeRepository,
-    paymentMethodRepository,
-    salesReceiptRepository,
-    serviceChargeRepository,
-    timeCardRepository,
-    unionMemberRepository,
-    paymentRepository
-}: AppDependencies): App {
+export function buildApp(): App {
     const coreActions = makeCoreActions({
-        employeeRepository,
-        paymentMethodRepository,
-        salesReceiptRepository,
-        serviceChargeRepository,
-        timeCardRepository,
-        unionMemberRepository
+        employeeRepository: mongoEmployeeRepository,
+        paymentMethodRepository: mongoPaymentMethodRepository,
+        salesReceiptRepository: mongoSalesReceiptRepository,
+        serviceChargeRepository: mongoServiceChargeRepository,
+        timeCardRepository: mongoTimeCardRepository,
+        unionMemberRepository: mongoUnionMemberRepository
     });
     const paymentActions = makePaymentActions({
         coreActions,
-        paymentRepository
+        paymentRepository: mongoPaymentRepository
     });
-    const transactionDomain = makeTransactionsActions(coreActions, paymentActions);
+    const router = makeTransactionsRouter(coreActions, paymentActions);
 
     return {
-        processTransaction: transactionDomain.processTransaction
+        async start() {
+            await initConnection();
+        },
+        async stop() {
+            return closeConnection();
+        },
+        async processCommand(...args) {
+            return router.processCommand(...args);
+        }
     };
 }

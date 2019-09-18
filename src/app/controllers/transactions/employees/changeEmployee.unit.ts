@@ -89,7 +89,7 @@ describe("changeEmployee", () => {
                 });
             });
             it("should throw an error if the salary is not defined", async () => {
-                const promise = changeEmployee(`${employeeId}`, "Commissioned", "");
+                const promise = changeEmployee(`${employeeId}`, "Commissioned", "", "");
 
                 await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
             });
@@ -123,12 +123,12 @@ describe("changeEmployee", () => {
                 expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the bank-id is missing", async () => {
-                const promise = changeEmployee(`${employeeId}`, "Direct");
+                const promise = changeEmployee(`${employeeId}`, "Direct", "", "");
 
                 await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
             });
             it("should throw a transaction format error when the account-id is missing", async () => {
-                const promise = changeEmployee(`${employeeId}`, "Direct", "bank-id");
+                const promise = changeEmployee(`${employeeId}`, "Direct", "bank-id", "");
 
                 await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
             });
@@ -144,7 +144,7 @@ describe("changeEmployee", () => {
                 expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWithEntity(expectedPaymentMethod);
             });
             it("should throw a transaction format error when the address is missing", async () => {
-                const promise = changeEmployee(`${employeeId}`, "Mail");
+                const promise = changeEmployee(`${employeeId}`, "Mail", "");
 
                 await expect(promise).to.be.rejectedWith(TransactionFormatError, "ChgEmp");
             });
@@ -166,7 +166,7 @@ describe("changeEmployee", () => {
                 expect(stubbedActions.createUnionMember).to.have.been.calledOnceWithEntity(expectedUnionMember);
             });
             it("should throw a TransactionFormatError when the dues rate is not specified", async () => {
-                const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues");
+                const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "");
 
                 await expect(promise).to.have.been.rejectedWith(TransactionFormatError, "ChgEmp");
             });

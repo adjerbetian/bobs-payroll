@@ -1,10 +1,10 @@
 import { buildSalesReceipt, CoreActions } from "../../../domain";
-import { Transactions } from "../../processTransaction";
+import { Controllers } from "../../Controllers";
 import { buildTransactionValidator } from "../utils";
 
 const transactionValidator = buildTransactionValidator("SalesReceipt");
 
-export function makePostSalesReceiptTransaction(actions: CoreActions): Transactions["postSalesReceipt"] {
+export function makePostSalesReceiptTransaction(actions: CoreActions): Controllers["postSalesReceipt"] {
     return async function(employeeId, date, amount) {
         assertTransactionIsValid();
 

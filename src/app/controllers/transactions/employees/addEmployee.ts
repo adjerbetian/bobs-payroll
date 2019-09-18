@@ -8,14 +8,21 @@ import {
     HourlyEmployee,
     SalariedEmployee
 } from "../../../domain";
+import { Controllers } from "../../Controllers";
 import { TransactionFormatError } from "../../errors";
-import { Transactions } from "../../processTransaction";
 import { buildTransactionValidator, stripQuotationMarks } from "../utils";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
 
-export function makeAddEmployeeTransaction(actions: CoreActions): Transactions["addEmployee"] {
-    return async function(id, name, address, type, rate, commissionRate?) {
+export function makeAddEmployeeTransaction(actions: CoreActions): Controllers["addEmployee"] {
+    return async function(
+        id: string,
+        name: string,
+        address: string,
+        type: string,
+        rate: string,
+        commissionRate?: string
+    ) {
         assertTransactionIsValid();
 
         await addEmployee({
