@@ -184,7 +184,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
         });
     });
     describe("payment method", () => {
-        it("should include the employee payment method", async () => {
+        it("should specify the employee payment method", async () => {
             const employee = await seeders.seedSalariedEmployee();
             const paymentMethod = await seeders.seedDirectPaymentMethod({ employeeId: employee.getId() });
 
@@ -193,7 +193,7 @@ describe("Use Case 7: Run the Payroll for Today", () => {
             const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
             expect(payment.getMethod()).entity.to.equal(paymentMethod);
         });
-        it("should include the hold payment method if not specified", async () => {
+        it("should specify the hold payment method if not specified", async () => {
             const employee = await seeders.seedSalariedEmployee();
 
             await executePayrollCommand(`Payday ${lastDayOfMonth}`);
@@ -205,30 +205,30 @@ describe("Use Case 7: Run the Payroll for Today", () => {
     });
     describe("union", () => {
         it.skip("should deduce the weekly dues rate from the hourly payment", async () => {
-            const employee = await seeders.seedHourlyEmployee();
-            const timeCard = await seeders.seedTimeCard({
+            const employee = await seeders.seedHourlyEmployee({ hourlyRate: 15 });
+            await seeders.seedTimeCard({
                 date: tuesday,
                 hours: 6,
                 employeeId: employee.getId()
             });
-            const unionMember = await seeders.seedUnionMember({ employeeId: employee.getId(), rate: 0.1 });
+            await seeders.seedUnionMember({ employeeId: employee.getId(), rate: 0.1 });
 
             await executePayrollCommand(`Payday ${friday}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
-            const fullPaymentAmount = employee.getHourlyRate() * timeCard.getHours();
-            const unionDues = fullPaymentAmount * unionMember.getRate();
+            const fullPaymentAmount = 15 * 6;
+            const unionDues = fullPaymentAmount * 0.1;
             expect(payment.getAmount()).to.equal(fullPaymentAmount - unionDues);
         });
         it.skip("should deduce the weekly dues rate from the salary", async () => {
-            const employee = await seeders.seedSalariedEmployee();
-            const unionMember = await seeders.seedUnionMember({ employeeId: employee.getId() });
+            const employee = await seeders.seedSalariedEmployee({ salary: 3500 });
+            await seeders.seedUnionMember({ employeeId: employee.getId(), rate: 0.1 });
 
             await executePayrollCommand(`Payday ${lastDayOfMonth}`);
 
             const payment = await dbPayments.fetchLast({ employeeId: employee.getId() });
-            const unionDues = employee.getSalary() * unionMember.getRate() * nFridaysInMonth(firstDayOfMonth);
-            expect(payment.getAmount()).to.equal(employee.getSalary() - unionDues);
+            const unionDues = 3500 * 0.1 * nFridaysInMonth(firstDayOfMonth);
+            expect(payment.getAmount()).to.equal(3500 - unionDues);
         });
         it.skip("should deduce the service charges", async () => {});
         it.skip("should not deduce the already paid service charges", async () => {});

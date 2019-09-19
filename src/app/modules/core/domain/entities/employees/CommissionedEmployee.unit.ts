@@ -1,27 +1,28 @@
-import { generators, expect } from "@test/unit";
-import { CommissionedEmployee } from "../Employee";
+import { expect, generators } from "@test/unit";
 
 describe("entity CommissionedEmployee", () => {
-    let employee: CommissionedEmployee;
-
     describe("computePayAmount", () => {
-        beforeEach(() => {
-            employee = generators.generateCommissionedEmployee();
-        });
-
         it("should return the salary when there is no salesReceipt", async () => {
+            const employee = generators.generateCommissionedEmployee({ salary: 3000 });
+
             const amount = await employee.computeCommissionedSalary([]);
 
-            expect(amount).to.equal(employee.getSalary());
+            expect(amount).to.equal(3000);
         });
         it("should take into account the sales receipts", async () => {
-            const salesReceipts = [generators.generateSalesReceipt(), generators.generateSalesReceipt()];
+            const employee = generators.generateCommissionedEmployee({
+                salary: 3000,
+                commissionRate: 0.1
+            });
+            const salesReceipts = [
+                generators.generateSalesReceipt({ amount: 2000 }),
+                generators.generateSalesReceipt({ amount: 4000 })
+            ];
 
             const amount = await employee.computeCommissionedSalary(salesReceipts);
 
-            const commission =
-                (salesReceipts[0].getAmount() + salesReceipts[1].getAmount()) * employee.getCommissionRate();
-            expect(amount).to.equal(commission + employee.getSalary());
+            const commission = (2000 + 4000) * 0.1;
+            expect(amount).to.equal(commission + 3000);
         });
     });
 });
