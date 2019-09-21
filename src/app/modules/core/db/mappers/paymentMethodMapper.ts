@@ -16,10 +16,12 @@ import {
     PaymentMethodDBModel
 } from "../DBModels";
 
-type PaymentMethodMapper = Mapper<HoldPaymentMethod, HoldPaymentMethodDBModel> &
-    Mapper<DirectPaymentMethod, DirectPaymentMethodDBModel> &
-    Mapper<MailPaymentMethod, MailPaymentMethodDBModel> &
-    Mapper<PaymentMethod, PaymentMethodDBModel>;
+// prettier-ignore
+type PaymentMethodMapper =
+    & Mapper<HoldPaymentMethod, HoldPaymentMethodDBModel>
+    & Mapper<DirectPaymentMethod, DirectPaymentMethodDBModel>
+    & Mapper<MailPaymentMethod, MailPaymentMethodDBModel>
+    & Mapper<PaymentMethod, PaymentMethodDBModel>;
 
 export const paymentMethodMapper: PaymentMethodMapper = buildMapper({
     toEntity(model: PaymentMethodDBModel): any {

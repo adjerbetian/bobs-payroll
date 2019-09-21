@@ -16,10 +16,12 @@ import {
     SalariedEmployeeDBModel
 } from "../DBModels";
 
-type EmployeeMapper = Mapper<HourlyEmployee, HourlyEmployeeDBModel> &
-    Mapper<SalariedEmployee, SalariedEmployeeDBModel> &
-    Mapper<CommissionedEmployee, CommissionedEmployeeDBModel> &
-    Mapper<Employee, EmployeeDBModel>;
+// prettier-ignore
+type EmployeeMapper =
+    & Mapper<HourlyEmployee, HourlyEmployeeDBModel>
+    & Mapper<SalariedEmployee, SalariedEmployeeDBModel>
+    & Mapper<CommissionedEmployee, CommissionedEmployeeDBModel>
+    & Mapper<Employee, EmployeeDBModel>;
 
 export const employeeMapper: EmployeeMapper = buildMapper({
     toEntity(model: EmployeeDBModel): any {

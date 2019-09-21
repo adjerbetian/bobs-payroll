@@ -16,12 +16,14 @@ import {
     UnionMemberCreationModel
 } from "../requestModels";
 
-export type CoreActions = CoreEmployeeActions &
-    CorePaymentMethodActions &
-    CoreSalesReceiptActions &
-    CoreServiceChargeActions &
-    CoreTimeCardActions &
-    CoreUnionActions;
+// prettier-ignore
+export type CoreActions =
+    & CoreEmployeeActions
+    & CorePaymentMethodActions
+    & CoreSalesReceiptActions
+    & CoreServiceChargeActions
+    & CoreTimeCardActions
+    & CoreUnionActions;
 
 export interface CoreEmployeeActions {
     createEmployee(creationModel: EmployeeCreationModel): Promise<void>;
