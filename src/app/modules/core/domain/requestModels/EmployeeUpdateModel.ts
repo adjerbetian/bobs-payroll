@@ -8,21 +8,21 @@ export type EmployeeUpdateModel =
     | CommissionedTypeUpdate;
 
 interface AddressUpdate {
-    address: string;
+    readonly address: string;
 }
 interface NameUpdate {
-    name: string;
+    readonly name: string;
 }
 interface HourlyTypeUpdate {
-    type: EmployeeType.HOURLY;
-    hourlyRate: number;
+    readonly type: EmployeeType.HOURLY;
+    readonly hourlyRate: number;
 }
 interface SalariedTypeUpdate {
-    type: EmployeeType.SALARIED;
-    salary: number;
+    readonly type: EmployeeType.SALARIED;
+    readonly salary: number;
 }
 interface CommissionedTypeUpdate {
-    type: EmployeeType.COMMISSIONED;
-    salary: number;
-    commissionRate: number;
+    readonly type: EmployeeType.COMMISSIONED;
+    readonly salary: number;
+    readonly commissionRate: number;
 }

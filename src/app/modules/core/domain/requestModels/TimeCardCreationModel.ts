@@ -1,5 +1,5 @@
 export interface TimeCardCreationModel {
-    employeeId: number;
-    date: string;
-    hours: number;
+    readonly employeeId: number;
+    readonly date: string;
+    readonly hours: number;
 }

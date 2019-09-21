@@ -1,5 +1,5 @@
 export interface UnionMemberCreationModel {
-    employeeId: number;
-    memberId: string;
-    rate: number;
+    readonly employeeId: number;
+    readonly memberId: string;
+    readonly rate: number;
 }

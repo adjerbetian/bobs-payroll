@@ -1,4 +1,4 @@
 export interface ServiceChargeCreationModel {
-    memberId: string;
-    amount: number;
+    readonly memberId: string;
+    readonly amount: number;
 }

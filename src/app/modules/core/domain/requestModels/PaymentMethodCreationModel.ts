@@ -6,19 +6,19 @@ export type PaymentMethodCreationModel =
     | MailPaymentMethodCreationModel;
 
 export interface HoldPaymentMethodCreationModel extends CommonPaymentMethodCreationModel {
-    type: PaymentMethodType.HOLD;
+    readonly type: PaymentMethodType.HOLD;
 }
 export interface DirectPaymentMethodCreationModel extends CommonPaymentMethodCreationModel {
-    type: PaymentMethodType.DIRECT;
-    bank: string;
-    account: string;
+    readonly type: PaymentMethodType.DIRECT;
+    readonly bank: string;
+    readonly account: string;
 }
 export interface MailPaymentMethodCreationModel extends CommonPaymentMethodCreationModel {
-    type: PaymentMethodType.MAIL;
-    address: string;
+    readonly type: PaymentMethodType.MAIL;
+    readonly address: string;
 }
 
 interface CommonPaymentMethodCreationModel {
-    employeeId: number;
-    type: PaymentMethodType;
+    readonly employeeId: number;
+    readonly type: PaymentMethodType;
 }

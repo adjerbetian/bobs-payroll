@@ -6,22 +6,22 @@ export type EmployeeCreationModel =
     | CommissionedEmployeeCreationModel;
 
 export interface HourlyEmployeeCreationModel extends CommonEmployeeCreationModel {
-    type: EmployeeType.HOURLY;
-    hourlyRate: number;
+    readonly type: EmployeeType.HOURLY;
+    readonly hourlyRate: number;
 }
 export interface SalariedEmployeeCreationModel extends CommonEmployeeCreationModel {
-    type: EmployeeType.SALARIED;
-    salary: number;
+    readonly type: EmployeeType.SALARIED;
+    readonly salary: number;
 }
 export interface CommissionedEmployeeCreationModel extends CommonEmployeeCreationModel {
-    type: EmployeeType.COMMISSIONED;
-    salary: number;
-    commissionRate: number;
+    readonly type: EmployeeType.COMMISSIONED;
+    readonly salary: number;
+    readonly commissionRate: number;
 }
 
 interface CommonEmployeeCreationModel {
-    id: number;
-    name: string;
-    address: string;
-    type: EmployeeType;
+    readonly id: number;
+    readonly name: string;
+    readonly address: string;
+    readonly type: EmployeeType;
 }

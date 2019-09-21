@@ -1,5 +1,5 @@
 export interface SalesReceiptCreationModel {
-    employeeId: number;
-    date: string;
-    amount: number;
+    readonly employeeId: number;
+    readonly date: string;
+    readonly amount: number;
 }
