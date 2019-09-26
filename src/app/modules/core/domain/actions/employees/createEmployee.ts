@@ -16,11 +16,11 @@ interface Dependencies {
 
 export function makeCreateEmployee({ employeeRepository }: Dependencies): CoreEmployeeActions["createEmployee"] {
     return async function(creationModel) {
-        const employee = await buildEmployee(creationModel);
+        const employee = buildEmployee(creationModel);
         await employeeRepository.insert(employee);
     };
 
-    async function buildEmployee(creationModel: EmployeeCreationModel): Promise<Employee> {
+    function buildEmployee(creationModel: EmployeeCreationModel): Employee {
         if (creationModel.type === EmployeeType.HOURLY) {
             return buildHourlyEmployee(creationModel);
         }
