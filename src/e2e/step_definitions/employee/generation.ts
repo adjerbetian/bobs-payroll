@@ -26,6 +26,6 @@ Given("a(n) {string} employee {string}", async (type: string, name: string) => {
 Given("an employee {string}", async (name: string) => {
     store.employees.set(name, await seeders.seedHourlyEmployee({ name: name }));
 });
-Given("a new employee {string}", (type: string, name: string) => {
+Given("a new employee {string}", (name: string) => {
     store.employees.set(name, generators.generateHourlyEmployee({ name: name }));
 });
