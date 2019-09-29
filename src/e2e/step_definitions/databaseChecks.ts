@@ -3,25 +3,28 @@ import { Then } from "cucumber";
 import { dbEmployees, dbTimeCards } from "../../app";
 import { store } from "../utils";
 
-Then("the employee should fully exist in the DB", async function() {
-    const employee = store.employee;
+Then("{string} should fully exist in the employee DB", async function(name: string) {
+    const employee = store.employees.get(name);
     const dbEmployee = await dbEmployees.fetch({ id: employee.getId() });
     expect(dbEmployee).entity.to.equal(employee);
 });
 
-Then("the employee should not exist in the DB", async function() {
-    const employee = store.employee;
+Then("{string} should not exist in the employee DB", async function(name: string) {
+    const employee = store.employees.get(name);
     const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
     expect(employeeExistsInDb).to.be.false;
 });
 
-Then("the employee should (still) exist in the DB", async function() {
-    const employee = store.employee;
+Then("{string} should (still) exist in the employee DB", async function(name: string) {
+    const employee = store.employees.get(name);
     const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
     expect(employeeExistsInDb).to.be.true;
 });
 
-Then("the employee should have the time card", async function() {
-    const timeCards = await dbTimeCards.fetchAll({ employeeId: store.employee.getId() });
-    expect(timeCards).entities.to.include(store.timeCard);
+Then("{string} should have the time card {string}", async function(employeeName: string, timeCardName: string) {
+    const employee = store.employees.get(employeeName);
+    const timeCard = store.timeCards.get(timeCardName);
+
+    const timeCardsInDB = await dbTimeCards.fetchAll({ employeeId: employee.getId() });
+    expect(timeCardsInDB).entities.to.include(timeCard);
 });

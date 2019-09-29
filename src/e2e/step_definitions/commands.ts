@@ -1,13 +1,13 @@
-import { executePayrollCommand, generateIndex } from "@test/cucumber";
+import { executePayrollCommand } from "@test/cucumber";
 import { When } from "cucumber";
 import { EmployeeType } from "../../app";
 import { store } from "../utils";
 
-When("I execute the AddEmp command", async function() {
+When("I execute the AddEmp command on {string}", async function(name: string) {
     await executePayrollCommand(buildCommand());
 
     function buildCommand(): string {
-        const employee = store.employee;
+        const employee = store.employees.get(name);
         if (employee.hasType(EmployeeType.HOURLY)) {
             return `AddEmp ${employee.getId()} "${employee.getName()}" "${employee.getAddress()}" H ${employee.getHourlyRate()}`;
         }
@@ -21,21 +21,17 @@ When("I execute the AddEmp command", async function() {
     }
 });
 
-When("I execute an incomplete AddEmp command", async function() {
-    const employee = store.employee;
+When("I execute an incomplete AddEmp command on {string}", async function(name: string) {
+    const employee = store.employees.get(name);
     await executePayrollCommand(`AddEmp ${employee.getId()} "${employee.getName()}" "${employee.getAddress()}"`);
 });
 
-When("I execute the DelEmp command", async function() {
-    const employee = store.employee;
+When("I execute the DelEmp command on {string}", async function(name: string) {
+    const employee = store.employees.get(name);
     await executePayrollCommand(`DelEmp ${employee.getId()}`);
 });
 
-When("I execute the DelEmp command on another employee", async function() {
-    await executePayrollCommand(`DelEmp ${generateIndex()}`);
-});
-
-When("I execute the TimeCard command", async function() {
-    const timeCard = store.timeCard;
+When("I execute the TimeCard command on {string}", async function(name: string) {
+    const timeCard = store.timeCards.get(name);
     await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()} ${timeCard.getHours()}`);
 });

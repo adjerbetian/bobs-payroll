@@ -1,37 +1,29 @@
 import { Before } from "cucumber";
 import { Employee, TimeCard } from "../../app";
+import { buildNonNullMap, NonNullMap } from "./NonNullMap";
 
 export const store = buildVariablesStore();
-
 Before(() => store.reset());
 
-function buildVariablesStore(): Store {
-    let employee: Employee | null;
-    let timeCard: TimeCard | null;
-
-    return {
-        get employee(): Employee {
-            if (!employee) throw new Error("no employee set");
-            return employee;
-        },
-        set employee(newEmployee: Employee) {
-            employee = newEmployee;
-        },
-        get timeCard(): TimeCard {
-            if (!timeCard) throw new Error("no timeCard set");
-            return timeCard;
-        },
-        set timeCard(newTimeCard: TimeCard) {
-            timeCard = newTimeCard;
-        },
-        reset() {
-            employee = null;
-        }
-    };
+interface Store {
+    employees: NonNullMap<Employee>;
+    timeCards: NonNullMap<TimeCard>;
+    reset(): void;
 }
 
-interface Store {
-    timeCard: TimeCard;
-    employee: Employee;
-    reset(): void;
+function buildVariablesStore(): Store {
+    const employeeMap = buildNonNullMap<Employee>();
+    const timeCardMap = buildNonNullMap<TimeCard>();
+
+    return {
+        get employees() {
+            return employeeMap;
+        },
+        get timeCards() {
+            return timeCardMap;
+        },
+        reset() {
+            employeeMap.reset();
+        }
+    };
 }
