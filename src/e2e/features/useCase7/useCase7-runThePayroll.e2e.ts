@@ -19,7 +19,7 @@ import {
     wednesday
 } from "@test/e2e";
 import * as moment from "moment";
-import { CommissionedEmployee, dbPayments, HourlyEmployee, SalariedEmployee } from "../app";
+import { CommissionedEmployee, dbPayments, HourlyEmployee, SalariedEmployee } from "../../../app";
 
 describe("Use Case 7: Run the Payroll for Today", () => {
     describe("hourly employees", () => {

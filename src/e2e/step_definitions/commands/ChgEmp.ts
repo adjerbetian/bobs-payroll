@@ -1,5 +1,12 @@
 import { executePayrollCommand } from "@test/cucumber";
 import { When } from "cucumber";
+import {
+    DirectPaymentMethod,
+    HoldPaymentMethod,
+    MailPaymentMethod,
+    PaymentMethod,
+    PaymentMethodType
+} from "../../../app";
 import { store } from "../../utils";
 
 When(
@@ -35,3 +42,43 @@ When(
         return executePayrollCommand(`ChgEmp ${employee.getId()} Commissioned ${salary} ${commissionRate}`);
     }
 );
+When(
+    "I execute the ChgEmp command on {string} to change the payment method to {string}",
+    async (name: string, paymentMethodName: string) => {
+        const employee = store.employees.get(name);
+        return executePayrollCommand(buildCommand());
+
+        // prettier-ignore
+        function buildCommand(): string {
+            const paymentMethod = store.paymentMethods.get(paymentMethodName);
+            if (isHold(paymentMethod)) return `ChgEmp ${employee.getId()} Hold`;
+            if (isDirect(paymentMethod)) return `ChgEmp ${employee.getId()} Direct ${paymentMethod.getBank()} ${paymentMethod.getAccount()}`;
+            if (isMail(paymentMethod)) return `ChgEmp ${employee.getId()} Mail ${paymentMethod.getAddress()}`;
+            throw new Error("invalid type");
+        }
+    }
+);
+When(
+    "I execute an incomplete ChgEmp command on {string} to change the payment method to {string}",
+    async (name: string, paymentMethodName: string) => {
+        const employee = store.employees.get(name);
+        return executePayrollCommand(buildCommand());
+
+        function buildCommand(): string {
+            const paymentMethod = store.paymentMethods.get(paymentMethodName);
+            if (isMail(paymentMethod)) return `ChgEmp ${employee.getId()} Mail`;
+            if (isDirect(paymentMethod)) return `ChgEmp ${employee.getId()} Direct ${paymentMethod.getBank()}`;
+            throw new Error("invalid type");
+        }
+    }
+);
+
+function isHold(paymentMethod: PaymentMethod): paymentMethod is HoldPaymentMethod {
+    return paymentMethod.hasType(PaymentMethodType.HOLD);
+}
+function isDirect(paymentMethod: PaymentMethod): paymentMethod is DirectPaymentMethod {
+    return paymentMethod.hasType(PaymentMethodType.DIRECT);
+}
+function isMail(paymentMethod: PaymentMethod): paymentMethod is MailPaymentMethod {
+    return paymentMethod.hasType(PaymentMethodType.MAIL);
+}
