@@ -10,7 +10,7 @@ describe("Use Case 3: Post a Time Card", () => {
 
         await expectEmployeeToHaveTimeCard(employee.getId(), timeCard);
     });
-    it("should do nothing when the employee is an hourly employee", async () => {
+    it("should do nothing when the employee is not an hourly employee", async () => {
         const employee = await seeders.seedSalariedEmployee();
         const timeCard = generators.generateTimeCard({ employeeId: employee.getId() });
 

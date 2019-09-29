@@ -34,3 +34,8 @@ When("I execute the DelEmp command", async function() {
 When("I execute the DelEmp command on another employee", async function() {
     await executePayrollCommand(`DelEmp ${generateIndex()}`);
 });
+
+When("I execute the TimeCard command", async function() {
+    const timeCard = store.timeCard;
+    await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()} ${timeCard.getHours()}`);
+});
