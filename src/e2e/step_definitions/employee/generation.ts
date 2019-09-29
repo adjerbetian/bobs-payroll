@@ -23,7 +23,7 @@ Given("a(n) {string} employee {string}", async (type: string, name: string) => {
         throw new Error("invalid type");
     }
 });
-Given("an employee {string}", async (name: string) => {
+Given("an(other) employee {string}", async (name: string) => {
     store.employees.set(name, await seeders.seedHourlyEmployee({ name: name }));
 });
 Given("a new employee {string}", (name: string) => {

@@ -72,7 +72,6 @@ When(
         }
     }
 );
-
 function isHold(paymentMethod: PaymentMethod): paymentMethod is HoldPaymentMethod {
     return paymentMethod.hasType(PaymentMethodType.HOLD);
 }
@@ -82,3 +81,26 @@ function isDirect(paymentMethod: PaymentMethod): paymentMethod is DirectPaymentM
 function isMail(paymentMethod: PaymentMethod): paymentMethod is MailPaymentMethod {
     return paymentMethod.hasType(PaymentMethodType.MAIL);
 }
+
+When(
+    "I execute the ChgEmp command on {string} to add the membership {string}",
+    async (name: string, membershipName: string) => {
+        const employee = store.employees.get(name);
+        const unionMember = store.unionMembers.get(membershipName);
+        return executePayrollCommand(
+            `ChgEmp ${employee.getId()} Member ${unionMember.getMemberId()} Dues ${unionMember.getRate()}`
+        );
+    }
+);
+When(
+    "I execute an incomplete ChgEmp command on {string} to add the membership {string}",
+    async (name: string, membershipName: string) => {
+        const employee = store.employees.get(name);
+        const unionMember = store.unionMembers.get(membershipName);
+        return executePayrollCommand(`ChgEmp ${employee.getId()} Member ${unionMember.getMemberId()} Dues`);
+    }
+);
+When("I execute the ChgEmp command on {string} to remove from the union", async (name: string) => {
+    const employee = store.employees.get(name);
+    return executePayrollCommand(`ChgEmp ${employee.getId()} NoMember`);
+});
