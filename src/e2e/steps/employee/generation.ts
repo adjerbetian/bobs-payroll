@@ -29,3 +29,12 @@ Given("an(other) employee {string}", async (name: string) => {
 Given("a new employee {string}", (name: string) => {
     store.employees.set(name, generators.generateHourlyEmployee({ name: name }));
 });
+Given("an(other) hourly employee {string} with a hourly rate of {float}", async (name: string, hourlyRate: number) => {
+    const employee = await seeders.seedHourlyEmployee({ name: name, hourlyRate });
+    store.employees.set(name, employee);
+});
+// noinspection SpellCheckingInspection
+Given("a(nother) salaried employee {string} with a salary of {float}", async (name: string, salary: number) => {
+    const employee = await seeders.seedSalariedEmployee({ name: name, salary });
+    store.employees.set(name, employee);
+});

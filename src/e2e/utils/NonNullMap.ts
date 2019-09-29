@@ -4,8 +4,8 @@ export interface NonNullMap<T> {
     reset(): void;
 }
 
-export function buildNonNullMap<T>(): NonNullMap<T> {
-    const map = new Map<string, T>();
+export function buildNonNullMap<T>(initialValues: Array<[string, T]> = []): NonNullMap<T> {
+    const map = new Map<string, T>(initialValues);
     return {
         get(name) {
             const result = map.get(name);
