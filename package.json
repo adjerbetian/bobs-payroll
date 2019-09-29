@@ -7,7 +7,7 @@
     "main": "src\\index.ts",
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
-        "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
+        "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:cucumber",
         "test:unit": "mocha ./src/**/*.unit.ts",
         "test:unit:watch": "npm run test:unit -- --watch",
         "test:integration": "mocha ./**/*.spec.ts",
