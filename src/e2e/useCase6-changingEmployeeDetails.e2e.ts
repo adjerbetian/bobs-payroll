@@ -1,18 +1,13 @@
-import { seeders, executePayrollCommand, expect, generateIndex } from "@test/e2e";
+import { executePayrollCommand, expect, generateIndex, seeders } from "@test/e2e";
 import {
-    CommissionedEmployee,
-    dbEmployees,
     dbPaymentMethods,
     dbUnionMembers,
     DirectPaymentMethod,
     Employee,
-    EmployeeType,
-    HourlyEmployee,
     MailPaymentMethod,
     NotFoundError,
     PaymentMethod,
     PaymentMethodType,
-    SalariedEmployee,
     UnionMember
 } from "../app";
 
@@ -23,58 +18,6 @@ describe("Use Case 6: Changing Employee Details", () => {
         employee = await seeders.seedHourlyEmployee();
     });
 
-    describe("basic infos", () => {
-        it("should change the employee's name", async () => {
-            await executePayrollCommand(`ChgEmp ${employee.getId()} Name "James Bond"`);
-
-            const dbEmployee = await fetchEmployeeById(employee.getId());
-            expect(dbEmployee.getName()).to.equal("James Bond");
-        });
-        it("should change the employee's address", async () => {
-            await executePayrollCommand(`ChgEmp ${employee.getId()} Address "my new address"`);
-
-            const dbEmployee = await fetchEmployeeById(employee.getId());
-            expect(dbEmployee.getAddress()).to.equal("my new address");
-        });
-        it("should do nothing when the employee does not exist", async () => {
-            const nonExistingId = generateIndex();
-
-            await executePayrollCommand(`ChgEmp ${nonExistingId} Address "my new address"`);
-
-            const dbEmployee = await fetchEmployeeById(employee.getId());
-            expect(dbEmployee).entity.to.equal(employee);
-        });
-    });
-    describe("type", () => {
-        it("should change the employee to hourly", async () => {
-            employee = await seeders.seedSalariedEmployee();
-
-            await executePayrollCommand(`ChgEmp ${employee.getId()} Hourly 10`);
-
-            const dbEmployee = (await fetchEmployeeById(employee.getId())) as HourlyEmployee;
-            expect(dbEmployee.getType()).to.equal(EmployeeType.HOURLY);
-            expect(dbEmployee.getHourlyRate()).to.have.equal(10);
-        });
-        it("should change the employee to monthly salary", async () => {
-            employee = await seeders.seedHourlyEmployee();
-
-            await executePayrollCommand(`ChgEmp ${employee.getId()} Salaried 2000`);
-
-            const dbEmployee = (await fetchEmployeeById(employee.getId())) as SalariedEmployee;
-            expect(dbEmployee.getType()).to.equal(EmployeeType.SALARIED);
-            expect(dbEmployee.getSalary()).to.equal(2000);
-        });
-        it("should change the employee to commissioned", async () => {
-            employee = await seeders.seedHourlyEmployee();
-
-            await executePayrollCommand(`ChgEmp ${employee.getId()} Commissioned 2000 0.01`);
-
-            const dbEmployee = (await fetchEmployeeById(employee.getId())) as CommissionedEmployee;
-            expect(dbEmployee.getType()).to.equal(EmployeeType.COMMISSIONED);
-            expect(dbEmployee.getSalary()).to.equal(2000);
-            expect(dbEmployee.getCommissionRate()).to.equal(0.01);
-        });
-    });
     describe("payment method", () => {
         describe("Hold", () => {
             it("should set the employee's payment method", async () => {
@@ -186,9 +129,6 @@ describe("Use Case 6: Changing Employee Details", () => {
     });
 });
 
-async function fetchEmployeeById(employeeId: number): Promise<Employee> {
-    return dbEmployees.fetch({ id: employeeId });
-}
 async function fetchPaymentMethodByEmployeeId(employeeId: number): Promise<PaymentMethod> {
     return dbPaymentMethods.fetch({ employeeId });
 }

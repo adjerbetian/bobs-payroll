@@ -1,6 +1,13 @@
 import { expect } from "@test/utils";
 import { Then } from "cucumber";
-import { dbEmployees, Employee, EmployeeType } from "../../../app";
+import {
+    CommissionedEmployee,
+    dbEmployees,
+    Employee,
+    EmployeeType,
+    HourlyEmployee,
+    SalariedEmployee
+} from "../../../app";
 import { store } from "../../utils";
 
 Then("{string} should fully exist in the employee DB", async (name: string) => {
@@ -18,14 +25,15 @@ Then("{string} should (still )exist in the employee DB", async (name: string) =>
     const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
     expect(employeeExistsInDb).to.be.true;
 });
+// prettier-ignore
 Then("{string} should have its {string} set to {string}", async (name: string, field: string, value: string) => {
     const employee = await fetchEmployeeByName(name);
-    if (field === "name") {
-        return expect(employee.getName()).to.equal(value);
-    }
-    if (field === "address") {
-        return expect(employee.getAddress()).to.equal(value);
-    }
+    if (field === "name") return expect(employee.getName()).to.equal(value);
+    if (field === "address") return expect(employee.getAddress()).to.equal(value);
+    if (field === "hourly rate") return expect((employee as HourlyEmployee).getHourlyRate()).to.equal(parseFloat(value));
+    if (field === "salary") return expect((employee as SalariedEmployee | CommissionedEmployee).getSalary()).to.equal(parseFloat(value));
+    if (field === "commission rate") return expect((employee as CommissionedEmployee).getCommissionRate()).to.equal(parseFloat(value));
+
     throw new Error("invalid field");
 });
 Then("{string} should be of type {string}", async (name: string, type: string) => {
@@ -38,12 +46,6 @@ Then("{string} should be of type {string}", async (name: string, type: string) =
         if (type === "commissioned") return EmployeeType.COMMISSIONED;
         throw new Error("invalid type");
     }
-});
-Then("{string} should have an hourly rate of {float}", async (name: string, hourlyRate: number) => {
-    const employee = await fetchEmployeeByName(name);
-    if (!employee.hasType(EmployeeType.HOURLY)) throw new Error(`expected "${name}" to be an hourly employee`);
-
-    expect(employee.getHourlyRate()).to.equal(hourlyRate);
 });
 
 async function fetchEmployeeByName(name: string): Promise<Employee> {
