@@ -1,6 +1,10 @@
 import { seeders, executePayrollCommand, expect } from "@test/e2e";
 import { dbEmployees } from "../app";
 
+// --------------------------
+// DEPRECATED
+// --------------------------
+
 describe("Use Case 2: Deleting an Employee", () => {
     it("should delete an existing employee from the database", async () => {
         const employee = await seeders.seedHourlyEmployee();
