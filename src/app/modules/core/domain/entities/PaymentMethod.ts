@@ -44,6 +44,7 @@ export function buildHoldPaymentMethod({ employeeId }: { employeeId: number }): 
         },
         toJSON() {
             return {
+                entity: "HoldPaymentMethod",
                 type: PaymentMethodType.HOLD,
                 employeeId
             };
@@ -77,6 +78,7 @@ export function buildDirectPaymentMethod({
         },
         toJSON() {
             return {
+                entity: "DirectPaymentMethod",
                 type: PaymentMethodType.DIRECT,
                 employeeId,
                 bank,
@@ -107,6 +109,7 @@ export function buildMailPaymentMethod({
         },
         toJSON() {
             return {
+                entity: "MailPaymentMethod",
                 type: PaymentMethodType.MAIL,
                 employeeId,
                 address

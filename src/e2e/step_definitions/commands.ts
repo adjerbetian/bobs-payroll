@@ -20,35 +20,37 @@ When("I execute the AddEmp command on {string}", async (name: string) => {
         throw new Error("invalid type");
     }
 });
-
 When("I execute an incomplete AddEmp command on {string}", async (name: string) => {
     const employee = store.employees.get(name);
     await executePayrollCommand(`AddEmp ${employee.getId()} "${employee.getName()}" "${employee.getAddress()}"`);
 });
-
 When("I execute the DelEmp command on {string}", async (name: string) => {
     const employee = store.employees.get(name);
     await executePayrollCommand(`DelEmp ${employee.getId()}`);
 });
-
 When("I execute the TimeCard command on {string}", async (name: string) => {
     const timeCard = store.timeCards.get(name);
     await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()} ${timeCard.getHours()}`);
 });
-
 When("I execute an incomplete TimeCard command on {string}", async (name: string) => {
     const timeCard = store.timeCards.get(name);
     await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()}`);
 });
-
 When("I execute the SalesReceipt command on {string}", async (name: string) => {
     const salesReceipt = store.salesReceipts.get(name);
     await executePayrollCommand(
         `SalesReceipt ${salesReceipt.getEmployeeId()} ${salesReceipt.getDate()} ${salesReceipt.getAmount()}`
     );
 });
-
 When("I execute an incomplete SalesReceipt command on {string}", async (name: string) => {
     const salesReceipt = store.salesReceipts.get(name);
     await executePayrollCommand(`SalesReceipt ${salesReceipt.getEmployeeId()} ${salesReceipt.getDate()}`);
+});
+When("I execute the ServiceCharge command on {string}", async (name: string) => {
+    const serviceCharge = store.serviceCharges.get(name);
+    await executePayrollCommand(`ServiceCharge ${serviceCharge.getMemberId()} ${serviceCharge.getAmount()}`);
+});
+When("I execute an incomplete ServiceCharge command on {string}", async (name: string) => {
+    const serviceCharge = store.serviceCharges.get(name);
+    await executePayrollCommand(`ServiceCharge ${serviceCharge.getMemberId()}`);
 });

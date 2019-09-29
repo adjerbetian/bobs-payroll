@@ -23,11 +23,36 @@ Given("a(n) {string} employee {string}", async (type: string, name: string) => {
         throw new Error("invalid type");
     }
 });
+Given("an employee {string}", async (name: string) => {
+    store.employees.set(name, await seeders.seedHourlyEmployee({ name: name }));
+});
 Given("a new time card {string} for {string}", async (timeCardName: string, employeeName: string) => {
     const employee = store.employees.get(employeeName);
-    store.timeCards.set(timeCardName, generators.generateTimeCard({ employeeId: employee.getId() }));
+
+    const timeCard = generators.generateTimeCard({ employeeId: employee.getId() });
+    store.timeCards.set(timeCardName, timeCard);
 });
 Given("a new sales receipt {string} for {string}", async (salesReceiptName: string, employeeName: string) => {
     const employee = store.employees.get(employeeName);
-    store.salesReceipts.set(salesReceiptName, generators.generateSalesReceipt({ employeeId: employee.getId() }));
+
+    const salesReceipt = generators.generateSalesReceipt({ employeeId: employee.getId() });
+    store.salesReceipts.set(salesReceiptName, salesReceipt);
+});
+Given("a union membership for {string}", async (employeeName: string) => {
+    const employee = store.employees.get(employeeName);
+
+    const unionMember = await seeders.seedUnionMember({ employeeId: employee.getId() });
+    store.unionMembers.set(employeeName, unionMember);
+});
+Given("a new union membership for {string}", (employeeName: string) => {
+    const employee = store.employees.get(employeeName);
+
+    const unionMember = generators.generateUnionMember({ employeeId: employee.getId() });
+    store.unionMembers.set(employeeName, unionMember);
+});
+Given("a new service charge {string} for {string}", async (serviceChargeName: string, employeeName: string) => {
+    const unionMember = store.unionMembers.get(employeeName);
+
+    const serviceCharge = generators.generateServiceCharge({ memberId: unionMember.getMemberId() });
+    store.serviceCharges.set(serviceChargeName, serviceCharge);
 });

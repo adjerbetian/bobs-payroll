@@ -36,7 +36,12 @@ export function buildTimeCard({
             return Math.max(hours - REGULAR_HOURS_PER_DAY, 0);
         },
         toJSON() {
-            return { employeeId, date, hours };
+            return {
+                entity: "TimeCard",
+                employeeId,
+                date,
+                hours
+            };
         }
     });
 }

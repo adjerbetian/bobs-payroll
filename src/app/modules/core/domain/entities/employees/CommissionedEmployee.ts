@@ -43,6 +43,7 @@ export function buildCommissionedEmployee({
         },
         toJSON() {
             return {
+                entity: "CommissionedEmployee",
                 id,
                 name,
                 address,

@@ -15,6 +15,7 @@ export function buildServiceCharge({ memberId, amount }: { memberId: string; amo
         },
         toJSON() {
             return {
+                entity: "ServiceCharge",
                 memberId,
                 amount
             };

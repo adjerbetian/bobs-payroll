@@ -27,6 +27,7 @@ export function buildSalesReceipt({
         },
         toJSON() {
             return {
+                entity: "SalesReceipt",
                 employeeId,
                 date,
                 amount

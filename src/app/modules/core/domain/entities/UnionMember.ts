@@ -26,7 +26,12 @@ export function buildUnionMember({
             return rate;
         },
         toJSON() {
-            return { employeeId, memberId, rate };
+            return {
+                entity: "UnionMember",
+                employeeId,
+                memberId,
+                rate
+            };
         }
     });
 }

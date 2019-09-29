@@ -33,6 +33,7 @@ export function buildPayment({
         },
         toJSON() {
             return {
+                entity: "Payment",
                 employeeId,
                 amount,
                 date,

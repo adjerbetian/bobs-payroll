@@ -32,6 +32,7 @@ export function buildSalariedEmployee({
         },
         toJSON() {
             return {
+                entity: "SalariedEmployee",
                 id,
                 name,
                 address,

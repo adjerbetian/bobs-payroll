@@ -1,14 +1,16 @@
 import { Before } from "cucumber";
-import { Employee, SalesReceipt, TimeCard } from "../../app";
+import { Employee, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../../app";
 import { buildNonNullMap, NonNullMap } from "./NonNullMap";
 
 export const store = buildVariablesStore();
 Before(() => store.reset());
 
 interface Store {
-    employees: NonNullMap<Employee>;
-    timeCards: NonNullMap<TimeCard>;
-    salesReceipts: NonNullMap<SalesReceipt>;
+    readonly employees: NonNullMap<Employee>;
+    readonly timeCards: NonNullMap<TimeCard>;
+    readonly salesReceipts: NonNullMap<SalesReceipt>;
+    readonly unionMembers: NonNullMap<UnionMember>;
+    readonly serviceCharges: NonNullMap<ServiceCharge>;
     reset(): void;
 }
 
@@ -16,6 +18,8 @@ function buildVariablesStore(): Store {
     const employeeMap = buildNonNullMap<Employee>();
     const timeCardMap = buildNonNullMap<TimeCard>();
     const salesReceiptMap = buildNonNullMap<SalesReceipt>();
+    const unionMemberMap = buildNonNullMap<UnionMember>();
+    const serviceChargeMap = buildNonNullMap<ServiceCharge>();
 
     return {
         get employees() {
@@ -27,8 +31,18 @@ function buildVariablesStore(): Store {
         get salesReceipts() {
             return salesReceiptMap;
         },
+        get unionMembers() {
+            return unionMemberMap;
+        },
+        get serviceCharges() {
+            return serviceChargeMap;
+        },
         reset() {
             employeeMap.reset();
+            timeCardMap.reset();
+            salesReceiptMap.reset();
+            unionMemberMap.reset();
+            serviceChargeMap.reset();
         }
     };
 }

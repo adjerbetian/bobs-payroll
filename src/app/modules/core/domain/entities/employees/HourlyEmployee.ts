@@ -46,6 +46,7 @@ export function buildHourlyEmployee({
         },
         toJSON() {
             return {
+                entity: "HourlyEmployee",
                 id,
                 name,
                 address,
