@@ -10,7 +10,7 @@ module.exports = {
         mocha: true,
         node: true
     },
-    plugins: ["import", "@typescript-eslint"],
+    plugins: ["import", "@typescript-eslint", "chai-friendly"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
@@ -27,9 +27,12 @@ module.exports = {
     },
     rules: {
         // eslint
-        "no-unused-expressions": "error",
         "no-unused-vars": ["error", { args: "after-used" }],
         "no-shadow": "error",
+
+        // chai
+        "no-unused-expressions": "off",
+        "chai-friendly/no-unused-expressions": "error",
 
         // import
         "import/no-internal-modules": "error",
@@ -62,13 +65,5 @@ module.exports = {
         "@typescript-eslint/promise-function-async": "error",
         "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/no-explicit-any": "off"
-    },
-    overrides: [
-        {
-            files: ["*.spec.ts", "*.unit.ts", "*.e2e.ts"],
-            rules: {
-                "no-unused-expressions": "off"
-            }
-        }
-    ]
+    }
 };

@@ -11,7 +11,8 @@
         "test:unit": "mocha ./src/**/*.unit.ts",
         "test:unit:watch": "npm run test:unit -- --watch",
         "test:integration": "mocha ./**/*.spec.ts",
-        "test:e2e": "mocha ./src/**/*.e2e.ts --timeout 10000"
+        "test:e2e": "mocha ./src/**/*.e2e.ts --timeout 10000",
+        "test:cucumber": "cucumber-js"
     },
     "_moduleAliases": {
         "@test": "src/test"
@@ -25,6 +26,7 @@
     "devDependencies": {
         "@types/chai": "^4.2.3",
         "@types/chai-as-promised": "^7.1.2",
+        "@types/cucumber": "^4.0.7",
         "@types/lodash": "^4.14.141",
         "@types/mocha": "^5.2.7",
         "@types/mongodb": "^3.3.3",
@@ -38,6 +40,7 @@
         "cucumber": "^5.1.0",
         "eslint": "^6.5.0",
         "eslint-config-prettier": "^6.3.0",
+        "eslint-plugin-chai-friendly": "^0.4.1",
         "eslint-plugin-import": "^2.18.2",
         "mocha": "^6.2.0",
         "nyc": "^14.1.1",
