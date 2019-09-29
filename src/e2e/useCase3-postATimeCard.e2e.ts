@@ -1,6 +1,10 @@
 import { generators, seeders, executePayrollCommand, expect } from "@test/e2e";
 import { dbTimeCards, TimeCard } from "../app";
 
+// --------------------------
+// DEPRECATED
+// --------------------------
+
 describe("Use Case 3: Post a Time Card", () => {
     it("should insert the time card in the db", async () => {
         const employee = await seeders.seedHourlyEmployee();

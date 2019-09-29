@@ -35,3 +35,8 @@ When("I execute the TimeCard command on {string}", async function(name: string) 
     const timeCard = store.timeCards.get(name);
     await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()} ${timeCard.getHours()}`);
 });
+
+When("I execute an incomplete TimeCard command on {string}", async function(name: string) {
+    const timeCard = store.timeCards.get(name);
+    await executePayrollCommand(`TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()}`);
+});
