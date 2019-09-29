@@ -1,3 +1,4 @@
+@UseCase3 @TimeCard
 Feature: Use Case 3: Post a Time Card
 
   Scenario: it should insert the time card in the db

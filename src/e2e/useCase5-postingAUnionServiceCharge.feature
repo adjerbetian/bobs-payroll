@@ -1,3 +1,4 @@
+@UseCase5 @ServiceCharge
 Feature: Use Case 5: Posting a Union Service Charge
 
   Scenario: it should insert the service charge in the db

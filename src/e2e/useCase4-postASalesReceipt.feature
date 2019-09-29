@@ -1,3 +1,4 @@
+@UseCase4 @SalesReceipt
 Feature: Use Case 4: Post a Sales Receipt
 
   Scenario: it should insert the sales receipt in the db

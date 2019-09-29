@@ -1,3 +1,4 @@
+@UseCase2 @DelEmp
 Feature: Use Case 2: Deleting an Employee
 
   Scenario: it should delete an existing employee from the database

@@ -1,3 +1,4 @@
+@UseCase1 @AddEmp
 Feature: Use Case 1: Add New Employee
 
   Scenario: it should add an hourly employee
