@@ -7,7 +7,7 @@ Feature: Use Case 3: Post a Time Card
     Then "Bob" should have the time card "TC"
 
   Scenario: it should do nothing when the employee in not an hourly employee
-    Given an "salaried" employee "Bob"
+    Given a "salaried" employee "Bob"
     And a new time card "TC" for "Bob"
     When I execute the TimeCard command on "TC"
     Then "Bob" should not have the time card "TC"
