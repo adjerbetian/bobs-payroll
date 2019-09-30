@@ -14,4 +14,4 @@ Feature: Use Case 6: Changing Employee Details - Basic infos
   Scenario: it should do nothing when the employee does not exist
     Given a new employee Bob
     When I execute the ChgEmp command on "Bob" to change the "name" to "James"
-    Then "Bob" should still not exist in the employee DB
+    Then Bob should not exist in the employee DB

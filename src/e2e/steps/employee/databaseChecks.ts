@@ -10,20 +10,20 @@ import {
 } from "../../../app";
 import { store } from "../../utils";
 
-Then("{string} should fully exist in the employee DB", async (name: string) => {
-    const employee = store.employees.get(name);
-    const dbEmployee = await fetchEmployeeByName(name);
-    expect(dbEmployee).entity.to.equal(employee);
-});
-Then("{string} should (still )not exist in the employee DB", async (name: string) => {
-    const employee = store.employees.get(name);
-    const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
-    expect(employeeExistsInDb).to.be.false;
-});
-Then("{string} should (still )exist in the employee DB", async (name: string) => {
+Then(/(\w+) should( fully)? exist in the employee DB/, async (name: string, isFullComparison: string | undefined) => {
     const employee = store.employees.get(name);
     const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
     expect(employeeExistsInDb).to.be.true;
+
+    if (isFullComparison) {
+        const dbEmployee = await fetchEmployeeByName(name);
+        expect(dbEmployee).entity.to.equal(employee);
+    }
+});
+Then(/(\w+) should not exist in the employee DB/, async (name: string) => {
+    const employee = store.employees.get(name);
+    const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
+    expect(employeeExistsInDb).to.be.false;
 });
 // prettier-ignore
 Then("{string} should have its {string} set to {string}", async (name: string, field: string, value: string) => {
