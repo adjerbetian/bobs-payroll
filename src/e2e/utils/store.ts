@@ -1,9 +1,7 @@
-import { Before } from "cucumber";
 import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../../app";
 import { buildNonNullMap, NonNullMap } from "./NonNullMap";
 
 export const store = buildVariablesStore();
-Before(() => store.reset());
 
 interface Store {
     readonly employees: NonNullMap<Employee>;

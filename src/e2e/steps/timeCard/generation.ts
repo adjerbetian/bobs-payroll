@@ -1,27 +1,31 @@
 import { generators, seeders } from "@test/generators";
 import { Given } from "cucumber";
-import { dates, store } from "../../utils";
+import { TimeCard } from "../../../app";
+import { dates, store, toFloat } from "../../utils";
 
-Given("a new time card {string} for {string}", async (timeCardName: string, employeeName: string) => {
-    const employee = store.employees.get(employeeName);
-
-    const timeCard = generators.generateTimeCard({ employeeId: employee.getId() });
-    store.timeCards.set(timeCardName, timeCard);
-});
-Given("a time card {string} for {string}", async (timeCardName: string, employeeName: string) => {
-    const employee = store.employees.get(employeeName);
-
-    const timeCard = await seeders.seedTimeCard({ employeeId: employee.getId() });
-    store.timeCards.set(timeCardName, timeCard);
-});
 Given(
-    "a time card for {string} of {float} hours on {string}",
-    async (employeeName: string, hours: number, day: string) => {
-        const employee = store.employees.get(employeeName);
-        await seeders.seedTimeCard({
-            employeeId: employee.getId(),
-            hours: hours,
-            date: dates.get(day)
-        });
+    /a( new)? time card(?: (\w+)?)? for (\w+)(?: of (\d+\.\d+) hours on (.+))?/,
+    async (
+        isNew: string | undefined,
+        timeCardName: string | undefined,
+        employeeName: string,
+        hours: string | undefined,
+        day: string | undefined
+    ) => {
+        const timeCard = await generateOrSeed();
+        if (timeCardName) {
+            store.timeCards.set(timeCardName, timeCard);
+        }
+
+        async function generateOrSeed(): Promise<TimeCard> {
+            const employee = store.employees.get(employeeName);
+            const partialTimeCard = {
+                employeeId: employee.getId(),
+                hours: toFloat(hours),
+                date: day && dates.get(day)
+            };
+            if (isNew) return generators.generateTimeCard(partialTimeCard);
+            else return seeders.seedTimeCard(partialTimeCard);
+        }
     }
 );

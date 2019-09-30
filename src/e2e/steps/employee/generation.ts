@@ -1,40 +1,55 @@
 import { generators, seeders } from "@test/generators";
 import { Given } from "cucumber";
-import { Employee } from "../../../app";
-import { store } from "../../utils";
+import { CommissionedEmployee, HourlyEmployee, SalariedEmployee } from "../../../app";
+import { store, toFloat } from "../../utils";
 
-Given("a new {string} employee {string}", (type: string, name: string) => {
-    store.employees.set(name, generateEmployee());
+Given(
+    /a(?:n)?( new)?(?: hourly)? employee (\w+)(?: with a hourly rate of (\d+.\d+))?/,
+    async (isNew: string | undefined, name: string, hourlyRate: string | undefined) => {
+        const employee = await generateOrSeed();
+        store.employees.set(name, employee);
 
-    function generateEmployee(): Employee {
-        if (type === "hourly") return generators.generateHourlyEmployee({ name: name });
-        if (type === "salaried") return generators.generateSalariedEmployee({ name: name });
-        if (type === "commissioned") return generators.generateSalariedEmployee({ name: name });
-        throw new Error("invalid type");
+        async function generateOrSeed(): Promise<HourlyEmployee> {
+            const partialEmployee = {
+                name,
+                hourlyRate: toFloat(hourlyRate)
+            };
+            if (isNew) return generators.generateHourlyEmployee(partialEmployee);
+            else return seeders.seedHourlyEmployee(partialEmployee);
+        }
     }
-});
-Given("a(n) {string} employee {string}", async (type: string, name: string) => {
-    store.employees.set(name, await seedEmployee());
+);
+Given(
+    /a( new)? salaried employee (\w+)(?: with a salary of (\d+.\d+))?/,
+    async (isNew: string | undefined, name: string, salary: string | undefined) => {
+        const employee = await generateOrSeed();
+        store.employees.set(name, employee);
 
-    async function seedEmployee(): Promise<Employee> {
-        if (type === "hourly") return seeders.seedHourlyEmployee({ name: name });
-        if (type === "salaried") return seeders.seedSalariedEmployee({ name: name });
-        if (type === "commissioned") return seeders.seedCommissionedEmployee({ name: name });
-        throw new Error("invalid type");
+        async function generateOrSeed(): Promise<SalariedEmployee> {
+            const partialEmployee = {
+                name,
+                salary: toFloat(salary)
+            };
+            if (isNew) return generators.generateSalariedEmployee(partialEmployee);
+            else return seeders.seedSalariedEmployee(partialEmployee);
+        }
     }
-});
-Given("an(other) employee {string}", async (name: string) => {
-    store.employees.set(name, await seeders.seedHourlyEmployee({ name: name }));
-});
-Given("a new employee {string}", (name: string) => {
-    store.employees.set(name, generators.generateHourlyEmployee({ name: name }));
-});
-Given("an(other) hourly employee {string} with a hourly rate of {float}", async (name: string, hourlyRate: number) => {
-    const employee = await seeders.seedHourlyEmployee({ name: name, hourlyRate });
-    store.employees.set(name, employee);
-});
-// noinspection SpellCheckingInspection
-Given("a(nother) salaried employee {string} with a salary of {float}", async (name: string, salary: number) => {
-    const employee = await seeders.seedSalariedEmployee({ name: name, salary });
-    store.employees.set(name, employee);
-});
+);
+
+Given(
+    /a( new)? commissioned employee (\w+)(?: with a salary of (\d+.\d+))?(?: and commission rate of (\d+.\d+))?/,
+    async (isNew: string | undefined, name: string, salary: string | undefined, commissionRate: string | undefined) => {
+        const employee = await generateOrSeed();
+        store.employees.set(name, employee);
+
+        async function generateOrSeed(): Promise<CommissionedEmployee> {
+            const partialEmployee = {
+                name,
+                salary: toFloat(salary),
+                commissionRate: toFloat(commissionRate)
+            };
+            if (isNew) return generators.generateCommissionedEmployee(partialEmployee);
+            else return seeders.seedCommissionedEmployee(partialEmployee);
+        }
+    }
+);
