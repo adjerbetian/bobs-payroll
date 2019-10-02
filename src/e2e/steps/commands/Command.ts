@@ -2,6 +2,7 @@ import { executePayrollCommand } from "@test/cucumber";
 import { When } from "cucumber";
 import { EmployeeType } from "../../../app";
 import { store } from "../../utils";
+import { removeLastArg } from "./removeLastArg";
 
 When(
     /^I execute the( incomplete)? (\w+) command on (\w+)$/,
@@ -54,21 +55,5 @@ function buildCommand(commandName: string, name: string): string {
     function buildServiceChargeCommand(): string {
         const serviceCharge = store.serviceCharges.get(name);
         return `ServiceCharge ${serviceCharge.getMemberId()} ${serviceCharge.getAmount()}`;
-    }
-}
-
-function removeLastArg(command: string): string {
-    const parts = command.split(`"`);
-    if (parts[parts.length - 1]) {
-        return command
-            .split(" ")
-            .slice(0, -1)
-            .join(" ");
-    } else {
-        return parts
-            .slice(0, -1)
-            .slice(0, -1)
-            .join(`"`)
-            .trim();
     }
 }
