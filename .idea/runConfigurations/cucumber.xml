@@ -1,9 +1,12 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="cucumber" type="cucumber.js" factoryName="Cucumber.js">
-    <option name="myFilePath" value="$PROJECT_DIR$/src/e2e" />
-    <option name="myNameFilter" value="" />
-    <option name="cucumberJsArguments" value="--require-module ts-node/register --require 'e2e/{setup,steps}/**/*.ts' --require-module module-alias/register" />
-    <option name="workingDirectory" value="$PROJECT_DIR$" />
+  <configuration default="false" name="cucumber" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="test:cucumber" />
+    </scripts>
+    <node-interpreter value="project" />
+    <envs />
     <method v="2" />
   </configuration>
 </component>

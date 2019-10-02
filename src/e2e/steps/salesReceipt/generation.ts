@@ -1,16 +1,20 @@
 import { generators, seeders } from "@test/generators";
 import { Given } from "cucumber";
+import { SalesReceipt } from "../../../app";
 import { store } from "../../utils";
 
-Given("a new sales receipt {string} for {string}", async (salesReceiptName: string, employeeName: string) => {
-    const employee = store.employees.get(employeeName);
+Given(
+    /a( new) sales receipt (\w+) for (\w+)/,
+    async (isNew: string | undefined, salesReceiptName: string, employeeName: string) => {
+        const salesReceipt = await generateOrSeed();
+        store.salesReceipts.set(salesReceiptName, salesReceipt);
 
-    const salesReceipt = generators.generateSalesReceipt({ employeeId: employee.getId() });
-    store.salesReceipts.set(salesReceiptName, salesReceipt);
-});
-Given("a sales receipt {string} for {string}", async (salesReceiptName: string, employeeName: string) => {
-    const employee = store.employees.get(employeeName);
+        async function generateOrSeed(): Promise<SalesReceipt> {
+            const employee = store.employees.get(employeeName);
+            const partialSalesReceipt = { employeeId: employee.getId() };
 
-    const salesReceipt = await seeders.seedSalesReceipt({ employeeId: employee.getId() });
-    store.salesReceipts.set(salesReceiptName, salesReceipt);
-});
+            if (isNew) return generators.generateSalesReceipt(partialSalesReceipt);
+            else return seeders.seedSalesReceipt(partialSalesReceipt);
+        }
+    }
+);

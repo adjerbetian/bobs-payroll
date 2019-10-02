@@ -18,5 +18,5 @@ Feature: Use Case 1: Add New Employee
 
   Scenario: it should do nothing when the transaction is incorrect
     Given a new hourly employee Mary
-    When I execute an incomplete AddEmp command on Mary
+    When I execute the incomplete AddEmp command on Mary
     Then Mary should not exist in the employee DB
