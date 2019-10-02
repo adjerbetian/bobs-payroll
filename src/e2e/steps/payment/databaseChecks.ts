@@ -4,26 +4,36 @@ import { dbPayments } from "../../../app";
 import { dates, store } from "../../utils";
 
 Then(
-    "{string} should have been paid on (the ){string} of an amount of {string}",
-    async (name: string, day: string, amountExpression: string) => {
-        const employee = store.employees.get(name);
-        const date = dates.get(day);
-        const amount = eval(amountExpression);
+    /(\w+) should (not )?have been paid on (?:the )?([^"]+)(?: of an amount of "(.+)")?$/,
+    async (name: string, isNegated: string | undefined, day: string, amountExpression: string | undefined) => {
+        await checkWasPaid();
+        await checkPaymentAmount();
 
-        const payment = await dbPayments.fetch({
-            employeeId: employee.getId(),
-            date
-        });
-        expect(payment.getAmount()).to.equal(amount);
+        async function checkWasPaid(): Promise<void> {
+            const wasPaid = await dbPayments.exists({
+                employeeId: getEmployeeId(),
+                date: getDate()
+            });
+            if (isNegated) expect(wasPaid).to.be.false;
+            else expect(wasPaid).to.be.true;
+        }
+        async function checkPaymentAmount(): Promise<void> {
+            if (!amountExpression) return;
+
+            const amount = eval(amountExpression);
+            const payment = await dbPayments.fetch({
+                employeeId: getEmployeeId(),
+                date: getDate()
+            });
+            expect(payment.getAmount()).to.equal(amount);
+        }
+
+        function getEmployeeId(): number {
+            const employee = store.employees.get(name);
+            return employee.getId();
+        }
+        function getDate(): string {
+            return dates.get(day);
+        }
     }
 );
-Then("{string} should not have been paid on (the ){string}", async (name: string, day: string) => {
-    const employee = store.employees.get(name);
-    const date = dates.get(day);
-
-    const wasPaid = await dbPayments.exists({
-        employeeId: employee.getId(),
-        date
-    });
-    expect(wasPaid).to.be.false;
-});
