@@ -4,7 +4,7 @@ import { dbSalesReceipts } from "../../../app";
 import { store } from "../../utils";
 
 Then(
-    /(\w+) should( not)? have the sales receipt (\w+)/,
+    /^(\w+) should( not)? have the sales receipt (\w+)$/,
     async (employeeName: string, isNegated: string | undefined, salesReceiptName: string) => {
         const employee = store.employees.get(employeeName);
         const salesReceipt = store.salesReceipts.get(salesReceiptName);

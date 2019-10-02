@@ -10,7 +10,7 @@ import {
 } from "../../../app";
 import { store } from "../../utils";
 
-Then(/(\w+) should( fully)? exist in the employee DB/, async (name: string, isFullComparison: string | undefined) => {
+Then(/^(\w+) should( fully)? exist in the employee DB$/, async (name: string, isFullComparison: string | undefined) => {
     const employee = store.employees.get(name);
     const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
     expect(employeeExistsInDb).to.be.true;
@@ -20,7 +20,7 @@ Then(/(\w+) should( fully)? exist in the employee DB/, async (name: string, isFu
         expect(dbEmployee).entity.to.equal(employee);
     }
 });
-Then(/(\w+) should not exist in the employee DB/, async (name: string) => {
+Then(/^(\w+) should not exist in the employee DB$/, async (name: string) => {
     const employee = store.employees.get(name);
     const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
     expect(employeeExistsInDb).to.be.false;

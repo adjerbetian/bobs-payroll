@@ -4,7 +4,7 @@ import { SalesReceipt } from "../../../app";
 import { store } from "../../utils";
 
 Given(
-    /a( new) sales receipt (\w+) for (\w+)/,
+    /^a( new) sales receipt (\w+) for (\w+)$/,
     async (isNew: string | undefined, salesReceiptName: string, employeeName: string) => {
         const salesReceipt = await generateOrSeed();
         store.salesReceipts.set(salesReceiptName, salesReceipt);

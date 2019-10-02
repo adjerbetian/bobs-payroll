@@ -19,6 +19,7 @@ function buildCommand(commandName: string, name: string): string {
     if (commandName === "DelEmp") return buildDelEmpCommand();
     if (commandName === "SalesReceipt") return buildSalesReceiptCommand();
     if (commandName === "TimeCard") return buildTimeCardCommand();
+    if (commandName === "ServiceCharge") return buildServiceChargeCommand();
     throw new Error(`unknown command ${commandName}`);
 
     function buildAddEmpCommand(): string {
@@ -48,6 +49,11 @@ function buildCommand(commandName: string, name: string): string {
     function buildTimeCardCommand(): string {
         const timeCard = store.timeCards.get(name);
         return `TimeCard ${timeCard.getEmployeeId()} ${timeCard.getDate()} ${timeCard.getHours()}`;
+    }
+
+    function buildServiceChargeCommand(): string {
+        const serviceCharge = store.serviceCharges.get(name);
+        return `ServiceCharge ${serviceCharge.getMemberId()} ${serviceCharge.getAmount()}`;
     }
 }
 

@@ -1,16 +1,20 @@
 import { generators, seeders } from "@test/generators";
 import { Given } from "cucumber";
+import { ServiceCharge } from "../../../app";
 import { store } from "../../utils";
 
-Given("a new service charge {string} for {string}", async (serviceChargeName: string, membershipName: string) => {
-    const unionMember = store.unionMembers.get(membershipName);
+Given(
+    /^a( new)? service charge (\w+) for (\w+)$/,
+    async (isNew: string | undefined, serviceChargeName: string, membershipName: string) => {
+        const serviceCharge = await seedOrGenerate();
+        store.serviceCharges.set(serviceChargeName, serviceCharge);
 
-    const serviceCharge = generators.generateServiceCharge({ memberId: unionMember.getMemberId() });
-    store.serviceCharges.set(serviceChargeName, serviceCharge);
-});
-Given("a service charge {string} for {string}", async (serviceChargeName: string, membershipName: string) => {
-    const unionMember = store.unionMembers.get(membershipName);
+        async function seedOrGenerate(): Promise<ServiceCharge> {
+            const unionMember = store.unionMembers.get(membershipName);
+            const partialServiceCharge = { memberId: unionMember.getMemberId() };
 
-    const serviceCharge = await seeders.seedServiceCharge({ memberId: unionMember.getMemberId() });
-    store.serviceCharges.set(serviceChargeName, serviceCharge);
-});
+            if (isNew) return generators.generateServiceCharge(partialServiceCharge);
+            else return seeders.seedServiceCharge({ memberId: unionMember.getMemberId() });
+        }
+    }
+);
