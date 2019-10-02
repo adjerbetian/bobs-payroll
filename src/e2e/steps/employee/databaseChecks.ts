@@ -26,7 +26,7 @@ Then(/^(\w+) should not exist in the employee DB$/, async (name: string) => {
     expect(employeeExistsInDb).to.be.false;
 });
 // prettier-ignore
-Then("{string} should have its {string} set to {string}", async (name: string, field: string, value: string) => {
+Then(/^(\w+) should have its (.+) set to (?:")?([^"]+)(?:")?$/, async (name: string, field: string, value: string) => {
     const employee = await fetchEmployeeByName(name);
     if (field === "name") return expect(employee.getName()).to.equal(value);
     if (field === "address") return expect(employee.getAddress()).to.equal(value);

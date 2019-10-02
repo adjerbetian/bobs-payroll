@@ -3,7 +3,7 @@ import { Then } from "cucumber";
 import { dbUnionMembers } from "../../../app";
 import { store } from "../../utils";
 
-Then("{string} should have the union membership {string}", async (name: string, membershipName: string) => {
+Then(/^(\w+) should have the union membership (\w+)$/, async (name: string, membershipName: string) => {
     const employee = store.employees.get(name);
     const unionMember = store.unionMembers.get(membershipName);
 
