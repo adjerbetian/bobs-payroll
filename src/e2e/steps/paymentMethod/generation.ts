@@ -4,31 +4,29 @@ import { PaymentMethod } from "../../../app";
 import { store } from "../../utils";
 
 Given(
-    "a {string} payment method {string} for {string}",
-    async (type: string, paymentMethodName: string, employeeName: string) => {
-        const employee = store.employees.get(employeeName);
-        const paymentMethod = await seedPaymentMethod();
+    /^a( new)? (hold|direct|mail) payment method (\w+) for (\w+)$/,
+    async (isNew: string | undefined, type: string, paymentMethodName: string, employeeName: string) => {
+        const paymentMethod = await seedOrGenerate();
         store.paymentMethods.set(paymentMethodName, paymentMethod);
 
-        async function seedPaymentMethod(): Promise<PaymentMethod> {
-            if (type === "Hold") return seeders.seedHoldPaymentMethod({ employeeId: employee.getId() });
-            if (type === "Direct") return seeders.seedDirectPaymentMethod({ employeeId: employee.getId() });
-            if (type === "Mail") return seeders.seedMailPaymentMethod({ employeeId: employee.getId() });
+        async function seedOrGenerate(): Promise<PaymentMethod> {
+            const employee = store.employees.get(employeeName);
+            const partialPaymentMethod = { employeeId: employee.getId() };
+
+            if (isNew) return generatePaymentMethod(partialPaymentMethod);
+            else return seedPaymentMethod(partialPaymentMethod);
+        }
+
+        async function seedPaymentMethod(args: { employeeId: number }): Promise<PaymentMethod> {
+            if (type === "hold") return seeders.seedHoldPaymentMethod(args);
+            if (type === "direct") return seeders.seedDirectPaymentMethod(args);
+            if (type === "mail") return seeders.seedMailPaymentMethod(args);
             throw new Error("invalid type");
         }
-    }
-);
-Given(
-    "a new {string} payment method {string} for {string}",
-    async (type: string, paymentMethodName: string, employeeName: string) => {
-        const employee = store.employees.get(employeeName);
-        const paymentMethod = buildPaymentMethod();
-        store.paymentMethods.set(paymentMethodName, paymentMethod);
-
-        function buildPaymentMethod(): PaymentMethod {
-            if (type === "Hold") return generators.generateHoldPaymentMethod({ employeeId: employee.getId() });
-            if (type === "Direct") return generators.generateDirectPaymentMethod({ employeeId: employee.getId() });
-            if (type === "Mail") return generators.generateMailPaymentMethod({ employeeId: employee.getId() });
+        function generatePaymentMethod(args: { employeeId: number }): PaymentMethod {
+            if (type === "hold") return generators.generateHoldPaymentMethod(args);
+            if (type === "direct") return generators.generateDirectPaymentMethod(args);
+            if (type === "mail") return generators.generateMailPaymentMethod(args);
             throw new Error("invalid type");
         }
     }
