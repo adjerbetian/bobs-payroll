@@ -46,28 +46,28 @@ When(
     }
 );
 When(
-    "I execute the ChgEmp command on {} to change the type to hourly with a hourly rate of {float}",
+    /^I execute the ChgEmp command on (\w+) to change the type to hourly with a hourly rate of (\d+\.\d+)/,
     async (name: string, hourlyRate: number) => {
         const employee = store.employees.get(name);
         return executePayrollCommand(`ChgEmp ${employee.getId()} Hourly ${hourlyRate}`);
     }
 );
 When(
-    "I execute the ChgEmp command on {} to change the type to salaried with a salary of {float}",
+    /^I execute the ChgEmp command on (\w+) to change the type to salaried with a salary of (\d+\.\d+)$/,
     async (name: string, salary: number) => {
         const employee = store.employees.get(name);
         return executePayrollCommand(`ChgEmp ${employee.getId()} Salaried ${salary}`);
     }
 );
 When(
-    "I execute the ChgEmp command on {} to change the type to commissioned with a salary of {float} and a commission rate of {float}",
+    /^I execute the ChgEmp command on (\w+) to change the type to commissioned with a salary of (\d+\.\d+) and a commission rate of (\d+\.\d+)$/,
     async (name: string, salary: number, commissionRate: number) => {
         const employee = store.employees.get(name);
         return executePayrollCommand(`ChgEmp ${employee.getId()} Commissioned ${salary} ${commissionRate}`);
     }
 );
 When(
-    "I execute the ChgEmp command on {} to add the membership {string}",
+    /^I execute the ChgEmp command on (\w+) to add the membership (\w+)$/,
     async (name: string, membershipName: string) => {
         const employee = store.employees.get(name);
         const unionMember = store.unionMembers.get(membershipName);
@@ -77,14 +77,14 @@ When(
     }
 );
 When(
-    "I execute an incomplete ChgEmp command on {} to add the membership {string}",
+    /^I execute an incomplete ChgEmp command on (\w+) to add the membership (\w+)$/,
     async (name: string, membershipName: string) => {
         const employee = store.employees.get(name);
         const unionMember = store.unionMembers.get(membershipName);
         return executePayrollCommand(`ChgEmp ${employee.getId()} Member ${unionMember.getMemberId()} Dues`);
     }
 );
-When("I execute the ChgEmp command on {} to remove from the union", async (name: string) => {
+When(/^I execute the ChgEmp command on (\w+) to remove from the union$/, async (name: string) => {
     const employee = store.employees.get(name);
     return executePayrollCommand(`ChgEmp ${employee.getId()} NoMember`);
 });

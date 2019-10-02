@@ -10,7 +10,7 @@ Then(/^(\w+) should have the union membership (\w+)$/, async (name: string, memb
     const unionMemberInDB = await dbUnionMembers.fetch({ employeeId: employee.getId() });
     expect(unionMemberInDB).entity.to.equal(unionMember);
 });
-Then("the union membership {string} should not exist in db", async (name: string) => {
+Then(/^the union membership (\w+) should not exist in db$/, async (name: string) => {
     const unionMember = store.unionMembers.get(name);
 
     const unionMemberExistsInDB = await dbUnionMembers.exists({

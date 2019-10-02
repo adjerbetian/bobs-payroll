@@ -34,9 +34,9 @@ Then(/^(\w+) should have its (.+) set to (?:")?([^"]+)(?:")?$/, async (name: str
     if (field === "salary") return expect((employee as SalariedEmployee | CommissionedEmployee).getSalary()).to.equal(parseFloat(value));
     if (field === "commission rate") return expect((employee as CommissionedEmployee).getCommissionRate()).to.equal(parseFloat(value));
 
-    throw new Error("invalid field");
+    throw new Error(`invalid field "${field}"`);
 });
-Then("{string} should be of type {string}", async (name: string, type: string) => {
+Then(/(\w+) should be of type (hourly|salaried|commissioned)/, async (name: string, type: string) => {
     const employee = await fetchEmployeeByName(name);
     return expect(employee.getType()).to.equal(buildExpectedType());
 
