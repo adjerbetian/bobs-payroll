@@ -6,13 +6,20 @@
     "description": "Agile Software Development - Principles, Pattern, and Practices - Case Study 1 - The Payroll System",
     "main": "src\\index.ts",
     "scripts": {
+        "run": "ts-node --transpile-only src/main.ts",
         "build": "tsc --project tsconfig.build.json",
-        "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:cucumber",
-        "test:unit": "mocha ./src/**/*.unit.ts",
-        "test:unit:watch": "npm run test:unit -- --watch",
-        "test:integration": "mocha ./**/*.spec.ts",
-        "test:e2e": "mocha ./src/**/*.e2e.ts --timeout 10000",
-        "test:cucumber": "cucumber-js"
+        "compile": "tsc --project tsconfig.json",
+        "test": "npm run compile && npm run test:fast:unit && npm run test:fast:integration && npm run test:fast:e2e && npm run test:fast:cucumber",
+        "test:unit": "npm run compile && mocha ./src/**/*.unit.ts",
+        "test:unit:watch": "npm run compile && npm run test:unit -- --watch",
+        "test:integration": "npm run compile && mocha ./**/*.spec.ts",
+        "test:e2e": "npm run compile && mocha ./src/**/*.e2e.ts --timeout 10000",
+        "test:cucumber": "npm run compile && cucumber-js",
+        "test:fast:unit": "mocha ./src/**/*.unit.ts",
+        "test:fast:unit:watch": "npm run test:unit -- --watch",
+        "test:fast:integration": "mocha ./**/*.spec.ts",
+        "test:fast:e2e": "mocha ./src/**/*.e2e.ts --timeout 10000",
+        "test:fast:cucumber": "cucumber-js"
     },
     "_moduleAliases": {
         "@test": "src/test"
