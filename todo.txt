@@ -1,4 +1,5 @@
 # Simple
+Todo: rename actions to use cases
 Todo: rename UnionMember to UnionMembership
 Todo: move stripQuotationMarks to core/controllers/utils
 Todo: add a @mongo alias (and maybe router too)
