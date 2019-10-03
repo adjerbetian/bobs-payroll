@@ -4,7 +4,7 @@ import { TimeCard } from "../../../app";
 import { dates, store, toFloat } from "../../utils";
 
 Given(
-    /^a( new)? time card(?: (\w+)?)? for (\w+)(?: of (\d+\.?\d*) hours on (.+))?$/,
+    /^a( new)? time card(?: (\w+)?)? for (\w+)(?: of (\d+\.?\d*) hours on(?: the)? (.+))?$/,
     async (
         isNew: string | undefined,
         timeCardName: string | undefined,

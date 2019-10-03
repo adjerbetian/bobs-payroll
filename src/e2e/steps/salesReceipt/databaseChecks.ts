@@ -3,6 +3,7 @@ import { Then } from "cucumber";
 import { dbSalesReceipts } from "../../../app";
 import { store } from "../../utils";
 
+// noinspection DuplicatedCode
 Then(
     /^(\w+) should( not)? have the sales receipt (\w+)$/,
     async (employeeName: string, isNegated: string | undefined, salesReceiptName: string) => {

@@ -4,10 +4,12 @@ import { PaymentMethod } from "../../../app";
 import { store } from "../../utils";
 
 Given(
-    /^a( new)? (hold|direct|mail) payment method (\w+) for (\w+)$/,
-    async (isNew: string | undefined, type: string, paymentMethodName: string, employeeName: string) => {
+    /^a( new)? (hold|direct|mail) payment method(?: (\w+))? for (\w+)$/,
+    async (isNew: string | undefined, type: string, paymentMethodName: string | undefined, employeeName: string) => {
         const paymentMethod = await seedOrGenerate();
-        store.paymentMethods.set(paymentMethodName, paymentMethod);
+        if (paymentMethodName) {
+            store.paymentMethods.set(paymentMethodName, paymentMethod);
+        }
 
         async function seedOrGenerate(): Promise<PaymentMethod> {
             const employee = store.employees.get(employeeName);

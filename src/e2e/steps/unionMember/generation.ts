@@ -1,23 +1,27 @@
 import { generators, seeders } from "@test/generators";
 import { Given } from "cucumber";
 import { UnionMember } from "../../../app";
-import { store } from "../../utils";
+import { store, toFloat } from "../../utils";
 
 Given(
-    /a( new)? union membership (\w+) for (\w+)(?: with the same member id as (\w+))?/,
+    /^a( new)? union membership(?: (\w+))? for (\w+)(?: with the member id (\w+))?(?: (?:with|and) a rate of (\d+\.?\d*))?$/,
     async (
         isNew: string | undefined,
-        newMembershipName: string,
+        membershipName: string | undefined,
         employeeName: string,
-        oldMembershipName: string | undefined
+        memberId: string | undefined,
+        rate: string | undefined
     ) => {
         const unionMember = await seedOrGenerate();
-        store.unionMembers.set(newMembershipName, unionMember);
+        if (membershipName) {
+            store.unionMembers.set(membershipName, unionMember);
+        }
 
         async function seedOrGenerate(): Promise<UnionMember> {
             const partialUnionMember = {
                 employeeId: getEmployeeId(),
-                memberId: getMemberId()
+                memberId: memberId,
+                rate: toFloat(rate)
             };
 
             if (isNew) return generators.generateUnionMember(partialUnionMember);
@@ -26,12 +30,6 @@ Given(
         function getEmployeeId(): number {
             const employee = store.employees.get(employeeName);
             return employee.getId();
-        }
-        function getMemberId(): string | undefined {
-            if (!oldMembershipName) return;
-
-            const oldMembership = store.unionMembers.get(oldMembershipName);
-            return oldMembership.getMemberId();
         }
     }
 );

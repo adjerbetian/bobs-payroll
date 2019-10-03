@@ -17,9 +17,16 @@ export const lastFriday = isoDate(moment(friday).subtract(1, "week"));
 
 export const firstDayOfMonth = isoDate(moment().startOf("month"));
 export const secondDayOfMonth = isoDate(moment(firstDayOfMonth).add(1, "day"));
+export const thirdDayOfMonth = isoDate(moment(firstDayOfMonth).add(2, "day"));
+export const fourthDayOfMonth = isoDate(moment(firstDayOfMonth).add(3, "day"));
+export const fifthDayOfMonth = isoDate(moment(firstDayOfMonth).add(4, "day"));
 export const lastDayOfMonth = isoDate(moment().endOf("month"));
 
 export const firstDayOfLastMonth = isoDate(moment(firstDayOfMonth).subtract(1, "month"));
+export const secondDayOfLastMonth = isoDate(moment(secondDayOfMonth).subtract(1, "month"));
+export const thirdDayOfLastMonth = isoDate(moment(thirdDayOfMonth).subtract(1, "month"));
+export const fourthDayOfLastMonth = isoDate(moment(fourthDayOfMonth).subtract(1, "month"));
+export const fifthDayOfLastMonth = isoDate(moment(fifthDayOfMonth).subtract(1, "month"));
 export const endOfLastMonth = isoDate(moment(firstDayOfLastMonth).endOf("month"));
 
 export const never = isoDate(moment(0));

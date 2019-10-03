@@ -23,9 +23,9 @@ Feature: Use Case 6: Changing Employee Details - Union
 
   Scenario: A union member id can only be used once
     Given an employee Jean
-    And a union membership usedMembership for Jean
+    And a union membership for Jean with the member id JeansMemberId
     And an employee Alex
-    And a new union membership newMembership for Alex with the same member id as usedMembership
+    And a new union membership newMembership for Alex with the member id JeansMemberId
     When I execute the ChgEmp command on Alex to add the membership newMembership
     Then the union membership newMembership should not exist in db
 

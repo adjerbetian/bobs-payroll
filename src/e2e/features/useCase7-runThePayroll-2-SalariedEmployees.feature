@@ -1,4 +1,4 @@
-@UseCase6 @ChgEmp
+@UseCase7 @Payday
 Feature: Use Case 7: Run the Payroll for Today - Salaried employees
 
   Scenario: Salaried employees are paid their salary at the end of the month

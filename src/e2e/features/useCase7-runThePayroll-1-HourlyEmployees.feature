@@ -1,4 +1,4 @@
-@UseCase6 @ChgEmp
+@UseCase7 @Payday
 Feature: Use Case 7: Run the Payroll for Today - Hourly employees
 
   Scenario: Employee's time card should be paid
