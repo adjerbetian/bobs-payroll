@@ -46,21 +46,21 @@ When(
     }
 );
 When(
-    /^I execute the ChgEmp command on (\w+) to change the type to hourly with a hourly rate of (\d+\.\d+)/,
+    /^I execute the ChgEmp command on (\w+) to change the type to hourly with a hourly rate of (\d+\.?\d*)/,
     async (name: string, hourlyRate: number) => {
         const employee = store.employees.get(name);
         return executePayrollCommand(`ChgEmp ${employee.getId()} Hourly ${hourlyRate}`);
     }
 );
 When(
-    /^I execute the ChgEmp command on (\w+) to change the type to salaried with a salary of (\d+\.\d+)$/,
+    /^I execute the ChgEmp command on (\w+) to change the type to salaried with a salary of (\d+\.?\d*)$/,
     async (name: string, salary: number) => {
         const employee = store.employees.get(name);
         return executePayrollCommand(`ChgEmp ${employee.getId()} Salaried ${salary}`);
     }
 );
 When(
-    /^I execute the ChgEmp command on (\w+) to change the type to commissioned with a salary of (\d+\.\d+) and a commission rate of (\d+\.\d+)$/,
+    /^I execute the ChgEmp command on (\w+) to change the type to commissioned with a salary of (\d+\.?\d*) and a commission rate of (\d+\.?\d*)$/,
     async (name: string, salary: number, commissionRate: number) => {
         const employee = store.employees.get(name);
         return executePayrollCommand(`ChgEmp ${employee.getId()} Commissioned ${salary} ${commissionRate}`);

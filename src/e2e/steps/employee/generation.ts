@@ -4,7 +4,7 @@ import { CommissionedEmployee, HourlyEmployee, SalariedEmployee } from "../../..
 import { store, toFloat } from "../../utils";
 
 Given(
-    /^a(?:n)?( new)?(?: hourly)? employee (\w+)(?: with a hourly rate of (\d+.\d+))?$/,
+    /^a(?:n)?( new)?(?: hourly)? employee (\w+)(?: with a hourly rate of (\d+\.?\d*))?$/,
     async (isNew: string | undefined, name: string, hourlyRate: string | undefined) => {
         const employee = await generateOrSeed();
         store.employees.set(name, employee);
@@ -20,7 +20,7 @@ Given(
     }
 );
 Given(
-    /^a( new)? salaried employee (\w+)(?: with a salary of (\d+.\d+))?$/,
+    /^a( new)? salaried employee (\w+)(?: with a salary of (\d+\.?\d*))?$/,
     async (isNew: string | undefined, name: string, salary: string | undefined) => {
         const employee = await generateOrSeed();
         store.employees.set(name, employee);
@@ -37,7 +37,7 @@ Given(
 );
 
 Given(
-    /^a( new)? commissioned employee (\w+)(?: with a salary of (\d+.\d+))?(?: and commission rate of (\d+.\d+))?$/,
+    /^a( new)? commissioned employee (\w+)(?: with a salary of (\d+\.?\d*))?(?: and commission rate of (\d+\.?\d*))?$/,
     async (isNew: string | undefined, name: string, salary: string | undefined, commissionRate: string | undefined) => {
         const employee = await generateOrSeed();
         store.employees.set(name, employee);

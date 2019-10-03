@@ -4,7 +4,7 @@ import { dbPayments } from "../../../app";
 import { dates, store } from "../../utils";
 
 Then(
-    /(\w+) should (not )?have been paid on (?:the )?([^"]+)(?: of an amount of "(.+)")?$/,
+    /(\w+) should (not )?have been paid on (?:the )?([^0-9]+)(?: of an amount of (.+|\d+))?$/,
     async (name: string, isNegated: string | undefined, day: string, amountExpression: string | undefined) => {
         await checkWasPaid();
         await checkPaymentAmount();
