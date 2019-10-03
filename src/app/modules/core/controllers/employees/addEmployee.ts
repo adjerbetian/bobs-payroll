@@ -1,7 +1,7 @@
 import { buildTransactionValidator, stripQuotationMarks, RouteFormatError } from "../../../../router";
 import {
     CommissionedEmployeeCreationModel,
-    CoreActions,
+    CoreUseCases,
     EmployeeCreationModel,
     EmployeeType,
     HourlyEmployeeCreationModel,
@@ -11,7 +11,7 @@ import { Controllers } from "../Controllers";
 
 const transactionValidator = buildTransactionValidator("AddEmp");
 
-export function makeAddEmployeeController(actions: CoreActions): Controllers["addEmployee"] {
+export function makeAddEmployeeController(useCases: CoreUseCases): Controllers["addEmployee"] {
     return async function(
         id: string,
         name: string,
@@ -44,7 +44,7 @@ export function makeAddEmployeeController(actions: CoreActions): Controllers["ad
 
     async function addEmployee(args: AddEmployeeArgs): Promise<void> {
         const employee = buildEmployeeRequestModel(args);
-        await actions.createEmployee(employee);
+        await useCases.createEmployee(employee);
     }
 
     function buildEmployeeRequestModel(args: AddEmployeeArgs): EmployeeCreationModel {

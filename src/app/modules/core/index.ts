@@ -1,6 +1,6 @@
 import { Routes } from "../../router";
 import { makeControllers } from "./controllers";
-import { CoreActions, makeCoreActions } from "./domain";
+import { CoreUseCases, makeCoreUseCases } from "./domain";
 import {
     mongoEmployeeRepository,
     mongoPaymentMethodRepository,
@@ -16,11 +16,11 @@ export * from "./db";
 
 interface CoreModule {
     routes: Routes;
-    actions: CoreActions;
+    useCases: CoreUseCases;
 }
 
 export function makeCoreModule(): CoreModule {
-    const coreActions = makeCoreActions({
+    const coreUseCases = makeCoreUseCases({
         timeCardRepository: mongoTimeCardRepository,
         serviceChargeRepository: mongoServiceChargeRepository,
         salesReceiptRepository: mongoSalesReceiptRepository,
@@ -28,9 +28,9 @@ export function makeCoreModule(): CoreModule {
         employeeRepository: mongoEmployeeRepository,
         unionMemberRepository: mongoUnionMemberRepository
     });
-    const controllers = makeControllers(coreActions);
+    const controllers = makeControllers(coreUseCases);
     return {
-        actions: coreActions,
+        useCases: coreUseCases,
         routes: makeRoutes(controllers)
     };
 }

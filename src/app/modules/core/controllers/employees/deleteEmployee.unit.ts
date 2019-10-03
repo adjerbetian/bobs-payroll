@@ -1,18 +1,18 @@
 import { expect, generateIndex, Stub } from "@test/unit";
 import { RouteFormatError } from "../../../../router";
-import { CoreActions } from "../../domain";
-import { buildStubbedCoreActions } from "../test";
+import { CoreUseCases } from "../../domain";
+import { buildStubbedCoreUseCases } from "../test";
 import { makeDeleteEmployeeController } from "./deleteEmployee";
 
 describe("deleteEmployee", () => {
-    let stubbedActions: Stub<CoreActions>;
+    let stubbedUseCases: Stub<CoreUseCases>;
     let deleteEmployee: ReturnType<typeof makeDeleteEmployeeController>;
 
     beforeEach(() => {
-        stubbedActions = buildStubbedCoreActions();
-        deleteEmployee = makeDeleteEmployeeController(stubbedActions);
+        stubbedUseCases = buildStubbedCoreUseCases();
+        deleteEmployee = makeDeleteEmployeeController(stubbedUseCases);
 
-        stubbedActions.deleteEmployee.resolves();
+        stubbedUseCases.deleteEmployee.resolves();
     });
 
     it("should delete the employee", async () => {
@@ -20,7 +20,7 @@ describe("deleteEmployee", () => {
 
         await deleteEmployee(`${employeeId}`);
 
-        expect(stubbedActions.deleteEmployee).to.have.been.calledOnceWith(employeeId);
+        expect(stubbedUseCases.deleteEmployee).to.have.been.calledOnceWith(employeeId);
     });
     it("should throw a RouteFormatError if the employee id is not given", async () => {
         const promise = deleteEmployee(``);

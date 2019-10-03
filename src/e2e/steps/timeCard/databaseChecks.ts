@@ -3,6 +3,7 @@ import { Then } from "cucumber";
 import { dbTimeCards } from "../../../app";
 import { store } from "../../utils";
 
+// noinspection DuplicatedCode
 Then(
     /^(\w+) should( not)? have the time card (\w+)$/,
     async (employeeName: string, isNegated: string | undefined, timeCardName: string) => {

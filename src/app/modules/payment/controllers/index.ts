@@ -1,11 +1,11 @@
-import { PaymentActions } from "../domain";
+import { PaymentUseCases } from "../domain";
 import { Controllers } from "./Controllers";
 import { makeRunPayrollController } from "./transactions";
 
 export { Controllers } from "./Controllers";
 
-export function makeControllers(paymentActions: PaymentActions): Controllers {
+export function makeControllers(paymentUseCases: PaymentUseCases): Controllers {
     return {
-        runPayroll: makeRunPayrollController(paymentActions)
+        runPayroll: makeRunPayrollController(paymentUseCases)
     };
 }

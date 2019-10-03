@@ -1,8 +1,8 @@
 import { buildStubFor, Stub } from "@test/utils";
-import { CoreActions } from "../../domain";
+import { CoreUseCases } from "../../domain";
 
-export function buildStubbedCoreActions(): Stub<CoreActions> {
-    return buildStubFor<CoreActions>({
+export function buildStubbedCoreUseCases(): Stub<CoreUseCases> {
+    return buildStubFor<CoreUseCases>({
         createEmployee: true,
         deleteEmployee: true,
         updateEmployee: true,

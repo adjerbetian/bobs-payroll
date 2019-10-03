@@ -1,8 +1,8 @@
-import { CoreActionsDependencies } from "./actions";
+import { CoreUseCasesDependencies } from "./useCases";
 
 export * from "./entities";
 export * from "./requestModels";
 export * from "./errors";
-export { CoreActions, makeCoreActions } from "./actions";
+export { CoreUseCases, makeCoreUseCases } from "./useCases";
 
-export type CoreDependencies = CoreActionsDependencies;
+export type CoreDependencies = CoreUseCasesDependencies;

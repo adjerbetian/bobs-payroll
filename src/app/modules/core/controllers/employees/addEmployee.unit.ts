@@ -2,22 +2,22 @@ import { generators, expect, Stub } from "@test/unit";
 import { RouteFormatError } from "../../../../router";
 import {
     CommissionedEmployeeCreationModel,
-    CoreActions,
+    CoreUseCases,
     HourlyEmployeeCreationModel,
     SalariedEmployeeCreationModel
 } from "../../domain";
-import { buildStubbedCoreActions } from "../test";
+import { buildStubbedCoreUseCases } from "../test";
 import { makeAddEmployeeController } from "./addEmployee";
 
 describe("addEmployee", () => {
-    let stubbedActions: Stub<CoreActions>;
+    let stubbedUseCases: Stub<CoreUseCases>;
     let addEmployee: ReturnType<typeof makeAddEmployeeController>;
 
     beforeEach(() => {
-        stubbedActions = buildStubbedCoreActions();
-        addEmployee = makeAddEmployeeController(stubbedActions);
+        stubbedUseCases = buildStubbedCoreUseCases();
+        addEmployee = makeAddEmployeeController(stubbedUseCases);
 
-        stubbedActions.createEmployee.resolves();
+        stubbedUseCases.createEmployee.resolves();
     });
 
     it("should insert an hourly employee", async () => {
@@ -38,7 +38,7 @@ describe("addEmployee", () => {
             type: employee.getType(),
             hourlyRate: employee.getHourlyRate()
         };
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(requestModel);
+        expect(stubbedUseCases.createEmployee).to.have.been.calledOnceWith(requestModel);
     });
     it("should insert a salaried employee", async () => {
         const employee = generators.generateSalariedEmployee();
@@ -58,7 +58,7 @@ describe("addEmployee", () => {
             type: employee.getType(),
             salary: employee.getSalary()
         };
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(requestModel);
+        expect(stubbedUseCases.createEmployee).to.have.been.calledOnceWith(requestModel);
     });
     it("should insert an salaried with commission employee", async () => {
         const employee = generators.generateCommissionedEmployee();
@@ -80,7 +80,7 @@ describe("addEmployee", () => {
             salary: employee.getSalary(),
             commissionRate: employee.getCommissionRate()
         };
-        expect(stubbedActions.createEmployee).to.have.been.calledOnceWith(requestModel);
+        expect(stubbedUseCases.createEmployee).to.have.been.calledOnceWith(requestModel);
     });
     it("should throw when the transaction is malformed", async () => {
         const employee = generators.generateCommissionedEmployee();

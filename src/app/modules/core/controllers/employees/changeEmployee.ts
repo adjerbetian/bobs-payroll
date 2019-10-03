@@ -1,10 +1,10 @@
 import { buildTransactionValidator } from "../../../../router";
-import { CoreActions, EmployeeType, PaymentMethodType } from "../../domain";
+import { CoreUseCases, EmployeeType, PaymentMethodType } from "../../domain";
 import { Controllers } from "../Controllers";
 
 const transactionValidator = buildTransactionValidator("ChgEmp");
 
-export function makeChangeEmployeeController(actions: CoreActions): Controllers["changeEmployee"] {
+export function makeChangeEmployeeController(useCases: CoreUseCases): Controllers["changeEmployee"] {
     return async function(id: string, updateType: string, ...params: string[]) {
         const employeeId = parseInt(id);
 
@@ -23,21 +23,21 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
             const [name] = params;
             transactionValidator.assertIsNotEmpty(name);
 
-            await actions.updateEmployee(employeeId, { name });
+            await useCases.updateEmployee(employeeId, { name });
         }
 
         async function changeEmployeeAddress(): Promise<void> {
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
 
-            return actions.updateEmployee(employeeId, { address });
+            return useCases.updateEmployee(employeeId, { address });
         }
 
         async function changeEmployeeTypeToHourly(): Promise<void> {
             const [hourlyRate] = params;
             transactionValidator.assertIsNotEmpty(hourlyRate);
 
-            return actions.updateEmployee(employeeId, {
+            return useCases.updateEmployee(employeeId, {
                 type: EmployeeType.HOURLY,
                 hourlyRate: parseFloat(hourlyRate)
             });
@@ -47,7 +47,7 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
             const [monthlySalary] = params;
             transactionValidator.assertIsNotEmpty(monthlySalary);
 
-            return actions.updateEmployee(employeeId, {
+            return useCases.updateEmployee(employeeId, {
                 type: EmployeeType.SALARIED,
                 salary: parseFloat(monthlySalary)
             });
@@ -58,7 +58,7 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
             transactionValidator.assertIsNotEmpty(monthlySalary);
             transactionValidator.assertIsNotEmpty(commissionRate);
 
-            return actions.updateEmployee(employeeId, {
+            return useCases.updateEmployee(employeeId, {
                 type: EmployeeType.COMMISSIONED,
                 salary: parseFloat(monthlySalary),
                 commissionRate: parseFloat(commissionRate)
@@ -66,7 +66,7 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
         }
 
         async function changeEmployeePaymentMethodToHold(): Promise<void> {
-            await actions.createPaymentMethod({
+            await useCases.createPaymentMethod({
                 employeeId: employeeId,
                 type: PaymentMethodType.HOLD
             });
@@ -77,7 +77,7 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
             transactionValidator.assertIsNotEmpty(bank);
             transactionValidator.assertIsNotEmpty(account);
 
-            await actions.createPaymentMethod({
+            await useCases.createPaymentMethod({
                 employeeId: employeeId,
                 type: PaymentMethodType.DIRECT,
                 account,
@@ -89,7 +89,7 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
             const [address] = params;
             transactionValidator.assertIsNotEmpty(address);
 
-            await actions.createPaymentMethod({
+            await useCases.createPaymentMethod({
                 employeeId: employeeId,
                 type: PaymentMethodType.MAIL,
                 address
@@ -100,7 +100,7 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
             const [memberId, , rate] = params;
             transactionValidator.assertIsNotEmpty(rate);
 
-            return actions.createUnionMember({
+            return useCases.createUnionMember({
                 employeeId,
                 memberId,
                 rate: parseFloat(rate)
@@ -108,7 +108,7 @@ export function makeChangeEmployeeController(actions: CoreActions): Controllers[
         }
 
         async function removeEmployeeFromUnion(): Promise<void> {
-            return actions.removeEmployeeFromUnion(employeeId);
+            return useCases.removeEmployeeFromUnion(employeeId);
         }
     };
 }

@@ -1,7 +1,7 @@
 import { expect, generateIndex, Stub } from "@test/unit";
 import { RouteFormatError } from "../../../../router";
 import {
-    CoreActions,
+    CoreUseCases,
     DirectPaymentMethodCreationModel,
     EmployeeType,
     HoldPaymentMethodCreationModel,
@@ -9,19 +9,19 @@ import {
     PaymentMethodType,
     UnionMemberCreationModel
 } from "../../domain";
-import { buildStubbedCoreActions } from "../test";
+import { buildStubbedCoreUseCases } from "../test";
 import { makeChangeEmployeeController } from "./changeEmployee";
 
 describe("changeEmployee", () => {
-    let stubbedActions: Stub<CoreActions>;
+    let stubbedUseCases: Stub<CoreUseCases>;
     let changeEmployee: ReturnType<typeof makeChangeEmployeeController>;
     let employeeId: number;
 
     beforeEach(() => {
-        stubbedActions = buildStubbedCoreActions();
-        changeEmployee = makeChangeEmployeeController(stubbedActions);
+        stubbedUseCases = buildStubbedCoreUseCases();
+        changeEmployee = makeChangeEmployeeController(stubbedUseCases);
 
-        stubbedActions.updateEmployee.resolves();
+        stubbedUseCases.updateEmployee.resolves();
         employeeId = generateIndex();
     });
 
@@ -30,7 +30,7 @@ describe("changeEmployee", () => {
             it("should update the employee's name", async () => {
                 await changeEmployee(`${employeeId}`, "Name", "James Bond");
 
-                expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubbedUseCases.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     name: "James Bond"
                 });
             });
@@ -44,7 +44,7 @@ describe("changeEmployee", () => {
             it("should update the employee's address", async () => {
                 await changeEmployee(`${employeeId}`, "Address", "my new address");
 
-                expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubbedUseCases.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     address: "my new address"
                 });
             });
@@ -60,7 +60,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to hourly and set the rate", async () => {
                 await changeEmployee(`${employeeId}`, "Hourly", "10.5");
 
-                expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubbedUseCases.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     type: EmployeeType.HOURLY,
                     hourlyRate: 10.5
                 });
@@ -75,7 +75,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to salaried and set the salary", async () => {
                 await changeEmployee(`${employeeId}`, "Salaried", "10.5");
 
-                expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubbedUseCases.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     type: EmployeeType.SALARIED,
                     salary: 10.5
                 });
@@ -90,7 +90,7 @@ describe("changeEmployee", () => {
             it("should change the employee's type to salaried and set the salary", async () => {
                 await changeEmployee(`${employeeId}`, "Commissioned", "10", "30");
 
-                expect(stubbedActions.updateEmployee).to.have.been.calledOnceWith(employeeId, {
+                expect(stubbedUseCases.updateEmployee).to.have.been.calledOnceWith(employeeId, {
                     type: EmployeeType.COMMISSIONED,
                     salary: 10,
                     commissionRate: 30
@@ -109,7 +109,7 @@ describe("changeEmployee", () => {
         });
     });
     describe("payment method", () => {
-        beforeEach(() => stubbedActions.createPaymentMethod.resolves());
+        beforeEach(() => stubbedUseCases.createPaymentMethod.resolves());
 
         describe("Hold", () => {
             it("should add the hold paycheck payment method to the employee", async () => {
@@ -119,7 +119,7 @@ describe("changeEmployee", () => {
                     employeeId,
                     type: PaymentMethodType.HOLD
                 };
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
+                expect(stubbedUseCases.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
             });
         });
         describe("Direct", () => {
@@ -132,7 +132,7 @@ describe("changeEmployee", () => {
                     bank: "bank-id",
                     account: "account-id"
                 };
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
+                expect(stubbedUseCases.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
             });
             it("should throw a transaction format error when the bank-id is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Direct", "", "");
@@ -154,7 +154,7 @@ describe("changeEmployee", () => {
                     type: PaymentMethodType.MAIL,
                     address: "my paycheck address"
                 };
-                expect(stubbedActions.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
+                expect(stubbedUseCases.createPaymentMethod).to.have.been.calledOnceWith(requestModel);
             });
             it("should throw a transaction format error when the address is missing", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Mail", "");
@@ -169,14 +169,14 @@ describe("changeEmployee", () => {
 
             beforeEach(() => {
                 memberId = `member-${generateIndex()}`;
-                stubbedActions.createUnionMember.resolves();
+                stubbedUseCases.createUnionMember.resolves();
             });
 
             it("should add the union member", async () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
                 const requestModel: UnionMemberCreationModel = { memberId, employeeId, rate: 10.5 };
-                expect(stubbedActions.createUnionMember).to.have.been.calledOnceWith(requestModel);
+                expect(stubbedUseCases.createUnionMember).to.have.been.calledOnceWith(requestModel);
             });
             it("should throw a RouteFormatError when the dues rate is not specified", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "");
@@ -186,11 +186,11 @@ describe("changeEmployee", () => {
         });
         describe("NoMember", () => {
             it("should delete the union member", async () => {
-                stubbedActions.removeEmployeeFromUnion.resolves();
+                stubbedUseCases.removeEmployeeFromUnion.resolves();
 
                 await changeEmployee(`${employeeId}`, "NoMember");
 
-                expect(stubbedActions.removeEmployeeFromUnion).to.have.been.calledOnceWith(employeeId);
+                expect(stubbedUseCases.removeEmployeeFromUnion).to.have.been.calledOnceWith(employeeId);
             });
         });
     });

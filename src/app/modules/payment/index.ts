@@ -1,7 +1,7 @@
 import { Routes } from "../../router";
-import { CoreActions } from "../core";
+import { CoreUseCases } from "../core";
 import { makeControllers } from "./controllers";
-import { makePaymentActions, PaymentActions } from "./domain";
+import { makePaymentUseCases, PaymentUseCases } from "./domain";
 import { mongoPaymentRepository } from "./db";
 import { makeRoutes } from "./routes";
 
@@ -10,18 +10,18 @@ export { dbPayments } from "./db";
 
 interface PaymentModule {
     routes: Routes;
-    actions: PaymentActions;
+    useCases: PaymentUseCases;
 }
 
-export function makePaymentModule(coreActions: CoreActions): PaymentModule {
-    const paymentActions = makePaymentActions({
-        coreActions: coreActions,
+export function makePaymentModule(coreUseCases: CoreUseCases): PaymentModule {
+    const paymentUseCases = makePaymentUseCases({
+        coreUseCases: coreUseCases,
         paymentRepository: mongoPaymentRepository
     });
-    const controllers = makeControllers(paymentActions);
+    const controllers = makeControllers(paymentUseCases);
 
     return {
         routes: makeRoutes(controllers),
-        actions: paymentActions
+        useCases: paymentUseCases
     };
 }

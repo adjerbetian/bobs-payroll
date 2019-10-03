@@ -1,4 +1,4 @@
-import { CoreActions } from "../domain";
+import { CoreUseCases } from "../domain";
 import { Controllers } from "./Controllers";
 import { makeAddEmployeeController, makeChangeEmployeeController, makeDeleteEmployeeController } from "./employees";
 import { makePostSalesReceiptController } from "./salesReceipts";
@@ -7,13 +7,13 @@ import { makePostTimeCardController } from "./timeCards";
 
 export { Controllers } from "./Controllers";
 
-export function makeControllers(coreActions: CoreActions): Controllers {
+export function makeControllers(coreUseCases: CoreUseCases): Controllers {
     return {
-        addEmployee: makeAddEmployeeController(coreActions),
-        changeEmployee: makeChangeEmployeeController(coreActions),
-        deleteEmployee: makeDeleteEmployeeController(coreActions),
-        postSalesReceipt: makePostSalesReceiptController(coreActions),
-        postServiceCharge: makePostServiceChargeController(coreActions),
-        postTimeCard: makePostTimeCardController(coreActions)
+        addEmployee: makeAddEmployeeController(coreUseCases),
+        changeEmployee: makeChangeEmployeeController(coreUseCases),
+        deleteEmployee: makeDeleteEmployeeController(coreUseCases),
+        postSalesReceipt: makePostSalesReceiptController(coreUseCases),
+        postServiceCharge: makePostServiceChargeController(coreUseCases),
+        postTimeCard: makePostTimeCardController(coreUseCases)
     };
 }

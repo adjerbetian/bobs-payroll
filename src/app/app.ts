@@ -12,7 +12,7 @@ export function buildApp(): App {
     const router = buildRouter(console);
 
     const coreModule = makeCoreModule();
-    const paymentModule = makePaymentModule(coreModule.actions);
+    const paymentModule = makePaymentModule(coreModule.useCases);
 
     router.addRoutes(coreModule.routes);
     router.addRoutes(paymentModule.routes);

@@ -1,22 +1,22 @@
 import { generators, expect, Stub } from "@test/unit";
 import * as moment from "moment";
 import { RouteFormatError } from "../../../../router";
-import { CoreActions, TimeCard, TimeCardCreationModel } from "../../domain";
-import { buildStubbedCoreActions } from "../test";
+import { CoreUseCases, TimeCard, TimeCardCreationModel } from "../../domain";
+import { buildStubbedCoreUseCases } from "../test";
 import { makePostTimeCardController } from "./postTimeCard";
 
 describe("postTimeCard", () => {
-    let stubbedActions: Stub<CoreActions>;
+    let stubbedUseCases: Stub<CoreUseCases>;
     let postTimeCard: ReturnType<typeof makePostTimeCardController>;
 
     beforeEach(() => {
-        stubbedActions = buildStubbedCoreActions();
-        postTimeCard = makePostTimeCardController(stubbedActions);
+        stubbedUseCases = buildStubbedCoreUseCases();
+        postTimeCard = makePostTimeCardController(stubbedUseCases);
     });
 
     it("should create a time card for the employee", async () => {
         const timeCard = generators.generateTimeCard();
-        stubbedActions.createTimeCard.resolves();
+        stubbedUseCases.createTimeCard.resolves();
 
         await postTimeCardEntity(timeCard);
 
@@ -25,11 +25,11 @@ describe("postTimeCard", () => {
             hours: timeCard.getHours(),
             date: timeCard.getDate()
         };
-        expect(stubbedActions.createTimeCard).to.have.been.calledOnceWith(requestModel);
+        expect(stubbedUseCases.createTimeCard).to.have.been.calledOnceWith(requestModel);
     });
     it("should throw a RouteFormatError if the date is not in good format", async () => {
         const timeCard = generators.generateTimeCard({ date: moment().format("DD-MM-YYYY") });
-        stubbedActions.createTimeCard.resolves();
+        stubbedUseCases.createTimeCard.resolves();
 
         const promise = postTimeCardEntity(timeCard);
 

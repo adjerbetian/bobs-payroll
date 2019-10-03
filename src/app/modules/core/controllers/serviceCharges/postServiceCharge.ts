@@ -1,14 +1,14 @@
 import { buildTransactionValidator } from "../../../../router";
-import { CoreActions } from "../../domain";
+import { CoreUseCases } from "../../domain";
 import { Controllers } from "../Controllers";
 
 const transactionValidator = buildTransactionValidator("ServiceCharge");
 
-export function makePostServiceChargeController(actions: CoreActions): Controllers["postServiceCharge"] {
+export function makePostServiceChargeController(useCases: CoreUseCases): Controllers["postServiceCharge"] {
     return async function(memberId, amount) {
         assertTransactionValid(memberId, amount);
 
-        await actions.createServiceCharge({
+        await useCases.createServiceCharge({
             memberId,
             amount: parseFloat(amount)
         });

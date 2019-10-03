@@ -1,13 +1,13 @@
 import { buildTransactionValidator } from "../../../../router";
-import { CoreActions } from "../../domain";
+import { CoreUseCases } from "../../domain";
 import { Controllers } from "../Controllers";
 
 const transactionValidator = buildTransactionValidator("DelEmp");
 
-export function makeDeleteEmployeeController(actions: CoreActions): Controllers["deleteEmployee"] {
+export function makeDeleteEmployeeController(useCases: CoreUseCases): Controllers["deleteEmployee"] {
     return async function(employeeId) {
         assertTransactionIsValid();
-        await actions.deleteEmployee(parseInt(employeeId));
+        await useCases.deleteEmployee(parseInt(employeeId));
 
         function assertTransactionIsValid(): void {
             transactionValidator.assertIsNotEmpty(employeeId);

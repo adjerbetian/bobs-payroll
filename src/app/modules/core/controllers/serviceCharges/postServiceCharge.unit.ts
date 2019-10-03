@@ -1,18 +1,18 @@
 import { generators, expect, Stub } from "@test/unit";
 import { RouteFormatError } from "../../../../router";
-import { CoreActions, ServiceCharge, ServiceChargeCreationModel } from "../../domain";
-import { buildStubbedCoreActions } from "../test";
+import { CoreUseCases, ServiceCharge, ServiceChargeCreationModel } from "../../domain";
+import { buildStubbedCoreUseCases } from "../test";
 import { makePostServiceChargeController } from "./postServiceCharge";
 
 describe("postServiceCharge", () => {
-    let stubbedActions: Stub<CoreActions>;
+    let stubbedUseCases: Stub<CoreUseCases>;
     let postServiceCharge: ReturnType<typeof makePostServiceChargeController>;
 
     beforeEach(() => {
-        stubbedActions = buildStubbedCoreActions();
-        postServiceCharge = makePostServiceChargeController(stubbedActions);
+        stubbedUseCases = buildStubbedCoreUseCases();
+        postServiceCharge = makePostServiceChargeController(stubbedUseCases);
 
-        stubbedActions.createServiceCharge.resolves();
+        stubbedUseCases.createServiceCharge.resolves();
     });
 
     it("should create a service charge for the employee", async () => {
@@ -24,7 +24,7 @@ describe("postServiceCharge", () => {
             memberId: serviceCharge.getMemberId(),
             amount: serviceCharge.getAmount()
         };
-        expect(stubbedActions.createServiceCharge).to.have.been.calledOnceWith(requestModel);
+        expect(stubbedUseCases.createServiceCharge).to.have.been.calledOnceWith(requestModel);
     });
     it("should throw a RouteFormatError if the amount is missing", async () => {
         const serviceCharge = generators.generateServiceCharge();

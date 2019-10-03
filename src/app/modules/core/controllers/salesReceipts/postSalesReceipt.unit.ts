@@ -1,19 +1,19 @@
 import { generators, expect, Stub } from "@test/unit";
 import * as moment from "moment";
 import { RouteFormatError } from "../../../../router";
-import { CoreActions, SalesReceipt, SalesReceiptCreationModel } from "../../domain";
-import { buildStubbedCoreActions } from "../test";
+import { CoreUseCases, SalesReceipt, SalesReceiptCreationModel } from "../../domain";
+import { buildStubbedCoreUseCases } from "../test";
 import { makePostSalesReceiptController } from "./postSalesReceipt";
 
 describe("postTimeCard", () => {
-    let stubbedActions: Stub<CoreActions>;
+    let stubbedUseCases: Stub<CoreUseCases>;
     let postSalesReceipt: ReturnType<typeof makePostSalesReceiptController>;
 
     beforeEach(() => {
-        stubbedActions = buildStubbedCoreActions();
-        postSalesReceipt = makePostSalesReceiptController(stubbedActions);
+        stubbedUseCases = buildStubbedCoreUseCases();
+        postSalesReceipt = makePostSalesReceiptController(stubbedUseCases);
 
-        stubbedActions.createSalesReceipt.resolves();
+        stubbedUseCases.createSalesReceipt.resolves();
     });
 
     it("should create a sales receipt for the employee", async () => {
@@ -26,7 +26,7 @@ describe("postTimeCard", () => {
             date: salesReceipt.getDate(),
             amount: salesReceipt.getAmount()
         };
-        expect(stubbedActions.createSalesReceipt).to.have.been.calledOnceWith(requestModel);
+        expect(stubbedUseCases.createSalesReceipt).to.have.been.calledOnceWith(requestModel);
     });
     it("should throw a RouteFormatError if the amount is missing", async () => {
         const salesReceipt = generators.generateSalesReceipt();

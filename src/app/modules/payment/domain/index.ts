@@ -1,3 +1,3 @@
 export * from "./entities";
-export { makePaymentActions, PaymentActions } from "./actions";
+export { makePaymentUseCases, PaymentUseCases } from "./useCases";
 export * from "./repositories";

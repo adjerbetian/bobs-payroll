@@ -8,12 +8,10 @@
     Principles, Pattern, and Practices
 </h1>
 
-## Case Study 1 - The Payroll System 
+## The Payroll System 
 
-This is an attempt to apply Clean Architecture / DDD to 
-the The Payroll System case study while using typescript.
-
-(*note:* Use cases *in* Clean Architecture *are here called actions*)
+This is an attempt to apply Clean Architecture / DDD to the The Payroll System
+case study from the *Agile Software Development* book while using typescript.
 
 ## Rudimentary Specification of the Payroll System *[From the book]*
 
