@@ -9,17 +9,15 @@
         "run": "ts-node --transpile-only src/main.ts",
         "build": "tsc --project tsconfig.build.json",
         "compile": "tsc --project tsconfig.json",
-        "test": "npm run compile && npm run test:fast:unit && npm run test:fast:integration && npm run test:fast:e2e && npm run test:fast:cucumber",
-        "test:unit": "npm run compile && mocha ./src/**/*.unit.ts",
+        "test": "npm run compile && npm run test:fast:unit && npm run test:fast:integration && npm run test:fast:e2e",
+        "test:unit": "npm run compile && npm run test:fast:unit",
         "test:unit:watch": "npm run compile && npm run test:unit -- --watch",
-        "test:integration": "npm run compile && mocha ./**/*.spec.ts",
-        "test:e2e": "npm run compile && mocha ./src/**/*.e2e.ts --timeout 10000",
-        "test:cucumber": "npm run compile && cucumber-js",
+        "test:integration": "npm run compile && npm run test:fast:integration",
+        "test:e2e": "npm run compile && npm run test:fast:e2e",
+        "test:todo": "npm run compile && cucumber-js --tags \"@todo\"",
         "test:fast:unit": "mocha ./src/**/*.unit.ts",
-        "test:fast:unit:watch": "npm run test:unit -- --watch",
         "test:fast:integration": "mocha ./**/*.spec.ts",
-        "test:fast:e2e": "mocha ./src/**/*.e2e.ts --timeout 10000",
-        "test:fast:cucumber": "cucumber-js"
+        "test:fast:e2e": "cucumber-js --tags \"not @todo\""
     },
     "_moduleAliases": {
         "@test": "src/test"
