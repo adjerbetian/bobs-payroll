@@ -1,25 +1,25 @@
 @UseCase3 @TimeCard
 Feature: Use Case 3: Post a Time Card
 
-  Scenario: it should insert the time card in the db
+  Scenario: Time cards can be posted for hourly employees
     Given an hourly employee Bob
     And a new time card TC for Bob
     When I execute the TimeCard command on TC
     Then Bob should have the time card TC
 
-  Scenario: it should do nothing when the employee in not an hourly employee
+  Scenario: Time cards are only valid for hourly employees
     Given a salaried employee Bob
     And a new time card TC for Bob
     When I execute the TimeCard command on TC
     Then Bob should not have the time card TC
 
-  Scenario: it should do nothing when the employee does not exist in the db
+  Scenario: Time cards should be posted on existing employees
     Given a new salaried employee Alice
     And a new time card TC for Alice
     When I execute the TimeCard command on TC
     Then Alice should not have the time card TC
 
-  Scenario: it should do nothing when transaction is wrong
+  Scenario: An incorrect transaction should do nothing
     Given a salaried employee Bob
     And a new time card TC for Bob
     When I execute the incomplete TimeCard command on TC

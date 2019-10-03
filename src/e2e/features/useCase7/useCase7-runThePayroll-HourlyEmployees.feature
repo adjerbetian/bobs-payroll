@@ -22,13 +22,13 @@ Feature: Use Case 7: Run the Payroll for Today - Hourly employees
     When I execute the Payday command on friday
     Then Jack should have been paid on friday of an amount of "18.0 * 6.0"
 
-  Scenario: should not pay if it's not Friday
+  Scenario: Hourly employees are paid only on fridays
     Given an hourly employee Bob with a hourly rate of 15.0
     And a time card for Bob of 5.0 hours on monday
     When I execute the Payday command on wednesday
     Then Bob should not have been paid on wednesday
 
-  Scenario: complex hourly scenario
+  Scenario: Complex hourly scenario
     Given an hourly employee Alex with a hourly rate of 22.0
     And a time card for Alex of 9.0 hours on last monday
     And a time card for Alex of 11.0 hours on last wednesday
