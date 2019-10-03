@@ -1,20 +1,20 @@
 @UseCase6 @ChgEmp
 Feature: Use Case 7: Run the Payroll for Today - Hourly employees
 
-  Scenario: should pay the hours made in the employee's time cards
+  Scenario: Employee's time card should be paid
     Given an hourly employee Bob with a hourly rate of 15.0
     And a time card for Bob of 5.0 hours on monday
     And a time card for Bob of 6.0 hours on tuesday
     When I execute the Payday command on friday
     Then Bob should have been paid on friday of an amount of "15.0 * (5.0 + 6.0)"
 
-  Scenario: should pay 1.5 time the normal rate for extra hours (>8h a day)
+  Scenario: Extra hours (>8h a day) should be paid 1.5 time the normal rate
     Given an hourly employee Camille with a hourly rate of 13.5
     And a time card for Camille of 12.0 hours on monday
     When I execute the Payday command on friday
     Then Camille should have been paid on friday of an amount of "13.5 * (8.0 + 1.5*4.0)"
 
-  Scenario: should not include the time cards already paid
+  Scenario: Already paid time cards should not be repaid
     Given an hourly employee Jack with a hourly rate of 18.0
     And a time card for Jack of 5.0 hours on last monday
     And a payment for "Jack" on "last friday"
