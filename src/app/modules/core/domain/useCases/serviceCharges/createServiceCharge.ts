@@ -1,24 +1,24 @@
 import { buildServiceCharge } from "../../entities";
-import { ServiceChargeRepository, UnionMemberRepository } from "../../repositories";
+import { ServiceChargeRepository, UnionMembershipRepository } from "../../repositories";
 import { CoreServiceChargeUseCases } from "../CoreUseCases";
 
 interface Dependencies {
     serviceChargeRepository: ServiceChargeRepository;
-    unionMemberRepository: UnionMemberRepository;
+    unionMembershipRepository: UnionMembershipRepository;
 }
 
 export function makeCreateServiceCharge({
     serviceChargeRepository,
-    unionMemberRepository
+    unionMembershipRepository
 }: Dependencies): CoreServiceChargeUseCases["createServiceCharge"] {
     return async function(creationModel) {
-        await assertUnionMemberExists(creationModel.memberId);
+        await assertUnionMembershipExists(creationModel.memberId);
 
         const serviceCharge = buildServiceCharge(creationModel);
         await serviceChargeRepository.insert(serviceCharge);
     };
 
-    async function assertUnionMemberExists(memberId: string): Promise<void> {
-        await unionMemberRepository.fetchByMemberId(memberId);
+    async function assertUnionMembershipExists(memberId: string): Promise<void> {
+        await unionMembershipRepository.fetchByMemberId(memberId);
     }
 }

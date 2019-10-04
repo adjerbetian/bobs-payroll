@@ -3,4 +3,4 @@ export { TimeCardRepository } from "./TimeCardRepository";
 export { SalesReceiptRepository } from "./SalesReceiptRepository";
 export { ServiceChargeRepository } from "./ServiceChargeRepository";
 export { PaymentMethodRepository } from "./PaymentMethodRepository";
-export { UnionMemberRepository } from "./UnionMemberRepository";
+export { UnionMembershipRepository } from "./UnionMembershipRepository";

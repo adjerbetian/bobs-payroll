@@ -13,7 +13,7 @@ export const seeders = {
     seedHourlyEmployee: buildSeeder(generators.generateHourlyEmployee, dbEmployees),
     seedSalariedEmployee: buildSeeder(generators.generateSalariedEmployee, dbEmployees),
     seedCommissionedEmployee: buildSeeder(generators.generateCommissionedEmployee, dbEmployees),
-    seedUnionMember: buildSeeder(generators.generateUnionMember, dbUnionMembers),
+    seedUnionMembership: buildSeeder(generators.generateUnionMembership, dbUnionMembers),
     seedTimeCard: buildSeeder(generators.generateTimeCard, dbTimeCards),
     seedSalesReceipt: buildSeeder(generators.generateSalesReceipt, dbSalesReceipts),
     seedServiceCharge: buildSeeder(generators.generateServiceCharge, dbServiceCharges),

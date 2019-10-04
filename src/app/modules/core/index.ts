@@ -7,7 +7,7 @@ import {
     mongoSalesReceiptRepository,
     mongoServiceChargeRepository,
     mongoTimeCardRepository,
-    mongoUnionMemberRepository
+    mongoUnionMembershipRepository
 } from "./db";
 import { makeRoutes } from "./routes";
 
@@ -26,7 +26,7 @@ export function makeCoreModule(): CoreModule {
         salesReceiptRepository: mongoSalesReceiptRepository,
         paymentMethodRepository: mongoPaymentMethodRepository,
         employeeRepository: mongoEmployeeRepository,
-        unionMemberRepository: mongoUnionMemberRepository
+        unionMembershipRepository: mongoUnionMembershipRepository
     });
     const controllers = makeControllers(coreUseCases);
     return {

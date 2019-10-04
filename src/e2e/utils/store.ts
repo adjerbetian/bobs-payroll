@@ -1,4 +1,4 @@
-import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMember } from "../../app";
+import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMembership } from "../../app";
 import { buildNonNullMap, NonNullMap } from "./NonNullMap";
 
 export const store = buildVariablesStore();
@@ -7,7 +7,7 @@ interface Store {
     readonly employees: NonNullMap<Employee>;
     readonly timeCards: NonNullMap<TimeCard>;
     readonly salesReceipts: NonNullMap<SalesReceipt>;
-    readonly unionMembers: NonNullMap<UnionMember>;
+    readonly unionMembers: NonNullMap<UnionMembership>;
     readonly serviceCharges: NonNullMap<ServiceCharge>;
     readonly paymentMethods: NonNullMap<PaymentMethod>;
     reset(): void;
@@ -19,7 +19,7 @@ function buildVariablesStore(): Store {
     const employeeMap = buildMap<Employee>();
     const timeCardMap = buildMap<TimeCard>();
     const salesReceiptMap = buildMap<SalesReceipt>();
-    const unionMemberMap = buildMap<UnionMember>();
+    const unionMembershipMap = buildMap<UnionMembership>();
     const serviceChargeMap = buildMap<ServiceCharge>();
     const paymentMethodMap = buildMap<PaymentMethod>();
 
@@ -34,7 +34,7 @@ function buildVariablesStore(): Store {
             return salesReceiptMap;
         },
         get unionMembers() {
-            return unionMemberMap;
+            return unionMembershipMap;
         },
         get serviceCharges() {
             return serviceChargeMap;

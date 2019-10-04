@@ -12,7 +12,7 @@ import {
     makeMongoSalesReceiptRepository,
     makeMongoServiceChargeRepository,
     makeMongoTimeCardRepository,
-    makeMongoUnionMemberRepository
+    makeMongoUnionMembershipRepository
 } from "./repositories";
 
 export * from "./collections";
@@ -22,4 +22,4 @@ export const mongoPaymentMethodRepository = makeMongoPaymentMethodRepository(dbP
 export const mongoSalesReceiptRepository = makeMongoSalesReceiptRepository(dbSalesReceipts);
 export const mongoServiceChargeRepository = makeMongoServiceChargeRepository(dbServiceCharges);
 export const mongoTimeCardRepository = makeMongoTimeCardRepository(dbTimeCards);
-export const mongoUnionMemberRepository = makeMongoUnionMemberRepository(dbUnionMembers);
+export const mongoUnionMembershipRepository = makeMongoUnionMembershipRepository(dbUnionMembers);

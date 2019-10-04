@@ -6,7 +6,7 @@ import {
     salesReceiptMapper,
     serviceChargeMapper,
     timeCardMapper,
-    unionMemberMapper
+    unionMembershipMapper
 } from "../mappers";
 
 export const dbEmployees = buildDatabase("employees", employeeMapper, NotFoundError);
@@ -14,4 +14,4 @@ export const dbTimeCards = buildDatabase("time-cards", timeCardMapper, NotFoundE
 export const dbSalesReceipts = buildDatabase("sales-receipts", salesReceiptMapper, NotFoundError);
 export const dbServiceCharges = buildDatabase("service-charges", serviceChargeMapper, NotFoundError);
 export const dbPaymentMethods = buildDatabase("payment-methods", paymentMethodMapper, NotFoundError);
-export const dbUnionMembers = buildDatabase("union-members", unionMemberMapper, NotFoundError);
+export const dbUnionMembers = buildDatabase("union-members", unionMembershipMapper, NotFoundError);

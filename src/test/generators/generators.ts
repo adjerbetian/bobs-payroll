@@ -11,14 +11,14 @@ import {
     buildSalesReceipt,
     buildServiceCharge,
     buildTimeCard,
-    buildUnionMember
+    buildUnionMembership
 } from "../../app";
 import { isoDate } from "../../utils";
 import { generateFloatBetween, generateIndex } from "./common";
 
 interface Generators {
     generateTimeCard: Generator<typeof buildTimeCard>;
-    generateUnionMember: Generator<typeof buildUnionMember>;
+    generateUnionMembership: Generator<typeof buildUnionMembership>;
     generateHourlyEmployee: Generator<typeof buildHourlyEmployee>;
     generateSalariedEmployee: Generator<typeof buildSalariedEmployee>;
     generateCommissionedEmployee: Generator<typeof buildCommissionedEmployee>;
@@ -40,8 +40,8 @@ export const generators: Generators = {
             ...clean(args)
         });
     },
-    generateUnionMember(args = {}) {
-        return buildUnionMember({
+    generateUnionMembership(args = {}) {
+        return buildUnionMembership({
             employeeId: generateIndex(),
             memberId: `member-${generateIndex()}`,
             rate: generateFloatBetween(0, 0.1),

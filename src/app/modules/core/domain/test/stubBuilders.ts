@@ -5,7 +5,7 @@ import {
     SalesReceiptRepository,
     ServiceChargeRepository,
     TimeCardRepository,
-    UnionMemberRepository
+    UnionMembershipRepository
 } from "../repositories";
 
 export function buildStubbedEmployeeRepository(): Stub<EmployeeRepository> {
@@ -53,7 +53,7 @@ export function buildStubbedServiceChargeRepository(): Stub<ServiceChargeReposit
     });
 }
 
-export function buildStubbedUnionMemberRepository(): Stub<UnionMemberRepository> {
+export function buildStubbedUnionMembershipRepository(): Stub<UnionMembershipRepository> {
     return buildStubFor({
         fetchByMemberId: true,
         fetchByEmployeeId: true,

@@ -100,7 +100,7 @@ export function makeChangeEmployeeController(useCases: CoreUseCases): Controller
             const [memberId, , rate] = params;
             transactionValidator.assertIsNotEmpty(rate);
 
-            return useCases.createUnionMember({
+            return useCases.createUnionMembership({
                 employeeId,
                 memberId,
                 rate: parseFloat(rate)

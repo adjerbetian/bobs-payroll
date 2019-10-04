@@ -1,8 +1,6 @@
 @UseCase6 @ChgEmp
 Feature: Use Case 6: Changing Employee Details - Union
 
-  # member
-
   Scenario: An employee can be a member of the union
     Given an employee Marta
     And a new union membership UM for Marta
@@ -28,8 +26,6 @@ Feature: Use Case 6: Changing Employee Details - Union
     And a new union membership newMembership for Alex with the member id JeansMemberId
     When I execute the ChgEmp command on Alex to add the membership newMembership
     Then the union membership newMembership should not exist in db
-
-  # No member
 
   Scenario: A union member can quit the union
     Given an employee Kevin

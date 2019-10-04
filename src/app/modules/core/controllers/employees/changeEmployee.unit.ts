@@ -7,7 +7,7 @@ import {
     HoldPaymentMethodCreationModel,
     MailPaymentMethodCreationModel,
     PaymentMethodType,
-    UnionMemberCreationModel
+    UnionMembershipCreationModel
 } from "../../domain";
 import { buildStubbedCoreUseCases } from "../test";
 import { makeChangeEmployeeController } from "./changeEmployee";
@@ -169,14 +169,14 @@ describe("changeEmployee", () => {
 
             beforeEach(() => {
                 memberId = `member-${generateIndex()}`;
-                stubbedUseCases.createUnionMember.resolves();
+                stubbedUseCases.createUnionMembership.resolves();
             });
 
             it("should add the union member", async () => {
                 await changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "10.5");
 
-                const requestModel: UnionMemberCreationModel = { memberId, employeeId, rate: 10.5 };
-                expect(stubbedUseCases.createUnionMember).to.have.been.calledOnceWith(requestModel);
+                const requestModel: UnionMembershipCreationModel = { memberId, employeeId, rate: 10.5 };
+                expect(stubbedUseCases.createUnionMembership).to.have.been.calledOnceWith(requestModel);
             });
             it("should throw a RouteFormatError when the dues rate is not specified", async () => {
                 const promise = changeEmployee(`${employeeId}`, "Member", memberId, "Dues", "");

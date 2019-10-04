@@ -21,7 +21,7 @@ export function buildStubbedCoreUseCases(): Stub<CoreUseCases> {
         createPaymentMethod: true,
         fetchEmployeePaymentMethod: true,
 
-        createUnionMember: true,
+        createUnionMembership: true,
         removeEmployeeFromUnion: true
     });
 }

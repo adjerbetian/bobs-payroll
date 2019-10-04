@@ -1,12 +1,12 @@
 import { Entity } from "./Entity";
 
-export interface UnionMember extends Entity {
+export interface UnionMembership extends Entity {
     getEmployeeId(): number;
     getMemberId(): string;
     getRate(): number;
 }
 
-export function buildUnionMember({
+export function buildUnionMembership({
     rate,
     memberId,
     employeeId
@@ -14,7 +14,7 @@ export function buildUnionMember({
     employeeId: number;
     memberId: string;
     rate: number;
-}): UnionMember {
+}): UnionMembership {
     return Object.freeze({
         getEmployeeId() {
             return employeeId;
@@ -27,7 +27,7 @@ export function buildUnionMember({
         },
         toJSON() {
             return {
-                entity: "UnionMember",
+                entity: "UnionMembership",
                 employeeId,
                 memberId,
                 rate

@@ -1,10 +1,10 @@
 import { buildMapper } from "../../../../mongo";
-import { buildUnionMember, UnionMember } from "../../domain";
-import { UnionMemberDBModel } from "../DBModels";
+import { buildUnionMembership, UnionMembership } from "../../domain";
+import { UnionMembershipDBModel } from "../DBModels";
 
-export const unionMemberMapper = buildMapper<UnionMember, UnionMemberDBModel>({
+export const unionMembershipMapper = buildMapper<UnionMembership, UnionMembershipDBModel>({
     toEntity(model) {
-        return buildUnionMember({
+        return buildUnionMembership({
             employeeId: model.employeeId,
             memberId: model.memberId,
             rate: model.rate

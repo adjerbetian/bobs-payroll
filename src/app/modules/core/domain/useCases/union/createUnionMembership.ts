@@ -1,30 +1,30 @@
-import { buildUnionMember } from "../../entities";
+import { buildUnionMembership } from "../../entities";
 import { UnionMemberIdAlreadyUsedError } from "../../errors";
-import { EmployeeRepository, UnionMemberRepository } from "../../repositories";
+import { EmployeeRepository, UnionMembershipRepository } from "../../repositories";
 import { CoreUnionUseCases } from "../CoreUseCases";
 
 interface Dependencies {
-    unionMemberRepository: UnionMemberRepository;
+    unionMembershipRepository: UnionMembershipRepository;
     employeeRepository: EmployeeRepository;
 }
 
-export function makeCreateUnionMember({
-    unionMemberRepository,
+export function makeCreateUnionMembership({
+    unionMembershipRepository,
     employeeRepository
-}: Dependencies): CoreUnionUseCases["createUnionMember"] {
+}: Dependencies): CoreUnionUseCases["createUnionMembership"] {
     return async function(creationModel) {
         await assertEmployeeExists();
         await assertMemberIdIsNotTaken();
 
-        const unionMember = buildUnionMember(creationModel);
-        await unionMemberRepository.insert(unionMember);
+        const unionMembership = buildUnionMembership(creationModel);
+        await unionMembershipRepository.insert(unionMembership);
 
         async function assertEmployeeExists(): Promise<void> {
             await employeeRepository.fetchById(creationModel.employeeId);
         }
 
         async function assertMemberIdIsNotTaken(): Promise<void> {
-            const memberIdExists = await unionMemberRepository.doesMemberIdExist(creationModel.memberId);
+            const memberIdExists = await unionMembershipRepository.doesMemberIdExist(creationModel.memberId);
             if (memberIdExists) throw new UnionMemberIdAlreadyUsedError(creationModel.memberId);
         }
     };

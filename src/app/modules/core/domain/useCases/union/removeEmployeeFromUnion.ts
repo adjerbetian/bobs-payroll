@@ -1,14 +1,14 @@
-import { UnionMemberRepository } from "../../repositories";
+import { UnionMembershipRepository } from "../../repositories";
 import { CoreUnionUseCases } from "../CoreUseCases";
 
 interface Dependencies {
-    unionMemberRepository: UnionMemberRepository;
+    unionMembershipRepository: UnionMembershipRepository;
 }
 
 export function makeRemoveEmployeeFromUnion({
-    unionMemberRepository
+    unionMembershipRepository
 }: Dependencies): CoreUnionUseCases["removeEmployeeFromUnion"] {
     return async function(employeeId) {
-        await unionMemberRepository.deleteByEmployeeId(employeeId);
+        await unionMembershipRepository.deleteByEmployeeId(employeeId);
     };
 }

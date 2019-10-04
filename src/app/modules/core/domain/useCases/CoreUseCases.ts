@@ -13,7 +13,7 @@ import {
     SalesReceiptCreationModel,
     ServiceChargeCreationModel,
     TimeCardCreationModel,
-    UnionMemberCreationModel
+    UnionMembershipCreationModel
 } from "../requestModels";
 
 // prettier-ignore
@@ -54,6 +54,6 @@ export interface CoreTimeCardUseCases {
 }
 
 export interface CoreUnionUseCases {
-    createUnionMember(creationModel: UnionMemberCreationModel): Promise<void>;
+    createUnionMembership(creationModel: UnionMembershipCreationModel): Promise<void>;
     removeEmployeeFromUnion(employeeId: number): Promise<void>;
 }

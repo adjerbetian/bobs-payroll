@@ -10,11 +10,11 @@ Given(
         store.serviceCharges.set(serviceChargeName, serviceCharge);
 
         async function seedOrGenerate(): Promise<ServiceCharge> {
-            const unionMember = store.unionMembers.get(membershipName);
-            const partialServiceCharge = { memberId: unionMember.getMemberId() };
+            const unionMembership = store.unionMembers.get(membershipName);
+            const partialServiceCharge = { memberId: unionMembership.getMemberId() };
 
             if (isNew) return generators.generateServiceCharge(partialServiceCharge);
-            else return seeders.seedServiceCharge({ memberId: unionMember.getMemberId() });
+            else return seeders.seedServiceCharge({ memberId: unionMembership.getMemberId() });
         }
     }
 );

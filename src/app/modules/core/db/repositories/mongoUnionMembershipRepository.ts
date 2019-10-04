@@ -1,10 +1,10 @@
 import { MongoEntity } from "../../../../mongo";
-import { CoreDependencies, UnionMember } from "../../domain";
-import { UnionMemberDBModel } from "../DBModels";
+import { CoreDependencies, UnionMembership } from "../../domain";
+import { UnionMembershipDBModel } from "../DBModels";
 
-export function makeMongoUnionMemberRepository(
-    db: MongoEntity<UnionMember, UnionMemberDBModel>
-): CoreDependencies["unionMemberRepository"] {
+export function makeMongoUnionMembershipRepository(
+    db: MongoEntity<UnionMembership, UnionMembershipDBModel>
+): CoreDependencies["unionMembershipRepository"] {
     return {
         async fetchByEmployeeId(employeeId) {
             return db.fetch({ employeeId });
@@ -12,8 +12,8 @@ export function makeMongoUnionMemberRepository(
         async fetchByMemberId(memberId) {
             return db.fetch({ memberId });
         },
-        async insert(unionMember) {
-            await db.insert(unionMember);
+        async insert(unionMembership) {
+            await db.insert(unionMembership);
         },
         async doesMemberIdExist(memberId) {
             return db.exists({ memberId: memberId });

@@ -4,7 +4,7 @@ import {
     SalesReceiptRepository,
     ServiceChargeRepository,
     TimeCardRepository,
-    UnionMemberRepository
+    UnionMembershipRepository
 } from "../repositories";
 import { CoreUseCases } from "./CoreUseCases";
 import { makeCoreEmployeeUseCases } from "./employees";
@@ -20,7 +20,7 @@ export interface CoreUseCasesDependencies {
     employeeRepository: EmployeeRepository;
     timeCardRepository: TimeCardRepository;
     serviceChargeRepository: ServiceChargeRepository;
-    unionMemberRepository: UnionMemberRepository;
+    unionMembershipRepository: UnionMembershipRepository;
     salesReceiptRepository: SalesReceiptRepository;
     paymentMethodRepository: PaymentMethodRepository;
 }
@@ -29,7 +29,7 @@ export function makeCoreUseCases({
     employeeRepository,
     timeCardRepository,
     serviceChargeRepository,
-    unionMemberRepository,
+    unionMembershipRepository,
     salesReceiptRepository,
     paymentMethodRepository
 }: CoreUseCasesDependencies): CoreUseCases {
@@ -37,8 +37,8 @@ export function makeCoreUseCases({
         ...makeCoreEmployeeUseCases({ employeeRepository }),
         ...makeCorePaymentMethodUseCases({ paymentMethodRepository }),
         ...makeCoreSalesReceiptUseCases({ employeeRepository, salesReceiptRepository }),
-        ...makeCoreServiceChargesUseCases({ unionMemberRepository, serviceChargeRepository }),
+        ...makeCoreServiceChargesUseCases({ unionMembershipRepository, serviceChargeRepository }),
         ...makeCoreTimeCardUseCases({ employeeRepository, timeCardRepository }),
-        ...makeCoreUnionUseCases({ employeeRepository, unionMemberRepository })
+        ...makeCoreUnionUseCases({ employeeRepository, unionMembershipRepository })
     };
 }

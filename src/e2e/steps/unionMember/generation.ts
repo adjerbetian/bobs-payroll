@@ -1,6 +1,6 @@
 import { generators, seeders } from "@test/generators";
 import { Given } from "cucumber";
-import { UnionMember } from "../../../app";
+import { UnionMembership } from "../../../app";
 import { store, toFloat } from "../../utils";
 
 Given(
@@ -12,20 +12,20 @@ Given(
         memberId: string | undefined,
         rate: string | undefined
     ) => {
-        const unionMember = await seedOrGenerate();
+        const unionMembership = await seedOrGenerate();
         if (membershipName) {
-            store.unionMembers.set(membershipName, unionMember);
+            store.unionMembers.set(membershipName, unionMembership);
         }
 
-        async function seedOrGenerate(): Promise<UnionMember> {
-            const partialUnionMember = {
+        async function seedOrGenerate(): Promise<UnionMembership> {
+            const partialUnionMembership = {
                 employeeId: getEmployeeId(),
                 memberId: memberId,
                 rate: toFloat(rate)
             };
 
-            if (isNew) return generators.generateUnionMember(partialUnionMember);
-            else return await seeders.seedUnionMember(partialUnionMember);
+            if (isNew) return generators.generateUnionMembership(partialUnionMembership);
+            else return await seeders.seedUnionMembership(partialUnionMembership);
         }
         function getEmployeeId(): number {
             const employee = store.employees.get(employeeName);

@@ -1,6 +1,6 @@
 import { MongoModel } from "../../../../mongo";
 
-export interface UnionMemberDBModel extends MongoModel {
+export interface UnionMembershipDBModel extends MongoModel {
     employeeId: number;
     memberId: string;
     rate: number;

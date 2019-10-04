@@ -1,4 +1,4 @@
-export * from "./UnionMemberDBModel";
+export * from "./UnionMembershipDBModel";
 export * from "./TimeCardDBModel";
 export * from "./EmployeeDBModel";
 export * from "./SalesReceiptDBModel";

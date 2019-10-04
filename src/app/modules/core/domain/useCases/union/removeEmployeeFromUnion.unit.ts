@@ -1,25 +1,25 @@
 import { expect, generateIndex, Stub } from "@test/unit";
-import { UnionMemberRepository } from "../../repositories";
-import { buildStubbedUnionMemberRepository } from "../../test";
+import { UnionMembershipRepository } from "../../repositories";
+import { buildStubbedUnionMembershipRepository } from "../../test";
 import { makeRemoveEmployeeFromUnion } from "./removeEmployeeFromUnion";
 
 describe("use case - removeEmployeeFromUnion", () => {
-    let stubbedUnionMemberRepository: Stub<UnionMemberRepository>;
+    let stubbedUnionMembershipRepository: Stub<UnionMembershipRepository>;
     let removeEmployeeFromUnion: ReturnType<typeof makeRemoveEmployeeFromUnion>;
 
     beforeEach(() => {
-        stubbedUnionMemberRepository = buildStubbedUnionMemberRepository();
+        stubbedUnionMembershipRepository = buildStubbedUnionMembershipRepository();
         removeEmployeeFromUnion = makeRemoveEmployeeFromUnion({
-            unionMemberRepository: stubbedUnionMemberRepository
+            unionMembershipRepository: stubbedUnionMembershipRepository
         });
     });
 
-    it("should delete the employee union member", async () => {
+    it("should delete the employee union membership", async () => {
         const employeeId = generateIndex();
-        stubbedUnionMemberRepository.deleteByEmployeeId.resolves();
+        stubbedUnionMembershipRepository.deleteByEmployeeId.resolves();
 
         await removeEmployeeFromUnion(employeeId);
 
-        expect(stubbedUnionMemberRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
+        expect(stubbedUnionMembershipRepository.deleteByEmployeeId).to.have.been.calledOnceWith(employeeId);
     });
 });

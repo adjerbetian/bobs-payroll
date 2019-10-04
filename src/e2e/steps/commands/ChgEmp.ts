@@ -70,9 +70,9 @@ When(
     /^I execute the ChgEmp command on (\w+) to add the membership (\w+)$/,
     async (name: string, membershipName: string) => {
         const employee = store.employees.get(name);
-        const unionMember = store.unionMembers.get(membershipName);
+        const unionMembership = store.unionMembers.get(membershipName);
         return executePayrollCommand(
-            `ChgEmp ${employee.getId()} Member ${unionMember.getMemberId()} Dues ${unionMember.getRate()}`
+            `ChgEmp ${employee.getId()} Member ${unionMembership.getMemberId()} Dues ${unionMembership.getRate()}`
         );
     }
 );
@@ -80,8 +80,8 @@ When(
     /^I execute an incomplete ChgEmp command on (\w+) to add the membership (\w+)$/,
     async (name: string, membershipName: string) => {
         const employee = store.employees.get(name);
-        const unionMember = store.unionMembers.get(membershipName);
-        return executePayrollCommand(`ChgEmp ${employee.getId()} Member ${unionMember.getMemberId()} Dues`);
+        const unionMembership = store.unionMembers.get(membershipName);
+        return executePayrollCommand(`ChgEmp ${employee.getId()} Member ${unionMembership.getMemberId()} Dues`);
     }
 );
 When(/^I execute the ChgEmp command on (\w+) to remove from the union$/, async (name: string) => {
