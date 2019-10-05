@@ -1,4 +1,4 @@
-import { buildMapper } from "../../../../mongo";
+import { buildMapper } from "@bobs-payroll/mongo";
 import { buildTimeCard, TimeCard } from "../../domain";
 import { TimeCardDBModel } from "../DBModels";
 

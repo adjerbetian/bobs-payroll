@@ -1,4 +1,4 @@
-import { MongoModel } from "../../../../mongo";
+import { MongoModel } from "@bobs-payroll/mongo";
 
 export interface UnionMembershipDBModel extends MongoModel {
     employeeId: number;

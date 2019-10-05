@@ -1,4 +1,4 @@
-import { MongoEntity } from "../../../../mongo";
+import { MongoEntity } from "@bobs-payroll/mongo";
 import { CoreDependencies, SalesReceipt } from "../../domain";
 import { SalesReceiptDBModel } from "../DBModels";
 

@@ -1,4 +1,4 @@
-import { buildMapper } from "../../../../mongo";
+import { buildMapper } from "@bobs-payroll/mongo";
 import { buildSalesReceipt, SalesReceipt } from "../../domain";
 import { SalesReceiptDBModel } from "../DBModels";
 

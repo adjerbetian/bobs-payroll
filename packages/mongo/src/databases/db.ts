@@ -1,8 +1,7 @@
 import { Db, MongoClient } from "mongodb";
-import * as config from "../../../config.json";
+import * as config from "../config.json";
 import { Mapper } from "../mappers";
-import { makeMongoDbAdapter } from "./mongoDbAdapter";
-import { buildMongoEntity, MongoEntity } from "./mongoEntity";
+import { buildMongoEntity, makeMongoDbAdapter, MongoEntity } from "../adapters";
 
 let client: MongoClient;
 

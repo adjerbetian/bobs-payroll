@@ -1,6 +1,6 @@
+import { MongoEntity } from "@bobs-payroll/mongo";
 import * as moment from "moment";
 import { isoDate } from "../../../../../utils";
-import { MongoEntity } from "../../../../mongo";
 import { Payment, PaymentRepository } from "../../domain";
 import { PaymentDBModel } from "../DBModels";
 

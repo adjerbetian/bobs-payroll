@@ -1,4 +1,4 @@
-import { MongoModel } from "../../../../mongo";
+import { MongoModel } from "@bobs-payroll/mongo";
 import { PaymentMethodType } from "../../../core";
 
 export interface PaymentDBModel extends MongoModel {

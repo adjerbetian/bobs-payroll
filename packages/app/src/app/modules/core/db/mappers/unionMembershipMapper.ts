@@ -1,4 +1,4 @@
-import { buildMapper } from "../../../../mongo";
+import { buildMapper } from "@bobs-payroll/mongo";
 import { buildUnionMembership, UnionMembership } from "../../domain";
 import { UnionMembershipDBModel } from "../DBModels";
 

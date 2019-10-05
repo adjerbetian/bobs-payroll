@@ -1,6 +1,6 @@
 import { buildRouter } from "./router";
 import { makeCoreModule, makePaymentModule } from "./modules";
-import { closeConnection, initConnection } from "./mongo";
+import { closeConnection, initConnection } from "@bobs-payroll/mongo";
 
 interface App {
     start: () => Promise<void>;

@@ -1,0 +1,16 @@
+{
+    "name": "@bobs-payroll/mongo",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "test": "npm run build && mocha ./**/*.spec.ts"
+    },
+    "dependencies": {
+        "mongodb": "^3.3.2"
+    },
+    "devDependencies": {
+        "@types/mongodb": "^3.3.3",
+        "@types/node": "^12.7.8"
+    }
+}
