@@ -59,7 +59,7 @@ module.exports = {
         "@typescript-eslint/no-require-imports": "error",
         "@typescript-eslint/no-this-alias": "error",
         "@typescript-eslint/no-useless-constructor": "error",
-        "@typescript-eslint/prefer-function-type": "error",
+        "@typescript-eslint/prefer-function-type": "off",
         "@typescript-eslint/prefer-includes": "error",
         "@typescript-eslint/prefer-readonly": "error",
         "@typescript-eslint/prefer-string-starts-ends-with": "error",

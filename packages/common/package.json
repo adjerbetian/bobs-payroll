@@ -7,6 +7,10 @@
         "test": "echo 'no tests'"
     },
     "dependencies": {
-        "moment": "^2.24.0"
+        "moment": "^2.24.0",
+        "lodash": "^4.17.15"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.141"
     }
 }
