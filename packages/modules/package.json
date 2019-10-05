@@ -1,25 +1,16 @@
 {
     "name": "@bobs-payroll/modules",
     "version": "1.0.0",
-    "author": "Alexandre Djerbetian",
-    "license": "ISC",
-    "description": "Agile Software Development - Principles, Pattern, and Practices - Case Study 1 - The Payroll System",
     "scripts": {
-        "run": "ts-node --transpile-only src/main.ts",
         "build": "tsc --project tsconfig.json",
-        "test": "npm run build && npm run test:fast:unit && npm run test:fast:integration && npm run test:fast:e2e",
-        "test:unit": "npm run build && npm run test:fast:unit",
-        "test:unit:watch": "npm run build && npm run test:unit -- --watch",
-        "test:integration": "npm run build && npm run test:fast:integration",
-        "test:e2e": "npm run build && npm run test:fast:e2e",
-        "test:todo": "npm run build && cucumber-js --tags \"@todo\"",
-        "test:fast:unit": "mocha ./src/**/*.unit.ts",
-        "test:fast:integration": "mocha ./**/*.spec.ts",
-        "test:fast:e2e": "cucumber-js --tags \"not @todo\""
+        "test": "npm run test:unit && npm run test:integration",
+        "test:unit": "mocha ./src/**/*.unit.ts",
+        "test:integration": "mocha ./**/*.spec.ts"
     },
     "dependencies": {
-        "@bobs-payroll/mongo": "^1.0.0",
         "@bobs-payroll/common": "^1.0.0",
+        "@bobs-payroll/mongo": "^1.0.0",
+        "@bobs-payroll/test": "^1.0.0",
         "lodash": "^4.17.15",
         "moment": "^2.24.0",
         "mongodb": "^3.3.2"

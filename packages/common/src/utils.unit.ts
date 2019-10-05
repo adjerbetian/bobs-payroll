@@ -1,4 +1,4 @@
-// import { expect } from "../../../test/unit";
+// import { expect } from "@bobs-payroll/test";
 // import { stripQuotationMarks } from "./strings";
 //
 // describe("string utils", () => {

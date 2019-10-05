@@ -1,4 +1,4 @@
-import { expect, generateIndex, Stub } from "../../../test/unit";
+import { expect, generateIndex, Stub } from "@bobs-payroll/test";
 import { CoreUseCases } from "../../domain";
 import { RouteFormatError } from "../errors";
 import { buildStubbedCoreUseCases } from "../test";

@@ -1,5 +1,6 @@
 import { monday } from "@bobs-payroll/common";
-import { generators, expect, generateIndex, Stub } from "../../../../test/unit";
+import { expect, generateIndex, Stub } from "@bobs-payroll/test";
+import { generators } from "../../../../test";
 import { SalesReceiptRepository } from "../../repositories";
 import { buildStubbedSalesReceiptRepository } from "../../test";
 import { makeFetchAllEmployeeSalesReceipts } from "./fetchAllEmployeeSalesReceiptsSince";

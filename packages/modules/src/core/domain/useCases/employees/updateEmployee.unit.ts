@@ -1,4 +1,4 @@
-import { expect, generateIndex, Stub } from "../../../../test/unit";
+import { expect, generateIndex, Stub } from "@bobs-payroll/test";
 import { EmployeeRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository } from "../../test";
 import { makeUpdateEmployee } from "./updateEmployee";

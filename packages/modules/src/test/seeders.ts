@@ -1,12 +1,6 @@
-import {
-    dbEmployees,
-    dbPaymentMethods,
-    dbSalesReceipts,
-    dbServiceCharges,
-    dbTimeCards,
-    dbUnionMembers
-} from "../../core";
-import { dbPayments } from "../../payment";
+import { buildSeeder } from "@bobs-payroll/test";
+import { dbEmployees, dbPaymentMethods, dbSalesReceipts, dbServiceCharges, dbTimeCards, dbUnionMembers } from "../core";
+import { dbPayments } from "../payment";
 import { generators } from "./generators";
 
 export const seeders = {
@@ -22,14 +16,3 @@ export const seeders = {
     seedMailPaymentMethod: buildSeeder(generators.generateMailPaymentMethod, dbPaymentMethods),
     seedPayment: buildSeeder(generators.generatePayment, dbPayments)
 };
-
-function buildSeeder<Generator extends (args: any) => any>(
-    generator: Generator,
-    inserter: { insert: (entity: ReturnType<Generator>) => Promise<void> }
-): (args?: Parameters<Generator>[0]) => Promise<ReturnType<Generator>> {
-    return async function(args = {}) {
-        const entity = generator(args);
-        await inserter.insert(entity);
-        return entity;
-    };
-}

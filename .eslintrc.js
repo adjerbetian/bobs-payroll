@@ -4,7 +4,7 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: "module",
-        project: "./tsconfig.json"
+        project: "./tsconfig.base.json"
     },
     env: {
         es6: true,
@@ -36,7 +36,7 @@ module.exports = {
         "chai-friendly/no-unused-expressions": "error",
 
         // import
-        "import/no-internal-modules": ["error", {allow: ["test/*", "test/**/*"]}],
+        "import/no-internal-modules": ["error", {allow: ["@bobs-payroll/test/integration"]}],
         "import/no-unresolved": "error",
         "import/no-cycle": "error",
         "import/no-unused-modules": "off",

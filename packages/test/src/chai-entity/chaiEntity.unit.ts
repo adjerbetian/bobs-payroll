@@ -1,6 +1,5 @@
 import { SinonStub } from "sinon";
-import { Entity } from "../../core";
-import { expect, sandbox } from "../unit";
+import { expect, sandbox } from "../utils";
 
 describe("chaiEntity", () => {
     describe("entity.to.equal", function() {
@@ -168,7 +167,7 @@ describe("chaiEntity", () => {
     }
 });
 
-function buildEntity<T extends object>(object: T): T & Entity {
+function buildEntity<T extends object>(object: T): T & { toJSON: () => any } {
     return {
         ...object,
         toJSON() {

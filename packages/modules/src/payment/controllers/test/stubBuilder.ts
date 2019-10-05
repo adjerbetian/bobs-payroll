@@ -1,4 +1,4 @@
-import { buildStubFor, Stub } from "../../../test/utils";
+import { buildStubFor, Stub } from "@bobs-payroll/test";
 import { PaymentUseCases } from "../../domain";
 
 export function buildStubbedPaymentUseCases(): Stub<PaymentUseCases> {

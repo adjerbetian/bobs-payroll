@@ -1,5 +1,5 @@
 import { isoDate } from "@bobs-payroll/common";
-import { expect, Stub } from "../../../test/unit";
+import { expect, Stub } from "@bobs-payroll/test";
 import * as moment from "moment";
 import { PaymentUseCases } from "../../domain";
 import { RouteFormatError } from "../errors";

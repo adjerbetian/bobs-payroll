@@ -1,4 +1,5 @@
-import { generators, expect } from "../../../test/unit";
+import { expect } from "@bobs-payroll/test";
+import { generators } from "../../../test";
 import { TimeCard } from "./TimeCard";
 
 describe("entity TimeCard", () => {

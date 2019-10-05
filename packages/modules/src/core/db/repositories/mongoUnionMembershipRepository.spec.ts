@@ -1,4 +1,6 @@
-import { generators, seeders, expect, generateIndex } from "../../../test/integration";
+import { expect, generateIndex } from "@bobs-payroll/test";
+import "@bobs-payroll/test/integration";
+import { generators, seeders } from "../../../test";
 import { NotFoundError } from "../../domain";
 import { dbUnionMembers } from "../collections";
 import { makeMongoUnionMembershipRepository } from "./mongoUnionMembershipRepository";

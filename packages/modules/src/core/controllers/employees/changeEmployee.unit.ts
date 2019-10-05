@@ -1,4 +1,4 @@
-import { expect, generateIndex, Stub } from "../../../test/unit";
+import { expect, generateIndex, Stub } from "@bobs-payroll/test";
 import {
     CoreUseCases,
     DirectPaymentMethodCreationModel,

@@ -1,5 +1,5 @@
-import { isoDate } from "@bobs-payroll/common";
-import * as _ from "lodash";
+import { clean, isoDate } from "@bobs-payroll/common";
+import { EntityGenerator, generateFloatBetween, generateIndex } from "@bobs-payroll/test";
 import * as moment from "moment";
 import {
     buildCommissionedEmployee,
@@ -12,22 +12,21 @@ import {
     buildServiceCharge,
     buildTimeCard,
     buildUnionMembership
-} from "../../core";
-import { buildPayment } from "../../payment";
-import { generateFloatBetween, generateIndex } from "./common";
+} from "../core";
+import { buildPayment } from "../payment";
 
 interface Generators {
-    generateTimeCard: Generator<typeof buildTimeCard>;
-    generateUnionMembership: Generator<typeof buildUnionMembership>;
-    generateHourlyEmployee: Generator<typeof buildHourlyEmployee>;
-    generateSalariedEmployee: Generator<typeof buildSalariedEmployee>;
-    generateCommissionedEmployee: Generator<typeof buildCommissionedEmployee>;
-    generateSalesReceipt: Generator<typeof buildSalesReceipt>;
-    generateServiceCharge: Generator<typeof buildServiceCharge>;
-    generateHoldPaymentMethod: Generator<typeof buildHoldPaymentMethod>;
-    generateDirectPaymentMethod: Generator<typeof buildDirectPaymentMethod>;
-    generateMailPaymentMethod: Generator<typeof buildMailPaymentMethod>;
-    generatePayment: Generator<typeof buildPayment>;
+    generateTimeCard: EntityGenerator<typeof buildTimeCard>;
+    generateUnionMembership: EntityGenerator<typeof buildUnionMembership>;
+    generateHourlyEmployee: EntityGenerator<typeof buildHourlyEmployee>;
+    generateSalariedEmployee: EntityGenerator<typeof buildSalariedEmployee>;
+    generateCommissionedEmployee: EntityGenerator<typeof buildCommissionedEmployee>;
+    generateSalesReceipt: EntityGenerator<typeof buildSalesReceipt>;
+    generateServiceCharge: EntityGenerator<typeof buildServiceCharge>;
+    generateHoldPaymentMethod: EntityGenerator<typeof buildHoldPaymentMethod>;
+    generateDirectPaymentMethod: EntityGenerator<typeof buildDirectPaymentMethod>;
+    generateMailPaymentMethod: EntityGenerator<typeof buildMailPaymentMethod>;
+    generatePayment: EntityGenerator<typeof buildPayment>;
 }
 
 export const generators: Generators = {
@@ -131,11 +130,3 @@ export const generators: Generators = {
         });
     }
 };
-
-type Generator<EntityFactory extends (args: any) => any> = (
-    args?: Partial<Parameters<EntityFactory>[0]>
-) => ReturnType<EntityFactory>;
-
-function clean<T extends Record<string, any>>(object: T): T {
-    return _.omitBy(object, a => _.isUndefined(a)) as T;
-}

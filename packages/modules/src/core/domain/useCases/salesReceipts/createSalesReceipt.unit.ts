@@ -1,4 +1,5 @@
-import { generators, expect, Stub } from "../../../../test/unit";
+import { expect, Stub } from "@bobs-payroll/test";
+import { generators } from "../../../../test";
 import { EmployeeTypeError } from "../../errors";
 import { EmployeeRepository, SalesReceiptRepository } from "../../repositories";
 import { buildStubbedEmployeeRepository, buildStubbedSalesReceiptRepository } from "../../test";

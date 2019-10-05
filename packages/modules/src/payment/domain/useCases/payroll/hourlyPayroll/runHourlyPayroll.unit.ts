@@ -1,6 +1,7 @@
 import { friday, lastFriday, never } from "@bobs-payroll/common";
-import { buildStubFor, generators, expect, Stub } from "../../../../../test/unit";
+import { buildStubFor, expect, Stub } from "@bobs-payroll/test";
 import { CoreUseCases } from "../../../../../core";
+import { generators } from "../../../../../test";
 import { buildStubbedCoreUseCases } from "../../../../test";
 import { PaymentRepository } from "../../../repositories";
 import { buildStubbedPaymentRepository } from "../../../test";

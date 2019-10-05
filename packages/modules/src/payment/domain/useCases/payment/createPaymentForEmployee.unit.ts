@@ -1,6 +1,7 @@
 import { lastDayOfMonth } from "@bobs-payroll/common";
-import { generators, expect, generateFloatBetween, generateIndex, Stub } from "../../../../test/unit";
+import { expect, generateFloatBetween, generateIndex, Stub } from "@bobs-payroll/test";
 import { CoreUseCases } from "../../../../core";
+import { generators } from "../../../../test";
 import { buildStubbedCoreUseCases } from "../../../test";
 import { buildPayment, Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";

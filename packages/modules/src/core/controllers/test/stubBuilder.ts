@@ -1,4 +1,4 @@
-import { buildStubFor, Stub } from "../../../test/utils";
+import { buildStubFor, Stub } from "@bobs-payroll/test";
 import { CoreUseCases } from "../../domain";
 
 export function buildStubbedCoreUseCases(): Stub<CoreUseCases> {
