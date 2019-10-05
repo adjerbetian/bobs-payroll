@@ -1,12 +1,12 @@
-import { executePayrollCommand } from "../../../test/cucumber";
-import { When } from "cucumber";
 import {
     DirectPaymentMethod,
     HoldPaymentMethod,
     MailPaymentMethod,
     PaymentMethod,
     PaymentMethodType
-} from "../../../app";
+} from "../../../core";
+import { executePayrollCommand } from "../../../test/cucumber";
+import { When } from "cucumber";
 import { store } from "../../utils";
 import { removeLastArg } from "./removeLastArg";
 

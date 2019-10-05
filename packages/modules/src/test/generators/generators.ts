@@ -7,13 +7,13 @@ import {
     buildHoldPaymentMethod,
     buildHourlyEmployee,
     buildMailPaymentMethod,
-    buildPayment,
     buildSalariedEmployee,
     buildSalesReceipt,
     buildServiceCharge,
     buildTimeCard,
     buildUnionMembership
-} from "../../app";
+} from "../../core";
+import { buildPayment } from "../../payment";
 import { generateFloatBetween, generateIndex } from "./common";
 
 interface Generators {

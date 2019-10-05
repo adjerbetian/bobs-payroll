@@ -1,6 +1,6 @@
+import { SalesReceipt } from "../../../core";
 import { generators, seeders } from "../../../test/generators";
 import { Given } from "cucumber";
-import { SalesReceipt } from "../../../app";
 import { dates, store, toFloat } from "../../utils";
 
 Given(

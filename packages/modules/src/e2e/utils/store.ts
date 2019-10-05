@@ -1,4 +1,4 @@
-import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMembership } from "../../app";
+import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMembership } from "../../core";
 import { buildNonNullMap, NonNullMap } from "./NonNullMap";
 
 export const store = buildVariablesStore();

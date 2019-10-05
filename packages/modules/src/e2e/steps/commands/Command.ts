@@ -1,6 +1,6 @@
+import { EmployeeType } from "../../../core";
 import { executePayrollCommand } from "../../../test/cucumber";
 import { When } from "cucumber";
-import { EmployeeType } from "../../../app";
 import { store } from "../../utils";
 import { removeLastArg } from "./removeLastArg";
 

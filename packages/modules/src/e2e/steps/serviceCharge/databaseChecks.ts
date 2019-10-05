@@ -1,6 +1,6 @@
+import { dbServiceCharges, dbUnionMembers } from "../../../core";
 import { expect } from "../../../test/utils";
 import { Then } from "cucumber";
-import { dbServiceCharges, dbUnionMembers } from "../../../app";
 import { store } from "../../utils";
 
 Then(

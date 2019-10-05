@@ -1,6 +1,6 @@
-import { generators, seeders } from "../../../test/generators";
 import { Given } from "cucumber";
-import { UnionMembership } from "../../../app";
+import { UnionMembership } from "../../../core";
+import { generators, seeders } from "../../../test/generators";
 import { store, toFloat } from "../../utils";
 
 Given(

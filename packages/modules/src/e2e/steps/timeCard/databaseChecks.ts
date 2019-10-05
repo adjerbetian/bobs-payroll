@@ -1,6 +1,6 @@
-import { expect } from "../../../test/utils";
 import { Then } from "cucumber";
-import { dbTimeCards } from "../../../app";
+import { dbTimeCards } from "../../../core";
+import { expect } from "../../../test/utils";
 import { store } from "../../utils";
 
 // noinspection DuplicatedCode

@@ -1,12 +1,12 @@
 import {
     dbEmployees,
     dbPaymentMethods,
-    dbPayments,
     dbSalesReceipts,
     dbServiceCharges,
     dbTimeCards,
     dbUnionMembers
-} from "../../app";
+} from "../../core";
+import { dbPayments } from "../../payment";
 import { generators } from "./generators";
 
 export const seeders = {

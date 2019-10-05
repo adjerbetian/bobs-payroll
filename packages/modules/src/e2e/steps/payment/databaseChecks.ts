@@ -1,6 +1,6 @@
-import { expect } from "../../../test/utils";
 import { Then } from "cucumber";
-import { dbPayments } from "../../../app";
+import { dbPayments } from "../../../payment";
+import { expect } from "../../../test/utils";
 import { dates, store } from "../../utils";
 
 Then(

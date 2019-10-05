@@ -1,6 +1,6 @@
-import { generators, seeders } from "../../../test/generators";
 import { Given } from "cucumber";
-import { PaymentMethod } from "../../../app";
+import { PaymentMethod } from "../../../core";
+import { generators, seeders } from "../../../test/generators";
 import { store } from "../../utils";
 
 Given(
