@@ -11,7 +11,7 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/mongo/dist" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
-      <excludePattern pattern="*.js" />
+      <excludePattern pattern="index.js" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
