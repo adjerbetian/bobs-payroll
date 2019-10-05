@@ -4,13 +4,8 @@
     "packages/**"
   ],
   "scripts": {
-    "build": "lerna run build --stream",
-    "test": "lerna exec yarn test",
-    "test:unit": "lerna exec yarn test:unit",
-    "test:unit:watch": "lerna exec yarn test:unit:watch",
-    "test:integration": "lerna exec yarn test:integration",
-    "test:e2e": "lerna exec yarn test:e2e",
-    "test:todo": "lerna exec yarn test:todo"
+    "build": "lerna bootstrap && lerna run build --stream",
+    "test": "yarn run build && lerna exec yarn test"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.3.1",
