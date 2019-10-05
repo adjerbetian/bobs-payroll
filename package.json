@@ -5,16 +5,23 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
-    "compile": "lerna run compile --stream",
-    "test": "lerna run test --stream --no-prefix",
-    "test:unit": "lerna run test:unit --stream",
-    "test:unit:watch": "lerna run test:unit:watch --stream",
-    "test:integration": "lerna run test:integration --stream",
-    "test:e2e": "lerna run test:e2e --stream",
-    "test:todo": "lerna run test:todo --stream"
+    "test": "lerna exec yarn test",
+    "test:unit": "lerna exec yarn test:unit",
+    "test:unit:watch": "lerna exec yarn test:unit:watch",
+    "test:integration": "lerna exec yarn test:integration",
+    "test:e2e": "lerna exec yarn test:e2e",
+    "test:todo": "lerna exec yarn test:todo"
   },
   "devDependencies": {
-    "lerna": "^3.16.4"
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
+    "eslint": "^6.5.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-import": "^2.18.2",
+    "lerna": "^3.16.4",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.3"
   },
   "name": "bobs-payroll"
 }

@@ -1,17 +1,13 @@
 {
+    "extends": "../../tsconfig",
     "compilerOptions": {
-        "allowJs": false,
-        "module": "commonjs",
-        "target": "esnext",
-        "sourceMap": true,
-        "moduleResolution": "node",
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "listEmittedFiles": true,
-        "resolveJsonModule": true,
         "baseUrl": "./src/",
-        "outDir": "dist/",
-        "noEmit": true
+        "outDir": "dist/"
     },
-    "exclude": ["node_modules"]
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
