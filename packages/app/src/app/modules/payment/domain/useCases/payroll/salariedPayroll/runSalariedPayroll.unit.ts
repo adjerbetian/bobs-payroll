@@ -1,4 +1,5 @@
-import { buildStubFor, generators, expect, lastDayOfMonth, Stub } from "../../../../../../../test/unit";
+import { lastDayOfMonth } from "@bobs-payroll/common";
+import { buildStubFor, generators, expect, Stub } from "../../../../../../../test/unit";
 import { CoreUseCases } from "../../../../../core";
 import { buildStubbedCoreUseCases } from "../../../../test";
 import { CreatePaymentForEmployee } from "../../payment";

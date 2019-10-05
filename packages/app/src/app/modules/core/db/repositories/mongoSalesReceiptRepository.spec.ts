@@ -1,13 +1,5 @@
-import {
-    expect,
-    generateIndex,
-    monday,
-    seeders,
-    never,
-    tuesday,
-    lastTuesday,
-    generators
-} from "../../../../../test/integration";
+import { lastTuesday, monday, never, tuesday } from "@bobs-payroll/common";
+import { expect, generateIndex, seeders, generators } from "../../../../../test/integration";
 import { dbSalesReceipts } from "../collections";
 import { makeMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";
 

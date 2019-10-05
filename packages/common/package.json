@@ -1,0 +1,12 @@
+{
+    "name": "@bobs-payroll/common",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "test": "echo 'no tests'"
+    },
+    "dependencies": {
+        "moment": "^2.24.0"
+    }
+}

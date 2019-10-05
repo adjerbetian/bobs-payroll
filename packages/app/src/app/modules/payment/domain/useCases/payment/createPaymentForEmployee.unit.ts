@@ -1,11 +1,5 @@
-import {
-    generators,
-    expect,
-    generateFloatBetween,
-    generateIndex,
-    lastDayOfMonth,
-    Stub
-} from "../../../../../../test/unit";
+import { lastDayOfMonth } from "@bobs-payroll/common";
+import { generators, expect, generateFloatBetween, generateIndex, Stub } from "../../../../../../test/unit";
 import { CoreUseCases } from "../../../../core";
 import { buildStubbedCoreUseCases } from "../../../test";
 import { buildPayment, Payment } from "../../entities";
