@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "module": "commonjs",
+        "target": "esnext",
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "listEmittedFiles": true,
+        "resolveJsonModule": true,
+        "baseUrl": "./src/",
+        "outDir": "dist/",
+        "noEmit": true
+    },
+    "exclude": ["node_modules"]
+}

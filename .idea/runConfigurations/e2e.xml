@@ -3,12 +3,10 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="test:fast:e2e" />
+      <script value="test:e2e" />
     </scripts>
     <node-interpreter value="project" />
     <envs />
-    <method v="2">
-      <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" CONFIG_PATH="$PROJECT_DIR$/tsconfig.json" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>
