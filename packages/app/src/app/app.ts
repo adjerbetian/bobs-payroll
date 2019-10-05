@@ -1,4 +1,4 @@
-import { buildRouter } from "./router";
+import { buildRouter } from "@bobs-payroll/router";
 import { makeCoreModule, makePaymentModule } from "./modules";
 import { closeConnection, initConnection } from "@bobs-payroll/mongo";
 

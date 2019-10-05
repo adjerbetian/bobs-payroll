@@ -1,6 +1,6 @@
+import { RouteFormatError } from "@bobs-payroll/router";
 import { generators, expect, Stub } from "../../../../../test/unit";
 import * as moment from "moment";
-import { RouteFormatError } from "../../../../router";
 import { CoreUseCases, SalesReceipt, SalesReceiptCreationModel } from "../../domain";
 import { buildStubbedCoreUseCases } from "../test";
 import { makePostSalesReceiptController } from "./postSalesReceipt";

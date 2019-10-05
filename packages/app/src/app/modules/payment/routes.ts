@@ -1,4 +1,4 @@
-import { Routes } from "../../router";
+import { Routes } from "@bobs-payroll/router";
 import { Controllers } from "./controllers";
 
 export function makeRoutes(controllers: Controllers): Routes {

@@ -1,5 +1,5 @@
+import { RouteFormatError } from "@bobs-payroll/router";
 import { generators, expect, Stub } from "../../../../../test/unit";
-import { RouteFormatError } from "../../../../router";
 import {
     CommissionedEmployeeCreationModel,
     CoreUseCases,

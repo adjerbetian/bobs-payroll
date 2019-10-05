@@ -1,4 +1,4 @@
-import { buildTransactionValidator, stripQuotationMarks, RouteFormatError } from "../../../../router";
+import { buildTransactionValidator, RouteFormatError, stripQuotationMarks } from "@bobs-payroll/router";
 import {
     CommissionedEmployeeCreationModel,
     CoreUseCases,

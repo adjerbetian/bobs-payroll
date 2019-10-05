@@ -1,5 +1,5 @@
+import { RouteFormatError } from "@bobs-payroll/router";
 import { expect, generateIndex, Stub } from "../../../../../test/unit";
-import { RouteFormatError } from "../../../../router";
 import {
     CoreUseCases,
     DirectPaymentMethodCreationModel,

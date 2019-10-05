@@ -1,5 +1,5 @@
+import { RouteFormatError } from "@bobs-payroll/router";
 import { generators, expect, Stub } from "../../../../../test/unit";
-import { RouteFormatError } from "../../../../router";
 import { CoreUseCases, ServiceCharge, ServiceChargeCreationModel } from "../../domain";
 import { buildStubbedCoreUseCases } from "../test";
 import { makePostServiceChargeController } from "./postServiceCharge";

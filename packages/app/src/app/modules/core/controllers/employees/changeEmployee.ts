@@ -1,4 +1,4 @@
-import { buildTransactionValidator } from "../../../../router";
+import { buildTransactionValidator } from "@bobs-payroll/router";
 import { CoreUseCases, EmployeeType, PaymentMethodType } from "../../domain";
 import { Controllers } from "../Controllers";
 

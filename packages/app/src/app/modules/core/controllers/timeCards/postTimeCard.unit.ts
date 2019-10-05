@@ -1,6 +1,6 @@
+import { RouteFormatError } from "@bobs-payroll/router";
 import { generators, expect, Stub } from "../../../../../test/unit";
 import * as moment from "moment";
-import { RouteFormatError } from "../../../../router";
 import { CoreUseCases, TimeCard, TimeCardCreationModel } from "../../domain";
 import { buildStubbedCoreUseCases } from "../test";
 import { makePostTimeCardController } from "./postTimeCard";

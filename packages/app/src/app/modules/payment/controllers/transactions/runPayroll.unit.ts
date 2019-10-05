@@ -1,7 +1,7 @@
+import { RouteFormatError } from "@bobs-payroll/router";
 import { expect, Stub } from "../../../../../test/unit";
 import * as moment from "moment";
 import { isoDate } from "../../../../../utils";
-import { RouteFormatError } from "../../../../router";
 import { PaymentUseCases } from "../../domain";
 import { buildStubbedPaymentUseCases } from "../test";
 import { makeRunPayrollController } from "./runPayroll";
