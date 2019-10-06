@@ -1,5 +1,5 @@
 @UseCase7 @Payday
-Feature: Use Case 7: Run the Payroll for Today - Union
+Feature: Use Case 7: Run the Payroll for Today
 
   @todo
   Scenario: Weekly due rates should be deduced from the payment of hourly employees

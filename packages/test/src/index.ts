@@ -1,3 +1,3 @@
 export * from "./utils";
-export * from "./hooks";
+export { mapHooksToCucumber, mapHooksToMocha, Hooks } from "./hooks";
 import "./chai-entity";

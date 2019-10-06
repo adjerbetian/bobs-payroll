@@ -9,7 +9,7 @@ const ICONS: Record<Status, { char: string; color: "green" | "yellow" | "red" | 
     [Status.AMBIGUOUS]: { char: "!", color: "yellow" },
     [Status.FAILED]: { char: "×", color: "red" },
     [Status.PENDING]: { char: "P", color: "blue" },
-    [Status.SKIPPED]: { char: "S", color: "blue" },
+    [Status.SKIPPED]: { char: "-", color: "blue" },
     [Status.UNDEFINED]: { char: "?", color: "yellow" }
 };
 

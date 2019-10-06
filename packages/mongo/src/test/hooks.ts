@@ -1,7 +1,7 @@
-import { cleanCollections, closeConnection, initConnection } from "@bobs-payroll/mongo";
-import { Hooks } from "./hooks";
+import { Hooks } from "@bobs-payroll/test";
+import { cleanCollections, closeConnection, initConnection } from "../databases";
 
-export const integrationHooks: Hooks = {
+export const mongoHooks: Hooks = {
     async before() {
         await initConnection();
     },

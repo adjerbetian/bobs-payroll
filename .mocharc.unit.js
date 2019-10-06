@@ -3,5 +3,5 @@ const tsConfig = require("./.mocharc.ts");
 
 module.exports = {
     ...tsConfig,
-    file: [path.resolve(__dirname, "node_modules/@bobs-payroll/test/unit")]
+    file: [path.resolve(__dirname, "node_modules/@bobs-payroll/test/dist/runners/mocha")]
 };

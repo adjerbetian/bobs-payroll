@@ -1,5 +1,5 @@
 @UseCase6 @ChgEmp
-Feature: Use Case 6: Changing Employee Details - Type
+Feature: Use Case 6: Changing Employee Details
 
   Scenario: The employee type can be changed to hourly
     Given a salaried employee Marta

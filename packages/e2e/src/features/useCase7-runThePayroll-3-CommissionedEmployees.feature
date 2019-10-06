@@ -1,5 +1,5 @@
 @UseCase7 @Payday
-Feature: Use Case 7: Run the Payroll for Today - Commissioned employees
+Feature: Use Case 7: Run the Payroll for Today
 
   Scenario: Commissioned employees are paid their salary at the end of the month
     Given a commissioned employee Bob with a salary of 2500

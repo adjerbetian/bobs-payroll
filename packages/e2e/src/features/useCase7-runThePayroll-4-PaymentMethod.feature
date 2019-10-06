@@ -1,5 +1,5 @@
 @UseCase7 @Payday
-Feature: Use Case 7: Run the Payroll for Today - Payment Method
+Feature: Use Case 7: Run the Payroll for Today
 
   Scenario: The payment should be made with the employee's payment method
     Given a salaried employee Bob

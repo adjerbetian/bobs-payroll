@@ -1,5 +1,5 @@
 @UseCase6 @ChgEmp
-Feature: Use Case 6: Changing Employee Details - Basic infos
+Feature: Use Case 6: Changing Employee Details
 
   Scenario: The name of an employee can be changed
     Given an employee Bob

@@ -1,1 +1,1 @@
-export { cleanCollections, closeConnection, initConnection, buildDatabase } from "./db";
+export { cleanCollections, closeConnection, initConnection, buildDatabase, getDb } from "./db";

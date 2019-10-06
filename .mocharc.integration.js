@@ -5,6 +5,6 @@ module.exports = {
     ...unitConfig,
     file: [
         ...unitConfig.file,
-        path.resolve(__dirname, "node_modules/@bobs-payroll/test/integration")
+        path.resolve(__dirname, "node_modules/@bobs-payroll/mongo/dist/test/runners/mocha")
     ]
 };

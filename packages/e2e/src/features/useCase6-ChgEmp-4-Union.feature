@@ -1,5 +1,5 @@
 @UseCase6 @ChgEmp
-Feature: Use Case 6: Changing Employee Details - Union
+Feature: Use Case 6: Changing Employee Details
 
   Scenario: An employee can be a member of the union
     Given an employee Marta

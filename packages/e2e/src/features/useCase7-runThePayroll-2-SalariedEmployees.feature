@@ -1,5 +1,5 @@
 @UseCase7 @Payday
-Feature: Use Case 7: Run the Payroll for Today - Salaried employees
+Feature: Use Case 7: Run the Payroll for Today
 
   Scenario: Salaried employees are paid their salary at the end of the month
     Given a salaried employee Bob with a salary of 2500

@@ -6,7 +6,7 @@
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit && npm run test:integration",
         "test:unit": "mocha --config ../../.mocharc.unit.js ./src/**/*.unit.ts",
-        "test:integration": "mocha --config ../../.mocharc.integration.js ./**/*.spec.ts"
+        "test:integration": "mocha --config ../../.mocharc.unit.js --file ./src/test/runners/mocha.ts ./**/*.spec.ts"
     },
     "dependencies": {
         "mongodb": "^3.3.2"
