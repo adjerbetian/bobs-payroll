@@ -2,6 +2,7 @@
 [![language: TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)](https://www.typescriptlang.org/)
 ![e2e-coverage: > 95%](https://img.shields.io/badge/e2e%20coverage-%3E%2095%25-green)
 ![coverage: > 95%](https://img.shields.io/badge/coverage-%3E%2095%25-green)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
 <h1> 
     Agile Software Development <br/>

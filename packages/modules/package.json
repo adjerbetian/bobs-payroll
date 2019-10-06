@@ -4,34 +4,21 @@
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit && npm run test:integration",
-        "test:unit": "mocha --config ../../.mocharc.unit.js ./src/**/*.unit.ts",
-        "test:integration": "mocha --config ../../.mocharc.integration.js ./**/*.spec.ts"
+        "test:unit": "mocha --config ../../.mocharc.unit.js",
+        "test:integration": "mocha --config ../../.mocharc.integration.js"
     },
     "dependencies": {
         "@bobs-payroll/common": "^1.0.0",
         "@bobs-payroll/mongo": "^1.0.0",
         "@bobs-payroll/test": "^1.0.0",
         "lodash": "^4.17.15",
-        "moment": "^2.24.0",
-        "mongodb": "^3.3.2"
+        "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@types/chai": "^4.2.3",
-        "@types/chai-as-promised": "^7.1.2",
-        "@types/cucumber": "^4.0.7",
         "@types/lodash": "^4.14.141",
         "@types/mocha": "^5.2.7",
-        "@types/mongodb": "^3.3.3",
         "@types/node": "^12.7.8",
-        "@types/sinon": "^7.0.13",
-        "@types/sinon-chai": "^3.2.3",
-        "chai": "^4.2.0",
-        "chai-as-promised": "^7.1.1",
-        "cucumber": "^5.1.0",
         "mocha": "^6.2.1",
-        "nyc": "^14.1.1",
-        "sinon": "^7.5.0",
-        "sinon-chai": "^3.3.0",
-        "ts-node": "8.4.0"
+        "ts-node": "^8.4.1"
     }
 }

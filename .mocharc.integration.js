@@ -6,5 +6,6 @@ module.exports = {
     file: [
         ...unitConfig.file,
         path.resolve(__dirname, "node_modules/@bobs-payroll/mongo/dist/test/runners/mocha")
-    ]
+    ],
+    spec: "./src/**/*.spec.ts"
 };
