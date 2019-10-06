@@ -1,4 +1,3 @@
-import { Then } from "cucumber";
 import {
     CommissionedEmployee,
     dbEmployees,
@@ -6,8 +5,9 @@ import {
     EmployeeType,
     HourlyEmployee,
     SalariedEmployee
-} from "../../../core";
-import { expect } from "../../../test/utils";
+} from "@bobs-payroll/modules";
+import { expect } from "@bobs-payroll/test";
+import { Then } from "cucumber";
 import { store } from "../../utils";
 
 Then(/^(\w+) should( fully)? exist in the employee DB$/, async (name: string, isFullComparison: string | undefined) => {

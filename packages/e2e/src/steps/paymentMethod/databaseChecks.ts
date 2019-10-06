@@ -1,6 +1,6 @@
+import { dbPaymentMethods } from "@bobs-payroll/modules";
+import { expect } from "@bobs-payroll/test";
 import { Then } from "cucumber";
-import { dbPaymentMethods } from "../../../core";
-import { expect } from "../../../test/utils";
 import { store } from "../../utils";
 
 Then(/^(\w+) should have the payment method (\w+)$/, async (employeeName: string, paymentMethodName: string) => {

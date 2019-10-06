@@ -1,6 +1,6 @@
+import { dbPayments } from "@bobs-payroll/modules";
+import { expect } from "@bobs-payroll/test";
 import { Then } from "cucumber";
-import { dbPayments } from "../../../payment";
-import { expect } from "../../../test/utils";
 import { dates, store } from "../../utils";
 
 Then(

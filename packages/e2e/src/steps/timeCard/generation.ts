@@ -1,6 +1,6 @@
+import { TimeCard } from "@bobs-payroll/modules";
+import { generators, seeders } from "@bobs-payroll/modules/test";
 import { Given } from "cucumber";
-import { TimeCard } from "../../../core";
-import { generators, seeders } from "../../../test/generators";
 import { dates, store, toFloat } from "../../utils";
 
 Given(

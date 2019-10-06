@@ -1,5 +1,5 @@
-import { CommissionedEmployee, HourlyEmployee, SalariedEmployee } from "../../../core";
-import { generators, seeders } from "../../../test/generators";
+import { CommissionedEmployee, HourlyEmployee, SalariedEmployee } from "@bobs-payroll/modules";
+import { generators, seeders } from "@bobs-payroll/modules/test";
 import { Given } from "cucumber";
 import { store, toFloat } from "../../utils";
 

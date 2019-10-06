@@ -1,6 +1,6 @@
+import { dbUnionMembers } from "@bobs-payroll/modules";
+import { expect } from "@bobs-payroll/test";
 import { Then } from "cucumber";
-import { dbUnionMembers } from "../../../core";
-import { expect } from "../../../test/utils";
 import { store } from "../../utils";
 
 Then(/^(\w+) should have the union membership (\w+)$/, async (name: string, membershipName: string) => {

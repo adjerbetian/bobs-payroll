@@ -1,5 +1,5 @@
 {
-    "name": "@bobs-payroll/router",
+    "name": "@bobs-payroll/app",
     "version": "1.0.0",
     "main": "dist/main.js",
     "scripts": {

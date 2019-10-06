@@ -1,4 +1,4 @@
-import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMembership } from "../../core";
+import { Employee, PaymentMethod, SalesReceipt, ServiceCharge, TimeCard, UnionMembership } from "@bobs-payroll/modules";
 import { buildNonNullMap, NonNullMap } from "./NonNullMap";
 
 export const store = buildVariablesStore();

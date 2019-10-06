@@ -1,0 +1,16 @@
+{
+    "name": "@bobs-payroll/e2e",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "test": "cucumber-js --tags \"not @todo\"",
+        "test:todo": "cucumber-js --tags \"@todo\""
+    },
+    "dependencies": {
+        "@bobs-payroll/app": "^1.0.0",
+        "@bobs-payroll/modules": "^1.0.0",
+        "@bobs-payroll/test": "^1.0.0",
+        "chalk": "^2.4.2"
+    },
+    "devDependencies": {}
+}

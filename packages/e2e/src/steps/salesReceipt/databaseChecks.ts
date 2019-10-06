@@ -1,6 +1,6 @@
+import { dbSalesReceipts } from "@bobs-payroll/modules";
+import { expect } from "@bobs-payroll/test";
 import { Then } from "cucumber";
-import { dbSalesReceipts } from "../../../core";
-import { expect } from "../../../test/utils";
 import { store } from "../../utils";
 
 // noinspection DuplicatedCode

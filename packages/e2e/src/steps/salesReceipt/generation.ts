@@ -1,5 +1,5 @@
-import { SalesReceipt } from "../../../core";
-import { generators, seeders } from "../../../test/generators";
+import { SalesReceipt } from "@bobs-payroll/modules";
+import { generators, seeders } from "@bobs-payroll/modules/test";
 import { Given } from "cucumber";
 import { dates, store, toFloat } from "../../utils";
 

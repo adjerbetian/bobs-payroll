@@ -1,6 +1,6 @@
+import { UnionMembership } from "@bobs-payroll/modules";
+import { generators, seeders } from "@bobs-payroll/modules/test";
 import { Given } from "cucumber";
-import { UnionMembership } from "../../../core";
-import { generators, seeders } from "../../../test/generators";
 import { store, toFloat } from "../../utils";
 
 Given(

@@ -36,7 +36,7 @@ module.exports = {
         "chai-friendly/no-unused-expressions": "error",
 
         // import
-        "import/no-internal-modules": "error",
+        "import/no-internal-modules": ["error", { allow: ["@bobs-payroll/modules/test"] }],
         "import/no-unresolved": "error",
         "import/no-cycle": "error",
         "import/no-unused-modules": "off",

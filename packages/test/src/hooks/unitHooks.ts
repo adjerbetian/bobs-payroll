@@ -1,8 +1,8 @@
 import { sandbox } from "../utils";
-import { buildHooks, Hooks } from "./hooks";
+import { Hooks } from "./hooks";
 
-export const unitHooks: Hooks = buildHooks({
-    async beforeEach() {
+export const unitHooks: Hooks = {
+    beforeEach() {
         sandbox.restore();
     }
-});
+};

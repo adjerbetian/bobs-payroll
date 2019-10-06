@@ -1,36 +1,22 @@
 import { After, AfterAll, Before, BeforeAll } from "cucumber";
 
-export function buildHooks(args: Partial<Hooks>): Hooks {
-    return {
-        before: doNothing,
-        beforeEach: doNothing,
-        afterEach: doNothing,
-        after: doNothing,
-        ...args
-    };
-
-    async function doNothing(): Promise<void> {
-        return;
-    }
-}
-
 export function mapHooksToMocha(hooks: Hooks): void {
-    before(hooks.before);
-    beforeEach(hooks.beforeEach);
-    afterEach(hooks.afterEach);
-    after(hooks.after);
+    if (hooks.before) before(hooks.before);
+    if (hooks.beforeEach) beforeEach(hooks.beforeEach);
+    if (hooks.afterEach) afterEach(hooks.afterEach);
+    if (hooks.after) after(hooks.after);
 }
 
 export function mapHooksToCucumber(hooks: Hooks): void {
-    BeforeAll(hooks.before);
-    Before(hooks.beforeEach);
-    After(hooks.afterEach);
-    AfterAll(hooks.after);
+    if (hooks.before) BeforeAll(hooks.before);
+    if (hooks.beforeEach) Before(hooks.beforeEach);
+    if (hooks.afterEach) After(hooks.afterEach);
+    if (hooks.after) AfterAll(hooks.after);
 }
 
 export interface Hooks {
-    before(): Promise<void>;
-    beforeEach(): Promise<void>;
-    afterEach(): Promise<void>;
-    after(): Promise<void>;
+    before?(): Promise<void> | void;
+    beforeEach?(): Promise<void> | void;
+    afterEach?(): Promise<void> | void;
+    after?(): Promise<void> | void;
 }

@@ -1,0 +1,13 @@
+{
+    "extends": "../../tsconfig.base",
+    "compilerOptions": {
+        "baseUrl": "./src/",
+        "lib": ["es2017"]
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

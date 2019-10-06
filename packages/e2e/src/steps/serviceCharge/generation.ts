@@ -1,6 +1,6 @@
+import { ServiceCharge } from "@bobs-payroll/modules";
+import { generators, seeders } from "@bobs-payroll/modules/test";
 import { Given } from "cucumber";
-import { ServiceCharge } from "../../../core";
-import { generators, seeders } from "../../../test/generators";
 import { store } from "../../utils";
 
 Given(
