@@ -1,5 +1,4 @@
 import { expect, generateIndex } from "@bobs-payroll/test";
-import "@bobs-payroll/test/integration";
 import { generators, seeders } from "../../../test";
 import { CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../../domain";
 import { dbEmployees } from "../collections";

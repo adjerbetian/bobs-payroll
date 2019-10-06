@@ -1,6 +1,5 @@
 import { never } from "@bobs-payroll/common";
 import { expect, generateIndex } from "@bobs-payroll/test";
-import "@bobs-payroll/test/integration";
 import { NotFoundError, PaymentMethod } from "../../../core";
 import { generators, seeders } from "../../../test";
 import { Payment } from "../../domain";

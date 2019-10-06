@@ -8,8 +8,8 @@
     "packages/**"
   ],
   "scripts": {
-    "build": "lerna bootstrap && lerna run build --stream",
-    "test": "yarn run build && lerna exec yarn test"
+    "build": "lerna bootstrap && lerna run build",
+    "test": "lerna exec yarn test"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.3.1",

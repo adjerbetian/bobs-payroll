@@ -1,6 +1,5 @@
 import { lastTuesday, monday, never, tuesday } from "@bobs-payroll/common";
 import { expect, generateIndex } from "@bobs-payroll/test";
-import "@bobs-payroll/test/integration";
 import { generators, seeders } from "../../../test";
 import { dbTimeCards } from "../collections";
 import { makeMongoTimeCardRepository } from "./mongoTimeCardRepository";

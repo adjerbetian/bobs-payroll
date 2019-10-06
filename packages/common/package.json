@@ -4,7 +4,9 @@
     "main": "index.js",
     "scripts": {
         "build": "tsc --project tsconfig.json",
-        "test": "echo 'no tests'"
+        "test": "npm run test:unit && npm run test:integration",
+        "test:unit": "mocha --config ../../.mocharc.unit.js ./src/**/*.unit.ts",
+        "test:integration": "mocha --config ../../.mocharc.integration.js ./**/*.spec.ts"
     },
     "dependencies": {
         "moment": "^2.24.0",
