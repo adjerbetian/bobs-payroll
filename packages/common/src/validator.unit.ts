@@ -1,4 +1,4 @@
-import { expect } from "@bobs-payroll/test";
+import { expect } from "@payroll/test";
 import { buildValidator, Validator } from "./validator";
 
 describe("asserter", () => {

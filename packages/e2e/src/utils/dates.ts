@@ -24,7 +24,7 @@ import {
     thursday,
     tuesday,
     wednesday
-} from "@bobs-payroll/common";
+} from "@payroll/common";
 import { buildNonNullMap } from "./NonNullMap";
 
 export const dates = buildNonNullMap([

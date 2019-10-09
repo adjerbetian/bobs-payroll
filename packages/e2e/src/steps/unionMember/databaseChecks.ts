@@ -1,5 +1,5 @@
-import { dbUnionMembers } from "@bobs-payroll/modules";
-import { expect } from "@bobs-payroll/test";
+import { dbUnionMembers } from "@payroll/core";
+import { expect } from "@payroll/test";
 import { Then } from "cucumber";
 import { store } from "../../utils";
 

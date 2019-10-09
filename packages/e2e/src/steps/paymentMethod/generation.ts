@@ -1,5 +1,5 @@
-import { PaymentMethod } from "@bobs-payroll/modules";
-import { generators, seeders } from "@bobs-payroll/modules/test";
+import { PaymentMethod } from "@payroll/core";
+import { generators, seeders } from "@payroll/core/test";
 import { Given } from "cucumber";
 import { store } from "../../utils";
 

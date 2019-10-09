@@ -5,8 +5,8 @@ import {
     EmployeeType,
     HourlyEmployee,
     SalariedEmployee
-} from "@bobs-payroll/modules";
-import { expect } from "@bobs-payroll/test";
+} from "@payroll/core";
+import { expect } from "@payroll/test";
 import { Then } from "cucumber";
 import { store } from "../../utils";
 

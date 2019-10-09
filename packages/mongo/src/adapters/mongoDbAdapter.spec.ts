@@ -1,4 +1,4 @@
-import { expect, generateIndex } from "@bobs-payroll/test";
+import { expect, generateIndex } from "@payroll/test";
 import { ObjectID } from "bson";
 import { Collection } from "mongodb";
 import { getDb } from "../databases";

@@ -1,15 +1,14 @@
 {
-    "name": "@bobs-payroll/common",
+    "name": "@payroll/common",
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
         "build": "tsc --project tsconfig.json",
-        "test": "npm run test:unit && npm run test:integration",
-        "test:unit": "mocha --config ../../.mocharc.unit.js",
-        "test:integration": "mocha --config ../../.mocharc.integration.js"
+        "test": "npm run test:unit",
+        "test:unit": "mocha --config ../../.mocharc.unit.js"
     },
     "dependencies": {
-        "@bobs-payroll/test": "^1.0.0",
+        "@payroll/test": "^1.0.0",
         "lodash": "^4.17.15",
         "moment": "^2.24.0"
     },

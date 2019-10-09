@@ -1,5 +1,6 @@
-import { makeCoreModule, makePaymentModule } from "@bobs-payroll/modules";
-import { closeConnection, initConnection } from "@bobs-payroll/mongo";
+import { makeCoreModule } from "@payroll/core";
+import { makePaymentModule } from "@payroll/payment";
+import { closeConnection, initConnection } from "@payroll/mongo";
 import { buildRouter } from "../router";
 
 interface App {

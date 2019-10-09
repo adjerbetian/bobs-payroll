@@ -1,5 +1,5 @@
 {
-    "name": "@bobs-payroll/e2e",
+    "name": "@payroll/e2e",
     "version": "1.0.0",
     "scripts": {
         "build": "tsc --project tsconfig.json",
@@ -7,10 +7,12 @@
         "test:todo": "cucumber-js --tags \"@todo\""
     },
     "dependencies": {
-        "@bobs-payroll/app": "^1.0.0",
-        "@bobs-payroll/common": "^1.0.0",
-        "@bobs-payroll/modules": "^1.0.0",
-        "@bobs-payroll/test": "^1.0.0",
+        "@payroll/app": "^1.0.0",
+        "@payroll/common": "^1.0.0",
+        "@payroll/core": "^1.0.0",
+        "@payroll/mongo": "^1.0.0",
+        "@payroll/payment": "^1.0.0",
+        "@payroll/test": "^1.0.0",
         "chalk": "^2.4.2",
         "cucumber": "^5.1.0",
         "lodash": "^4.17.15",

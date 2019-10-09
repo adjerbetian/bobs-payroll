@@ -1,4 +1,4 @@
-import { seeders } from "@bobs-payroll/modules/test";
+import { seeders } from "@payroll/payment/test";
 import { Given } from "cucumber";
 import { dates, store } from "../../utils";
 

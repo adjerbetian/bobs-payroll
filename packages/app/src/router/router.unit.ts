@@ -1,4 +1,4 @@
-import { expect, Stub, buildStubFor } from "@bobs-payroll/test";
+import { expect, Stub, buildStubFor } from "@payroll/test";
 import { RoutingError } from "../errors";
 import { Logger, buildRouter, Router, Routes } from "./router";
 

@@ -1,5 +1,5 @@
-import { dbPaymentMethods } from "@bobs-payroll/modules";
-import { expect } from "@bobs-payroll/test";
+import { dbPaymentMethods } from "@payroll/core";
+import { expect } from "@payroll/test";
 import { Then } from "cucumber";
 import { store } from "../../utils";
 

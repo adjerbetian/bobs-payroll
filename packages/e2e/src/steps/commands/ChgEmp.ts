@@ -4,7 +4,7 @@ import {
     MailPaymentMethod,
     PaymentMethod,
     PaymentMethodType
-} from "@bobs-payroll/modules";
+} from "@payroll/core";
 import { When } from "cucumber";
 import { executePayrollCommand, store } from "../../utils";
 import { removeLastArg } from "./removeLastArg";

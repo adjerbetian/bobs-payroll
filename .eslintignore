@@ -1,3 +1,6 @@
+packages/*/node_modules/**/*
 packages/*/dist/**/*
 packages/*/*.ts
 packages/*/*.js
+packages/*/*.json
+packages/e2e/*/*.feature

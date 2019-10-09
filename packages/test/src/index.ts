@@ -1,5 +1,5 @@
 export * from "./utils";
-export { mapHooksToCucumber, mapHooksToMocha, Hooks } from "./hooks";
-import "./chai-entity";
+export * from "./hooks";
 import "chai-as-promised";
 import "sinon-chai";
+import "./chai-entity";

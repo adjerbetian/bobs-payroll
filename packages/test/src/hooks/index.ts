@@ -1,2 +1,2 @@
-export { mapHooksToMocha, mapHooksToCucumber, Hooks } from "./hooks";
+export { mapHooksToMocha, Hooks } from "./hooks";
 export { unitHooks } from "./unitHooks";

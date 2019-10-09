@@ -8,12 +8,14 @@
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/app/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/common/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/modules/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/core/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/mongo/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/payment/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/test/dist" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludePattern pattern="index.js" />
+      <excludePattern pattern="test.js" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
