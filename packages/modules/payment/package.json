@@ -4,8 +4,8 @@
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit && npm run test:integration",
-        "test:unit": "mocha --config ../../.mocharc.unit.js",
-        "test:integration": "mocha --config ../../.mocharc.integration.js"
+        "test:unit": "mocha --config ../../../.mocharc.unit.js",
+        "test:integration": "mocha --config ../../../.mocharc.integration.js"
     },
     "dependencies": {
         "@payroll/common": "^1.0.0",

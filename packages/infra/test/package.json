@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "build": "tsc --project tsconfig.json",
-        "test": "mocha --config ../../.mocharc.ts.js ./src/**/*.unit.ts"
+        "test": "mocha --config ../../../.mocharc.ts.js ./src/**/*.unit.ts"
     },
     "devDependencies": {
         "@types/chai": "^4.2.3",

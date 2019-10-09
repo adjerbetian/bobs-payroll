@@ -1,4 +1,7 @@
 # Simple
+Todo: check the main field of package.json https://docs.npmjs.com/files/package.json#main
+Todo: check the bin field of package.json for app
+Todo: add the watch command to be run in parallel for typescript compilation
 Todo: add the possibility to run all tests in parallel with lerna --> separate the db in different dbs so that they don't collide
 Todo: move stripQuotationMarks to core/controllers/utils
 Todo: check for type assertion in TransactionValidator (coming soon, see here: https://github.com/microsoft/TypeScript/pull/32695)

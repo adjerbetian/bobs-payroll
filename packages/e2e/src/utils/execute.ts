@@ -1,5 +1,4 @@
 import { exec } from "child_process";
-import * as path from "path";
 
 async function execute(command: string): Promise<string> {
     return new Promise((resolve, reject) =>
@@ -11,6 +10,5 @@ async function execute(command: string): Promise<string> {
 }
 
 export async function executePayrollCommand(command: string): Promise<string> {
-    const main = path.resolve(__dirname, "../../../app/dist/main.js");
-    return await execute(`node ${main} ${command}`);
+    return await execute(`node node_modules/@payroll/app/dist/main.js ${command}`);
 }
