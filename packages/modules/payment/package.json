@@ -1,6 +1,6 @@
 {
     "name": "@payroll/payment",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit && npm run test:integration",
@@ -8,10 +8,10 @@
         "test:integration": "mocha --config ../../../.mocharc.integration.js"
     },
     "dependencies": {
-        "@payroll/common": "^1.0.0",
-        "@payroll/core": "^1.0.0",
-        "@payroll/mongo": "^1.0.0",
-        "@payroll/test": "^1.0.0",
+        "@payroll/common": "^2.0.0",
+        "@payroll/core": "^2.0.0",
+        "@payroll/mongo": "^2.0.0",
+        "@payroll/test": "^2.0.0",
         "lodash": "^4.17.15",
         "moment": "^2.24.0"
     },

@@ -1,18 +1,18 @@
 {
     "name": "@payroll/e2e",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "cucumber-js --tags \"not @todo\"",
         "test:todo": "cucumber-js --tags \"@todo\""
     },
     "dependencies": {
-        "@payroll/app": "^1.0.0",
-        "@payroll/common": "^1.0.0",
-        "@payroll/core": "^1.0.0",
-        "@payroll/mongo": "^1.0.0",
-        "@payroll/payment": "^1.0.0",
-        "@payroll/test": "^1.0.0",
+        "@payroll/app": "^2.0.0",
+        "@payroll/common": "^2.0.0",
+        "@payroll/core": "^2.0.0",
+        "@payroll/mongo": "^2.0.0",
+        "@payroll/payment": "^2.0.0",
+        "@payroll/test": "^2.0.0",
         "chalk": "^2.4.2",
         "cucumber": "^5.1.0",
         "lodash": "^4.17.15",
