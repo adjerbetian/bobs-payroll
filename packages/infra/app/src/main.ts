@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { buildApp } from "./app";
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

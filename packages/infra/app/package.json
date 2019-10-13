@@ -1,6 +1,9 @@
 {
     "name": "@infra/app",
     "version": "2.0.0",
+    "bin": {
+        "payroll": "dist/main.js"
+    },
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit && npm run test:integration",
