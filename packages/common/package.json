@@ -1,21 +1,13 @@
 {
     "name": "@payroll/common",
     "version": "2.0.0",
-    "main": "index.js",
+    "main": "src/index.ts",
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit",
         "test:unit": "mocha --config ../../.mocharc.unit.js"
     },
     "dependencies": {
-        "@payroll/test": "^2.0.0",
-        "lodash": "^4.17.15",
-        "moment": "^2.24.0"
-    },
-    "devDependencies": {
-        "@types/lodash": "^4.14.141",
-        "@types/mocha": "^5.2.7",
-        "mocha": "^6.2.1",
-        "ts-node": "^8.4.1"
+        "@payroll/test": "^2.0.0"
     }
 }

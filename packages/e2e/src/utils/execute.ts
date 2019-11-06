@@ -10,5 +10,5 @@ async function execute(command: string): Promise<string> {
 }
 
 export async function executePayrollCommand(command: string): Promise<string> {
-    return await execute(`node node_modules/@payroll/app/dist/main.js ${command}`);
+    return await execute(`ts-node -T node_modules/@payroll/app/src/main.ts ${command}`);
 }

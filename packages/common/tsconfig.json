@@ -1,14 +1,9 @@
 {
     "extends": "../../tsconfig.base",
     "compilerOptions": {
-        "baseUrl": "./src/",
-        "outDir": "dist/",
-        "noEmit": false
+        "baseUrl": "./src/"
     },
     "include": [
         "src/**/*"
-    ],
-    "exclude": [
-        "node_modules"
     ]
 }

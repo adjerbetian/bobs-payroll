@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "build": "lerna bootstrap && lerna run build",
-    "test": "lerna run test --stream --concurrency 1"
+    "test": "lerna run test --stream --concurrency 1",
+    "test:e2e": "lerna run test --stream --scope=@payroll/e2e"
   },
   "dependencies": {
     "chalk": "^2.4.2",
