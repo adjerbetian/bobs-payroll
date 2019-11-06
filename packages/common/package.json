@@ -8,6 +8,6 @@
         "test:unit": "mocha --config ../../.mocharc.unit.js"
     },
     "dependencies": {
-        "@payroll/test": "^2.0.0"
+        "@infra/test": "^2.0.0"
     }
 }

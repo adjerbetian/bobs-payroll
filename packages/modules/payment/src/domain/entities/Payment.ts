@@ -1,4 +1,4 @@
-import { Entity, PaymentMethod } from "@payroll/core";
+import { Entity, PaymentMethod } from "@modules/core";
 
 export interface Payment extends Entity {
     getEmployeeId(): number;

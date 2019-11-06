@@ -1,5 +1,5 @@
 import { lastTuesday, monday, never, tuesday } from "@payroll/common";
-import { expect, generateIndex } from "@payroll/test";
+import { expect, generateIndex } from "@infra/test";
 import { generators, seeders } from "../../test";
 import { dbSalesReceipts } from "../collections";
 import { makeMongoSalesReceiptRepository } from "./mongoSalesReceiptRepository";

@@ -1,6 +1,6 @@
 import { lastDayOfMonth } from "@payroll/common";
-import { CoreUseCases } from "@payroll/core";
-import { expect, generateFloatBetween, generateIndex, Stub } from "@payroll/test";
+import { CoreUseCases } from "@modules/core";
+import { expect, generateFloatBetween, generateIndex, Stub } from "@infra/test";
 import { buildStubbedCoreUseCases, generators } from "../../../test";
 import { buildPayment, Payment } from "../../entities";
 import { PaymentRepository } from "../../repositories";

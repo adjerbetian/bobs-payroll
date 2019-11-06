@@ -1,4 +1,4 @@
-import { buildMapper, Mapper } from "@payroll/mongo";
+import { buildMapper, Mapper } from "@infra/mongo";
 import {
     buildDirectPaymentMethod,
     buildHoldPaymentMethod,

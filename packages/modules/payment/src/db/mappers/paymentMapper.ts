@@ -1,4 +1,4 @@
-import { buildMapper } from "@payroll/mongo";
+import { buildMapper } from "@infra/mongo";
 import {
     buildDirectPaymentMethod,
     buildHoldPaymentMethod,
@@ -6,7 +6,7 @@ import {
     InvalidObject,
     PaymentMethod,
     PaymentMethodType
-} from "@payroll/core";
+} from "@modules/core";
 import { buildPayment, Payment } from "../../domain";
 import { PaymentDBModel } from "../DBModels";
 

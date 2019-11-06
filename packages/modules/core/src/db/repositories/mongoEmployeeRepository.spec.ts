@@ -1,4 +1,4 @@
-import { expect, generateIndex } from "@payroll/test";
+import { expect, generateIndex } from "@infra/test";
 import { generators, seeders } from "../../test";
 import { CommissionedEmployee, Employee, EmployeeType, HourlyEmployee, SalariedEmployee } from "../../domain";
 import { dbEmployees } from "../collections";

@@ -1,5 +1,5 @@
 import { Routes } from "@payroll/common";
-import { CoreUseCases } from "@payroll/core";
+import { CoreUseCases } from "@modules/core";
 import { makeControllers } from "./controllers";
 import { makePaymentUseCases, PaymentUseCases } from "./domain";
 import { mongoPaymentRepository } from "./db";

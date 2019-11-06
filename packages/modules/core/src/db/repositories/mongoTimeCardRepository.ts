@@ -1,4 +1,4 @@
-import { MongoEntity } from "@payroll/mongo";
+import { MongoEntity } from "@infra/mongo";
 import { CoreDependencies, TimeCard } from "../../domain";
 import { TimeCardDBModel } from "../DBModels";
 

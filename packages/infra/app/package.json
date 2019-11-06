@@ -1,5 +1,5 @@
 {
-    "name": "@payroll/app",
+    "name": "@infra/app",
     "version": "2.0.0",
     "scripts": {
         "build": "tsc --project tsconfig.json",
@@ -8,9 +8,9 @@
         "test:integration": "mocha --config ../../../.mocharc.integration.js"
     },
     "dependencies": {
-        "@payroll/core": "^2.0.0",
-        "@payroll/mongo": "^2.0.0",
-        "@payroll/payment": "^2.0.0",
-        "@payroll/test": "^2.0.0"
+        "@modules/core": "^2.0.0",
+        "@infra/mongo": "^2.0.0",
+        "@modules/payment": "^2.0.0",
+        "@infra/test": "^2.0.0"
     }
 }

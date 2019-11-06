@@ -1,4 +1,4 @@
-import { buildSeeder } from "@payroll/test";
+import { buildSeeder } from "@infra/test";
 import { dbEmployees, dbPaymentMethods, dbSalesReceipts, dbServiceCharges, dbTimeCards, dbUnionMembers } from "../db";
 import { generators } from "./generators";
 

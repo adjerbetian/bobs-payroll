@@ -1,5 +1,5 @@
 import { isoDate } from "@payroll/common";
-import { CommissionedEmployee, CoreUseCases, SalesReceipt } from "@payroll/core";
+import { CommissionedEmployee, CoreUseCases, SalesReceipt } from "@modules/core";
 import * as moment from "moment";
 import { CreatePaymentForEmployee } from "../../payment";
 import { RunPayrollUseCases } from "../runPayrollDispatcher";

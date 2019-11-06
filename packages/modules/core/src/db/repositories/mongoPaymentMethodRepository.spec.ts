@@ -1,4 +1,4 @@
-import { expect, generateIndex } from "@payroll/test";
+import { expect, generateIndex } from "@infra/test";
 import { generators, seeders } from "../../test";
 import { NotFoundError, PaymentMethod } from "../../domain";
 import { dbPaymentMethods } from "../collections";

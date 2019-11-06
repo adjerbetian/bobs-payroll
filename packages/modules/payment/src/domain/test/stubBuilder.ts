@@ -1,4 +1,4 @@
-import { buildStubFor, Stub } from "@payroll/test";
+import { buildStubFor, Stub } from "@infra/test";
 import { PaymentRepository } from "../repositories";
 
 export function buildStubbedPaymentRepository(): Stub<PaymentRepository> {

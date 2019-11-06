@@ -4,7 +4,7 @@ module.exports = {
     ...unitConfig,
     file: [
         ...unitConfig.file,
-        "node_modules/@payroll/mongo/src/test/runners/mocha"
+        "node_modules/@infra/mongo/src/test/runners/mocha"
     ],
     spec: "./src/**/*.spec.ts"
 };

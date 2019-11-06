@@ -1,4 +1,4 @@
-import { buildMapper } from "@payroll/mongo";
+import { buildMapper } from "@infra/mongo";
 import { buildServiceCharge, ServiceCharge } from "../../domain";
 import { ServiceChargeDBModel } from "../DBModels";
 

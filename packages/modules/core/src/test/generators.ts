@@ -1,5 +1,5 @@
 import { clean } from "@payroll/common";
-import { EntityGenerator, generateFloatBetween, generateIndex } from "@payroll/test";
+import { EntityGenerator, generateFloatBetween, generateIndex } from "@infra/test";
 import * as moment from "moment";
 import {
     buildCommissionedEmployee,

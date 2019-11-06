@@ -3,15 +3,15 @@
     "version": "2.0.0",
     "scripts": {
         "build": "tsc --project tsconfig.json",
-        "test": "cucumber-js --tags \"not @todo\"",
+        "test": "..\\..\\node_modules\\.bin\\cucumber-js --tags \"not @todo\"",
         "test:todo": "cucumber-js --tags \"@todo\""
     },
     "dependencies": {
-        "@payroll/app": "^2.0.0",
+        "@infra/app": "^2.0.0",
         "@payroll/common": "^2.0.0",
-        "@payroll/core": "^2.0.0",
-        "@payroll/mongo": "^2.0.0",
-        "@payroll/payment": "^2.0.0",
-        "@payroll/test": "^2.0.0"
+        "@modules/core": "^2.0.0",
+        "@infra/mongo": "^2.0.0",
+        "@modules/payment": "^2.0.0",
+        "@infra/test": "^2.0.0"
     }
 }

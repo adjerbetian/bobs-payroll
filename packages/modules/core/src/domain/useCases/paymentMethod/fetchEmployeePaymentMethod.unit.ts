@@ -1,4 +1,4 @@
-import { expect, generateIndex, Stub } from "@payroll/test";
+import { expect, generateIndex, Stub } from "@infra/test";
 import { generators } from "../../../test";
 import { NotFoundError } from "../../errors";
 import { PaymentMethodRepository } from "../../repositories";

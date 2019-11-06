@@ -1,4 +1,4 @@
-import { CoreUseCases, HourlyEmployee, TimeCard } from "@payroll/core";
+import { CoreUseCases, HourlyEmployee, TimeCard } from "@modules/core";
 import { PaymentRepository } from "../../../repositories";
 import { CreatePaymentForEmployee } from "../../payment";
 import { RunPayrollUseCases } from "../runPayrollDispatcher";

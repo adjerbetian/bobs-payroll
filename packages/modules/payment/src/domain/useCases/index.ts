@@ -1,4 +1,4 @@
-import { CoreUseCases } from "@payroll/core";
+import { CoreUseCases } from "@modules/core";
 import { PaymentRepository } from "../repositories";
 import { PaymentUseCases } from "./PaymentUseCases";
 import { makeRunPayroll } from "./payroll";

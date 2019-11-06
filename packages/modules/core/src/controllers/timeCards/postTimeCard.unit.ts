@@ -1,4 +1,4 @@
-import { expect, Stub } from "@payroll/test";
+import { expect, Stub } from "@infra/test";
 import * as moment from "moment";
 import { generators } from "../../test";
 import { CoreUseCases, TimeCard, TimeCardCreationModel } from "../../domain";

@@ -1,4 +1,4 @@
-import { CoreUseCases, SalariedEmployee } from "@payroll/core";
+import { CoreUseCases, SalariedEmployee } from "@modules/core";
 import { CreatePaymentForEmployee } from "../../payment";
 import { RunPayrollUseCases } from "../runPayrollDispatcher";
 

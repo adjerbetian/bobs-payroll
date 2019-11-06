@@ -1,5 +1,5 @@
-import { TimeCard } from "@payroll/core";
-import { generators, seeders } from "@payroll/core/test";
+import { TimeCard } from "@modules/core";
+import { generators, seeders } from "@modules/core/test";
 import { Given } from "cucumber";
 import { dates, store, toFloat } from "../../utils";
 

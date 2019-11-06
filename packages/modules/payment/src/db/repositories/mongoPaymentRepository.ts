@@ -1,5 +1,5 @@
 import { isoDate } from "@payroll/common";
-import { MongoEntity } from "@payroll/mongo";
+import { MongoEntity } from "@infra/mongo";
 import * as moment from "moment";
 import { Payment, PaymentRepository } from "../../domain";
 import { PaymentDBModel } from "../DBModels";

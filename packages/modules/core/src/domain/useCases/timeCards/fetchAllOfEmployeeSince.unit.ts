@@ -1,5 +1,5 @@
 import { monday } from "@payroll/common";
-import { expect, generateIndex, Stub } from "@payroll/test";
+import { expect, generateIndex, Stub } from "@infra/test";
 import { generators } from "../../../test";
 import { TimeCardRepository } from "../../repositories";
 import { buildStubbedTimeCardRepository } from "../../test";

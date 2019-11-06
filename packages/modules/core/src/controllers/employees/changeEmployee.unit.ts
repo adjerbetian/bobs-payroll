@@ -1,4 +1,4 @@
-import { expect, generateIndex, Stub } from "@payroll/test";
+import { expect, generateIndex, Stub } from "@infra/test";
 import {
     CoreUseCases,
     DirectPaymentMethodCreationModel,

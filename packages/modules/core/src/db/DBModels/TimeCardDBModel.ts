@@ -1,4 +1,4 @@
-import { MongoModel } from "@payroll/mongo";
+import { MongoModel } from "@infra/mongo";
 
 export interface TimeCardDBModel extends MongoModel {
     employeeId: number;

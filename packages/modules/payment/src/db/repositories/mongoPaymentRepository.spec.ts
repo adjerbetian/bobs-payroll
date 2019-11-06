@@ -1,6 +1,6 @@
 import { never } from "@payroll/common";
-import { expect, generateIndex } from "@payroll/test";
-import { NotFoundError, PaymentMethod } from "@payroll/core";
+import { expect, generateIndex } from "@infra/test";
+import { NotFoundError, PaymentMethod } from "@modules/core";
 import { generators, seeders } from "../../test";
 import { Payment } from "../../domain";
 import { dbPayments } from "../collections";

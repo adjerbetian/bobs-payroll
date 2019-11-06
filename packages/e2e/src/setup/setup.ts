@@ -1,5 +1,5 @@
-import { mongoHooks } from "@payroll/mongo/test";
-import { Hooks, unitHooks } from "@payroll/test";
+import { mongoHooks } from "@infra/mongo/test";
+import { Hooks, unitHooks } from "@infra/test";
 import { After, AfterAll, Before, BeforeAll, setDefaultTimeout } from "cucumber";
 import { store } from "../utils";
 

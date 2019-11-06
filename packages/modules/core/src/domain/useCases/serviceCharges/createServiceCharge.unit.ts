@@ -1,4 +1,4 @@
-import { expect, Stub } from "@payroll/test";
+import { expect, Stub } from "@infra/test";
 import { generators } from "../../../test";
 import { NotFoundError } from "../../errors";
 import { ServiceChargeRepository, UnionMembershipRepository } from "../../repositories";

@@ -1,6 +1,6 @@
 import { lastDayOfMonth } from "@payroll/common";
-import { CoreUseCases } from "@payroll/core";
-import { buildStubFor, expect, Stub } from "@payroll/test";
+import { CoreUseCases } from "@modules/core";
+import { buildStubFor, expect, Stub } from "@infra/test";
 import { buildStubbedCoreUseCases, generators } from "../../../../test";
 import { CreatePaymentForEmployee } from "../../payment";
 import { makeRunSalariedPayroll } from "./runSalariedPayroll";

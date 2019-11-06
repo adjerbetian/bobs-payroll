@@ -1,4 +1,4 @@
-import { EmployeeType } from "@payroll/core";
+import { EmployeeType } from "@modules/core";
 import { When } from "cucumber";
 import { executePayrollCommand, store } from "../../utils";
 import { removeLastArg } from "./removeLastArg";

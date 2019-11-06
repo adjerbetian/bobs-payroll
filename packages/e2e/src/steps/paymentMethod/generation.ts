@@ -1,5 +1,5 @@
-import { PaymentMethod } from "@payroll/core";
-import { generators, seeders } from "@payroll/core/test";
+import { PaymentMethod } from "@modules/core";
+import { generators, seeders } from "@modules/core/test";
 import { Given } from "cucumber";
 import { store } from "../../utils";
 

@@ -1,4 +1,4 @@
-import { buildDatabase } from "@payroll/mongo";
+import { buildDatabase } from "@infra/mongo";
 import { NotFoundError } from "../../domain";
 import {
     employeeMapper,

@@ -1,4 +1,4 @@
-import { Hooks } from "@payroll/test";
+import { Hooks } from "@infra/test";
 import { cleanCollections, closeConnection, initConnection } from "../databases";
 
 export const mongoHooks: Hooks = {

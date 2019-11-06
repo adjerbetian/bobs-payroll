@@ -1,4 +1,4 @@
-import { MongoModel } from "@payroll/mongo";
+import { MongoModel } from "@infra/mongo";
 import { EmployeeType } from "../../domain";
 
 export type EmployeeDBModel = HourlyEmployeeDBModel | SalariedEmployeeDBModel | CommissionedEmployeeDBModel;

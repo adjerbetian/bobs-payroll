@@ -1,5 +1,5 @@
 {
-    "name": "@payroll/mongo",
+    "name": "@infra/mongo",
     "version": "2.0.0",
     "main": "src/index.ts",
     "scripts": {
@@ -9,6 +9,6 @@
         "test:integration": "mocha --config ../../../.mocharc.unit.js --file ./src/test/runners/mocha.ts ./**/*.spec.ts"
     },
     "dependencies": {
-        "@payroll/test": "^2.0.0"
+        "@infra/test": "^2.0.0"
     }
 }

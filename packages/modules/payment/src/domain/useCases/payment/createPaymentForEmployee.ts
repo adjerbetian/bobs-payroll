@@ -1,4 +1,4 @@
-import { CoreUseCases } from "@payroll/core";
+import { CoreUseCases } from "@modules/core";
 import { buildPayment } from "../../entities";
 import { PaymentRepository } from "../../repositories";
 

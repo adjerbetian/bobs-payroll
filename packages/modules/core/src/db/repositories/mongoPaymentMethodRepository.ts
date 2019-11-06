@@ -1,4 +1,4 @@
-import { MongoEntity } from "@payroll/mongo";
+import { MongoEntity } from "@infra/mongo";
 import { CoreDependencies, PaymentMethod } from "../../domain";
 import { PaymentMethodDBModel } from "../DBModels";
 

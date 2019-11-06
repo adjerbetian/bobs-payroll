@@ -1,5 +1,5 @@
 {
-    "name": "@payroll/payment",
+    "name": "@modules/payment",
     "version": "2.0.0",
     "main": "src/index.ts",
     "scripts": {
@@ -10,8 +10,8 @@
     },
     "dependencies": {
         "@payroll/common": "^2.0.0",
-        "@payroll/core": "^2.0.0",
-        "@payroll/mongo": "^2.0.0",
-        "@payroll/test": "^2.0.0"
+        "@modules/core": "^2.0.0",
+        "@infra/mongo": "^2.0.0",
+        "@infra/test": "^2.0.0"
     }
 }

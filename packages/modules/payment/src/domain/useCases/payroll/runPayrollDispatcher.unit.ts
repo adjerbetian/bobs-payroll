@@ -9,7 +9,7 @@ import {
     tuesday,
     wednesday
 } from "@payroll/common";
-import { buildStubFor, expect, Stub } from "@payroll/test";
+import { buildStubFor, expect, Stub } from "@infra/test";
 import { makeRunPayrollDispatcher, RunPayrollUseCases } from "./runPayrollDispatcher";
 
 describe("use case - runPayroll", () => {

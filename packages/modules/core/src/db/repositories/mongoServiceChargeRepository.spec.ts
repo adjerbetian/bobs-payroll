@@ -1,4 +1,4 @@
-import { expect, generateIndex } from "@payroll/test";
+import { expect, generateIndex } from "@infra/test";
 import { generators, seeders } from "../../test";
 import { dbServiceCharges } from "../collections";
 import { makeMongoServiceChargeRepository } from "./mongoServiceChargeRepository";

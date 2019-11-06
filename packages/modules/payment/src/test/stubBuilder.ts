@@ -1,5 +1,5 @@
-import { buildStubFor, Stub } from "@payroll/test";
-import { CoreUseCases } from "@payroll/core";
+import { buildStubFor, Stub } from "@infra/test";
+import { CoreUseCases } from "@modules/core";
 
 export function buildStubbedCoreUseCases(): Stub<CoreUseCases> {
     return buildStubFor<CoreUseCases>({

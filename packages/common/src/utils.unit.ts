@@ -1,4 +1,4 @@
-import { expect } from "@payroll/test";
+import { expect } from "@infra/test";
 import * as moment from "moment";
 import { clean, isoDate, stripQuotationMarks } from "./utils";
 

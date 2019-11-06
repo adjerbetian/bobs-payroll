@@ -1,4 +1,4 @@
-import { MongoModel } from "@payroll/mongo";
+import { MongoModel } from "@infra/mongo";
 import { PaymentMethodType } from "../../domain";
 
 export type PaymentMethodDBModel = HoldPaymentMethodDBModel | DirectPaymentMethodDBModel | MailPaymentMethodDBModel;

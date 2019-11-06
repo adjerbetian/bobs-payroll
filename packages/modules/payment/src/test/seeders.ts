@@ -1,5 +1,5 @@
-import { buildSeeder } from "@payroll/test";
-import { seeders as coreSeeders } from "@payroll/core/test";
+import { buildSeeder } from "@infra/test";
+import { seeders as coreSeeders } from "@modules/core/test";
 import { dbPayments } from "../db";
 import { generators } from "./generators";
 

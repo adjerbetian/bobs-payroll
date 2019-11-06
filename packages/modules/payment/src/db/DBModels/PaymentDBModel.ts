@@ -1,5 +1,5 @@
-import { MongoModel } from "@payroll/mongo";
-import { PaymentMethodType } from "@payroll/core";
+import { MongoModel } from "@infra/mongo";
+import { PaymentMethodType } from "@modules/core";
 
 export interface PaymentDBModel extends MongoModel {
     employeeId: number;

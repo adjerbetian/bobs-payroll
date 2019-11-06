@@ -1,6 +1,6 @@
 import { clean, isoDate } from "@payroll/common";
-import { generators as coreGenerators } from "@payroll/core/test";
-import { EntityGenerator, generateFloatBetween, generateIndex } from "@payroll/test";
+import { generators as coreGenerators } from "@modules/core/test";
+import { EntityGenerator, generateFloatBetween, generateIndex } from "@infra/test";
 import { buildPayment } from "../domain";
 
 type Generators = typeof coreGenerators & {
