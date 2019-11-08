@@ -1,21 +1,6 @@
 {
     "extends": "../../../tsconfig.base",
     "compilerOptions": {
-        "baseUrl": "./src/",
-        "module": "commonjs",
-        "outDir": "./dist",
-        "noEmit": false,
-        "sourceMap": false
-    },
-    "include": [
-        "src/**/*",
-        "node_modules/@infra/**/*",
-        "node_modules/@modules/**/*",
-        "node_modules/@payroll/**/*"
-    ],
-    "exclude": [
-        "*.unit.ts",
-        "*.spec.ts",
-        "**/test/**/*"
-    ]
+        "baseUrl": "./src/"
+    }
 }

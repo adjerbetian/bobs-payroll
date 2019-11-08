@@ -1,4 +1,4 @@
-import { clean, isoDate } from "@payroll/common";
+import { µ } from "@payroll/common";
 import { generators as coreGenerators } from "@modules/core/test";
 import { EntityGenerator, generateFloatBetween, generateIndex } from "@infra/test";
 import { buildPayment } from "../domain";
@@ -14,9 +14,9 @@ export const generators: Generators = {
         return buildPayment({
             amount: generateFloatBetween(1000, 2000),
             employeeId: index,
-            date: isoDate(),
+            date: µ.isoDate(),
             method: generators.generateHoldPaymentMethod({ employeeId: args.employeeId || index }),
-            ...clean(args)
+            ...µ.clean(args)
         });
     }
 };

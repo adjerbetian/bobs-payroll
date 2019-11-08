@@ -1,10 +1,10 @@
-import { isoDate } from "@payroll/common";
+import { µ } from "@payroll/common";
 import { MongoEntity } from "@infra/mongo";
 import * as moment from "moment";
 import { Payment, PaymentRepository } from "../../domain";
 import { PaymentDBModel } from "../DBModels";
 
-const NEVER = isoDate(moment(0));
+const NEVER = µ.isoDate(moment(0));
 
 export function makeMongoPaymentRepository(db: MongoEntity<Payment, PaymentDBModel>): PaymentRepository {
     return {

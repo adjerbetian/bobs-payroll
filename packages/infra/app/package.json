@@ -5,10 +5,8 @@
         "payroll": "dist/src/main.js"
     },
     "scripts": {
-        "prebuild": "rm -rf dist",
+        "postinstall": "rm -rf ./dist && tsc --project tsconfig.bin.json && node postBuild.js",
         "build": "tsc --project tsconfig.json",
-        "postbuild": "node postBuild.js",
-        "move": "mv dist/node_modules/@modules/core/src/* dist/node_modules/@modules/core/",
         "test": "npm run test:unit && npm run test:integration",
         "test:unit": "mocha --config ../../../.mocharc.unit.js",
         "test:integration": "mocha --config ../../../.mocharc.integration.js"

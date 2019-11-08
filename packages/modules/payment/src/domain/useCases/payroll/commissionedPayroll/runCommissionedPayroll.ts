@@ -1,4 +1,4 @@
-import { isoDate } from "@payroll/common";
+import { µ } from "@payroll/common";
 import { CommissionedEmployee, CoreUseCases, SalesReceipt } from "@modules/core";
 import * as moment from "moment";
 import { CreatePaymentForEmployee } from "../../payment";
@@ -33,7 +33,7 @@ export function makeRunCommissionedPayroll({
         }
 
         async function fetchEmployeeSalesReceiptOfTheMonth(): Promise<SalesReceipt[]> {
-            const beginningOfMonth = isoDate(moment(date).startOf("month"));
+            const beginningOfMonth = µ.isoDate(moment(date).startOf("month"));
             return coreUseCases.fetchAllEmployeeSalesReceiptsSince(employee.getId(), beginningOfMonth);
         }
     }

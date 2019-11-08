@@ -1,4 +1,4 @@
-import { isoDate } from "@payroll/common";
+import { µ } from "@payroll/common";
 import { expect, Stub } from "@infra/test";
 import * as moment from "moment";
 import { PaymentUseCases } from "../../domain";
@@ -18,7 +18,7 @@ describe("runPayroll", () => {
     });
 
     it("should call the runPayroll on the date", async () => {
-        const date = isoDate();
+        const date = µ.isoDate();
 
         await runPayroll(date);
 

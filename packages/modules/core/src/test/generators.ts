@@ -1,4 +1,4 @@
-import { clean } from "@payroll/common";
+import { µ } from "@payroll/common";
 import { EntityGenerator, generateFloatBetween, generateIndex } from "@infra/test";
 import * as moment from "moment";
 import {
@@ -34,7 +34,7 @@ export const generators: Generators = {
             employeeId: index,
             date: moment().format("YYYY-MM-DD"),
             hours: generateFloatBetween(2, 8),
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateUnionMembership(args = {}) {
@@ -42,7 +42,7 @@ export const generators: Generators = {
             employeeId: generateIndex(),
             memberId: `member-${generateIndex()}`,
             rate: generateFloatBetween(0, 0.1),
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateHourlyEmployee(args = {}) {
@@ -52,7 +52,7 @@ export const generators: Generators = {
             address: `address-${index}`,
             name: `name-${index}`,
             hourlyRate: generateFloatBetween(10, 20),
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateSalariedEmployee(args = {}) {
@@ -62,7 +62,7 @@ export const generators: Generators = {
             address: `address-${index}`,
             name: `name-${index}`,
             salary: generateFloatBetween(1500, 5000),
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateCommissionedEmployee(args = {}) {
@@ -73,7 +73,7 @@ export const generators: Generators = {
             name: `name-${index}`,
             salary: generateFloatBetween(1500, 5000),
             commissionRate: generateFloatBetween(0, 0.1),
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateSalesReceipt(args = {}) {
@@ -82,7 +82,7 @@ export const generators: Generators = {
             employeeId: index,
             date: moment().format("YYYY-MM-DD"),
             amount: generateFloatBetween(10000, 50000),
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateServiceCharge(args = {}) {
@@ -90,14 +90,14 @@ export const generators: Generators = {
         return buildServiceCharge({
             memberId: `member-${index}`,
             amount: generateFloatBetween(2, 10),
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateHoldPaymentMethod(args = {}) {
         const index = generateIndex();
         return buildHoldPaymentMethod({
             employeeId: index,
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateDirectPaymentMethod(args = {}) {
@@ -106,7 +106,7 @@ export const generators: Generators = {
             employeeId: index,
             bank: `bank-${index}`,
             account: `bank-${index}`,
-            ...clean(args)
+            ...µ.clean(args)
         });
     },
     generateMailPaymentMethod(args = {}) {
@@ -114,7 +114,7 @@ export const generators: Generators = {
         return buildMailPaymentMethod({
             employeeId: index,
             address: `address-${index}`,
-            ...clean(args)
+            ...µ.clean(args)
         });
     }
 };

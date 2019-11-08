@@ -1,4 +1,4 @@
-import { buildValidator, stripQuotationMarks } from "@payroll/common";
+import { buildValidator, µ } from "@payroll/common";
 import {
     CommissionedEmployeeCreationModel,
     CoreUseCases,
@@ -25,8 +25,8 @@ export function makeAddEmployeeController(useCases: CoreUseCases): Controllers["
 
         await addEmployee({
             id: parseInt(id),
-            name: stripQuotationMarks(name),
-            address: stripQuotationMarks(address),
+            name: µ.stripQuotationMarks(name),
+            address: µ.stripQuotationMarks(address),
             type: type,
             rate: parseFloat(rate),
             commissionRate: commissionRate ? parseFloat(commissionRate) : null
