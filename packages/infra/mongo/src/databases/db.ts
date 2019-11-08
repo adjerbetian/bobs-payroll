@@ -1,5 +1,5 @@
 import { Db, MongoClient } from "mongodb";
-import * as config from "../config.json";
+import config from "../config";
 import { Mapper } from "../mappers";
 import { buildMongoEntity, makeMongoDbAdapter, MongoEntity } from "../adapters";
 

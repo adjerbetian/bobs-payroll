@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="todo tests" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/packages/e2e/package.json" />
+  <configuration default="false" name="test:e2e:todo" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="test:todo" />
+      <script value="test:e2e:todo" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

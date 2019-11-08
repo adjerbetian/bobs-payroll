@@ -2,18 +2,22 @@
     "name": "@infra/app",
     "version": "2.0.0",
     "bin": {
-        "payroll": "dist/main.js"
+        "payroll": "dist/src/main.js"
     },
     "scripts": {
+        "prebuild": "rm -rf dist",
         "build": "tsc --project tsconfig.json",
+        "postbuild": "node postBuild.js",
+        "move": "mv dist/node_modules/@modules/core/src/* dist/node_modules/@modules/core/",
         "test": "npm run test:unit && npm run test:integration",
         "test:unit": "mocha --config ../../../.mocharc.unit.js",
         "test:integration": "mocha --config ../../../.mocharc.integration.js"
     },
     "dependencies": {
-        "@modules/core": "^2.0.0",
         "@infra/mongo": "^2.0.0",
+        "@infra/test": "^2.0.0",
+        "@modules/core": "^2.0.0",
         "@modules/payment": "^2.0.0",
-        "@infra/test": "^2.0.0"
+        "@payroll/common": "^2.0.0"
     }
 }

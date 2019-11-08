@@ -1,15 +1,12 @@
 {
     "compilerOptions": {
         "allowJs": false,
-        "module": "commonjs",
         "target": "esnext",
-        "sourceMap": true,
         "moduleResolution": "node",
         "noImplicitAny": true,
         "strictNullChecks": true,
         "resolveJsonModule": true,
         "incremental": true,
-        "noEmit": true,
-        "declaration": true
+        "noEmit": true
     }
 }
