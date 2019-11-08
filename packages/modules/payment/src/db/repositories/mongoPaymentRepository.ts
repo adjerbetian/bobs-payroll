@@ -1,4 +1,4 @@
-import { µ } from "@payroll/common";
+import { µ } from "@common/micro";
 import { MongoEntity } from "@infra/mongo";
 import * as moment from "moment";
 import { Payment, PaymentRepository } from "../../domain";

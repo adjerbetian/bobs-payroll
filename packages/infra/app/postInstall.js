@@ -1,16 +1,17 @@
 const { execSync } = require("child_process");
+const { existsSync } = require("fs");
 
 cleanDist("./dist");
 execSync("tsc --project tsconfig.bin.json");
-moveDependency("@modules/core");
-moveDependency("@modules/payment");
-moveDependency("@infra/mongo");
-moveDependency("@payroll/common");
+copyPackageJSONOfDependencies();
 
-function moveDependency(folder) {
-    execSync(`rm -f dist/node_modules/${folder}/*.js`);
-    execSync(`mv dist/node_modules/${folder}/src/* dist/node_modules/${folder}/`);
-    execSync(`rm -r dist/node_modules/${folder}/src`);
+function copyPackageJSONOfDependencies() {
+    const { dependencies } = require("./package");
+    Object.keys(dependencies).forEach(dependency => copyPackageJSONOfDependency(dependency));
+}
+function copyPackageJSONOfDependency(folder) {
+    if (!existsSync(`dist/node_modules/${folder}`)) return;
+    execSync(`cp node_modules/${folder}/package.json dist/node_modules/${folder}/`);
 }
 function cleanDist(folder) {
     execSync(`rm -rf ${folder}`);

@@ -12,10 +12,13 @@
         "test:integration": "mocha --config ../../../.mocharc.integration.js"
     },
     "dependencies": {
+        "@common/dates": "^2.0.0",
+        "@common/micro": "^2.0.0",
+        "@common/types": "^2.0.0",
+        "@common/validator": "^2.0.0",
         "@infra/mongo": "^2.0.0",
         "@infra/test": "^2.0.0",
         "@modules/core": "^2.0.0",
-        "@modules/payment": "^2.0.0",
-        "@payroll/common": "^2.0.0"
+        "@modules/payment": "^2.0.0"
     }
 }

@@ -1,4 +1,4 @@
-import { Routes } from "@payroll/common";
+import { Routes } from "@common/types";
 import { Controllers } from "./controllers";
 
 export function makeRoutes(controllers: Controllers): Routes {

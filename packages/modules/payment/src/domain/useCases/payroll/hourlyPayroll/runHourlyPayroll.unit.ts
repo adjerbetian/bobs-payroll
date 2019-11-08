@@ -1,4 +1,4 @@
-import { friday, lastFriday, never } from "@payroll/common";
+import { friday, lastFriday, never } from "@common/dates";
 import { CoreUseCases } from "@modules/core";
 import { buildStubFor, expect, Stub } from "@infra/test";
 import { buildStubbedCoreUseCases, generators } from "../../../../test";

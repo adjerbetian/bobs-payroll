@@ -1,7 +1,7 @@
 {
     "name": "@infra/mongo",
     "version": "2.0.0",
-    "main": "src/index.ts",
+    "main": "src",
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit && npm run test:integration",

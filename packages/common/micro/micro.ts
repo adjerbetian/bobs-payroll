@@ -1,6 +1,7 @@
 import { omitBy, isUndefined } from "lodash";
 import * as moment from "moment";
 
+// noinspection NonAsciiCharacters
 export const µ = {
     clean<T extends Record<string, any>>(object: T): T {
         return omitBy(object, a => isUndefined(a)) as T;

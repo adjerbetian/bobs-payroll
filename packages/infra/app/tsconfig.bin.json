@@ -9,9 +9,9 @@
     },
     "include": [
         "src/**/*",
+        "node_modules/@common/**/*",
         "node_modules/@infra/**/*",
-        "node_modules/@modules/**/*",
-        "node_modules/@payroll/**/*"
+        "node_modules/@modules/**/*"
     ],
     "exclude": [
         "*.unit.ts",

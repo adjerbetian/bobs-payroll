@@ -1,4 +1,4 @@
-import { never } from "@payroll/common";
+import { never } from "@common/dates";
 import { expect, generateIndex } from "@infra/test";
 import { NotFoundError, PaymentMethod } from "@modules/core";
 import { generators, seeders } from "../../test";

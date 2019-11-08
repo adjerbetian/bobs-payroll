@@ -1,4 +1,4 @@
-import { µ } from "@payroll/common";
+import { µ } from "@common/micro";
 import { generators as coreGenerators } from "@modules/core/test";
 import { EntityGenerator, generateFloatBetween, generateIndex } from "@infra/test";
 import { buildPayment } from "../domain";

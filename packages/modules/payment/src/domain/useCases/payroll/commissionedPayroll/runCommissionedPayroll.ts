@@ -1,4 +1,4 @@
-import { µ } from "@payroll/common";
+import { µ } from "@common/micro";
 import { CommissionedEmployee, CoreUseCases, SalesReceipt } from "@modules/core";
 import * as moment from "moment";
 import { CreatePaymentForEmployee } from "../../payment";

@@ -1,4 +1,4 @@
-import { buildValidator } from "@payroll/common";
+import { buildValidator } from "@common/validator";
 import { PaymentUseCases } from "../../domain";
 import { Controllers } from "../Controllers";
 import { RouteFormatError } from "../errors";

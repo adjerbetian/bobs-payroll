@@ -1,4 +1,4 @@
-import { firstDayOfMonth, lastDayOfMonth } from "@payroll/common";
+import { firstDayOfMonth, lastDayOfMonth } from "@common/dates";
 import { CoreUseCases } from "@modules/core";
 import { buildStubFor, expect, Stub } from "@infra/test";
 import { buildStubbedCoreUseCases, generators } from "../../../../test";

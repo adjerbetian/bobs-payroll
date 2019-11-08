@@ -5,8 +5,9 @@
   "description": "Agile Software Development - Principles, Pattern, and Practices - Case Study 1 - The Payroll System",
   "private": true,
   "scripts": {
-    "all": "npm run build && npm run test",
-    "build": "lerna clean -y && lerna bootstrap && lerna run build",
+    "all": "npm run bootstrap && npm run test",
+    "bootstrap": "lerna clean -y && lerna bootstrap",
+    "build": "npm run bootstrap && lerna run build",
     "test": "lerna run test --stream --concurrency 1",
     "test:e2e": "lerna run test --stream --scope=@payroll/e2e",
     "test:e2e:todo": "lerna run test:todo --stream --scope=@payroll/e2e",

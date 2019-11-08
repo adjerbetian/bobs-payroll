@@ -1,4 +1,4 @@
-import { µ } from "@payroll/common";
+import { µ } from "@common/micro";
 import { EntityGenerator, generateFloatBetween, generateIndex } from "@infra/test";
 import * as moment from "moment";
 import {

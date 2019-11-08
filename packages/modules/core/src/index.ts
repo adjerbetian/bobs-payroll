@@ -1,4 +1,4 @@
-import { Routes } from "@payroll/common";
+import { Routes } from "@common/types";
 import { makeControllers } from "./controllers";
 import { CoreUseCases, makeCoreUseCases } from "./domain";
 import {

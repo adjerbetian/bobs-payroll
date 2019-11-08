@@ -1,4 +1,4 @@
-import { µ } from "@payroll/common";
+import { µ } from "@common/micro";
 import { expect, Stub } from "@infra/test";
 import * as moment from "moment";
 import { PaymentUseCases } from "../../domain";

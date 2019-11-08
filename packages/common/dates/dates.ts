@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { µ } from "./micro";
+import { µ } from "@common/micro";
 
 export const monday = µ.isoDate(moment().startOf("isoWeek"));
 export const tuesday = µ.isoDate(moment(monday).add(1, "day"));

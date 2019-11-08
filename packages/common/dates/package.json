@@ -1,0 +1,12 @@
+{
+    "name": "@common/dates",
+    "version": "2.0.0",
+    "main": "dates",
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "test": ""
+    },
+    "dependencies": {
+        "@common/micro": "^2.0.0"
+    }
+}

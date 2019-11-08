@@ -1,4 +1,4 @@
-import { lastTuesday, monday, never, tuesday } from "@payroll/common";
+import { lastTuesday, monday, never, tuesday } from "@common/dates";
 import { expect, generateIndex } from "@infra/test";
 import { generators, seeders } from "../../test";
 import { dbTimeCards } from "../collections";

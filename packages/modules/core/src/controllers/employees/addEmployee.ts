@@ -1,4 +1,5 @@
-import { buildValidator, µ } from "@payroll/common";
+import { µ } from "@common/micro";
+import { buildValidator } from "@common/validator";
 import {
     CommissionedEmployeeCreationModel,
     CoreUseCases,

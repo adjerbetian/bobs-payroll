@@ -1,0 +1,9 @@
+{
+    "name": "@common/types",
+    "version": "2.0.0",
+    "main": "types",
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "test": ""
+    }
+}

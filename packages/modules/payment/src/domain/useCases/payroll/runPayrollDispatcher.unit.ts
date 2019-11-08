@@ -8,7 +8,7 @@ import {
     thursday,
     tuesday,
     wednesday
-} from "@payroll/common";
+} from "@common/dates";
 import { buildStubFor, expect, Stub } from "@infra/test";
 import { makeRunPayrollDispatcher, RunPayrollUseCases } from "./runPayrollDispatcher";
 

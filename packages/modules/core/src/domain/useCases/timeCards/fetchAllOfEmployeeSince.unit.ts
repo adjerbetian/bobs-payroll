@@ -1,4 +1,4 @@
-import { monday } from "@payroll/common";
+import { monday } from "@common/dates";
 import { expect, generateIndex, Stub } from "@infra/test";
 import { generators } from "../../../test";
 import { TimeCardRepository } from "../../repositories";

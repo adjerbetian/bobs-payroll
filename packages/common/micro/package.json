@@ -1,0 +1,13 @@
+{
+    "name": "@common/micro",
+    "version": "2.0.0",
+    "main": "micro",
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "test": "npm run test:unit",
+        "test:unit": "mocha --config ../../../.mocharc.unit.js"
+    },
+    "dependencies": {
+        "@infra/test": "^2.0.0"
+    }
+}
