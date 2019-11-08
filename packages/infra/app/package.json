@@ -5,7 +5,7 @@
         "payroll": "dist/src/main.js"
     },
     "scripts": {
-        "postinstall": "rm -rf ./dist && tsc --project tsconfig.bin.json && node postBuild.js",
+        "postinstall": "node postInstall.js",
         "build": "tsc --project tsconfig.json",
         "test": "npm run test:unit && npm run test:integration",
         "test:unit": "mocha --config ../../../.mocharc.unit.js",
