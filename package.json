@@ -9,12 +9,12 @@
     "bootstrap": "lerna clean -y && lerna bootstrap",
     "build": "npm run bootstrap && lerna run build",
     "test": "lerna run test --stream --concurrency 1",
-    "test:e2e": "lerna run test --stream --scope=@payroll/e2e",
-    "test:e2e:todo": "lerna run test:todo --stream --scope=@payroll/e2e",
+    "test:e2e": "lerna run test --stream --scope=@payroll/e2e --no-prefix",
+    "test:e2e:todo": "lerna run test:todo --stream --scope=@payroll/e2e --no-prefix",
     "watch": "lerna run build --parallel -- -- --watch"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongodb": "^3.3.2"

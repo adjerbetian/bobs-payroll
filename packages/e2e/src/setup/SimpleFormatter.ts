@@ -1,6 +1,6 @@
 import { Status, SummaryFormatter } from "cucumber";
 import { TestCaseFinished, TestCaseFinishedEvent, TestCaseStartedEvent } from "./cucumber-defs";
-import chalk from "chalk";
+import * as chalk from "chalk";
 
 const TAB = "    ";
 
