@@ -1,18 +1,21 @@
 const { execSync } = require("child_process");
-const { existsSync } = require("fs");
+const { existsSync, rmdirSync, copyFileSync } = require("fs");
 
-cleanDist("./dist");
-execSync("tsc --project tsconfig.bin.json");
+cleanDist();
+compileTypeScript();
 copyPackageJSONOfDependencies();
 
+function cleanDist() {
+    rmdirSync("./dist", { recursive: true });
+}
+function compileTypeScript() {
+    execSync("tsc --project tsconfig.bin.json");
+}
 function copyPackageJSONOfDependencies() {
     const { dependencies } = require("./package");
     Object.keys(dependencies).forEach(dependency => copyPackageJSONOfDependency(dependency));
 }
 function copyPackageJSONOfDependency(folder) {
     if (!existsSync(`dist/node_modules/${folder}`)) return;
-    execSync(`cp node_modules/${folder}/package.json dist/node_modules/${folder}/`);
-}
-function cleanDist(folder) {
-    execSync(`rm -rf ${folder}`);
+    copyFileSync(`node_modules/${folder}/package.json`, `dist/node_modules/${folder}/package.json`);
 }
