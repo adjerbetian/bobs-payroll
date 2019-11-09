@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.3",
     "@types/chai-as-promised": "^7.1.2",
-    "@types/cucumber": "^4.0.7",
+    "@types/cucumber": "^6.0.0",
     "@types/lodash": "^4.14.146",
     "@types/mocha": "^5.2.7",
     "@types/mongodb": "^3.3.10",
@@ -33,7 +33,7 @@
     "@typescript-eslint/parser": "^2.6.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "cucumber": "^5.1.0",
+    "cucumber": "^6.0.3",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-chai-friendly": "^0.5.0",

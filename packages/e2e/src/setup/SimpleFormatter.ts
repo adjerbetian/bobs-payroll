@@ -25,21 +25,29 @@ export default class SimpleFormatter extends SummaryFormatter {
         options.eventBroadcaster.on("test-case-finished", this.logTime);
     }
     private logScenario({ sourceLocation }: TestCaseStartedEvent): void {
-        const { gherkinDocument, pickle } = this.eventDataCollector.getTestCaseData(sourceLocation);
+        const { gherkinDocument, pickle } = this.eventDataCollector.getTestCaseAttempt({
+            sourceLocation,
+            attemptNumber: 0
+        });
         this.logLine(`${gherkinDocument.feature.name} / ${pickle.name}`);
     }
-    private logTestStep({ testCase, index, result }: TestCaseFinishedEvent): void {
-        const { gherkinKeyword, pickleStep } = this.eventDataCollector.getTestStepData({ testCase, index });
-        if (pickleStep) {
-            this.logLine(`${TAB}${getIcon(result.status)} ${chalk.gray(gherkinKeyword + pickleStep.text)}`);
+    private logTestStep(allArgs: TestCaseFinishedEvent): void {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { testCase, index, result } = allArgs;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { gherkinDocument, pickle } = this.eventDataCollector.getTestCaseAttempt(testCase);
+        if (pickle) {
+            this.logLine(`${TAB}${getIcon(result.status)}`);
+            // this.logLine(`${TAB}${getIcon(result.status)} ${chalk.gray(pickle.steps[index].text)}`);
         } else {
             if (result.status === Status.PASSED) return;
             this.logLine(`${TAB}${getIcon(result.status)} Hook`);
         }
     }
     private logTime({ result }: TestCaseFinished): void {
-        if (result.duration > 800) {
-            this.logLine(`${TAB}(${result.duration}ms)`);
+        const milliseconds = Math.floor(result.duration / 1000000);
+        if (milliseconds > 800) {
+            this.logLine(`${TAB}(${milliseconds}ms)`);
         }
     }
     private logLine(text: string): void {

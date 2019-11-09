@@ -5,7 +5,7 @@ import { store } from "../../utils";
 
 Given(
     /^a( new)? service charge (\w+) for (\w+)$/,
-    async (isNew: string | undefined, serviceChargeName: string, membershipName: string) => {
+    async (isNew: string | null, serviceChargeName: string, membershipName: string) => {
         const serviceCharge = await seedOrGenerate();
         store.serviceCharges.set(serviceChargeName, serviceCharge);
 

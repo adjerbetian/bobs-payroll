@@ -5,7 +5,7 @@ import { store } from "../../utils";
 
 Given(
     /^a( new)? (hold|direct|mail) payment method(?: (\w+))? for (\w+)$/,
-    async (isNew: string | undefined, type: string, paymentMethodName: string | undefined, employeeName: string) => {
+    async (isNew: string | null, type: string, paymentMethodName: string | null, employeeName: string) => {
         const paymentMethod = await seedOrGenerate();
         if (paymentMethodName) {
             store.paymentMethods.set(paymentMethodName, paymentMethod);

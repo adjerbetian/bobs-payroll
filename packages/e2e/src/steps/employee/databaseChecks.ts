@@ -10,7 +10,7 @@ import { expect } from "@infra/test";
 import { Then } from "cucumber";
 import { store } from "../../utils";
 
-Then(/^(\w+) should( fully)? exist in the employee DB$/, async (name: string, isFullComparison: string | undefined) => {
+Then(/^(\w+) should( fully)? exist in the employee DB$/, async (name: string, isFullComparison: string | null) => {
     const employee = store.employees.get(name);
     const employeeExistsInDb = await dbEmployees.exists({ id: employee.getId() });
     expect(employeeExistsInDb).to.be.true;

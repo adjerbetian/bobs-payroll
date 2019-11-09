@@ -7,10 +7,10 @@ Then(
     /(\w+) should (not )?have been paid on (?:the )?([^0-9]{0,30})(?: of an amount of (.+|\d+))?(?: with the method (\w+))?$/,
     async (
         name: string,
-        isNegated: string | undefined,
+        isNegated: string | null,
         day: string,
-        amountExpression: string | undefined,
-        paymentMethodName: string | undefined
+        amountExpression: string | null,
+        paymentMethodName: string | null
     ) => {
         await checkWasPaid();
         await checkPaymentAmount();

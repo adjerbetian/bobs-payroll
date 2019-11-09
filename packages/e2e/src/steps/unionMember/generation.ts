@@ -6,11 +6,11 @@ import { store, toFloat } from "../../utils";
 Given(
     /^a( new)? union membership(?: (\w+))? for (\w+)(?: with the member id (\w+))?(?: (?:with|and) a rate of (\d+\.?\d*))?$/,
     async (
-        isNew: string | undefined,
-        membershipName: string | undefined,
+        isNew: string | null,
+        membershipName: string | null,
         employeeName: string,
-        memberId: string | undefined,
-        rate: string | undefined
+        memberId: string | null,
+        rate: string | null
     ) => {
         const unionMembership = await seedOrGenerate();
         if (membershipName) {
@@ -20,7 +20,7 @@ Given(
         async function seedOrGenerate(): Promise<UnionMembership> {
             const partialUnionMembership = {
                 employeeId: getEmployeeId(),
-                memberId: memberId,
+                memberId: memberId || undefined,
                 rate: toFloat(rate)
             };
 

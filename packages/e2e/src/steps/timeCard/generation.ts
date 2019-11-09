@@ -6,11 +6,11 @@ import { dates, store, toFloat } from "../../utils";
 Given(
     /^a( new)? time card(?: (\w+)?)? for (\w+)(?: of (\d+\.?\d*) hours on(?: the)? (.+))?$/,
     async (
-        isNew: string | undefined,
-        timeCardName: string | undefined,
+        isNew: string | null,
+        timeCardName: string | null,
         employeeName: string,
-        hours: string | undefined,
-        day: string | undefined
+        hours: string | null,
+        day: string | null
     ) => {
         const timeCard = await generateOrSeed();
         if (timeCardName) {
@@ -22,7 +22,7 @@ Given(
             const partialTimeCard = {
                 employeeId: employee.getId(),
                 hours: toFloat(hours),
-                date: day && dates.get(day)
+                date: (day && dates.get(day)) || undefined
             };
             if (isNew) return generators.generateTimeCard(partialTimeCard);
             else return seeders.seedTimeCard(partialTimeCard);

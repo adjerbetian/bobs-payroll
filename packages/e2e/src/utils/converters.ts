@@ -1,3 +1,3 @@
-export function toFloat(n: string | undefined): number | undefined {
+export function toFloat(n: string | null): number | undefined {
     return parseFloat(n || "") || undefined;
 }

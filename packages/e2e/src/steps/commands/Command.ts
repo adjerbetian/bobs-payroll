@@ -5,7 +5,7 @@ import { removeLastArg } from "./removeLastArg";
 
 When(
     /^I execute the( incomplete)? (AddEmp|DelEmp|SalesReceipt|TimeCard|ServiceCharge) command on (\w+)$/,
-    async (isIncomplete: string | undefined, commandName: string, name: string) => {
+    async (isIncomplete: string | null, commandName: string, name: string) => {
         let command = buildCommand(commandName, name);
         if (isIncomplete) {
             command = removeLastArg(command);

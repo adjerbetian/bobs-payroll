@@ -11,7 +11,7 @@ import { removeLastArg } from "./removeLastArg";
 
 When(
     /^I execute the( incomplete)? ChgEmp command on (\w+) to change the (name|address|payment method) to (?:")?([^"]+)(?:")?$/,
-    async (isIncomplete: string | undefined, name: string, field: string, value: string) => {
+    async (isIncomplete: string | null, name: string, field: string, value: string) => {
         let command = buildCommand();
         if (isIncomplete) {
             command = removeLastArg(command);

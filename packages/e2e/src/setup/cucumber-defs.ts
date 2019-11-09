@@ -11,7 +11,7 @@ export interface TestCaseStartedEvent {
     sourceLocation: SourceLocation;
 }
 export interface TestCaseFinishedEvent {
-    testCase: { sourceLocation: SourceLocation };
+    testCase: { sourceLocation: SourceLocation; attemptNumber: number };
     index: number;
     result: { status: Status };
 }
@@ -20,54 +20,27 @@ export interface TestCaseFinished {
     sourceLocation: SourceLocation;
 }
 
-interface SourceLocation {
-    uri: string;
-    line: number;
-}
-
 interface EventDataCollector {
-    getTestCaseData(sourceLocation: SourceLocation): TestCaseData;
-    getTestStepData(args: { testCase: { sourceLocation: SourceLocation }; index: number }): TestStepData;
+    getTestCaseAttempts(): TestCaseAttempt[];
+    getTestCaseAttempt(args: { sourceLocation: SourceLocation; attemptNumber: number }): TestCaseAttempt;
 }
 
-interface TestCaseData {
-    gherkinDocument: {
-        type: "GherkinDocument";
-        feature: Feature;
-        comments: string[];
-    };
+interface TestCaseAttempt {
+    gherkinDocument: GherkinDocument;
     pickle: Pickle;
     testCase: {
         sourceLocation: SourceLocation;
         steps: { actionLocation: SourceLocation; sourceLocation?: SourceLocation }[];
     };
-}
-
-interface TestStepData {
-    testStep: {
-        sourceLocation?: SourceLocation;
-        actionLocation: SourceLocation;
-        result: {
-            duration: number;
-            status: Status;
-        };
-    };
-    gherkinKeyword?: StepKeyword;
-    pickleStep?: {
-        text: string;
-        arguments: any[];
-        locations: Location[];
-    };
-}
-
-interface Feature {
-    type: "Feature";
-    tags: Tag[];
-    location: Location;
-    language: "en";
-    keyword: "Feature";
-    name: string;
-    children: Scenario[];
+    attemptNumber: number;
+    result: any;
+    stepAttachments: [];
+    stepResults:
+        | {
+              duration: number;
+              status: Status;
+          }[]
+        | null;
 }
 
 interface Pickle {
@@ -82,24 +55,51 @@ interface Pickle {
     }[];
 }
 
+interface GherkinDocument {
+    type: "GherkinDocument";
+    feature: Feature;
+    comments: string[];
+    uri: string;
+}
+
+interface Feature {
+    type: "Feature";
+    tags: Tag[];
+    location: Location;
+    language: "en";
+    keyword: "Feature";
+    name: string;
+    description: string | undefined;
+    children: Scenario[];
+}
+
 interface Scenario {
     type: "Scenario";
     tags: Tag[];
     location: Location;
     keyword: "Scenario";
     name: string;
-    steps: {
-        type: "Step";
-        location: Location;
-        keyword: StepKeyword;
-        text: string;
-    }[];
+    description: string | undefined;
+    steps: Step[];
+}
+
+interface Step {
+    type: "Step";
+    location: Location;
+    keyword: StepKeyword;
+    text: string;
+    argument: undefined;
 }
 
 interface Tag {
     type?: "Tag";
     name: string;
     location: Location;
+}
+
+interface SourceLocation {
+    uri: string;
+    line: number;
 }
 
 interface Location {

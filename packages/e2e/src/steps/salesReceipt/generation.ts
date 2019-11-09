@@ -6,11 +6,11 @@ import { dates, store, toFloat } from "../../utils";
 Given(
     /^a( new)? sales receipt(?: (\w+)?)? for (\w+)(?: of an amount of (\d+\.?\d*) on(?: the)? (.+))?$/,
     async (
-        isNew: string | undefined,
-        salesReceiptName: string | undefined,
+        isNew: string | null,
+        salesReceiptName: string | null,
         employeeName: string,
-        amount: string | undefined,
-        day: string | undefined
+        amount: string | null,
+        day: string | null
     ) => {
         const salesReceipt = await generateOrSeed();
         if (salesReceiptName) {
@@ -22,7 +22,7 @@ Given(
             const partialSalesReceipt = {
                 employeeId: employee.getId(),
                 amount: toFloat(amount),
-                date: day && dates.get(day)
+                date: (day && dates.get(day)) || undefined
             };
 
             if (isNew) return generators.generateSalesReceipt(partialSalesReceipt);

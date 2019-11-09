@@ -5,7 +5,7 @@ import { store, toFloat } from "../../utils";
 
 Given(
     /^a(?:n)?( new)?(?: hourly)? employee (\w+)(?: with a hourly rate of (\d+\.?\d*))?$/,
-    async (isNew: string | undefined, name: string, hourlyRate: string | undefined) => {
+    async (isNew: string | null, name: string, hourlyRate: string | null) => {
         const employee = await generateOrSeed();
         store.employees.set(name, employee);
 
@@ -21,7 +21,7 @@ Given(
 );
 Given(
     /^a( new)? salaried employee (\w+)(?: with a salary of (\d+\.?\d*))?$/,
-    async (isNew: string | undefined, name: string, salary: string | undefined) => {
+    async (isNew: string | null, name: string, salary: string | null) => {
         const employee = await generateOrSeed();
         store.employees.set(name, employee);
 
@@ -38,7 +38,7 @@ Given(
 
 Given(
     /^a( new)? commissioned employee (\w+)(?: with a salary of (\d+\.?\d*))?(?: and a commission rate of (\d+\.?\d*))?$/,
-    async (isNew: string | undefined, name: string, salary: string | undefined, commissionRate: string | undefined) => {
+    async (isNew: string | null, name: string, salary: string | null, commissionRate: string | null) => {
         const employee = await generateOrSeed();
         store.employees.set(name, employee);
 

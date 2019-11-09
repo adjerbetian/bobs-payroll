@@ -5,7 +5,7 @@ import { store } from "../../utils";
 
 Then(
     /^(\w+) should( not)? have the service charge (\w+)$/,
-    async (employeeName: string, isNegated: string | undefined, serviceChargeName: string) => {
+    async (employeeName: string, isNegated: string | null, serviceChargeName: string) => {
         const employee = store.employees.get(employeeName);
         const serviceCharge = store.serviceCharges.get(serviceChargeName);
 
