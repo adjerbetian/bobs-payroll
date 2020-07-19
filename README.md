@@ -14,6 +14,10 @@
 This is an attempt to apply Clean Architecture / DDD to the The Payroll System
 case study from the *Agile Software Development* book while using typescript.
 
+## Features
+
+You can see the features [in Cucumber here](https://github.com/adjerbetian/bobs-payroll/tree/master/packages/e2e/src/features).
+
 ## Rudimentary Specification of the Payroll System *[From the book]*
 
 The following are some of the notes we took while conversing with our customer.
