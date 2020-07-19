@@ -33,7 +33,7 @@ export function makeMongoDbAdapter<DBModel>(
             return dbModel;
         },
         async insert(dbModel) {
-            await db.insertOne(dbModel);
+            await db.insertOne(dbModel as any);
         },
         async exists(query) {
             return !!(await db.findOne(query, { projection: { _id: 1 } }));
